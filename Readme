@@ -1,53 +1,76 @@
-L-BFGS-B is released under the “New BSD License” (aka “Modified BSD License” or “3-clause license”)
-Please read attached file License.txt
+                                                                            
+L-BFGS-B is released under the “New BSD License” (aka “Modified BSD License” or
+“3-clause license”)                                                                  
+Please read attached file License.txt                                                   
 
-          L-BFGS-B (version 2.1)    March 1997
+          L-BFGS-B (version 3.0)    march, 2011
 
-This directory contains the limited memory
-code for solving bound constrained
-optimization problems.
-
-A makefile is provided for Unix users.
-
-We recommend that the user read driver1.f, which
-gives a good idea of how the code works as well as
-directions on how to adapt the timing routine to particular
-systems.
-
-The following three articles are also included
-
-[1] algorithm.ps                -  describes the algorithm                 
-[2] compact.ps                  -  presents the compact form of matrices
-[3] code.ps                     -  describes the code
-
-The most useful article for those who only wish to use the code is [3].
-Users interested in understanding the algorithm should read [1] and
-possibly also [2].
+This directory contains the modified/corrected limited memory
+code for solving bound constrained optimization problems. 
 
 _______________________________________________________________________
+
+  o  f77 routines
+  
+     blas.f                subset of blas
+     linpack.f             subset of linpack
+     lbfgsb.f              main routine
+     timer.f               routine to compute CPU time
+
+  o  f77 and f90 drivers
+ 
+     driver1.f    driver1.f90
+     driver2.f    driver2.f90
+     driver3.f    driver3.f90
+
+     We recommend that the user read driver1.f/driver1.f90, which
+     give a good idea of how the code works
+
+  o  Makefile              Linux/Unix users. 
+
+     To run the code on a Linux/Unix machine simply type 
+
+        make
+
+     This will create the files
+ 
+     x.lbfgsb_77_1        x.lbfgsb_90_1
+     x.lbfgsb_77_2        x.lbfgsb_90_2
+     x.lbfgsb_77_3        x.lbfgsb_90_3
+
+     which are the executable files for the drivers in the package. 
+     One can execute the program by typing the name of the executable 
+     file.
+
+  o  Output files are provided for each executable file in directory
+     OUPUTS
+
+     output_77_1           output_90_1
+     output_77_2           output_90_2
+     output_77_3           output_90_3
+
+  o  The following four articles are also included
+
+     [1] algorithm.pdf     -  describes the algorithm                 
+     [2] compact.pdf       -  presents the compact form of matrices
+     [3] code.pdf          -  describes the code
+     [4] acm-remark.pdf    -  describes the modification/correction
+
+     The most useful articles for those who only wish to use the code 
+     are [3,4]. Users interested in understanding the algorithm should 
+     read [1] and possibly also [2].
+
+________________________________________________________________________
 
 For questions and help contact
 
-    Ciyou Zhu                    or           Jorge Nocedal
-    ciyou@ece.nwu.edu                        nocedal@ece.nwu.edu
-
-_______________________________________________________________________
-
-
-To run the code on a Unix machine simply
-type 
-        make
-
-This will create (among others) the file
-x.lbfgsb1*  which is the executable file for the
-simplest driver in the package. One can execute 
-the program by typing
-
-     x.lbfgsb1
+    Jorge Nocedal       <nocedal@eecs.northwestern.edu>
+    Jose Luis Morales   <jmorales@itam.mx>
+________________________________________________________________________
 
 
-************************************************************************
                       How to use L-BFGS-B     
+
 ************************************************************************
 
 	The simplest way to use the code is to modify one of the
@@ -129,7 +152,7 @@ c         where pg_i is the ith component of the projected gradient.
 c       The user can suppress this termination test by setting pgtol=0.
 c
 c     wa is a DOUBLE PRECISION  array of length 
-c       (2mmax + 4)nmax + 12mmax^2 + 12mmax used as workspace.
+c       (2mmax + 5)nmax + 11mmax^2 + 8mmax used as workspace.
 c       This array must not be altered by the user.
 c
 c     iwa is an INTEGER  array of length 3nmax used as
@@ -204,5 +227,6 @@ c         dsave(13) = the infinity norm of the projected gradient;
 c
 c         see the subroutine setulb.f for a description of other 
 c         information contained in dsave
-
+c
+************************************************************************
 

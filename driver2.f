@@ -1,11 +1,11 @@
-c
-c  L-BFGS-B is released under the “New BSD License” (aka “Modified BSD License” 
-c  or “3-clause license”)
-c  Please read attached file License.txt
-c
-c                             DRIVER 2
+c                                                                                      
+c  L-BFGS-B is released under the “New BSD License” (aka “Modified BSD License”        
+c  or “3-clause license”)                                                              
+c  Please read attached file License.txt                                               
+c                                        
+c                             DRIVER 2 in Fortran 77
 c     --------------------------------------------------------------
-c              CUSTOMIZED DRIVER FOR L-BFGS-B (version 2.1)
+c              CUSTOMIZED DRIVER FOR L-BFGS-B (version 3.0)
 c     --------------------------------------------------------------
 c
 c        L-BFGS-B is a code for solving large nonlinear optimization
@@ -35,24 +35,26 @@ c           ftp to eecs.nwu.edu in the directory pub/lbfgs/lbfgs_bcm.)
 c
 c                              *  *  *
 c
-c        NEOS, November 1994. (Latest revision June 1996.)
-c        Optimization Technology Center.
-c        Argonne National Laboratory and Northwestern University.
-c        Written by
-c                           Ciyou Zhu
-c        in collaboration with R.H. Byrd, P. Lu-Chen and J. Nocedal.
+c         February 2011   (latest revision)
+c         Optimization Center at Northwestern University
+c         Instituto Tecnologico Autonomo de Mexico
 c
+c         Jorge Nocedal and Jose Luis Morales
+c         Jorge Nocedal and Jose Luis Morales, Remark on "Algorithm 778: 
+c         L-BFGS-B: Fortran Subroutines for Large-Scale Bound Constrained 
+c         Optimization"  (2011). To appear in  ACM Transactions on 
+c         Mathematical Software,
 c
 c     **************
 
       program driver
  
 c     This driver shows how to replace the default stopping test
-c     by other termination criteria. It also illustrates how to
-c     print the values of several parameters during the course of
-c     the iteration. The sample problem used here is the same as in 
-c     DRIVER1 (the extended Rosenbrock function with bounds on the 
-c     variables).
+c       by other termination criteria. It also illustrates how to
+c       print the values of several parameters during the course of
+c       the iteration. The sample problem used here is the same as in 
+c       DRIVER1 (the extended Rosenbrock function with bounds on the 
+c       variables).
  
       integer          nmax, mmax
       parameter        (nmax=1024, mmax=17)
@@ -69,7 +71,7 @@ c       driver1.
      +                 nbd(nmax), iwa(3*nmax), isave(44)
       double precision f, factr, pgtol, 
      +                 x(nmax), l(nmax), u(nmax), g(nmax), dsave(29), 
-     +                 wa(2*mmax*nmax+4*nmax+12*mmax*mmax+12*mmax)
+     +                 wa(2*mmax*nmax+5*nmax+11*mmax*mmax+8*mmax)
 
 c     Declare a few additional variables for the sample problem.
 
@@ -123,8 +125,7 @@ c     We now write the heading of the output.
 
       write (6,16)
   16  format(/,5x, 'Solving sample problem.',
-     +       /,5x, ' (f = 0.0 at the optimal solution.)',/)               
-               
+     +       /,5x, ' (f = 0.0 at the optimal solution.)',/) 
 
 c     We start the iteration by initializing task.
 c 

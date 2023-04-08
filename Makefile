@@ -1,21 +1,37 @@
 FC = gfortran
 
-FFLAGS = -O
+FFLAGS = -O -Wall -fbounds-check -g -Wno-uninitialized 
 
-DRIVER1 = driver1.o
-DRIVER2 = driver2.o
-DRIVER3 = driver3.o
+DRIVER1_77 = driver1.f
+DRIVER2_77 = driver2.f
+DRIVER3_77 = driver3.f
 
-ROUTINES = routines.o
+DRIVER1_90 = driver1.f90
+DRIVER2_90 = driver2.f90
+DRIVER3_90 = driver3.f90
 
-all :  lbfgsb1 lbfgsb2 lbfgsb3 
+LBFGSB  = lbfgsb.f
+LINPACK = linpack.f
+BLAS    = blas.f
+TIMER   = timer.f
 
-lbfgsb1 : $(DRIVER1) $(ROUTINES)
-	$(FC) $(FFLAGS) $(DRIVER1) $(ROUTINES) -o x.lbfgsb1
+all :  lbfgsb_77_1 lbfgsb_77_2 lbfgsb_77_3 lbfgsb_90_1 lbfgsb_90_2 lbfgsb_90_3 
 
-lbfgsb2 : $(DRIVER2) $(ROUTINES)
-	$(FC) $(FFLAGS) $(DRIVER2) $(ROUTINES) -o x.lbfgsb2
 
-lbfgsb3 : $(DRIVER3) $(ROUTINES)
-	$(FC) $(FFLAGS) $(DRIVER3) $(ROUTINES) -o x.lbfgsb3
+lbfgsb_77_1 : $(DRIVER1_77) $(LBFGSB) $(LINPACK) $(BLAS) $(TIMER)
+	$(FC) $(FFLAGS) $(DRIVER1_77) $(LBFGSB) $(LINPACK) $(BLAS) $(TIMER) -o x.lbfgsb_77_1
 
+lbfgsb_77_2 : $(DRIVER2_77) $(LBFGSB) $(LINPACK) $(BLAS) $(TIMER)
+	$(FC) $(FFLAGS) $(DRIVER2_77) $(LBFGSB) $(LINPACK) $(BLAS) $(TIMER) -o x.lbfgsb_77_2
+
+lbfgsb_77_3 : $(DRIVER3_77) $(LBFGSB) $(LINPACK) $(BLAS) $(TIMER)
+	$(FC) $(FFLAGS) $(DRIVER3_77) $(LBFGSB) $(LINPACK) $(BLAS) $(TIMER) -o x.lbfgsb_77_3
+
+lbfgsb_90_1 : $(DRIVER1_90) $(LBFGSB) $(LINPACK) $(BLAS) $(TIMER)
+	$(FC) $(FFLAGS) $(DRIVER1_90) $(LBFGSB) $(LINPACK) $(BLAS) $(TIMER) -o x.lbfgsb_90_1
+
+lbfgsb_90_2 : $(DRIVER2_90) $(LBFGSB) $(LINPACK) $(BLAS) $(TIMER)
+	$(FC) $(FFLAGS) $(DRIVER2_90) $(LBFGSB) $(LINPACK) $(BLAS) $(TIMER) -o x.lbfgsb_90_2
+
+lbfgsb_90_3 : $(DRIVER3_90) $(LBFGSB) $(LINPACK) $(BLAS) $(TIMER)
+	$(FC) $(FFLAGS) $(DRIVER3_90) $(LBFGSB) $(LINPACK) $(BLAS) $(TIMER) -o x.lbfgsb_90_3

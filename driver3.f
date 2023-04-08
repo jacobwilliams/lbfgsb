@@ -1,11 +1,11 @@
-c
-c  L-BFGS-B is released under the “New BSD License” (aka “Modified BSD License” 
-c  or “3-clause license”)
-c  Please read attached file License.txt
-c
-c                             DRIVER 3
+c                                                                                      
+c  L-BFGS-B is released under the “New BSD License” (aka “Modified BSD License”        
+c  or “3-clause license”)                                                              
+c  Please read attached file License.txt                                               
+c                                        
+c                             DRIVER 3 in Fortran 77
 c     --------------------------------------------------------------
-c            TIME-CONTROLLED DRIVER FOR L-BFGS-B (version 2.1)
+c            TIME-CONTROLLED DRIVER FOR L-BFGS-B (version 3.0)
 c     --------------------------------------------------------------
 c
 c        L-BFGS-B is a code for solving large nonlinear optimization
@@ -36,12 +36,14 @@ c           ftp to eecs.nwu.edu in the directory pub/lbfgs/lbfgs_bcm.)
 c
 c                              *  *  *
 c
-c        NEOS, November 1994. (Latest revision June 1996.)
-c        Optimization Technology Center.
-c        Argonne National Laboratory and Northwestern University.
-c        Written by
-c                           Ciyou Zhu
-c        in collaboration with R.H. Byrd, P. Lu-Chen and J. Nocedal.
+c         February 2011   (latest revision)
+c         Optimization Center at Northwestern University
+c         Instituto Tecnologico Autonomo de Mexico
+c
+c         Jorge Nocedal and Jose Luis Morales, Remark on "Algorithm 778: 
+c         L-BFGS-B: Fortran Subroutines for Large-Scale Bound Constrained 
+c         Optimization"  (2011). To appear in  ACM Transactions on 
+c         Mathematical Software,
 c
 c
 c     **************
@@ -71,7 +73,7 @@ c       driver1.
      +                 nbd(nmax), iwa(3*nmax), isave(44)
       double precision f, factr, pgtol, 
      +                 x(nmax), l(nmax), u(nmax), g(nmax), dsave(29), 
-     +                 wa(2*mmax*nmax+4*nmax+12*mmax*mmax+12*mmax)
+     +                 wa(2*mmax*nmax+5*nmax+11*mmax*mmax+8*mmax)
 
 c     Declare a few additional variables for the sample problem 
 c       and for keeping track of time.
@@ -176,7 +178,7 @@ c          We print out the information contained in task.
 
 c          We print the latest iterate contained in wa(j+1:j+n), where
 c 
-            j = 3*n+2*m*n+12*m**2
+            j = 3*n+2*m*n+11*m**2
             write (6,*) 'Latest iterate X ='
             write (6,'((1x,1p, 6(1x,d11.4)))') (wa(i),i = j+1,j+n) 
 
