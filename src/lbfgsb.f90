@@ -43,18 +43,18 @@
 !                        March  2011
 !
 !=============================================================================
-      SUBROUTINE SETULB(N,M,X,L,U,Nbd,F,G,Factr,Pgtol,Wa,Iwa,Task,      &
+      subroutine setulb(n,m,x,l,u,Nbd,f,g,Factr,Pgtol,Wa,Iwa,Task,      &
                       & Iprint,Csave,Lsave,Isave,Dsave)
-      IMPLICIT NONE
+      implicit none
 !*--SETULB51
  
-      CHARACTER*60 Task , Csave
-      LOGICAL Lsave(4)
-      INTEGER N , M , Iprint , Nbd(N) , Iwa(3*N) , Isave(44)
+      character*60 Task , Csave
+      logical Lsave(4)
+      integer n , m , Iprint , Nbd(n) , Iwa(3*n) , Isave(44)
 !
 !-jlm-jn
-      DOUBLE PRECISION F , Factr , Pgtol , X(N) , L(N) , U(N) , G(N) ,  &
-                     & Wa(2*M*N+5*N+11*M*M+8*M) , Dsave(29)
+      double precision f , Factr , Pgtol , x(n) , l(n) , u(n) , g(n) ,  &
+                     & Wa(2*m*n+5*n+11*m*m+8*m) , Dsave(29)
  
 !     ************
 !
@@ -236,13 +236,13 @@
 !
 !     ************
 !-jlm-jn
-      INTEGER lws , lr , lz , lt , ld , lxp , lwa , lwy , lsy , lss ,   &
+      integer lws , lr , lz , lt , ld , lxp , lwa , lwy , lsy , lss ,   &
             & lwt , lwn , lsnd
  
-      IF ( Task.EQ.'START' ) THEN
-         Isave(1) = M*N
-         Isave(2) = M**2
-         Isave(3) = 4*M**2
+      if ( Task=='START' ) then
+         Isave(1) = m*n
+         Isave(2) = m**2
+         Isave(3) = 4*m**2
          Isave(4) = 1                       ! ws      m*n
          Isave(5) = Isave(4) + Isave(1)     ! wy      m*n
          Isave(6) = Isave(5) + Isave(1)     ! wsy     m**2
@@ -251,12 +251,12 @@
          Isave(9) = Isave(8) + Isave(2)     ! wn      4*m**2
          Isave(10) = Isave(9) + Isave(3)    ! wsnd    4*m**2
          Isave(11) = Isave(10) + Isave(3)   ! wz      n
-         Isave(12) = Isave(11) + N          ! wr      n
-         Isave(13) = Isave(12) + N          ! wd      n
-         Isave(14) = Isave(13) + N          ! wt      n
-         Isave(15) = Isave(14) + N          ! wxp     n
-         Isave(16) = Isave(15) + N          ! wa      8*m
-      ENDIF
+         Isave(12) = Isave(11) + n          ! wr      n
+         Isave(13) = Isave(12) + n          ! wd      n
+         Isave(14) = Isave(13) + n          ! wt      n
+         Isave(15) = Isave(14) + n          ! wxp     n
+         Isave(16) = Isave(15) + n          ! wa      8*m
+      endif
       lws = Isave(4)
       lwy = Isave(5)
       lsy = Isave(6)
@@ -271,31 +271,31 @@
       lxp = Isave(15)
       lwa = Isave(16)
  
-      CALL MAINLB(N,M,X,L,U,Nbd,F,G,Factr,Pgtol,Wa(lws),Wa(lwy),Wa(lsy),&
+      call mainlb(n,m,x,l,u,Nbd,f,g,Factr,Pgtol,Wa(lws),Wa(lwy),Wa(lsy),&
                 & Wa(lss),Wa(lwt),Wa(lwn),Wa(lsnd),Wa(lz),Wa(lr),Wa(ld),&
-                & Wa(lt),Wa(lxp),Wa(lwa),Iwa(1),Iwa(N+1),Iwa(2*N+1),    &
+                & Wa(lt),Wa(lxp),Wa(lwa),Iwa(1),Iwa(n+1),Iwa(2*n+1),    &
                 & Task,Iprint,Csave,Lsave,Isave(22),Dsave)
  
-      CONTINUE
+      continue
  
-      END
+      end
  
 !======================= The end of setulb =============================
  
-      SUBROUTINE MAINLB(N,M,X,L,U,Nbd,F,G,Factr,Pgtol,Ws,Wy,Sy,Ss,Wt,Wn,&
-                      & Snd,Z,R,D,T,Xp,Wa,Index,Iwhere,Indx2,Task,      &
+      subroutine mainlb(n,m,x,l,u,Nbd,f,g,Factr,Pgtol,Ws,Wy,Sy,Ss,Wt,Wn,&
+                      & Snd,z,r,d,t,Xp,Wa,Index,Iwhere,Indx2,Task,      &
                       & Iprint,Csave,Lsave,Isave,Dsave)
-      IMPLICIT NONE
+      implicit none
 !*--MAINLB292
-      CHARACTER*60 Task , Csave
-      LOGICAL Lsave(4)
-      INTEGER N , M , Iprint , Nbd(N) , Index(N) , Iwhere(N) , Indx2(N) &
+      character*60 Task , Csave
+      logical Lsave(4)
+      integer n , m , Iprint , Nbd(n) , Index(n) , Iwhere(n) , Indx2(n) &
             & , Isave(23)
 !-jlm-jn
-      DOUBLE PRECISION F , Factr , Pgtol , X(N) , L(N) , U(N) , G(N) ,  &
-                     & Z(N) , R(N) , D(N) , T(N) , Xp(N) , Wa(8*M) ,    &
-                     & Ws(N,M) , Wy(N,M) , Sy(M,M) , Ss(M,M) , Wt(M,M) ,&
-                     & Wn(2*M,2*M) , Snd(2*M,2*M) , Dsave(29)
+      double precision f , Factr , Pgtol , x(n) , l(n) , u(n) , g(n) ,  &
+                     & z(n) , r(n) , d(n) , t(n) , Xp(n) , Wa(8*m) ,    &
+                     & Ws(n,m) , Wy(n,m) , Sy(m,m) , Ss(m,m) , Wt(m,m) ,&
+                     & Wn(2*m,2*m) , Snd(2*m,2*m) , Dsave(29)
  
 !     ************
 !
@@ -400,8 +400,8 @@
 !     iwhere is an integer working array of dimension n used to record
 !       the status of the vector x for GCP computation.
 !       iwhere(i)=0 or -3 if x(i) is free and has bounds,
-!                 1       if x(i) is fixed at l(i), and l(i) .ne. u(i)
-!                 2       if x(i) is fixed at u(i), and u(i) .ne. l(i)
+!                 1       if x(i) is fixed at l(i), and l(i) /= u(i)
+!                 2       if x(i) is fixed at u(i), and u(i) /= l(i)
 !                 3       if x(i) is always fixed, i.e.,  u(i)=x(i)=l(i)
 !                -1       if x(i) is always free, i.e., no bounds on it.
 !
@@ -477,47 +477,47 @@
 !
 !     ************
  
-      LOGICAL prjctd , cnstnd , boxed , updatd , wrk
-      CHARACTER*3 word
-      INTEGER i , k , nintol , itfile , iback , nskip , head , col ,    &
+      logical prjctd , cnstnd , boxed , updatd , wrk
+      character*3 word
+      integer i , k , nintol , itfile , iback , nskip , head , col ,    &
             & iter , itail , iupdat , nseg , nfgv , info , ifun ,       &
             & iword , nfree , nact , ileave , nenter
-      DOUBLE PRECISION theta , fold , DDOT , dr , rr , tol , xstep ,    &
+      double precision theta , fold , ddot , dr , rr , tol , xstep ,    &
                      & sbgnrm , ddum , dnorm , dtd , epsmch , cpu1 ,    &
                      & cpu2 , cachyt , sbtime , lnscht , time1 , time2 ,&
                      & gd , gdold , stp , stpmx , time
-      DOUBLE PRECISION ONE , ZERO
-      PARAMETER (ONE=1.0D0,ZERO=0.0D0)
+      double precision one , zero
+      parameter (one=1.0d0,zero=0.0d0)
  
-      IF ( Task.EQ.'START' ) THEN
+      if ( Task=='START' ) then
  
-         epsmch = EPSILON(ONE)
+         epsmch = epsilon(one)
  
-         CALL TIMER(time1)
+         call timer(time1)
  
 !        Initialize counters and scalars when task='START'.
  
 !           for the limited memory BFGS matrices:
          col = 0
          head = 1
-         theta = ONE
+         theta = one
          iupdat = 0
-         updatd = .FALSE.
+         updatd = .false.
          iback = 0
          itail = 0
          iword = 0
          nact = 0
          ileave = 0
          nenter = 0
-         fold = ZERO
-         dnorm = ZERO
-         cpu1 = ZERO
-         gd = ZERO
-         stpmx = ZERO
-         sbgnrm = ZERO
-         stp = ZERO
-         gdold = ZERO
-         dtd = ZERO
+         fold = zero
+         dnorm = zero
+         cpu1 = zero
+         gd = zero
+         stpmx = zero
+         sbgnrm = zero
+         stp = zero
+         gdold = zero
+         dtd = zero
  
 !           for operation counts:
          iter = 0
@@ -525,7 +525,7 @@
          nseg = 0
          nintol = 0
          nskip = 0
-         nfree = N
+         nfree = n
          ifun = 0
 !           for stopping tolerance:
          tol = Factr*epsmch
@@ -543,27 +543,27 @@
  
          itfile = 8
 !                                open a summary file 'iterate.dat'
-         IF ( Iprint.GE.1 ) OPEN (8,FILE='iterate.dat',STATUS='unknown')
+         if ( Iprint>=1 ) open (8,file='iterate.dat',status='unknown')
  
 !        Check the input arguments for errors.
  
-         CALL ERRCLB(N,M,Factr,L,U,Nbd,Task,info,k)
-         IF ( Task(1:5).EQ.'ERROR' ) THEN
-            CALL PRN3LB(N,X,F,Task,Iprint,info,itfile,iter,nfgv,nintol, &
-                      & nskip,nact,sbgnrm,ZERO,nseg,word,iback,stp,     &
+         call errclb(n,m,Factr,l,u,Nbd,Task,info,k)
+         if ( Task(1:5)=='ERROR' ) then
+            call prn3lb(n,x,f,Task,Iprint,info,itfile,iter,nfgv,nintol, &
+                      & nskip,nact,sbgnrm,zero,nseg,word,iback,stp,     &
                       & xstep,k,cachyt,sbtime,lnscht)
-            RETURN
-         ENDIF
+            return
+         endif
  
-         CALL PRN1LB(N,M,L,U,X,Iprint,itfile,epsmch)
+         call prn1lb(n,m,l,u,x,Iprint,itfile,epsmch)
  
 !        Initialize iwhere & project x onto the feasible set.
  
-         CALL ACTIVE(N,L,U,Nbd,X,Iwhere,Iprint,prjctd,cnstnd,boxed)
+         call active(n,l,u,Nbd,x,Iwhere,Iprint,prjctd,cnstnd,boxed)
  
 !        The end of the initialization.
  
-      ELSE
+      else
 !          restore local variables.
  
          prjctd = Lsave(1)
@@ -610,61 +610,61 @@
 !        After returning from the driver go to the point where execution
 !        is to resume.
  
-         IF ( Task(1:5).EQ.'FG_LN' ) GOTO 600
-         IF ( Task(1:5).EQ.'NEW_X' ) GOTO 700
-         IF ( Task(1:5).EQ.'FG_ST' ) GOTO 100
-         IF ( Task(1:4).EQ.'STOP' ) THEN
-            IF ( Task(7:9).EQ.'CPU' ) THEN
+         if ( Task(1:5)=='FG_LN' ) goto 600
+         if ( Task(1:5)=='NEW_X' ) goto 700
+         if ( Task(1:5)=='FG_ST' ) goto 100
+         if ( Task(1:4)=='STOP' ) then
+            if ( Task(7:9)=='CPU' ) then
 !                                          restore the previous iterate.
-               CALL DCOPY(N,T,1,X,1)
-               CALL DCOPY(N,R,1,G,1)
-               F = fold
-            ENDIF
-            GOTO 900
-         ENDIF
-      ENDIF
+               call dcopy(n,t,1,x,1)
+               call dcopy(n,r,1,g,1)
+               f = fold
+            endif
+            goto 900
+         endif
+      endif
  
 !     Compute f0 and g0.
  
       Task = 'FG_START'
 !          return to the driver to calculate f and g; reenter at 111.
-      GOTO 1000
- 100  CONTINUE
+      goto 1000
+ 100  continue
       nfgv = 1
  
 !     Compute the infinity norm of the (-) projected gradient.
  
-      CALL PROJGR(N,L,U,Nbd,X,G,sbgnrm)
+      call projgr(n,l,u,Nbd,x,g,sbgnrm)
  
-      IF ( Iprint.GE.1 ) THEN
-         WRITE (6,99001) iter , F , sbgnrm
-99001    FORMAT (/,'At iterate',i5,4x,'f= ',1p,d12.5,4x,'|proj g|= ',1p,&
+      if ( Iprint>=1 ) then
+         write (6,99001) iter , f , sbgnrm
+99001    format (/,'At iterate',i5,4x,'f= ',1p,d12.5,4x,'|proj g|= ',1p,&
                & d12.5)
-         WRITE (itfile,99002) iter , nfgv , sbgnrm , F
-99002    FORMAT (2(1x,i4),5x,'-',5x,'-',3x,'-',5x,'-',5x,'-',8x,'-',3x, &
+         write (itfile,99002) iter , nfgv , sbgnrm , f
+99002    format (2(1x,i4),5x,'-',5x,'-',3x,'-',5x,'-',5x,'-',8x,'-',3x, &
                & 1p,2(1x,d10.3))
-      ENDIF
-      IF ( sbgnrm.LE.Pgtol ) THEN
+      endif
+      if ( sbgnrm<=Pgtol ) then
 !                                terminate the algorithm.
          Task = 'CONVERGENCE: NORM_OF_PROJECTED_GRADIENT_<=_PGTOL'
-         GOTO 900
-      ENDIF
+         goto 900
+      endif
  
 ! ----------------- the beginning of the loop --------------------------
  
- 200  CONTINUE
-      IF ( Iprint.GE.99 ) WRITE (6,99003) iter + 1
+ 200  continue
+      if ( Iprint>=99 ) write (6,99003) iter + 1
  
-99003 FORMAT (//,'ITERATION ',i5)
+99003 format (//,'ITERATION ',i5)
       iword = -1
 !
-      IF ( .NOT.cnstnd .AND. col.GT.0 ) THEN
+      if ( .not.cnstnd .and. col>0 ) then
 !                                            skip the search for GCP.
-         CALL DCOPY(N,X,1,Z,1)
+         call dcopy(n,x,1,z,1)
          wrk = updatd
          nseg = 0
-         GOTO 300
-      ENDIF
+         goto 300
+      endif
  
 !ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 !
@@ -672,40 +672,40 @@
 !
 !ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
  
-      CALL TIMER(cpu1)
-      CALL CAUCHY(N,X,L,U,Nbd,G,Indx2,Iwhere,T,D,Z,M,Wy,Ws,Sy,Wt,theta, &
-                & col,head,Wa(1),Wa(2*M+1),Wa(4*M+1),Wa(6*M+1),nseg,    &
+      call timer(cpu1)
+      call cauchy(n,x,l,u,Nbd,g,Indx2,Iwhere,t,d,z,m,Wy,Ws,Sy,Wt,theta, &
+                & col,head,Wa(1),Wa(2*m+1),Wa(4*m+1),Wa(6*m+1),nseg,    &
                 & Iprint,sbgnrm,info,epsmch)
-      IF ( info.NE.0 ) THEN
+      if ( info/=0 ) then
 !         singular triangular system detected; refresh the lbfgs memory.
-         IF ( Iprint.GE.1 ) WRITE (6,99008)
+         if ( Iprint>=1 ) write (6,99008)
          info = 0
          col = 0
          head = 1
-         theta = ONE
+         theta = one
          iupdat = 0
-         updatd = .FALSE.
-         CALL TIMER(cpu2)
+         updatd = .false.
+         call timer(cpu2)
          cachyt = cachyt + cpu2 - cpu1
-         GOTO 200
-      ENDIF
-      CALL TIMER(cpu2)
+         goto 200
+      endif
+      call timer(cpu2)
       cachyt = cachyt + cpu2 - cpu1
       nintol = nintol + nseg
  
 !     Count the entering and leaving variables for iter > 0;
 !     find the index set of free and active variables at the GCP.
  
-      CALL FREEV(N,nfree,Index,nenter,ileave,Indx2,Iwhere,wrk,updatd,   &
+      call freev(n,nfree,Index,nenter,ileave,Indx2,Iwhere,wrk,updatd,   &
                & cnstnd,Iprint,iter)
-      nact = N - nfree
+      nact = n - nfree
  
- 300  CONTINUE
+ 300  continue
  
 !     If there are no free variables or B=theta*I, then
 !                                        skip the subspace minimization.
  
-      IF ( nfree.EQ.0 .OR. col.EQ.0 ) GOTO 500
+      if ( nfree==0 .or. col==0 ) goto 500
  
 !ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 !
@@ -713,7 +713,7 @@
 !
 !ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
  
-      CALL TIMER(cpu1)
+      call timer(cpu1)
  
 !     Form  the LEL^T factorization of the indefinite
 !       matrix    K = [-D -Y'ZZ'Y/theta     L_a'-R_z'  ]
@@ -721,56 +721,56 @@
 !       where     E = [-I  0]
 !                     [ 0  I]
  
-      IF ( wrk ) CALL FORMK(N,nfree,Index,nenter,ileave,Indx2,iupdat,   &
-                          & updatd,Wn,Snd,M,Ws,Wy,Sy,theta,col,head,    &
+      if ( wrk ) call formk(n,nfree,Index,nenter,ileave,Indx2,iupdat,   &
+                          & updatd,Wn,Snd,m,Ws,Wy,Sy,theta,col,head,    &
                           & info)
-      IF ( info.NE.0 ) THEN
+      if ( info/=0 ) then
 !          nonpositive definiteness in Cholesky factorization;
 !          refresh the lbfgs memory and restart the iteration.
-         IF ( Iprint.GE.1 ) WRITE (6,99004)
-99004    FORMAT (/,                                                     &
+         if ( Iprint>=1 ) write (6,99004)
+99004    format (/,                                                     &
         &' Nonpositive definiteness in Cholesky factorization in formk;'&
        & ,/,'   refresh the lbfgs memory and restart the iteration.')
          info = 0
          col = 0
          head = 1
-         theta = ONE
+         theta = one
          iupdat = 0
-         updatd = .FALSE.
-         CALL TIMER(cpu2)
+         updatd = .false.
+         call timer(cpu2)
          sbtime = sbtime + cpu2 - cpu1
-         GOTO 200
-      ENDIF
+         goto 200
+      endif
  
 !        compute r=-Z'B(xcp-xk)-Z'g (using wa(2m+1)=W'(xcp-x)
 !                                                   from 'cauchy').
-      CALL CMPRLB(N,M,X,G,Ws,Wy,Sy,Wt,Z,R,Wa,Index,theta,col,head,nfree,&
+      call cmprlb(n,m,x,g,Ws,Wy,Sy,Wt,z,r,Wa,Index,theta,col,head,nfree,&
                 & cnstnd,info)
-      IF ( info.NE.0 ) GOTO 400
+      if ( info/=0 ) goto 400
  
 !-jlm-jn   call the direct method.
  
-      CALL SUBSM(N,M,nfree,Index,L,U,Nbd,Z,R,Xp,Ws,Wy,theta,X,G,col,    &
+      call subsm(n,m,nfree,Index,l,u,Nbd,z,r,Xp,Ws,Wy,theta,x,g,col,    &
                & head,iword,Wa,Wn,Iprint,info)
- 400  CONTINUE
-      IF ( info.NE.0 ) THEN
+ 400  continue
+      if ( info/=0 ) then
 !          singular triangular system detected;
 !          refresh the lbfgs memory and restart the iteration.
-         IF ( Iprint.GE.1 ) WRITE (6,99008)
+         if ( Iprint>=1 ) write (6,99008)
          info = 0
          col = 0
          head = 1
-         theta = ONE
+         theta = one
          iupdat = 0
-         updatd = .FALSE.
-         CALL TIMER(cpu2)
+         updatd = .false.
+         call timer(cpu2)
          sbtime = sbtime + cpu2 - cpu1
-         GOTO 200
-      ENDIF
+         goto 200
+      endif
  
-      CALL TIMER(cpu2)
+      call timer(cpu2)
       sbtime = sbtime + cpu2 - cpu1
- 500  CONTINUE
+ 500  continue
  
 !ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 !
@@ -780,111 +780,111 @@
  
 !     Generate the search direction d:=z-x.
  
-      DO i = 1 , N
-         D(i) = Z(i) - X(i)
-      ENDDO
-      CALL TIMER(cpu1)
- 600  CONTINUE
-      CALL LNSRLB(N,L,U,Nbd,X,F,fold,gd,gdold,G,D,R,T,Z,stp,dnorm,dtd,  &
+      do i = 1 , n
+         d(i) = z(i) - x(i)
+      enddo
+      call timer(cpu1)
+ 600  continue
+      call lnsrlb(n,l,u,Nbd,x,f,fold,gd,gdold,g,d,r,t,z,stp,dnorm,dtd,  &
                 & xstep,stpmx,iter,ifun,iback,nfgv,info,Task,boxed,     &
                 & cnstnd,Csave,Isave(22),Dsave(17))
-      IF ( info.NE.0 .OR. iback.GE.20 ) THEN
+      if ( info/=0 .or. iback>=20 ) then
 !          restore the previous iterate.
-         CALL DCOPY(N,T,1,X,1)
-         CALL DCOPY(N,R,1,G,1)
-         F = fold
-         IF ( col.EQ.0 ) THEN
+         call dcopy(n,t,1,x,1)
+         call dcopy(n,r,1,g,1)
+         f = fold
+         if ( col==0 ) then
 !             abnormal termination.
-            IF ( info.EQ.0 ) THEN
+            if ( info==0 ) then
                info = -9
 !                restore the actual number of f and g evaluations etc.
                nfgv = nfgv - 1
                ifun = ifun - 1
                iback = iback - 1
-            ENDIF
+            endif
             Task = 'ABNORMAL_TERMINATION_IN_LNSRCH'
             iter = iter + 1
-            GOTO 900
-         ELSE
+            goto 900
+         else
 !             refresh the lbfgs memory and restart the iteration.
-            IF ( Iprint.GE.1 ) WRITE (6,99005)
-99005       FORMAT (/,' Bad direction in the line search;',/,           &
+            if ( Iprint>=1 ) write (6,99005)
+99005       format (/,' Bad direction in the line search;',/,           &
                &'   refresh the lbfgs memory and restart the iteration.'&
               & )
-            IF ( info.EQ.0 ) nfgv = nfgv - 1
+            if ( info==0 ) nfgv = nfgv - 1
             info = 0
             col = 0
             head = 1
-            theta = ONE
+            theta = one
             iupdat = 0
-            updatd = .FALSE.
+            updatd = .false.
             Task = 'RESTART_FROM_LNSRCH'
-            CALL TIMER(cpu2)
+            call timer(cpu2)
             lnscht = lnscht + cpu2 - cpu1
-            GOTO 200
-         ENDIF
-      ELSEIF ( Task(1:5).EQ.'FG_LN' ) THEN
+            goto 200
+         endif
+      elseif ( Task(1:5)=='FG_LN' ) then
 !          return to the driver for calculating f and g; reenter at 666.
-         GOTO 1000
-      ELSE
+         goto 1000
+      else
 !          calculate and print out the quantities related to the new X.
-         CALL TIMER(cpu2)
+         call timer(cpu2)
          lnscht = lnscht + cpu2 - cpu1
          iter = iter + 1
  
 !        Compute the infinity norm of the projected (-)gradient.
  
-         CALL PROJGR(N,L,U,Nbd,X,G,sbgnrm)
+         call projgr(n,l,u,Nbd,x,g,sbgnrm)
  
 !        Print iteration information.
  
-         CALL PRN2LB(N,X,F,G,Iprint,itfile,iter,nfgv,nact,sbgnrm,nseg,  &
+         call prn2lb(n,x,f,g,Iprint,itfile,iter,nfgv,nact,sbgnrm,nseg,  &
                    & word,iword,iback,stp,xstep)
-         GOTO 1000
-      ENDIF
- 700  CONTINUE
+         goto 1000
+      endif
+ 700  continue
  
 !     Test for termination.
  
-      IF ( sbgnrm.LE.Pgtol ) THEN
+      if ( sbgnrm<=Pgtol ) then
 !                                terminate the algorithm.
          Task = 'CONVERGENCE: NORM_OF_PROJECTED_GRADIENT_<=_PGTOL'
-         GOTO 900
-      ENDIF
+         goto 900
+      endif
  
-      ddum = MAX(ABS(fold),ABS(F),ONE)
-      IF ( (fold-F).LE.tol*ddum ) THEN
+      ddum = max(abs(fold),abs(f),one)
+      if ( (fold-f)<=tol*ddum ) then
 !                                        terminate the algorithm.
          Task = 'CONVERGENCE: REL_REDUCTION_OF_F_<=_FACTR*EPSMCH'
-         IF ( iback.GE.10 ) info = -5
+         if ( iback>=10 ) info = -5
 !           i.e., to issue a warning if iback>10 in the line search.
-         GOTO 900
-      ENDIF
+         goto 900
+      endif
  
 !     Compute d=newx-oldx, r=newg-oldg, rr=y'y and dr=y's.
  
-      DO i = 1 , N
-         R(i) = G(i) - R(i)
-      ENDDO
-      rr = DDOT(N,R,1,R,1)
-      IF ( stp.EQ.ONE ) THEN
+      do i = 1 , n
+         r(i) = g(i) - r(i)
+      enddo
+      rr = ddot(n,r,1,r,1)
+      if ( stp==one ) then
          dr = gd - gdold
          ddum = -gdold
-      ELSE
+      else
          dr = (gd-gdold)*stp
-         CALL DSCAL(N,stp,D,1)
+         call dscal(n,stp,d,1)
          ddum = -gdold*stp
-      ENDIF
+      endif
  
-      IF ( dr.LE.epsmch*ddum ) THEN
+      if ( dr<=epsmch*ddum ) then
 !                            skip the L-BFGS update.
          nskip = nskip + 1
-         updatd = .FALSE.
-         IF ( Iprint.GE.1 ) WRITE (6,99006) dr , ddum
-99006    FORMAT ('  ys=',1p,e10.3,'  -gs=',1p,e10.3,                    &
+         updatd = .false.
+         if ( Iprint>=1 ) write (6,99006) dr , ddum
+99006    format ('  ys=',1p,e10.3,'  -gs=',1p,e10.3,                    &
                 &' BFGS update SKIPPED')
-         GOTO 800
-      ENDIF
+         goto 800
+      endif
  
 !ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 !
@@ -892,12 +892,12 @@
 !
 !ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
  
-      updatd = .TRUE.
+      updatd = .true.
       iupdat = iupdat + 1
  
 !     Update matrices WS and WY and form the middle matrix in B.
  
-      CALL MATUPD(N,M,Ws,Wy,Sy,Ss,D,R,itail,iupdat,col,head,theta,rr,dr,&
+      call matupd(n,m,Ws,Wy,Sy,Ss,d,r,itail,iupdat,col,head,theta,rr,dr,&
                 & stp,dtd)
  
 !     Form the upper half of the pds T = theta*SS + L*D^(-1)*L';
@@ -905,41 +905,41 @@
 !        Cholesky factorize T to J*J' with
 !           J' stored in the upper triangular of wt.
  
-      CALL FORMT(M,Wt,Sy,Ss,col,theta,info)
+      call formt(m,Wt,Sy,Ss,col,theta,info)
  
-      IF ( info.NE.0 ) THEN
+      if ( info/=0 ) then
 !          nonpositive definiteness in Cholesky factorization;
 !          refresh the lbfgs memory and restart the iteration.
-         IF ( Iprint.GE.1 ) WRITE (6,99007)
-99007    FORMAT (/,                                                     &
+         if ( Iprint>=1 ) write (6,99007)
+99007    format (/,                                                     &
         &' Nonpositive definiteness in Cholesky factorization in formt;'&
        & ,/,'   refresh the lbfgs memory and restart the iteration.')
          info = 0
          col = 0
          head = 1
-         theta = ONE
+         theta = one
          iupdat = 0
-         updatd = .FALSE.
-         GOTO 200
-      ENDIF
+         updatd = .false.
+         goto 200
+      endif
  
 !     Now the inverse of the middle matrix in B is
  
 !       [  D^(1/2)      O ] [ -D^(1/2)  D^(-1/2)*L' ]
 !       [ -L*D^(-1/2)   J ] [  0        J'          ]
  
- 800  CONTINUE
+ 800  continue
  
 ! -------------------- the end of the loop -----------------------------
  
-      GOTO 200
- 900  CONTINUE
-      CALL TIMER(time2)
+      goto 200
+ 900  continue
+      call timer(time2)
       time = time2 - time1
-      CALL PRN3LB(N,X,F,Task,Iprint,info,itfile,iter,nfgv,nintol,nskip, &
+      call prn3lb(n,x,f,Task,Iprint,info,itfile,iter,nfgv,nintol,nskip, &
                 & nact,sbgnrm,time,nseg,word,iback,stp,xstep,k,cachyt,  &
                 & sbtime,lnscht)
- 1000 CONTINUE
+ 1000 continue
  
 !     Save local variables.
  
@@ -984,21 +984,21 @@
       Dsave(15) = gdold
       Dsave(16) = dtd
  
-      CONTINUE
-99008 FORMAT (/,' Singular triangular system detected;',/,              &
+      continue
+99008 format (/,' Singular triangular system detected;',/,              &
              &'   refresh the lbfgs memory and restart the iteration.')
  
-      END
+      end
  
 !======================= The end of mainlb =============================
  
-      SUBROUTINE ACTIVE(N,L,U,Nbd,X,Iwhere,Iprint,Prjctd,Cnstnd,Boxed)
-      IMPLICIT NONE
+      subroutine active(n,l,u,Nbd,x,Iwhere,Iprint,Prjctd,Cnstnd,Boxed)
+      implicit none
 !*--ACTIVE1001
  
-      LOGICAL Prjctd , Cnstnd , Boxed
-      INTEGER N , Iprint , Nbd(N) , Iwhere(N)
-      DOUBLE PRECISION X(N) , L(N) , U(N)
+      logical Prjctd , Cnstnd , Boxed
+      integer n , Iprint , Nbd(n) , Iwhere(n)
+      double precision x(n) , l(n) , u(n)
  
 !     ************
 !
@@ -1027,79 +1027,79 @@
 !
 !     ************
  
-      INTEGER nbdd , i
-      DOUBLE PRECISION ZERO
-      PARAMETER (ZERO=0.0D0)
+      integer nbdd , i
+      double precision zero
+      parameter (zero=0.0d0)
  
 !     Initialize nbdd, prjctd, cnstnd and boxed.
  
       nbdd = 0
-      Prjctd = .FALSE.
-      Cnstnd = .FALSE.
-      Boxed = .TRUE.
+      Prjctd = .false.
+      Cnstnd = .false.
+      Boxed = .true.
  
 !     Project the initial x to the easible set if necessary.
  
-      DO i = 1 , N
-         IF ( Nbd(i).GT.0 ) THEN
-            IF ( Nbd(i).LE.2 .AND. X(i).LE.L(i) ) THEN
-               IF ( X(i).LT.L(i) ) THEN
-                  Prjctd = .TRUE.
-                  X(i) = L(i)
-               ENDIF
+      do i = 1 , n
+         if ( Nbd(i)>0 ) then
+            if ( Nbd(i)<=2 .and. x(i)<=l(i) ) then
+               if ( x(i)<l(i) ) then
+                  Prjctd = .true.
+                  x(i) = l(i)
+               endif
                nbdd = nbdd + 1
-            ELSEIF ( Nbd(i).GE.2 .AND. X(i).GE.U(i) ) THEN
-               IF ( X(i).GT.U(i) ) THEN
-                  Prjctd = .TRUE.
-                  X(i) = U(i)
-               ENDIF
+            elseif ( Nbd(i)>=2 .and. x(i)>=u(i) ) then
+               if ( x(i)>u(i) ) then
+                  Prjctd = .true.
+                  x(i) = u(i)
+               endif
                nbdd = nbdd + 1
-            ENDIF
-         ENDIF
-      ENDDO
+            endif
+         endif
+      enddo
  
 !     Initialize iwhere and assign values to cnstnd and boxed.
  
-      DO i = 1 , N
-         IF ( Nbd(i).NE.2 ) Boxed = .FALSE.
-         IF ( Nbd(i).EQ.0 ) THEN
+      do i = 1 , n
+         if ( Nbd(i)/=2 ) Boxed = .false.
+         if ( Nbd(i)==0 ) then
 !                                this variable is always free
             Iwhere(i) = -1
  
 !           otherwise set x(i)=mid(x(i), u(i), l(i)).
-         ELSE
-            Cnstnd = .TRUE.
-            IF ( Nbd(i).EQ.2 .AND. U(i)-L(i).LE.ZERO ) THEN
+         else
+            Cnstnd = .true.
+            if ( Nbd(i)==2 .and. u(i)-l(i)<=zero ) then
 !                   this variable is always fixed
                Iwhere(i) = 3
-            ELSE
+            else
                Iwhere(i) = 0
-            ENDIF
-         ENDIF
-      ENDDO
+            endif
+         endif
+      enddo
  
-      IF ( Iprint.GE.0 ) THEN
-         IF ( Prjctd ) WRITE (6,*)                                      &
+      if ( Iprint>=0 ) then
+         if ( Prjctd ) write (6,*)                                      &
            &'The initial X is infeasible.  Restart with its projection.'
-         IF ( .NOT.Cnstnd ) WRITE (6,*) 'This problem is unconstrained.'
-      ENDIF
+         if ( .not.Cnstnd ) write (6,*) 'This problem is unconstrained.'
+      endif
  
-      IF ( Iprint.GT.0 ) WRITE (6,99001) nbdd
+      if ( Iprint>0 ) write (6,99001) nbdd
  
-99001 FORMAT (/,'At X0 ',i9,' variables are exactly at the bounds')
+99001 format (/,'At X0 ',i9,' variables are exactly at the bounds')
  
-      CONTINUE
+      continue
  
-      END
+      end
  
 !======================= The end of active =============================
  
-      SUBROUTINE BMV(M,Sy,Wt,Col,V,P,Info)
-      IMPLICIT NONE
+      subroutine bmv(m,Sy,Wt,Col,v,p,Info)
+      implicit none
 !*--BMV1104
  
-      INTEGER M , Col , Info
-      DOUBLE PRECISION Sy(M,M) , Wt(M,M) , V(2*Col) , P(2*Col)
+      integer m , Col , Info
+      double precision Sy(m,m) , Wt(m,m) , v(2*Col) , p(2*Col)
  
 !     ************
 !
@@ -1159,70 +1159,70 @@
 !
 !     ************
  
-      INTEGER i , k , i2
-      DOUBLE PRECISION sum
+      integer i , k , i2
+      double precision sum
  
-      IF ( Col.EQ.0 ) RETURN
+      if ( Col==0 ) return
  
 !     PART I: solve [  D^(1/2)      O ] [ p1 ] = [ v1 ]
 !                   [ -L*D^(-1/2)   J ] [ p2 ]   [ v2 ].
  
 !       solve Jp2=v2+LD^(-1)v1.
-      P(Col+1) = V(Col+1)
-      DO i = 2 , Col
+      p(Col+1) = v(Col+1)
+      do i = 2 , Col
          i2 = Col + i
-         sum = 0.0D0
-         DO k = 1 , i - 1
-            sum = sum + Sy(i,k)*V(k)/Sy(k,k)
-         ENDDO
-         P(i2) = V(i2) + sum
-      ENDDO
+         sum = 0.0d0
+         do k = 1 , i - 1
+            sum = sum + Sy(i,k)*v(k)/Sy(k,k)
+         enddo
+         p(i2) = v(i2) + sum
+      enddo
 !     Solve the triangular system
-      CALL DTRSL(Wt,M,Col,P(Col+1),11,Info)
-      IF ( Info.NE.0 ) RETURN
+      call dtrsl(Wt,m,Col,p(Col+1),11,Info)
+      if ( Info/=0 ) return
  
 !       solve D^(1/2)p1=v1.
-      DO i = 1 , Col
-         P(i) = V(i)/SQRT(Sy(i,i))
-      ENDDO
+      do i = 1 , Col
+         p(i) = v(i)/sqrt(Sy(i,i))
+      enddo
  
 !     PART II: solve [ -D^(1/2)   D^(-1/2)*L'  ] [ p1 ] = [ p1 ]
 !                    [  0         J'           ] [ p2 ]   [ p2 ].
  
 !       solve J^Tp2=p2.
-      CALL DTRSL(Wt,M,Col,P(Col+1),01,Info)
-      IF ( Info.NE.0 ) RETURN
+      call dtrsl(Wt,m,Col,p(Col+1),01,Info)
+      if ( Info/=0 ) return
  
 !       compute p1=-D^(-1/2)(p1-D^(-1/2)L'p2)
 !                 =-D^(-1/2)p1+D^(-1)L'p2.
-      DO i = 1 , Col
-         P(i) = -P(i)/SQRT(Sy(i,i))
-      ENDDO
-      DO i = 1 , Col
-         sum = 0.D0
-         DO k = i + 1 , Col
-            sum = sum + Sy(k,i)*P(Col+k)/Sy(i,i)
-         ENDDO
-         P(i) = P(i) + sum
-      ENDDO
+      do i = 1 , Col
+         p(i) = -p(i)/sqrt(Sy(i,i))
+      enddo
+      do i = 1 , Col
+         sum = 0.d0
+         do k = i + 1 , Col
+            sum = sum + Sy(k,i)*p(Col+k)/Sy(i,i)
+         enddo
+         p(i) = p(i) + sum
+      enddo
  
-      CONTINUE
+      continue
  
-      END
+      end
  
 !======================== The end of bmv ===============================
  
-      SUBROUTINE CAUCHY(N,X,L,U,Nbd,G,Iorder,Iwhere,T,D,Xcp,M,Wy,Ws,Sy, &
-                      & Wt,Theta,Col,Head,P,C,Wbp,V,Nseg,Iprint,Sbgnrm, &
+      subroutine cauchy(n,x,l,u,Nbd,g,Iorder,Iwhere,t,d,Xcp,m,Wy,Ws,Sy, &
+                      & Wt,Theta,Col,Head,p,c,Wbp,v,Nseg,Iprint,Sbgnrm, &
                       & Info,Epsmch)
-      IMPLICIT NONE
+      implicit none
 !*--CAUCHY1225
-      INTEGER N , M , Head , Col , Nseg , Iprint , Info , Nbd(N) ,      &
-            & Iorder(N) , Iwhere(N)
-      DOUBLE PRECISION Theta , Epsmch , X(N) , L(N) , U(N) , G(N) ,     &
-                     & T(N) , D(N) , Xcp(N) , Wy(N,Col) , Ws(N,Col) ,   &
-                     & Sy(M,M) , Wt(M,M) , P(2*M) , C(2*M) , Wbp(2*M) , &
-                     & V(2*M)
+      integer n , m , Head , Col , Nseg , Iprint , Info , Nbd(n) ,      &
+            & Iorder(n) , Iwhere(n)
+      double precision Theta , Epsmch , x(n) , l(n) , u(n) , g(n) ,     &
+                     & t(n) , d(n) , Xcp(n) , Wy(n,Col) , Ws(n,Col) ,   &
+                     & Sy(m,m) , Wt(m,m) , p(2*m) , c(2*m) , Wbp(2*m) , &
+                     & v(2*m)
  
 !     ************
 !
@@ -1284,8 +1284,8 @@
 !       On exit iwhere records the status of the current x variables.
 !       iwhere(i)=-3  if x(i) is free and has bounds, but is not moved
 !                 0   if x(i) is free and has bounds, and is moved
-!                 1   if x(i) is fixed at l(i), and l(i) .ne. u(i)
-!                 2   if x(i) is fixed at u(i), and u(i) .ne. l(i)
+!                 1   if x(i) is fixed at l(i), and l(i) /= u(i)
+!                 2   if x(i) is fixed at u(i), and u(i) /= l(i)
 !                 3   if x(i) is always fixed, i.e.,  u(i)=x(i)=l(i)
 !                 -1  if x(i) is always free, i.e., it has no bounds.
 !
@@ -1401,199 +1401,199 @@
 !
 !     ************
  
-      LOGICAL xlower , xupper , bnded
-      INTEGER i , j , col2 , nfree , nbreak , pointr , ibp , nleft ,    &
+      logical xlower , xupper , bnded
+      integer i , j , col2 , nfree , nbreak , pointr , ibp , nleft ,    &
             & ibkmin , iter
-      DOUBLE PRECISION f1 , f2 , dt , dtm , tsum , dibp , zibp , dibp2 ,&
-                     & bkmin , tu , tl , wmc , wmp , wmw , DDOT , tj ,  &
+      double precision f1 , f2 , dt , dtm , tsum , dibp , zibp , dibp2 ,&
+                     & bkmin , tu , tl , wmc , wmp , wmw , ddot , tj ,  &
                      & tj0 , neggi , Sbgnrm , f2_org
-      DOUBLE PRECISION ONE , ZERO
-      PARAMETER (ONE=1.0D0,ZERO=0.0D0)
+      double precision one , zero
+      parameter (one=1.0d0,zero=0.0d0)
  
 !     Check the status of the variables, reset iwhere(i) if necessary;
 !       compute the Cauchy direction d and the breakpoints t; initialize
 !       the derivative f1 and the vector p = W'd (for theta = 1).
  
-      IF ( Sbgnrm.LE.ZERO ) THEN
-         IF ( Iprint.GE.0 ) WRITE (6,*) 'Subgnorm = 0.  GCP = X.'
-         CALL DCOPY(N,X,1,Xcp,1)
-         RETURN
-      ENDIF
-      bnded = .TRUE.
-      nfree = N + 1
+      if ( Sbgnrm<=zero ) then
+         if ( Iprint>=0 ) write (6,*) 'Subgnorm = 0.  GCP = X.'
+         call dcopy(n,x,1,Xcp,1)
+         return
+      endif
+      bnded = .true.
+      nfree = n + 1
       nbreak = 0
       ibkmin = 0
-      bkmin = ZERO
+      bkmin = zero
       col2 = 2*Col
-      f1 = ZERO
-      IF ( Iprint.GE.99 ) WRITE (6,99001)
-99001 FORMAT (/,'---------------- CAUCHY entered-------------------')
+      f1 = zero
+      if ( Iprint>=99 ) write (6,99001)
+99001 format (/,'---------------- CAUCHY entered-------------------')
  
 !     We set p to zero and build it up as we determine d.
  
-      DO i = 1 , col2
-         P(i) = ZERO
-      ENDDO
+      do i = 1 , col2
+         p(i) = zero
+      enddo
  
 !     In the following loop we determine for each variable its bound
 !        status and its breakpoint, and update p accordingly.
 !        Smallest breakpoint is identified.
  
-      DO i = 1 , N
-         neggi = -G(i)
-         IF ( Iwhere(i).NE.3 .AND. Iwhere(i).NE.-1 ) THEN
+      do i = 1 , n
+         neggi = -g(i)
+         if ( Iwhere(i)/=3 .and. Iwhere(i)/=-1 ) then
 !             if x(i) is not a constant and has bounds,
 !             compute the difference between x(i) and its bounds.
-            IF ( Nbd(i).LE.2 ) tl = X(i) - L(i)
-            IF ( Nbd(i).GE.2 ) tu = U(i) - X(i)
+            if ( Nbd(i)<=2 ) tl = x(i) - l(i)
+            if ( Nbd(i)>=2 ) tu = u(i) - x(i)
  
 !           If a variable is close enough to a bound
 !             we treat it as at bound.
-            xlower = Nbd(i).LE.2 .AND. tl.LE.ZERO
-            xupper = Nbd(i).GE.2 .AND. tu.LE.ZERO
+            xlower = Nbd(i)<=2 .and. tl<=zero
+            xupper = Nbd(i)>=2 .and. tu<=zero
  
 !              reset iwhere(i).
             Iwhere(i) = 0
-            IF ( xlower ) THEN
-               IF ( neggi.LE.ZERO ) Iwhere(i) = 1
-            ELSEIF ( xupper ) THEN
-               IF ( neggi.GE.ZERO ) Iwhere(i) = 2
-            ELSE
-               IF ( ABS(neggi).LE.ZERO ) Iwhere(i) = -3
-            ENDIF
-         ENDIF
+            if ( xlower ) then
+               if ( neggi<=zero ) Iwhere(i) = 1
+            elseif ( xupper ) then
+               if ( neggi>=zero ) Iwhere(i) = 2
+            else
+               if ( abs(neggi)<=zero ) Iwhere(i) = -3
+            endif
+         endif
          pointr = Head
-         IF ( Iwhere(i).NE.0 .AND. Iwhere(i).NE.-1 ) THEN
-            D(i) = ZERO
-         ELSE
-            D(i) = neggi
+         if ( Iwhere(i)/=0 .and. Iwhere(i)/=-1 ) then
+            d(i) = zero
+         else
+            d(i) = neggi
             f1 = f1 - neggi*neggi
 !             calculate p := p - W'e_i* (g_i).
-            DO j = 1 , Col
-               P(j) = P(j) + Wy(i,pointr)*neggi
-               P(Col+j) = P(Col+j) + Ws(i,pointr)*neggi
-               pointr = MOD(pointr,M) + 1
-            ENDDO
-            IF ( Nbd(i).LE.2 .AND. Nbd(i).NE.0 .AND. neggi.LT.ZERO )    &
-               & THEN
+            do j = 1 , Col
+               p(j) = p(j) + Wy(i,pointr)*neggi
+               p(Col+j) = p(Col+j) + Ws(i,pointr)*neggi
+               pointr = mod(pointr,m) + 1
+            enddo
+            if ( Nbd(i)<=2 .and. Nbd(i)/=0 .and. neggi<zero )    &
+               & then
 !                                 x(i) + d(i) is bounded; compute t(i).
                nbreak = nbreak + 1
                Iorder(nbreak) = i
-               T(nbreak) = tl/(-neggi)
-               IF ( nbreak.EQ.1 .OR. T(nbreak).LT.bkmin ) THEN
-                  bkmin = T(nbreak)
+               t(nbreak) = tl/(-neggi)
+               if ( nbreak==1 .or. t(nbreak)<bkmin ) then
+                  bkmin = t(nbreak)
                   ibkmin = nbreak
-               ENDIF
-            ELSEIF ( Nbd(i).GE.2 .AND. neggi.GT.ZERO ) THEN
+               endif
+            elseif ( Nbd(i)>=2 .and. neggi>zero ) then
 !                                 x(i) + d(i) is bounded; compute t(i).
                nbreak = nbreak + 1
                Iorder(nbreak) = i
-               T(nbreak) = tu/neggi
-               IF ( nbreak.EQ.1 .OR. T(nbreak).LT.bkmin ) THEN
-                  bkmin = T(nbreak)
+               t(nbreak) = tu/neggi
+               if ( nbreak==1 .or. t(nbreak)<bkmin ) then
+                  bkmin = t(nbreak)
                   ibkmin = nbreak
-               ENDIF
-            ELSE
+               endif
+            else
 !                x(i) + d(i) is not bounded.
                nfree = nfree - 1
                Iorder(nfree) = i
-               IF ( ABS(neggi).GT.ZERO ) bnded = .FALSE.
-            ENDIF
-         ENDIF
-      ENDDO
+               if ( abs(neggi)>zero ) bnded = .false.
+            endif
+         endif
+      enddo
  
 !     The indices of the nonzero components of d are now stored
 !       in iorder(1),...,iorder(nbreak) and iorder(nfree),...,iorder(n).
 !       The smallest of the nbreak breakpoints is in t(ibkmin)=bkmin.
  
 !                   complete the initialization of p for theta not= one.
-      IF ( Theta.NE.ONE ) CALL DSCAL(Col,Theta,P(Col+1),1)
+      if ( Theta/=one ) call dscal(Col,Theta,p(Col+1),1)
  
 !     Initialize GCP xcp = x.
  
-      CALL DCOPY(N,X,1,Xcp,1)
+      call dcopy(n,x,1,Xcp,1)
  
-      IF ( nbreak.EQ.0 .AND. nfree.EQ.N+1 ) THEN
+      if ( nbreak==0 .and. nfree==n+1 ) then
 !                  is a zero vector, return with the initial xcp as GCP.
-         IF ( Iprint.GT.100 ) WRITE (6,99006) (Xcp(i),i=1,N)
-         RETURN
-      ENDIF
+         if ( Iprint>100 ) write (6,99006) (Xcp(i),i=1,n)
+         return
+      endif
  
 !     Initialize c = W'(xcp - x) = 0.
  
-      DO j = 1 , col2
-         C(j) = ZERO
-      ENDDO
+      do j = 1 , col2
+         c(j) = zero
+      enddo
  
 !     Initialize derivative f2.
  
       f2 = -Theta*f1
       f2_org = f2
-      IF ( Col.GT.0 ) THEN
-         CALL BMV(M,Sy,Wt,Col,P,V,Info)
-         IF ( Info.NE.0 ) RETURN
-         f2 = f2 - DDOT(col2,V,1,P,1)
-      ENDIF
+      if ( Col>0 ) then
+         call bmv(m,Sy,Wt,Col,p,v,Info)
+         if ( Info/=0 ) return
+         f2 = f2 - ddot(col2,v,1,p,1)
+      endif
       dtm = -f1/f2
-      tsum = ZERO
+      tsum = zero
       Nseg = 1
-      IF ( Iprint.GE.99 ) WRITE (6,*) 'There are ' , nbreak ,           &
+      if ( Iprint>=99 ) write (6,*) 'There are ' , nbreak ,           &
                                      &'  breakpoints '
  
 !     If there are no breakpoints, locate the GCP and return.
  
-      IF ( nbreak.EQ.0 ) GOTO 200
+      if ( nbreak==0 ) goto 200
  
       nleft = nbreak
       iter = 1
  
  
-      tj = ZERO
+      tj = zero
  
 !------------------- the beginning of the loop -------------------------
  
- 100  CONTINUE
+ 100  continue
  
 !     Find the next smallest breakpoint;
 !       compute dt = t(nleft) - t(nleft + 1).
  
       tj0 = tj
-      IF ( iter.EQ.1 ) THEN
+      if ( iter==1 ) then
 !         Since we already have the smallest breakpoint we need not do
 !         heapsort yet. Often only one breakpoint is used and the
 !         cost of heapsort is avoided.
          tj = bkmin
          ibp = Iorder(ibkmin)
-      ELSE
-         IF ( iter.EQ.2 ) THEN
+      else
+         if ( iter==2 ) then
 !             Replace the already used smallest breakpoint with the
 !             breakpoint numbered nbreak > nlast, before heapsort call.
-            IF ( ibkmin.NE.nbreak ) THEN
-               T(ibkmin) = T(nbreak)
+            if ( ibkmin/=nbreak ) then
+               t(ibkmin) = t(nbreak)
                Iorder(ibkmin) = Iorder(nbreak)
-            ENDIF
+            endif
 !        Update heap structure of breakpoints
 !           (if iter=2, initialize heap).
-         ENDIF
-         CALL HPSOLB(nleft,T,Iorder,iter-2)
-         tj = T(nleft)
+         endif
+         call hpsolb(nleft,t,Iorder,iter-2)
+         tj = t(nleft)
          ibp = Iorder(nleft)
-      ENDIF
+      endif
  
       dt = tj - tj0
  
-      IF ( dt.NE.ZERO .AND. Iprint.GE.100 ) THEN
-         WRITE (6,99002) Nseg , f1 , f2
-99002    FORMAT (/,'Piece    ',i3,' --f1, f2 at start point ',1p,       &
+      if ( dt/=zero .and. Iprint>=100 ) then
+         write (6,99002) Nseg , f1 , f2
+99002    format (/,'Piece    ',i3,' --f1, f2 at start point ',1p,       &
                & 2(1x,d11.4))
-         WRITE (6,99003) dt
-99003    FORMAT ('Distance to the next break point =  ',1p,d11.4)
-         WRITE (6,99007) dtm
-      ENDIF
+         write (6,99003) dt
+99003    format ('Distance to the next break point =  ',1p,d11.4)
+         write (6,99007) dtm
+      endif
  
 !     If a minimizer is within this interval, locate the GCP and return.
  
-      IF ( dtm.LT.dt ) GOTO 200
+      if ( dtm<dt ) goto 200
  
 !     Otherwise fix one variable and
 !       reset the corresponding component of d to zero.
@@ -1601,25 +1601,25 @@
       tsum = tsum + dt
       nleft = nleft - 1
       iter = iter + 1
-      dibp = D(ibp)
-      D(ibp) = ZERO
-      IF ( dibp.GT.ZERO ) THEN
-         zibp = U(ibp) - X(ibp)
-         Xcp(ibp) = U(ibp)
+      dibp = d(ibp)
+      d(ibp) = zero
+      if ( dibp>zero ) then
+         zibp = u(ibp) - x(ibp)
+         Xcp(ibp) = u(ibp)
          Iwhere(ibp) = 2
-      ELSE
-         zibp = L(ibp) - X(ibp)
-         Xcp(ibp) = L(ibp)
+      else
+         zibp = l(ibp) - x(ibp)
+         Xcp(ibp) = l(ibp)
          Iwhere(ibp) = 1
-      ENDIF
-      IF ( Iprint.GE.100 ) WRITE (6,*) 'Variable  ' , ibp ,             &
+      endif
+      if ( Iprint>=100 ) write (6,*) 'Variable  ' , ibp ,             &
                                       &'  is fixed.'
-      IF ( nleft.EQ.0 .AND. nbreak.EQ.N ) THEN
+      if ( nleft==0 .and. nbreak==n ) then
 !                                             all n variables are fixed,
 !                                                return with xcp as GCP.
          dtm = dt
-         GOTO 300
-      ENDIF
+         goto 300
+      endif
  
 !     Update the derivative information.
  
@@ -1632,94 +1632,94 @@
       f1 = f1 + dt*f2 + dibp2 - Theta*dibp*zibp
       f2 = f2 - Theta*dibp2
  
-      IF ( Col.GT.0 ) THEN
+      if ( Col>0 ) then
 !                          update c = c + dt*p.
-         CALL DAXPY(col2,dt,P,1,C,1)
+         call daxpy(col2,dt,p,1,c,1)
  
 !           choose wbp,
 !           the row of W corresponding to the breakpoint encountered.
          pointr = Head
-         DO j = 1 , Col
+         do j = 1 , Col
             Wbp(j) = Wy(ibp,pointr)
             Wbp(Col+j) = Theta*Ws(ibp,pointr)
-            pointr = MOD(pointr,M) + 1
-         ENDDO
+            pointr = mod(pointr,m) + 1
+         enddo
  
 !           compute (wbp)Mc, (wbp)Mp, and (wbp)M(wbp)'.
-         CALL BMV(M,Sy,Wt,Col,Wbp,V,Info)
-         IF ( Info.NE.0 ) RETURN
-         wmc = DDOT(col2,C,1,V,1)
-         wmp = DDOT(col2,P,1,V,1)
-         wmw = DDOT(col2,Wbp,1,V,1)
+         call bmv(m,Sy,Wt,Col,Wbp,v,Info)
+         if ( Info/=0 ) return
+         wmc = ddot(col2,c,1,v,1)
+         wmp = ddot(col2,p,1,v,1)
+         wmw = ddot(col2,Wbp,1,v,1)
  
 !           update p = p - dibp*wbp.
-         CALL DAXPY(col2,-dibp,Wbp,1,P,1)
+         call daxpy(col2,-dibp,Wbp,1,p,1)
  
 !           complete updating f1 and f2 while col > 0.
          f1 = f1 + dibp*wmc
-         f2 = f2 + 2.0D0*dibp*wmp - dibp2*wmw
-      ENDIF
+         f2 = f2 + 2.0d0*dibp*wmp - dibp2*wmw
+      endif
  
-      f2 = MAX(Epsmch*f2_org,f2)
-      IF ( nleft.GT.0 ) THEN
+      f2 = max(Epsmch*f2_org,f2)
+      if ( nleft>0 ) then
          dtm = -f1/f2
-         GOTO 100
+         goto 100
 !                 to repeat the loop for unsearched intervals.
-      ELSEIF ( bnded ) THEN
-         f1 = ZERO
-         f2 = ZERO
-         dtm = ZERO
-      ELSE
+      elseif ( bnded ) then
+         f1 = zero
+         f2 = zero
+         dtm = zero
+      else
          dtm = -f1/f2
-      ENDIF
+      endif
  
 !------------------- the end of the loop -------------------------------
  
- 200  CONTINUE
-      IF ( Iprint.GE.99 ) THEN
-         WRITE (6,*)
-         WRITE (6,*) 'GCP found in this segment'
-         WRITE (6,99004) Nseg , f1 , f2
-99004    FORMAT ('Piece    ',i3,' --f1, f2 at start point ',1p,         &
+ 200  continue
+      if ( Iprint>=99 ) then
+         write (6,*)
+         write (6,*) 'GCP found in this segment'
+         write (6,99004) Nseg , f1 , f2
+99004    format ('Piece    ',i3,' --f1, f2 at start point ',1p,         &
                & 2(1x,d11.4))
-         WRITE (6,99007) dtm
-      ENDIF
-      IF ( dtm.LE.ZERO ) dtm = ZERO
+         write (6,99007) dtm
+      endif
+      if ( dtm<=zero ) dtm = zero
       tsum = tsum + dtm
  
 !     Move free variables (i.e., the ones w/o breakpoints) and
 !       the variables whose breakpoints haven't been reached.
  
-      CALL DAXPY(N,tsum,D,1,Xcp,1)
+      call daxpy(n,tsum,d,1,Xcp,1)
  
- 300  CONTINUE
+ 300  continue
  
 !     Update c = c + dtm*p = W'(x^c - x)
 !       which will be used in computing r = Z'(B(x^c - x) + g).
  
-      IF ( Col.GT.0 ) CALL DAXPY(col2,dtm,P,1,C,1)
-      IF ( Iprint.GT.100 ) WRITE (6,99006) (Xcp(i),i=1,N)
-      IF ( Iprint.GE.99 ) WRITE (6,99005)
-99005 FORMAT (/,'---------------- exit CAUCHY----------------------',/)
+      if ( Col>0 ) call daxpy(col2,dtm,p,1,c,1)
+      if ( Iprint>100 ) write (6,99006) (Xcp(i),i=1,n)
+      if ( Iprint>=99 ) write (6,99005)
+99005 format (/,'---------------- exit CAUCHY----------------------',/)
  
-      CONTINUE
+      continue
  
-99006 FORMAT ('Cauchy X =  ',/,(4x,1p,6(1x,d11.4)))
-99007 FORMAT ('Distance to the stationary point =  ',1p,d11.4)
+99006 format ('Cauchy X =  ',/,(4x,1p,6(1x,d11.4)))
+99007 format ('Distance to the stationary point =  ',1p,d11.4)
  
-      END
+      end
  
 !====================== The end of cauchy ==============================
  
-      SUBROUTINE CMPRLB(N,M,X,G,Ws,Wy,Sy,Wt,Z,R,Wa,Index,Theta,Col,Head,&
+      subroutine cmprlb(n,m,x,g,Ws,Wy,Sy,Wt,z,r,Wa,Index,Theta,Col,Head,&
                       & Nfree,Cnstnd,Info)
-      IMPLICIT NONE
+      implicit none
 !*--CMPRLB1724
  
-      LOGICAL Cnstnd
-      INTEGER N , M , Col , Head , Nfree , Info , Index(N)
-      DOUBLE PRECISION Theta , X(N) , G(N) , Z(N) , R(N) , Wa(4*M) ,    &
-                     & Ws(N,M) , Wy(N,M) , Sy(M,M) , Wt(M,M)
+      logical Cnstnd
+      integer n , m , Col , Head , Nfree , Info , Index(n)
+      double precision Theta , x(n) , g(n) , z(n) , r(n) , Wa(4*m) ,    &
+                     & Ws(n,m) , Wy(n,m) , Sy(m,m) , Wt(m,m)
  
 !     ************
 !
@@ -1745,48 +1745,48 @@
 !
 !     ************
  
-      INTEGER i , j , k , pointr
-      DOUBLE PRECISION a1 , a2
+      integer i , j , k , pointr
+      double precision a1 , a2
  
-      IF ( .NOT.Cnstnd .AND. Col.GT.0 ) THEN
-         DO i = 1 , N
-            R(i) = -G(i)
-         ENDDO
-      ELSE
-         DO i = 1 , Nfree
+      if ( .not.Cnstnd .and. Col>0 ) then
+         do i = 1 , n
+            r(i) = -g(i)
+         enddo
+      else
+         do i = 1 , Nfree
             k = Index(i)
-            R(i) = -Theta*(Z(k)-X(k)) - G(k)
-         ENDDO
-         CALL BMV(M,Sy,Wt,Col,Wa(2*M+1),Wa(1),Info)
-         IF ( Info.NE.0 ) THEN
+            r(i) = -Theta*(z(k)-x(k)) - g(k)
+         enddo
+         call bmv(m,Sy,Wt,Col,Wa(2*m+1),Wa(1),Info)
+         if ( Info/=0 ) then
             Info = -8
-            RETURN
-         ENDIF
+            return
+         endif
          pointr = Head
-         DO j = 1 , Col
+         do j = 1 , Col
             a1 = Wa(j)
             a2 = Theta*Wa(Col+j)
-            DO i = 1 , Nfree
+            do i = 1 , Nfree
                k = Index(i)
-               R(i) = R(i) + Wy(k,pointr)*a1 + Ws(k,pointr)*a2
-            ENDDO
-            pointr = MOD(pointr,M) + 1
-         ENDDO
-      ENDIF
+               r(i) = r(i) + Wy(k,pointr)*a1 + Ws(k,pointr)*a2
+            enddo
+            pointr = mod(pointr,m) + 1
+         enddo
+      endif
  
-      CONTINUE
+      continue
  
-      END
+      end
  
 !======================= The end of cmprlb =============================
  
-      SUBROUTINE ERRCLB(N,M,Factr,L,U,Nbd,Task,Info,K)
-      IMPLICIT NONE
+      subroutine errclb(n,m,Factr,l,u,Nbd,Task,Info,k)
+      implicit none
 !*--ERRCLB1793
  
-      CHARACTER*60 Task
-      INTEGER N , M , Info , K , Nbd(N)
-      DOUBLE PRECISION Factr , L(N) , U(N)
+      character*60 Task
+      integer n , m , Info , k , Nbd(n)
+      double precision Factr , l(n) , u(n)
  
 !     ************
 !
@@ -1807,51 +1807,51 @@
 !
 !     ************
  
-      INTEGER i
-      DOUBLE PRECISION ZERO
-      PARAMETER (ZERO=0.0D0)
+      integer i
+      double precision zero
+      parameter (zero=0.0d0)
  
 !     Check the input arguments for errors.
  
-      IF ( N.LE.0 ) Task = 'ERROR: N .LE. 0'
-      IF ( M.LE.0 ) Task = 'ERROR: M .LE. 0'
-      IF ( Factr.LT.ZERO ) Task = 'ERROR: FACTR .LT. 0'
+      if ( n<=0 ) Task = 'ERROR: N <= 0'
+      if ( m<=0 ) Task = 'ERROR: M <= 0'
+      if ( Factr<zero ) Task = 'ERROR: FACTR < 0'
  
 !     Check the validity of the arrays nbd(i), u(i), and l(i).
  
-      DO i = 1 , N
-         IF ( Nbd(i).LT.0 .OR. Nbd(i).GT.3 ) THEN
+      do i = 1 , n
+         if ( Nbd(i)<0 .or. Nbd(i)>3 ) then
 !                                                   return
             Task = 'ERROR: INVALID NBD'
             Info = -6
-            K = i
-         ENDIF
-         IF ( Nbd(i).EQ.2 ) THEN
-            IF ( L(i).GT.U(i) ) THEN
+            k = i
+         endif
+         if ( Nbd(i)==2 ) then
+            if ( l(i)>u(i) ) then
 !                                    return
                Task = 'ERROR: NO FEASIBLE SOLUTION'
                Info = -7
-               K = i
-            ENDIF
-         ENDIF
-      ENDDO
+               k = i
+            endif
+         endif
+      enddo
  
-      CONTINUE
+      continue
  
-      END
+      end
  
 !======================= The end of errclb =============================
  
-      SUBROUTINE FORMK(N,Nsub,Ind,Nenter,Ileave,Indx2,Iupdat,Updatd,Wn, &
-                     & Wn1,M,Ws,Wy,Sy,Theta,Col,Head,Info)
-      IMPLICIT NONE
+      subroutine formk(n,Nsub,Ind,Nenter,Ileave,Indx2,Iupdat,Updatd,Wn, &
+                     & Wn1,m,Ws,Wy,Sy,Theta,Col,Head,Info)
+      implicit none
 !*--FORMK1857
  
-      INTEGER N , Nsub , M , Col , Head , Nenter , Ileave , Iupdat ,    &
-            & Info , Ind(N) , Indx2(N)
-      DOUBLE PRECISION Theta , Wn(2*M,2*M) , Wn1(2*M,2*M) , Ws(N,M) ,   &
-                     & Wy(N,M) , Sy(M,M)
-      LOGICAL Updatd
+      integer n , Nsub , m , Col , Head , Nenter , Ileave , Iupdat ,    &
+            & Info , Ind(n) , Indx2(n)
+      double precision Theta , Wn(2*m,2*m) , Wn1(2*m,2*m) , Ws(n,m) ,   &
+                     & Wy(n,m) , Sy(m,m)
+      logical Updatd
  
 !     ************
 !
@@ -1976,11 +1976,11 @@
 !
 !     ************
  
-      INTEGER m2 , ipntr , jpntr , iy , is , jy , js , is1 , js1 , k1 , &
+      integer m2 , ipntr , jpntr , iy , is , jy , js , is1 , js1 , k1 , &
             & i , k , col2 , pbegin , pend , dbegin , dend , upcl
-      DOUBLE PRECISION DDOT , temp1 , temp2 , temp3 , temp4
-      DOUBLE PRECISION ZERO
-      PARAMETER (ZERO=0.0D0)
+      double precision ddot , temp1 , temp2 , temp3 , temp4
+      double precision zero
+      parameter (zero=0.0d0)
  
 !     Form the lower triangular part of
 !               WN1 = [Y' ZZ'Y   L_a'+R_z']
@@ -1988,192 +1988,192 @@
 !        where L_a is the strictly lower triangular part of S'AA'Y
 !              R_z is the upper triangular part of S'ZZ'Y.
  
-      IF ( Updatd ) THEN
-         IF ( Iupdat.GT.M ) THEN
+      if ( Updatd ) then
+         if ( Iupdat>m ) then
 !                                 shift old part of WN1.
-            DO jy = 1 , M - 1
-               js = M + jy
-               CALL DCOPY(M-jy,Wn1(jy+1,jy+1),1,Wn1(jy,jy),1)
-               CALL DCOPY(M-jy,Wn1(js+1,js+1),1,Wn1(js,js),1)
-               CALL DCOPY(M-1,Wn1(M+2,jy+1),1,Wn1(M+1,jy),1)
-            ENDDO
-         ENDIF
+            do jy = 1 , m - 1
+               js = m + jy
+               call dcopy(m-jy,Wn1(jy+1,jy+1),1,Wn1(jy,jy),1)
+               call dcopy(m-jy,Wn1(js+1,js+1),1,Wn1(js,js),1)
+               call dcopy(m-1,Wn1(m+2,jy+1),1,Wn1(m+1,jy),1)
+            enddo
+         endif
  
 !          put new rows in blocks (1,1), (2,1) and (2,2).
          pbegin = 1
          pend = Nsub
          dbegin = Nsub + 1
-         dend = N
+         dend = n
          iy = Col
-         is = M + Col
+         is = m + Col
          ipntr = Head + Col - 1
-         IF ( ipntr.GT.M ) ipntr = ipntr - M
+         if ( ipntr>m ) ipntr = ipntr - m
          jpntr = Head
-         DO jy = 1 , Col
-            js = M + jy
-            temp1 = ZERO
-            temp2 = ZERO
-            temp3 = ZERO
+         do jy = 1 , Col
+            js = m + jy
+            temp1 = zero
+            temp2 = zero
+            temp3 = zero
 !             compute element jy of row 'col' of Y'ZZ'Y
-            DO k = pbegin , pend
+            do k = pbegin , pend
                k1 = Ind(k)
                temp1 = temp1 + Wy(k1,ipntr)*Wy(k1,jpntr)
-            ENDDO
+            enddo
 !             compute elements jy of row 'col' of L_a and S'AA'S
-            DO k = dbegin , dend
+            do k = dbegin , dend
                k1 = Ind(k)
                temp2 = temp2 + Ws(k1,ipntr)*Ws(k1,jpntr)
                temp3 = temp3 + Ws(k1,ipntr)*Wy(k1,jpntr)
-            ENDDO
+            enddo
             Wn1(iy,jy) = temp1
             Wn1(is,js) = temp2
             Wn1(is,jy) = temp3
-            jpntr = MOD(jpntr,M) + 1
-         ENDDO
+            jpntr = mod(jpntr,m) + 1
+         enddo
  
 !          put new column in block (2,1).
          jy = Col
          jpntr = Head + Col - 1
-         IF ( jpntr.GT.M ) jpntr = jpntr - M
+         if ( jpntr>m ) jpntr = jpntr - m
          ipntr = Head
-         DO i = 1 , Col
-            is = M + i
-            temp3 = ZERO
+         do i = 1 , Col
+            is = m + i
+            temp3 = zero
 !             compute element i of column 'col' of R_z
-            DO k = pbegin , pend
+            do k = pbegin , pend
                k1 = Ind(k)
                temp3 = temp3 + Ws(k1,ipntr)*Wy(k1,jpntr)
-            ENDDO
-            ipntr = MOD(ipntr,M) + 1
+            enddo
+            ipntr = mod(ipntr,m) + 1
             Wn1(is,jy) = temp3
-         ENDDO
+         enddo
          upcl = Col - 1
-      ELSE
+      else
          upcl = Col
-      ENDIF
+      endif
  
 !       modify the old parts in blocks (1,1) and (2,2) due to changes
 !       in the set of free variables.
       ipntr = Head
-      DO iy = 1 , upcl
-         is = M + iy
+      do iy = 1 , upcl
+         is = m + iy
          jpntr = Head
-         DO jy = 1 , iy
-            js = M + jy
-            temp1 = ZERO
-            temp2 = ZERO
-            temp3 = ZERO
-            temp4 = ZERO
-            DO k = 1 , Nenter
+         do jy = 1 , iy
+            js = m + jy
+            temp1 = zero
+            temp2 = zero
+            temp3 = zero
+            temp4 = zero
+            do k = 1 , Nenter
                k1 = Indx2(k)
                temp1 = temp1 + Wy(k1,ipntr)*Wy(k1,jpntr)
                temp2 = temp2 + Ws(k1,ipntr)*Ws(k1,jpntr)
-            ENDDO
-            DO k = Ileave , N
+            enddo
+            do k = Ileave , n
                k1 = Indx2(k)
                temp3 = temp3 + Wy(k1,ipntr)*Wy(k1,jpntr)
                temp4 = temp4 + Ws(k1,ipntr)*Ws(k1,jpntr)
-            ENDDO
+            enddo
             Wn1(iy,jy) = Wn1(iy,jy) + temp1 - temp3
             Wn1(is,js) = Wn1(is,js) - temp2 + temp4
-            jpntr = MOD(jpntr,M) + 1
-         ENDDO
-         ipntr = MOD(ipntr,M) + 1
-      ENDDO
+            jpntr = mod(jpntr,m) + 1
+         enddo
+         ipntr = mod(ipntr,m) + 1
+      enddo
  
 !       modify the old parts in block (2,1).
       ipntr = Head
-      DO is = M + 1 , M + upcl
+      do is = m + 1 , m + upcl
          jpntr = Head
-         DO jy = 1 , upcl
-            temp1 = ZERO
-            temp3 = ZERO
-            DO k = 1 , Nenter
+         do jy = 1 , upcl
+            temp1 = zero
+            temp3 = zero
+            do k = 1 , Nenter
                k1 = Indx2(k)
                temp1 = temp1 + Ws(k1,ipntr)*Wy(k1,jpntr)
-            ENDDO
-            DO k = Ileave , N
+            enddo
+            do k = Ileave , n
                k1 = Indx2(k)
                temp3 = temp3 + Ws(k1,ipntr)*Wy(k1,jpntr)
-            ENDDO
-            IF ( is.LE.jy+M ) THEN
+            enddo
+            if ( is<=jy+m ) then
                Wn1(is,jy) = Wn1(is,jy) + temp1 - temp3
-            ELSE
+            else
                Wn1(is,jy) = Wn1(is,jy) - temp1 + temp3
-            ENDIF
-            jpntr = MOD(jpntr,M) + 1
-         ENDDO
-         ipntr = MOD(ipntr,M) + 1
-      ENDDO
+            endif
+            jpntr = mod(jpntr,m) + 1
+         enddo
+         ipntr = mod(ipntr,m) + 1
+      enddo
  
 !     Form the upper triangle of WN = [D+Y' ZZ'Y/theta   -L_a'+R_z' ]
 !                                     [-L_a +R_z        S'AA'S*theta]
  
-      m2 = 2*M
-      DO iy = 1 , Col
+      m2 = 2*m
+      do iy = 1 , Col
          is = Col + iy
-         is1 = M + iy
-         DO jy = 1 , iy
+         is1 = m + iy
+         do jy = 1 , iy
             js = Col + jy
-            js1 = M + jy
+            js1 = m + jy
             Wn(jy,iy) = Wn1(iy,jy)/Theta
             Wn(js,is) = Wn1(is1,js1)*Theta
-         ENDDO
-         DO jy = 1 , iy - 1
+         enddo
+         do jy = 1 , iy - 1
             Wn(jy,is) = -Wn1(is1,jy)
-         ENDDO
-         DO jy = iy , Col
+         enddo
+         do jy = iy , Col
             Wn(jy,is) = Wn1(is1,jy)
-         ENDDO
+         enddo
          Wn(iy,iy) = Wn(iy,iy) + Sy(iy,iy)
-      ENDDO
+      enddo
  
 !     Form the upper triangle of WN= [  LL'            L^-1(-L_a'+R_z')]
 !                                    [(-L_a +R_z)L'^-1   S'AA'S*theta  ]
  
 !        first Cholesky factor (1,1) block of wn to get LL'
 !                          with L' stored in the upper triangle of wn.
-      CALL DPOFA(Wn,m2,Col,Info)
-      IF ( Info.NE.0 ) THEN
+      call dpofa(Wn,m2,Col,Info)
+      if ( Info/=0 ) then
          Info = -1
-         RETURN
-      ENDIF
+         return
+      endif
 !        then form L^-1(-L_a'+R_z') in the (1,2) block.
       col2 = 2*Col
-      DO js = Col + 1 , col2
-         CALL DTRSL(Wn,m2,Col,Wn(1,js),11,Info)
-      ENDDO
+      do js = Col + 1 , col2
+         call dtrsl(Wn,m2,Col,Wn(1,js),11,Info)
+      enddo
  
 !     Form S'AA'S*theta + (L^-1(-L_a'+R_z'))'L^-1(-L_a'+R_z') in the
 !        upper triangle of (2,2) block of wn.
  
  
-      DO is = Col + 1 , col2
-         DO js = is , col2
-            Wn(is,js) = Wn(is,js) + DDOT(Col,Wn(1,is),1,Wn(1,js),1)
-         ENDDO
-      ENDDO
+      do is = Col + 1 , col2
+         do js = is , col2
+            Wn(is,js) = Wn(is,js) + ddot(Col,Wn(1,is),1,Wn(1,js),1)
+         enddo
+      enddo
  
 !     Cholesky factorization of (2,2) block of wn.
  
-      CALL DPOFA(Wn(Col+1,Col+1),m2,Col,Info)
-      IF ( Info.NE.0 ) THEN
+      call dpofa(Wn(Col+1,Col+1),m2,Col,Info)
+      if ( Info/=0 ) then
          Info = -2
-         RETURN
-      ENDIF
+         return
+      endif
  
-      CONTINUE
+      continue
  
-      END
+      end
  
 !======================= The end of formk ==============================
  
-      SUBROUTINE FORMT(M,Wt,Sy,Ss,Col,Theta,Info)
-      IMPLICIT NONE
+      subroutine formt(m,Wt,Sy,Ss,Col,Theta,Info)
+      implicit none
 !*--FORMT2183
  
-      INTEGER M , Col , Info
-      DOUBLE PRECISION Theta , Wt(M,M) , Sy(M,M) , Ss(M,M)
+      integer m , Col , Info
+      double precision Theta , Wt(m,m) , Sy(m,m) , Ss(m,m)
  
 !     ************
 !
@@ -2201,49 +2201,49 @@
 !
 !     ************
  
-      INTEGER i , j , k , k1
-      DOUBLE PRECISION ddum
-      DOUBLE PRECISION ZERO
-      PARAMETER (ZERO=0.0D0)
+      integer i , j , k , k1
+      double precision ddum
+      double precision zero
+      parameter (zero=0.0d0)
  
  
 !     Form the upper half of  T = theta*SS + L*D^(-1)*L',
 !        store T in the upper triangle of the array wt.
  
-      DO j = 1 , Col
+      do j = 1 , Col
          Wt(1,j) = Theta*Ss(1,j)
-      ENDDO
-      DO i = 2 , Col
-         DO j = i , Col
-            k1 = MIN(i,j) - 1
-            ddum = ZERO
-            DO k = 1 , k1
+      enddo
+      do i = 2 , Col
+         do j = i , Col
+            k1 = min(i,j) - 1
+            ddum = zero
+            do k = 1 , k1
                ddum = ddum + Sy(i,k)*Sy(j,k)/Sy(k,k)
-            ENDDO
+            enddo
             Wt(i,j) = ddum + Theta*Ss(i,j)
-         ENDDO
-      ENDDO
+         enddo
+      enddo
  
 !     Cholesky factorize T to J*J' with
 !        J' stored in the upper triangle of wt.
  
-      CALL DPOFA(Wt,M,Col,Info)
-      IF ( Info.NE.0 ) Info = -3
+      call dpofa(Wt,m,Col,Info)
+      if ( Info/=0 ) Info = -3
  
-      CONTINUE
+      continue
  
-      END
+      end
  
 !======================= The end of formt ==============================
  
-      SUBROUTINE FREEV(N,Nfree,Index,Nenter,Ileave,Indx2,Iwhere,Wrk,    &
+      subroutine freev(n,Nfree,Index,Nenter,Ileave,Indx2,Iwhere,Wrk,    &
                      & Updatd,Cnstnd,Iprint,Iter)
-      IMPLICIT NONE
+      implicit none
 !*--FREEV2253
  
-      INTEGER N , Nfree , Nenter , Ileave , Iprint , Iter , Index(N) ,  &
-            & Indx2(N) , Iwhere(N)
-      LOGICAL Wrk , Updatd , Cnstnd
+      integer n , Nfree , Nenter , Ileave , Iprint , Iter , Index(n) ,  &
+            & Indx2(n) , Iwhere(n)
+      logical Wrk , Updatd , Cnstnd
  
 !     ************
 !
@@ -2283,68 +2283,68 @@
 !
 !     ************
  
-      INTEGER iact , i , k
+      integer iact , i , k
  
       Nenter = 0
-      Ileave = N + 1
-      IF ( Iter.GT.0 .AND. Cnstnd ) THEN
+      Ileave = n + 1
+      if ( Iter>0 .and. Cnstnd ) then
 !                           count the entering and leaving variables.
-         DO i = 1 , Nfree
+         do i = 1 , Nfree
             k = Index(i)
  
 !            write(6,*) ' k  = index(i) ', k
 !            write(6,*) ' index = ', i
  
-            IF ( Iwhere(k).GT.0 ) THEN
+            if ( Iwhere(k)>0 ) then
                Ileave = Ileave - 1
                Indx2(Ileave) = k
-               IF ( Iprint.GE.100 ) WRITE (6,*) 'Variable ' , k ,       &
+               if ( Iprint>=100 ) write (6,*) 'Variable ' , k ,       &
                    &' leaves the set of free variables'
-            ENDIF
-         ENDDO
-         DO i = 1 + Nfree , N
+            endif
+         enddo
+         do i = 1 + Nfree , n
             k = Index(i)
-            IF ( Iwhere(k).LE.0 ) THEN
+            if ( Iwhere(k)<=0 ) then
                Nenter = Nenter + 1
                Indx2(Nenter) = k
-               IF ( Iprint.GE.100 ) WRITE (6,*) 'Variable ' , k ,       &
+               if ( Iprint>=100 ) write (6,*) 'Variable ' , k ,       &
                    &' enters the set of free variables'
-            ENDIF
-         ENDDO
-         IF ( Iprint.GE.99 ) WRITE (6,*) N + 1 - Ileave ,               &
+            endif
+         enddo
+         if ( Iprint>=99 ) write (6,*) n + 1 - Ileave ,               &
                                    &' variables leave; ' , Nenter ,     &
                                    &' variables enter'
-      ENDIF
-      Wrk = (Ileave.LT.N+1) .OR. (Nenter.GT.0) .OR. Updatd
+      endif
+      Wrk = (Ileave<n+1) .or. (Nenter>0) .or. Updatd
  
 !     Find the index set of free and active variables at the GCP.
  
       Nfree = 0
-      iact = N + 1
-      DO i = 1 , N
-         IF ( Iwhere(i).LE.0 ) THEN
+      iact = n + 1
+      do i = 1 , n
+         if ( Iwhere(i)<=0 ) then
             Nfree = Nfree + 1
             Index(Nfree) = i
-         ELSE
+         else
             iact = iact - 1
             Index(iact) = i
-         ENDIF
-      ENDDO
-      IF ( Iprint.GE.99 ) WRITE (6,*) Nfree ,                           &
+         endif
+      enddo
+      if ( Iprint>=99 ) write (6,*) Nfree ,                           &
                                      &' variables are free at GCP ' ,   &
                                     & Iter + 1
  
-      CONTINUE
+      continue
  
-      END
+      end
  
 !======================= The end of freev ==============================
  
-      SUBROUTINE HPSOLB(N,T,Iorder,Iheap)
-      IMPLICIT NONE
+      subroutine hpsolb(n,t,Iorder,Iheap)
+      implicit none
 !*--HPSOLB2357
-      INTEGER Iheap , N , Iorder(N)
-      DOUBLE PRECISION T(N)
+      integer Iheap , n , Iorder(n)
+      double precision t(n)
  
 !     ************
 !
@@ -2369,8 +2369,8 @@
 !
 !     iheap is an integer variable specifying the task.
 !       On entry iheap should be set as follows:
-!         iheap .eq. 0 if t(1) to t(n) is not in the form of a heap,
-!         iheap .ne. 0 if otherwise.
+!         iheap == 0 if t(1) to t(n) is not in the form of a heap,
+!         iheap /= 0 if otherwise.
 !       On exit iheap is unchanged.
 !
 !
@@ -2388,84 +2388,84 @@
 !
 !     ************
  
-      INTEGER i , j , k , indxin , indxou
-      DOUBLE PRECISION ddum , out
+      integer i , j , k , indxin , indxou
+      double precision ddum , out
  
-      IF ( Iheap.EQ.0 ) THEN
+      if ( Iheap==0 ) then
  
 !        Rearrange the elements t(1) to t(n) to form a heap.
  
-         DO k = 2 , N
-            ddum = T(k)
+         do k = 2 , n
+            ddum = t(k)
             indxin = Iorder(k)
  
 !           Add ddum to the heap.
             i = k
- 20         CONTINUE
-            IF ( i.GT.1 ) THEN
+ 20         continue
+            if ( i>1 ) then
                j = i/2
-               IF ( ddum.LT.T(j) ) THEN
-                  T(i) = T(j)
+               if ( ddum<t(j) ) then
+                  t(i) = t(j)
                   Iorder(i) = Iorder(j)
                   i = j
-                  GOTO 20
-               ENDIF
-            ENDIF
-            T(i) = ddum
+                  goto 20
+               endif
+            endif
+            t(i) = ddum
             Iorder(i) = indxin
-         ENDDO
-      ENDIF
+         enddo
+      endif
  
 !     Assign to 'out' the value of t(1), the least member of the heap,
 !        and rearrange the remaining members to form a heap as
 !        elements 1 to n-1 of t.
  
-      IF ( N.GT.1 ) THEN
+      if ( n>1 ) then
          i = 1
-         out = T(1)
+         out = t(1)
          indxou = Iorder(1)
-         ddum = T(N)
-         indxin = Iorder(N)
+         ddum = t(n)
+         indxin = Iorder(n)
  
 !        Restore the heap
- 50      CONTINUE
+ 50      continue
          j = i + i
-         IF ( j.LE.N-1 ) THEN
-            IF ( T(j+1).LT.T(j) ) j = j + 1
-            IF ( T(j).LT.ddum ) THEN
-               T(i) = T(j)
+         if ( j<=n-1 ) then
+            if ( t(j+1)<t(j) ) j = j + 1
+            if ( t(j)<ddum ) then
+               t(i) = t(j)
                Iorder(i) = Iorder(j)
                i = j
-               GOTO 50
-            ENDIF
-         ENDIF
-         T(i) = ddum
+               goto 50
+            endif
+         endif
+         t(i) = ddum
          Iorder(i) = indxin
  
 !     Put the least member in t(n).
  
-         T(N) = out
-         Iorder(N) = indxou
-      ENDIF
+         t(n) = out
+         Iorder(n) = indxou
+      endif
  
-      CONTINUE
+      continue
  
-      END
+      end
  
 !====================== The end of hpsolb ==============================
  
-      SUBROUTINE LNSRLB(N,L,U,Nbd,X,F,Fold,Gd,Gdold,G,D,R,T,Z,Stp,Dnorm,&
+      subroutine lnsrlb(n,l,u,Nbd,x,f,Fold,Gd,Gdold,g,d,r,t,z,Stp,Dnorm,&
                       & Dtd,Xstep,Stpmx,Iter,Ifun,Iback,Nfgv,Info,Task, &
                       & Boxed,Cnstnd,Csave,Isave,Dsave)
-      IMPLICIT NONE
+      implicit none
 !*--LNSRLB2474
  
-      CHARACTER*60 Task , Csave
-      LOGICAL Boxed , Cnstnd
-      INTEGER N , Iter , Ifun , Iback , Nfgv , Info , Nbd(N) , Isave(2)
-      DOUBLE PRECISION F , Fold , Gd , Gdold , Stp , Dnorm , Dtd ,      &
-                     & Xstep , Stpmx , X(N) , L(N) , U(N) , G(N) ,      &
-                     & D(N) , R(N) , T(N) , Z(N) , Dsave(13)
+      character*60 Task , Csave
+      logical Boxed , Cnstnd
+      integer n , Iter , Ifun , Iback , Nfgv , Info , Nbd(n) , Isave(2)
+      double precision f , Fold , Gd , Gdold , Stp , Dnorm , Dtd ,      &
+                     & Xstep , Stpmx , x(n) , l(n) , u(n) , g(n) ,      &
+                     & d(n) , r(n) , t(n) , z(n) , Dsave(13)
 !     **********
 !
 !     Subroutine lnsrlb
@@ -2493,106 +2493,106 @@
 !
 !     **********
  
-      INTEGER i
-      DOUBLE PRECISION DDOT , a1 , a2
-      DOUBLE PRECISION ONE , ZERO , BIG
-      PARAMETER (ONE=1.0D0,ZERO=0.0D0,BIG=1.0D+10)
-      DOUBLE PRECISION FTOL , GTOL , XTOL
-      PARAMETER (FTOL=1.0D-3,GTOL=0.9D0,XTOL=0.1D0)
+      integer i
+      double precision ddot , a1 , a2
+      double precision one , zero , big
+      parameter (one=1.0d0,zero=0.0d0,big=1.0d+10)
+      double precision ftol , gtol , xtol
+      parameter (ftol=1.0d-3,gtol=0.9d0,xtol=0.1d0)
  
-      IF ( Task(1:5).EQ.'FG_LN' ) GOTO 100
+      if ( Task(1:5)=='FG_LN' ) goto 100
  
-      Dtd = DDOT(N,D,1,D,1)
-      Dnorm = SQRT(Dtd)
+      Dtd = ddot(n,d,1,d,1)
+      Dnorm = sqrt(Dtd)
  
 !     Determine the maximum step length.
  
-      Stpmx = BIG
-      IF ( Cnstnd ) THEN
-         IF ( Iter.EQ.0 ) THEN
-            Stpmx = ONE
-         ELSE
-            DO i = 1 , N
-               a1 = D(i)
-               IF ( Nbd(i).NE.0 ) THEN
-                  IF ( a1.LT.ZERO .AND. Nbd(i).LE.2 ) THEN
-                     a2 = L(i) - X(i)
-                     IF ( a2.GE.ZERO ) THEN
-                        Stpmx = ZERO
-                     ELSEIF ( a1*Stpmx.LT.a2 ) THEN
+      Stpmx = big
+      if ( Cnstnd ) then
+         if ( Iter==0 ) then
+            Stpmx = one
+         else
+            do i = 1 , n
+               a1 = d(i)
+               if ( Nbd(i)/=0 ) then
+                  if ( a1<zero .and. Nbd(i)<=2 ) then
+                     a2 = l(i) - x(i)
+                     if ( a2>=zero ) then
+                        Stpmx = zero
+                     elseif ( a1*Stpmx<a2 ) then
                         Stpmx = a2/a1
-                     ENDIF
-                  ELSEIF ( a1.GT.ZERO .AND. Nbd(i).GE.2 ) THEN
-                     a2 = U(i) - X(i)
-                     IF ( a2.LE.ZERO ) THEN
-                        Stpmx = ZERO
-                     ELSEIF ( a1*Stpmx.GT.a2 ) THEN
+                     endif
+                  elseif ( a1>zero .and. Nbd(i)>=2 ) then
+                     a2 = u(i) - x(i)
+                     if ( a2<=zero ) then
+                        Stpmx = zero
+                     elseif ( a1*Stpmx>a2 ) then
                         Stpmx = a2/a1
-                     ENDIF
-                  ENDIF
-               ENDIF
-            ENDDO
-         ENDIF
-      ENDIF
+                     endif
+                  endif
+               endif
+            enddo
+         endif
+      endif
  
-      IF ( Iter.EQ.0 .AND. .NOT.Boxed ) THEN
-         Stp = MIN(ONE/Dnorm,Stpmx)
-      ELSE
-         Stp = ONE
-      ENDIF
+      if ( Iter==0 .and. .not.Boxed ) then
+         Stp = min(one/Dnorm,Stpmx)
+      else
+         Stp = one
+      endif
  
-      CALL DCOPY(N,X,1,T,1)
-      CALL DCOPY(N,G,1,R,1)
-      Fold = F
+      call dcopy(n,x,1,t,1)
+      call dcopy(n,g,1,r,1)
+      Fold = f
       Ifun = 0
       Iback = 0
       Csave = 'START'
- 100  CONTINUE
-      Gd = DDOT(N,G,1,D,1)
-      IF ( Ifun.EQ.0 ) THEN
+ 100  continue
+      Gd = ddot(n,g,1,d,1)
+      if ( Ifun==0 ) then
          Gdold = Gd
-         IF ( Gd.GE.ZERO ) THEN
+         if ( Gd>=zero ) then
 !                               the directional derivative >=0.
 !                               Line search is impossible.
-            WRITE (6,*) ' ascent direction in projection gd = ' , Gd
+            write (6,*) ' ascent direction in projection gd = ' , Gd
             Info = -4
-            RETURN
-         ENDIF
-      ENDIF
+            return
+         endif
+      endif
  
-      CALL DCSRCH(F,Gd,Stp,FTOL,GTOL,XTOL,ZERO,Stpmx,Csave,Isave,Dsave)
+      call dcsrch(f,Gd,Stp,ftol,gtol,xtol,zero,Stpmx,Csave,Isave,Dsave)
  
       Xstep = Stp*Dnorm
-      IF ( Csave(1:4).NE.'CONV' .AND. Csave(1:4).NE.'WARN' ) THEN
+      if ( Csave(1:4)/='CONV' .and. Csave(1:4)/='WARN' ) then
          Task = 'FG_LNSRCH'
          Ifun = Ifun + 1
          Nfgv = Nfgv + 1
          Iback = Ifun - 1
-         IF ( Stp.EQ.ONE ) THEN
-            CALL DCOPY(N,Z,1,X,1)
-         ELSE
-            DO i = 1 , N
-               X(i) = Stp*D(i) + T(i)
-            ENDDO
-         ENDIF
-      ELSE
+         if ( Stp==one ) then
+            call dcopy(n,z,1,x,1)
+         else
+            do i = 1 , n
+               x(i) = Stp*d(i) + t(i)
+            enddo
+         endif
+      else
          Task = 'NEW_X'
-      ENDIF
+      endif
  
-      CONTINUE
+      continue
  
-      END
+      end
  
 !======================= The end of lnsrlb =============================
  
-      SUBROUTINE MATUPD(N,M,Ws,Wy,Sy,Ss,D,R,Itail,Iupdat,Col,Head,Theta,&
+      subroutine matupd(n,m,Ws,Wy,Sy,Ss,d,r,Itail,Iupdat,Col,Head,Theta,&
                       & Rr,Dr,Stp,Dtd)
-      IMPLICIT NONE
+      implicit none
 !*--MATUPD2605
  
-      INTEGER N , M , Itail , Iupdat , Col , Head
-      DOUBLE PRECISION Theta , Rr , Dr , Stp , Dtd , D(N) , R(N) ,      &
-                     & Ws(N,M) , Wy(N,M) , Sy(M,M) , Ss(M,M)
+      integer n , m , Itail , Iupdat , Col , Head
+      double precision Theta , Rr , Dr , Stp , Dtd , d(n) , r(n) ,      &
+                     & Ws(n,m) , Wy(n,m) , Sy(m,m) , Ss(m,m)
  
 !     ************
 !
@@ -2618,25 +2618,25 @@
 !
 !     ************
  
-      INTEGER j , pointr
-      DOUBLE PRECISION DDOT
-      DOUBLE PRECISION ONE
-      PARAMETER (ONE=1.0D0)
+      integer j , pointr
+      double precision ddot
+      double precision one
+      parameter (one=1.0d0)
  
 !     Set pointers for matrices WS and WY.
  
-      IF ( Iupdat.LE.M ) THEN
+      if ( Iupdat<=m ) then
          Col = Iupdat
-         Itail = MOD(Head+Iupdat-2,M) + 1
-      ELSE
-         Itail = MOD(Itail,M) + 1
-         Head = MOD(Head,M) + 1
-      ENDIF
+         Itail = mod(Head+Iupdat-2,m) + 1
+      else
+         Itail = mod(Itail,m) + 1
+         Head = mod(Head,m) + 1
+      endif
  
 !     Update matrices WS and WY.
  
-      CALL DCOPY(N,D,1,Ws(1,Itail),1)
-      CALL DCOPY(N,R,1,Wy(1,Itail),1)
+      call dcopy(n,d,1,Ws(1,Itail),1)
+      call dcopy(n,r,1,Wy(1,Itail),1)
  
 !     Set theta=yy/ys.
  
@@ -2646,40 +2646,40 @@
  
 !        update the upper triangle of SS,
 !                                         and the lower triangle of SY:
-      IF ( Iupdat.GT.M ) THEN
+      if ( Iupdat>m ) then
 !                              move old information
-         DO j = 1 , Col - 1
-            CALL DCOPY(j,Ss(2,j+1),1,Ss(1,j),1)
-            CALL DCOPY(Col-j,Sy(j+1,j+1),1,Sy(j,j),1)
-         ENDDO
-      ENDIF
+         do j = 1 , Col - 1
+            call dcopy(j,Ss(2,j+1),1,Ss(1,j),1)
+            call dcopy(Col-j,Sy(j+1,j+1),1,Sy(j,j),1)
+         enddo
+      endif
 !        add new information: the last row of SY
 !                                             and the last column of SS:
       pointr = Head
-      DO j = 1 , Col - 1
-         Sy(Col,j) = DDOT(N,D,1,Wy(1,pointr),1)
-         Ss(j,Col) = DDOT(N,Ws(1,pointr),1,D,1)
-         pointr = MOD(pointr,M) + 1
-      ENDDO
-      IF ( Stp.EQ.ONE ) THEN
+      do j = 1 , Col - 1
+         Sy(Col,j) = ddot(n,d,1,Wy(1,pointr),1)
+         Ss(j,Col) = ddot(n,Ws(1,pointr),1,d,1)
+         pointr = mod(pointr,m) + 1
+      enddo
+      if ( Stp==one ) then
          Ss(Col,Col) = Dtd
-      ELSE
+      else
          Ss(Col,Col) = Stp*Stp*Dtd
-      ENDIF
+      endif
       Sy(Col,Col) = Dr
  
-      CONTINUE
+      continue
  
-      END
+      end
  
 !======================= The end of matupd =============================
  
-      SUBROUTINE PRN1LB(N,M,L,U,X,Iprint,Itfile,Epsmch)
-      IMPLICIT NONE
+      subroutine prn1lb(n,m,l,u,x,Iprint,Itfile,Epsmch)
+      implicit none
 !*--PRN1LB2694
  
-      INTEGER N , M , Iprint , Itfile
-      DOUBLE PRECISION Epsmch , X(N) , L(N) , U(N)
+      integer n , m , Iprint , Itfile
+      double precision Epsmch , x(n) , l(n) , u(n)
  
 !     ************
 !
@@ -2702,16 +2702,16 @@
 !
 !     ************
  
-      INTEGER i
+      integer i
  
-      IF ( Iprint.GE.0 ) THEN
-         WRITE (6,99001) Epsmch
-99001    FORMAT ('RUNNING THE L-BFGS-B CODE',/,/,'           * * *',/,/,&
+      if ( Iprint>=0 ) then
+         write (6,99001) Epsmch
+99001    format ('RUNNING THE L-BFGS-B CODE',/,/,'           * * *',/,/,&
                 &'Machine precision =',1p,d10.3)
-         WRITE (6,*) 'N = ' , N , '    M = ' , M
-         IF ( Iprint.GE.1 ) THEN
-            WRITE (Itfile,99002) Epsmch
-99002       FORMAT ('RUNNING THE L-BFGS-B CODE',/,/,                    &
+         write (6,*) 'N = ' , n , '    M = ' , m
+         if ( Iprint>=1 ) then
+            write (Itfile,99002) Epsmch
+99002       format ('RUNNING THE L-BFGS-B CODE',/,/,                    &
                    &'it    = iteration number',/,                       &
                    &'nf    = number of function evaluations',/,         &
          &'nseg  = number of segments explored during the Cauchy search'&
@@ -2726,35 +2726,35 @@
       &'projg = norm of the projected gradient',/,                      &
       &'f     = function value',/,/,'           * * *',/,/,             &
       &'Machine precision =',1p,d10.3)
-            WRITE (Itfile,*) 'N = ' , N , '    M = ' , M
-            WRITE (Itfile,99003)
-99003       FORMAT (/,3x,'it',3x,'nf',2x,'nseg',2x,'nact',2x,'sub',2x,  &
+            write (Itfile,*) 'N = ' , n , '    M = ' , m
+            write (Itfile,99003)
+99003       format (/,3x,'it',3x,'nf',2x,'nseg',2x,'nact',2x,'sub',2x,  &
                    &'itls',2x,'stepl',4x,'tstep',5x,'projg',8x,'f')
-            IF ( Iprint.GT.100 ) THEN
-               WRITE (6,99004) 'L =' , (L(i),i=1,N)
-               WRITE (6,99004) 'X0 =' , (X(i),i=1,N)
-               WRITE (6,99004) 'U =' , (U(i),i=1,N)
-            ENDIF
-         ENDIF
-      ENDIF
+            if ( Iprint>100 ) then
+               write (6,99004) 'L =' , (l(i),i=1,n)
+               write (6,99004) 'X0 =' , (x(i),i=1,n)
+               write (6,99004) 'U =' , (u(i),i=1,n)
+            endif
+         endif
+      endif
  
-      CONTINUE
+      continue
  
-99004 FORMAT (/,a4,1p,6(1x,d11.4),/,(4x,1p,6(1x,d11.4)))
+99004 format (/,a4,1p,6(1x,d11.4),/,(4x,1p,6(1x,d11.4)))
  
-      END
+      end
  
 !======================= The end of prn1lb =============================
  
-      SUBROUTINE PRN2LB(N,X,F,G,Iprint,Itfile,Iter,Nfgv,Nact,Sbgnrm,    &
+      subroutine prn2lb(n,x,f,g,Iprint,Itfile,Iter,Nfgv,Nact,Sbgnrm,    &
                       & Nseg,Word,Iword,Iback,Stp,Xstep)
-      IMPLICIT NONE
+      implicit none
 !*--PRN2LB2768
  
-      CHARACTER*3 Word
-      INTEGER N , Iprint , Itfile , Iter , Nfgv , Nact , Nseg , Iword , &
+      character*3 Word
+      integer n , Iprint , Itfile , Iter , Nfgv , Nact , Nseg , Iword , &
             & Iback
-      DOUBLE PRECISION F , Sbgnrm , Stp , Xstep , X(N) , G(N)
+      double precision f , Sbgnrm , Stp , Xstep , x(n) , g(n)
  
 !     ************
 !
@@ -2776,61 +2776,61 @@
 !
 !     ************
  
-      INTEGER i , imod
+      integer i , imod
  
 !           'word' records the status of subspace solutions.
-      IF ( Iword.EQ.0 ) THEN
+      if ( Iword==0 ) then
 !                            the subspace minimization converged.
          Word = 'con'
-      ELSEIF ( Iword.EQ.1 ) THEN
+      elseif ( Iword==1 ) then
 !                          the subspace minimization stopped at a bound.
          Word = 'bnd'
-      ELSEIF ( Iword.EQ.5 ) THEN
+      elseif ( Iword==5 ) then
 !                             the truncated Newton step has been used.
          Word = 'TNT'
-      ELSE
+      else
          Word = '---'
-      ENDIF
-      IF ( Iprint.GE.99 ) THEN
-         WRITE (6,*) 'LINE SEARCH' , Iback , ' times; norm of step = ' ,&
+      endif
+      if ( Iprint>=99 ) then
+         write (6,*) 'LINE SEARCH' , Iback , ' times; norm of step = ' ,&
                    & Xstep
-         WRITE (6,99003) Iter , F , Sbgnrm
-         IF ( Iprint.GT.100 ) THEN
-            WRITE (6,99002) 'X =' , (X(i),i=1,N)
-            WRITE (6,99002) 'G =' , (G(i),i=1,N)
-         ENDIF
-      ELSEIF ( Iprint.GT.0 ) THEN
-         imod = MOD(Iter,Iprint)
-         IF ( imod.EQ.0 ) WRITE (6,99003) Iter , F , Sbgnrm
-      ENDIF
-      IF ( Iprint.GE.1 ) WRITE (Itfile,99001) Iter , Nfgv , Nseg ,      &
+         write (6,99003) Iter , f , Sbgnrm
+         if ( Iprint>100 ) then
+            write (6,99002) 'X =' , (x(i),i=1,n)
+            write (6,99002) 'G =' , (g(i),i=1,n)
+         endif
+      elseif ( Iprint>0 ) then
+         imod = mod(Iter,Iprint)
+         if ( imod==0 ) write (6,99003) Iter , f , Sbgnrm
+      endif
+      if ( Iprint>=1 ) write (Itfile,99001) Iter , Nfgv , Nseg ,      &
                               & Nact , Word , Iback , Stp , Xstep ,     &
-                              & Sbgnrm , F
-99001 FORMAT (2(1x,i4),2(1x,i5),2x,a3,1x,i4,1p,2(2x,d7.1),1p,2(1x,d10.3)&
+                              & Sbgnrm , f
+99001 format (2(1x,i4),2(1x,i5),2x,a3,1x,i4,1p,2(2x,d7.1),1p,2(1x,d10.3)&
             & )
  
-      CONTINUE
+      continue
  
-99002 FORMAT (/,a4,1p,6(1x,d11.4),/,(4x,1p,6(1x,d11.4)))
-99003 FORMAT (/,'At iterate',i5,4x,'f= ',1p,d12.5,4x,'|proj g|= ',1p,   &
+99002 format (/,a4,1p,6(1x,d11.4),/,(4x,1p,6(1x,d11.4)))
+99003 format (/,'At iterate',i5,4x,'f= ',1p,d12.5,4x,'|proj g|= ',1p,   &
             & d12.5)
  
-      END
+      end
  
 !======================= The end of prn2lb =============================
  
-      SUBROUTINE PRN3LB(N,X,F,Task,Iprint,Info,Itfile,Iter,Nfgv,Nintol, &
+      subroutine prn3lb(n,x,f,Task,Iprint,Info,Itfile,Iter,Nfgv,Nintol, &
                       & Nskip,Nact,Sbgnrm,Time,Nseg,Word,Iback,Stp,     &
-                      & Xstep,K,Cachyt,Sbtime,Lnscht)
-      IMPLICIT NONE
+                      & Xstep,k,Cachyt,Sbtime,Lnscht)
+      implicit none
 !*--PRN3LB2843
  
-      CHARACTER*60 Task
-      CHARACTER*3 Word
-      INTEGER N , Iprint , Info , Itfile , Iter , Nfgv , Nintol ,       &
-            & Nskip , Nact , Nseg , Iback , K
-      DOUBLE PRECISION F , Sbgnrm , Time , Stp , Xstep , Cachyt ,       &
-                     & Sbtime , Lnscht , X(N)
+      character*60 Task
+      character*3 Word
+      integer n , Iprint , Info , Itfile , Iter , Nfgv , Nintol ,       &
+            & Nskip , Nact , Nseg , Iback , k
+      double precision f , Sbgnrm , Time , Stp , Xstep , Cachyt ,       &
+                     & Sbtime , Lnscht , x(n)
  
 !     ************
 !
@@ -2853,13 +2853,13 @@
 !
 !     ************
  
-      INTEGER i
+      integer i
  
-      IF ( Task(1:5).EQ.'ERROR' ) GOTO 100
+      if ( Task(1:5)=='ERROR' ) goto 100
  
-      IF ( Iprint.GE.0 ) THEN
-         WRITE (6,99001)
-99001    FORMAT (/,'           * * *',/,/,                              &
+      if ( Iprint>=0 ) then
+         write (6,99001)
+99001    format (/,'           * * *',/,/,                              &
                 &'Tit   = total number of iterations',/,                &
                 &'Tnf   = total number of function evaluations',/,      &
                 &'Tnint = total number of segments explored during',    &
@@ -2869,98 +2869,98 @@
                 &' Cauchy point',/,                                     &
                 &'Projg = norm of the final projected gradient',/,      &
                 &'F     = final function value',/,/,'           * * *')
-         WRITE (6,99002)
-99002    FORMAT (/,3x,'N',4x,'Tit',5x,'Tnf',2x,'Tnint',2x,'Skip',2x,    &
+         write (6,99002)
+99002    format (/,3x,'N',4x,'Tit',5x,'Tnf',2x,'Tnint',2x,'Skip',2x,    &
                 &'Nact',5x,'Projg',8x,'F')
-         WRITE (6,99003) N , Iter , Nfgv , Nintol , Nskip , Nact ,      &
-                       & Sbgnrm , F
-99003    FORMAT (i5,2(1x,i6),(1x,i6),(2x,i4),(1x,i5),1p,2(2x,d10.3))
-         IF ( Iprint.GE.100 ) THEN
-            WRITE (6,99004) 'X =' , (X(i),i=1,N)
+         write (6,99003) n , Iter , Nfgv , Nintol , Nskip , Nact ,      &
+                       & Sbgnrm , f
+99003    format (i5,2(1x,i6),(1x,i6),(2x,i4),(1x,i5),1p,2(2x,d10.3))
+         if ( Iprint>=100 ) then
+            write (6,99004) 'X =' , (x(i),i=1,n)
  
-99004       FORMAT (/,a4,1p,6(1x,d11.4),/,(4x,1p,6(1x,d11.4)))
-         ENDIF
-         IF ( Iprint.GE.1 ) WRITE (6,*) ' F =' , F
-      ENDIF
- 100  CONTINUE
-      IF ( Iprint.GE.0 ) THEN
-         WRITE (6,99008) Task
-         IF ( Info.NE.0 ) THEN
-            IF ( Info.EQ.-1 ) WRITE (6,99009)
-            IF ( Info.EQ.-2 ) WRITE (6,99010)
-            IF ( Info.EQ.-3 ) WRITE (6,99011)
-            IF ( Info.EQ.-4 ) WRITE (6,99012)
-            IF ( Info.EQ.-5 ) WRITE (6,99013)
-            IF ( Info.EQ.-6 ) WRITE (6,*) ' Input nbd(' , K ,           &
+99004       format (/,a4,1p,6(1x,d11.4),/,(4x,1p,6(1x,d11.4)))
+         endif
+         if ( Iprint>=1 ) write (6,*) ' F =' , f
+      endif
+ 100  continue
+      if ( Iprint>=0 ) then
+         write (6,99008) Task
+         if ( Info/=0 ) then
+            if ( Info==-1 ) write (6,99009)
+            if ( Info==-2 ) write (6,99010)
+            if ( Info==-3 ) write (6,99011)
+            if ( Info==-4 ) write (6,99012)
+            if ( Info==-5 ) write (6,99013)
+            if ( Info==-6 ) write (6,*) ' Input nbd(' , k ,           &
                                     &') is invalid.'
-            IF ( Info.EQ.-7 ) WRITE (6,*) ' l(' , K , ') > u(' , K ,    &
+            if ( Info==-7 ) write (6,*) ' l(' , k , ') > u(' , k ,    &
                                     &').  No feasible solution.'
-            IF ( Info.EQ.-8 ) WRITE (6,99014)
-            IF ( Info.EQ.-9 ) WRITE (6,99015)
-         ENDIF
-         IF ( Iprint.GE.1 ) WRITE (6,99005) Cachyt , Sbtime , Lnscht
-99005    FORMAT (/,' Cauchy                time',1p,e10.3,' seconds.',  &
+            if ( Info==-8 ) write (6,99014)
+            if ( Info==-9 ) write (6,99015)
+         endif
+         if ( Iprint>=1 ) write (6,99005) Cachyt , Sbtime , Lnscht
+99005    format (/,' Cauchy                time',1p,e10.3,' seconds.',  &
                 &/' Subspace minimization time',1p,e10.3,' seconds.',   &
                 &/' Line search           time',1p,e10.3,' seconds.')
-         WRITE (6,99007) Time
-         IF ( Iprint.GE.1 ) THEN
-            IF ( Info.EQ.-4 .OR. Info.EQ.-9 ) THEN
-               WRITE (Itfile,99006) Iter , Nfgv , Nseg , Nact , Word ,  &
+         write (6,99007) Time
+         if ( Iprint>=1 ) then
+            if ( Info==-4 .or. Info==-9 ) then
+               write (Itfile,99006) Iter , Nfgv , Nseg , Nact , Word ,  &
                                   & Iback , Stp , Xstep
-99006          FORMAT (2(1x,i4),2(1x,i5),2x,a3,1x,i4,1p,2(2x,d7.1),6x,  &
+99006          format (2(1x,i4),2(1x,i5),2x,a3,1x,i4,1p,2(2x,d7.1),6x,  &
                       &'-',10x,'-')
-            ENDIF
-            WRITE (Itfile,99008) Task
-            IF ( Info.NE.0 ) THEN
-               IF ( Info.EQ.-1 ) WRITE (Itfile,99009)
-               IF ( Info.EQ.-2 ) WRITE (Itfile,99010)
-               IF ( Info.EQ.-3 ) WRITE (Itfile,99011)
-               IF ( Info.EQ.-4 ) WRITE (Itfile,99012)
-               IF ( Info.EQ.-5 ) WRITE (Itfile,99013)
-               IF ( Info.EQ.-8 ) WRITE (Itfile,99014)
-               IF ( Info.EQ.-9 ) WRITE (Itfile,99015)
-            ENDIF
-            WRITE (Itfile,99007) Time
-         ENDIF
-      ENDIF
+            endif
+            write (Itfile,99008) Task
+            if ( Info/=0 ) then
+               if ( Info==-1 ) write (Itfile,99009)
+               if ( Info==-2 ) write (Itfile,99010)
+               if ( Info==-3 ) write (Itfile,99011)
+               if ( Info==-4 ) write (Itfile,99012)
+               if ( Info==-5 ) write (Itfile,99013)
+               if ( Info==-8 ) write (Itfile,99014)
+               if ( Info==-9 ) write (Itfile,99015)
+            endif
+            write (Itfile,99007) Time
+         endif
+      endif
  
-      CONTINUE
-99007 FORMAT (/,' Total User time',1p,e10.3,' seconds.',/)
-99008 FORMAT (/,a60)
-99009 FORMAT (/,                                                        &
+      continue
+99007 format (/,' Total User time',1p,e10.3,' seconds.',/)
+99008 format (/,a60)
+99009 format (/,                                                        &
       &' Matrix in 1st Cholesky factorization in formk is not Pos. Def.'&
      & )
-99010 FORMAT (/,                                                        &
+99010 format (/,                                                        &
       &' Matrix in 2st Cholesky factorization in formk is not Pos. Def.'&
      & )
-99011 FORMAT (/,                                                        &
+99011 format (/,                                                        &
       &' Matrix in the Cholesky factorization in formt is not Pos. Def.'&
      & )
-99012 FORMAT (/,' Derivative >= 0, backtracking line search impossible.'&
+99012 format (/,' Derivative >= 0, backtracking line search impossible.'&
             & ,/,'   Previous x, f and g restored.',/,                  &
         &' Possible causes: 1 error in function or gradient evaluation;'&
        & ,/,'                  2 rounding errors dominate computation.')
-99013 FORMAT (/,' Warning:  more than 10 function and gradient',/,      &
+99013 format (/,' Warning:  more than 10 function and gradient',/,      &
              &'   evaluations in the last line search.  Termination',/, &
              &'   may possibly be caused by a bad search direction.')
-99014 FORMAT (/,' The triangular system is singular.')
-99015 FORMAT (/,                                                        &
+99014 format (/,' The triangular system is singular.')
+99015 format (/,                                                        &
        &' Line search cannot locate an adequate point after 20 function'&
       & ,/,'  and gradient evaluations.  Previous x, f and g restored.',&
       & /,                                                              &
        &' Possible causes: 1 error in function or gradient evaluation;',&
       & /,'                  2 rounding error dominate computation.')
  
-      END
+      end
  
 !======================= The end of prn3lb =============================
  
-      SUBROUTINE PROJGR(N,L,U,Nbd,X,G,Sbgnrm)
-      IMPLICIT NONE
+      subroutine projgr(n,l,u,Nbd,x,g,Sbgnrm)
+      implicit none
 !*--PROJGR2978
  
-      INTEGER N , Nbd(N)
-      DOUBLE PRECISION Sbgnrm , X(N) , L(N) , U(N) , G(N)
+      integer n , Nbd(n)
+      double precision Sbgnrm , x(n) , l(n) , u(n) , g(n)
  
 !     ************
 !
@@ -2982,39 +2982,39 @@
 !
 !     ************
  
-      INTEGER i
-      DOUBLE PRECISION gi
-      DOUBLE PRECISION ZERO
-      PARAMETER (ZERO=0.0D0)
+      integer i
+      double precision gi
+      double precision zero
+      parameter (zero=0.0d0)
  
-      Sbgnrm = ZERO
-      DO i = 1 , N
-         gi = G(i)
-         IF ( Nbd(i).NE.0 ) THEN
-            IF ( gi.LT.ZERO ) THEN
-               IF ( Nbd(i).GE.2 ) gi = MAX((X(i)-U(i)),gi)
-            ELSE
-               IF ( Nbd(i).LE.2 ) gi = MIN((X(i)-L(i)),gi)
-            ENDIF
-         ENDIF
-         Sbgnrm = MAX(Sbgnrm,ABS(gi))
-      ENDDO
+      Sbgnrm = zero
+      do i = 1 , n
+         gi = g(i)
+         if ( Nbd(i)/=0 ) then
+            if ( gi<zero ) then
+               if ( Nbd(i)>=2 ) gi = max((x(i)-u(i)),gi)
+            else
+               if ( Nbd(i)<=2 ) gi = min((x(i)-l(i)),gi)
+            endif
+         endif
+         Sbgnrm = max(Sbgnrm,abs(gi))
+      enddo
  
-      CONTINUE
+      continue
  
-      END
+      end
  
 !======================= The end of projgr =============================
  
-      SUBROUTINE SUBSM(N,M,Nsub,Ind,L,U,Nbd,X,D,Xp,Ws,Wy,Theta,Xx,Gg,   &
+      subroutine subsm(n,m,Nsub,Ind,l,u,Nbd,x,d,Xp,Ws,Wy,Theta,Xx,Gg,   &
                      & Col,Head,Iword,Wv,Wn,Iprint,Info)
-      IMPLICIT NONE
+      implicit none
 !*--SUBSM3031
-      INTEGER N , M , Nsub , Col , Head , Iword , Iprint , Info ,       &
-            & Ind(Nsub) , Nbd(N)
-      DOUBLE PRECISION Theta , L(N) , U(N) , X(N) , D(N) , Xp(N) ,      &
-                     & Xx(N) , Gg(N) , Ws(N,M) , Wy(N,M) , Wv(2*M) ,    &
-                     & Wn(2*M,2*M)
+      integer n , m , Nsub , Col , Head , Iword , Iprint , Info ,       &
+            & Ind(Nsub) , Nbd(n)
+      double precision Theta , l(n) , u(n) , x(n) , d(n) , Xp(n) ,      &
+                     & Xx(n) , Gg(n) , Ws(n,m) , Wy(n,m) , Wv(2*m) ,    &
+                     & Wn(2*m,2*m)
  
 !     **********************************************************************
 !
@@ -3195,179 +3195,179 @@
 !
 !     ************
  
-      INTEGER pointr , m2 , col2 , ibd , jy , js , i , j , k
-      DOUBLE PRECISION alpha , xk , dk , temp1 , temp2
-      DOUBLE PRECISION ONE , ZERO
-      PARAMETER (ONE=1.0D0,ZERO=0.0D0)
+      integer pointr , m2 , col2 , ibd , jy , js , i , j , k
+      double precision alpha , xk , dk , temp1 , temp2
+      double precision one , zero
+      parameter (one=1.0d0,zero=0.0d0)
 !
-      DOUBLE PRECISION dd_p
+      double precision dd_p
  
-      IF ( Nsub.LE.0 ) RETURN
-      IF ( Iprint.GE.99 ) WRITE (6,99001)
+      if ( Nsub<=0 ) return
+      if ( Iprint>=99 ) write (6,99001)
  
-99001 FORMAT (/,'----------------SUBSM entered-----------------',/)
+99001 format (/,'----------------SUBSM entered-----------------',/)
  
 !     Compute wv = W'Zd.
  
       pointr = Head
-      DO i = 1 , Col
-         temp1 = ZERO
-         temp2 = ZERO
-         DO j = 1 , Nsub
+      do i = 1 , Col
+         temp1 = zero
+         temp2 = zero
+         do j = 1 , Nsub
             k = Ind(j)
-            temp1 = temp1 + Wy(k,pointr)*D(j)
-            temp2 = temp2 + Ws(k,pointr)*D(j)
-         ENDDO
+            temp1 = temp1 + Wy(k,pointr)*d(j)
+            temp2 = temp2 + Ws(k,pointr)*d(j)
+         enddo
          Wv(i) = temp1
          Wv(Col+i) = Theta*temp2
-         pointr = MOD(pointr,M) + 1
-      ENDDO
+         pointr = mod(pointr,m) + 1
+      enddo
  
 !     Compute wv:=K^(-1)wv.
  
-      m2 = 2*M
+      m2 = 2*m
       col2 = 2*Col
-      CALL DTRSL(Wn,m2,col2,Wv,11,Info)
-      IF ( Info.NE.0 ) RETURN
-      DO i = 1 , Col
+      call dtrsl(Wn,m2,col2,Wv,11,Info)
+      if ( Info/=0 ) return
+      do i = 1 , Col
          Wv(i) = -Wv(i)
-      ENDDO
-      CALL DTRSL(Wn,m2,col2,Wv,01,Info)
-      IF ( Info.NE.0 ) RETURN
+      enddo
+      call dtrsl(Wn,m2,col2,Wv,01,Info)
+      if ( Info/=0 ) return
  
 !     Compute d = (1/theta)d + (1/theta**2)Z'W wv.
  
       pointr = Head
-      DO jy = 1 , Col
+      do jy = 1 , Col
          js = Col + jy
-         DO i = 1 , Nsub
+         do i = 1 , Nsub
             k = Ind(i)
-            D(i) = D(i) + Wy(k,pointr)*Wv(jy)/Theta + Ws(k,pointr)      &
+            d(i) = d(i) + Wy(k,pointr)*Wv(jy)/Theta + Ws(k,pointr)      &
                  & *Wv(js)
-         ENDDO
-         pointr = MOD(pointr,M) + 1
-      ENDDO
+         enddo
+         pointr = mod(pointr,m) + 1
+      enddo
  
-      CALL DSCAL(Nsub,ONE/Theta,D,1)
+      call dscal(Nsub,one/Theta,d,1)
 !
 !-----------------------------------------------------------------
 !     Let us try the projection, d is the Newton direction
  
       Iword = 0
  
-      CALL DCOPY(N,X,1,Xp,1)
+      call dcopy(n,x,1,Xp,1)
 !
-      DO i = 1 , Nsub
+      do i = 1 , Nsub
          k = Ind(i)
-         dk = D(i)
-         xk = X(k)
-         IF ( Nbd(k).NE.0 ) THEN
+         dk = d(i)
+         xk = x(k)
+         if ( Nbd(k)/=0 ) then
 !
-            IF ( Nbd(k).EQ.1 ) THEN          ! lower bounds only
-               X(k) = MAX(L(k),xk+dk)
-               IF ( X(k).EQ.L(k) ) Iword = 1
-            ELSE
+            if ( Nbd(k)==1 ) then          ! lower bounds only
+               x(k) = max(l(k),xk+dk)
+               if ( x(k)==l(k) ) Iword = 1
+            else
 !
-               IF ( Nbd(k).EQ.2 ) THEN       ! upper and lower bounds
-                  xk = MAX(L(k),xk+dk)
-                  X(k) = MIN(U(k),xk)
-                  IF ( X(k).EQ.L(k) .OR. X(k).EQ.U(k) ) Iword = 1
-               ELSE
+               if ( Nbd(k)==2 ) then       ! upper and lower bounds
+                  xk = max(l(k),xk+dk)
+                  x(k) = min(u(k),xk)
+                  if ( x(k)==l(k) .or. x(k)==u(k) ) Iword = 1
+               else
 !
-                  IF ( Nbd(k).EQ.3 ) THEN    ! upper bounds only
-                     X(k) = MIN(U(k),xk+dk)
-                     IF ( X(k).EQ.U(k) ) Iword = 1
-                  ENDIF
-               ENDIF
-            ENDIF
+                  if ( Nbd(k)==3 ) then    ! upper bounds only
+                     x(k) = min(u(k),xk+dk)
+                     if ( x(k)==u(k) ) Iword = 1
+                  endif
+               endif
+            endif
 !
-         ELSE                                ! free variables
-            X(k) = xk + dk
-         ENDIF
-      ENDDO
+         else                                ! free variables
+            x(k) = xk + dk
+         endif
+      enddo
 !
-      IF ( Iword.EQ.0 ) GOTO 100
+      if ( Iword==0 ) goto 100
 !
 !     check sign of the directional derivative
 !
-      dd_p = ZERO
-      DO i = 1 , N
-         dd_p = dd_p + (X(i)-Xx(i))*Gg(i)
-      ENDDO
-      IF ( dd_p.GT.ZERO ) THEN
-         CALL DCOPY(N,Xp,1,X,1)
-         WRITE (6,*) ' Positive dir derivative in projection '
-         WRITE (6,*) ' Using the backtracking step '
-      ELSE
-         GOTO 100
-      ENDIF
+      dd_p = zero
+      do i = 1 , n
+         dd_p = dd_p + (x(i)-Xx(i))*Gg(i)
+      enddo
+      if ( dd_p>zero ) then
+         call dcopy(n,Xp,1,x,1)
+         write (6,*) ' Positive dir derivative in projection '
+         write (6,*) ' Using the backtracking step '
+      else
+         goto 100
+      endif
 !
 !-----------------------------------------------------------------
 !
-      alpha = ONE
+      alpha = one
       temp1 = alpha
       ibd = 0
-      DO i = 1 , Nsub
+      do i = 1 , Nsub
          k = Ind(i)
-         dk = D(i)
-         IF ( Nbd(k).NE.0 ) THEN
-            IF ( dk.LT.ZERO .AND. Nbd(k).LE.2 ) THEN
-               temp2 = L(k) - X(k)
-               IF ( temp2.GE.ZERO ) THEN
-                  temp1 = ZERO
-               ELSEIF ( dk*alpha.LT.temp2 ) THEN
+         dk = d(i)
+         if ( Nbd(k)/=0 ) then
+            if ( dk<zero .and. Nbd(k)<=2 ) then
+               temp2 = l(k) - x(k)
+               if ( temp2>=zero ) then
+                  temp1 = zero
+               elseif ( dk*alpha<temp2 ) then
                   temp1 = temp2/dk
-               ENDIF
-            ELSEIF ( dk.GT.ZERO .AND. Nbd(k).GE.2 ) THEN
-               temp2 = U(k) - X(k)
-               IF ( temp2.LE.ZERO ) THEN
-                  temp1 = ZERO
-               ELSEIF ( dk*alpha.GT.temp2 ) THEN
+               endif
+            elseif ( dk>zero .and. Nbd(k)>=2 ) then
+               temp2 = u(k) - x(k)
+               if ( temp2<=zero ) then
+                  temp1 = zero
+               elseif ( dk*alpha>temp2 ) then
                   temp1 = temp2/dk
-               ENDIF
-            ENDIF
-            IF ( temp1.LT.alpha ) THEN
+               endif
+            endif
+            if ( temp1<alpha ) then
                alpha = temp1
                ibd = i
-            ENDIF
-         ENDIF
-      ENDDO
+            endif
+         endif
+      enddo
  
-      IF ( alpha.LT.ONE ) THEN
-         dk = D(ibd)
+      if ( alpha<one ) then
+         dk = d(ibd)
          k = Ind(ibd)
-         IF ( dk.GT.ZERO ) THEN
-            X(k) = U(k)
-            D(ibd) = ZERO
-         ELSEIF ( dk.LT.ZERO ) THEN
-            X(k) = L(k)
-            D(ibd) = ZERO
-         ENDIF
-      ENDIF
-      DO i = 1 , Nsub
+         if ( dk>zero ) then
+            x(k) = u(k)
+            d(ibd) = zero
+         elseif ( dk<zero ) then
+            x(k) = l(k)
+            d(ibd) = zero
+         endif
+      endif
+      do i = 1 , Nsub
          k = Ind(i)
-         X(k) = X(k) + alpha*D(i)
-      ENDDO
+         x(k) = x(k) + alpha*d(i)
+      enddo
 !ccccc
- 100  CONTINUE
+ 100  continue
  
-      IF ( Iprint.GE.99 ) WRITE (6,99002)
-99002 FORMAT (/,'----------------exit SUBSM --------------------',/)
+      if ( Iprint>=99 ) write (6,99002)
+99002 format (/,'----------------exit SUBSM --------------------',/)
  
-      CONTINUE
+      continue
  
-      END
+      end
 !====================== The end of subsm ===============================
  
-      SUBROUTINE DCSRCH(F,G,Stp,Ftol,Gtol,Xtol,Stpmin,Stpmax,Task,Isave,&
+      subroutine dcsrch(f,g,Stp,Ftol,Gtol,Xtol,Stpmin,Stpmax,Task,Isave,&
                       & Dsave)
-      IMPLICIT NONE
+      implicit none
 !*--DCSRCH3385
-      CHARACTER*(*) Task
-      INTEGER Isave(2)
-      DOUBLE PRECISION F , G , Stp , Ftol , Gtol , Xtol , Stpmin ,      &
+      character*(*) Task
+      integer Isave(2)
+      double precision f , g , Stp , Ftol , Gtol , Xtol , Stpmin ,      &
                      & Stpmax
-      DOUBLE PRECISION Dsave(13)
+      double precision Dsave(13)
 !     **********
 !
 !     Subroutine dcsrch
@@ -3406,7 +3406,7 @@
 !     task = 'START'
 !  10 continue
 !        call dcsrch( ... )
-!        if (task .eq. 'FG') then
+!        if (task == 'FG') then
 !           Evaluate the function and the gradient at stp
 !           goto 10
 !           end if
@@ -3500,45 +3500,45 @@
 !     Brett M. Averick, Richard G. Carter, and Jorge J. More'.
 !
 !     **********
-      DOUBLE PRECISION ZERO , P5 , P66
-      PARAMETER (ZERO=0.0D0,P5=0.5D0,P66=0.66D0)
-      DOUBLE PRECISION XTRAPL , XTRAPU
-      PARAMETER (XTRAPL=1.1D0,XTRAPU=4.0D0)
+      double precision zero , p5 , p66
+      parameter (zero=0.0d0,p5=0.5d0,p66=0.66d0)
+      double precision xtrapl , xtrapu
+      parameter (xtrapl=1.1d0,xtrapu=4.0d0)
  
-      LOGICAL brackt
-      INTEGER stage
-      DOUBLE PRECISION finit , ftest , fm , fx , fxm , fy , fym ,       &
+      logical brackt
+      integer stage
+      double precision finit , ftest , fm , fx , fxm , fy , fym ,       &
                      & ginit , gtest , gm , gx , gxm , gy , gym , stx , &
                      & sty , stmin , stmax , width , width1
  
 !     Initialization block.
  
-      IF ( Task(1:5).EQ.'START' ) THEN
+      if ( Task(1:5)=='START' ) then
  
 !        Check the input arguments for errors.
  
-         IF ( Stp.LT.Stpmin ) Task = 'ERROR: STP .LT. STPMIN'
-         IF ( Stp.GT.Stpmax ) Task = 'ERROR: STP .GT. STPMAX'
-         IF ( G.GE.ZERO ) Task = 'ERROR: INITIAL G .GE. ZERO'
-         IF ( Ftol.LT.ZERO ) Task = 'ERROR: FTOL .LT. ZERO'
-         IF ( Gtol.LT.ZERO ) Task = 'ERROR: GTOL .LT. ZERO'
-         IF ( Xtol.LT.ZERO ) Task = 'ERROR: XTOL .LT. ZERO'
-         IF ( Stpmin.LT.ZERO ) Task = 'ERROR: STPMIN .LT. ZERO'
-         IF ( Stpmax.LT.Stpmin ) Task = 'ERROR: STPMAX .LT. STPMIN'
+         if ( Stp<Stpmin ) Task = 'ERROR: STP < STPMIN'
+         if ( Stp>Stpmax ) Task = 'ERROR: STP > STPMAX'
+         if ( g>=zero ) Task = 'ERROR: INITIAL G >= ZERO'
+         if ( Ftol<zero ) Task = 'ERROR: FTOL < ZERO'
+         if ( Gtol<zero ) Task = 'ERROR: GTOL < ZERO'
+         if ( Xtol<zero ) Task = 'ERROR: XTOL < ZERO'
+         if ( Stpmin<zero ) Task = 'ERROR: STPMIN < ZERO'
+         if ( Stpmax<Stpmin ) Task = 'ERROR: STPMAX < STPMIN'
  
 !        Exit if there are errors on input.
  
-         IF ( Task(1:5).EQ.'ERROR' ) RETURN
+         if ( Task(1:5)=='ERROR' ) return
  
 !        Initialize local variables.
  
-         brackt = .FALSE.
+         brackt = .false.
          stage = 1
-         finit = F
-         ginit = G
+         finit = f
+         ginit = g
          gtest = Ftol*ginit
          width = Stpmax - Stpmin
-         width1 = width/P5
+         width1 = width/p5
  
 !        The variables stx, fx, gx contain the values of the step,
 !        function, and derivative at the best step.
@@ -3547,27 +3547,27 @@
 !        The variables stp, f, g contain the values of the step,
 !        function, and derivative at stp.
  
-         stx = ZERO
+         stx = zero
          fx = finit
          gx = ginit
-         sty = ZERO
+         sty = zero
          fy = finit
          gy = ginit
-         stmin = ZERO
-         stmax = Stp + XTRAPU*Stp
+         stmin = zero
+         stmax = Stp + xtrapu*Stp
          Task = 'FG'
  
-         GOTO 100
+         goto 100
  
-      ELSE
+      else
  
 !        Restore local variables.
  
-         IF ( Isave(1).EQ.1 ) THEN
-            brackt = .TRUE.
-         ELSE
-            brackt = .FALSE.
-         ENDIF
+         if ( Isave(1)==1 ) then
+            brackt = .true.
+         else
+            brackt = .false.
+         endif
          stage = Isave(2)
          ginit = Dsave(1)
          gtest = Dsave(2)
@@ -3583,52 +3583,52 @@
          width = Dsave(12)
          width1 = Dsave(13)
  
-      ENDIF
+      endif
  
 !     If psi(stp) <= 0 and f'(stp) >= 0 for some step, then the
 !     algorithm enters the second stage.
  
       ftest = finit + Stp*gtest
-      IF ( stage.EQ.1 .AND. F.LE.ftest .AND. G.GE.ZERO ) stage = 2
+      if ( stage==1 .and. f<=ftest .and. g>=zero ) stage = 2
  
 !     Test for warnings.
  
-      IF ( brackt .AND. (Stp.LE.stmin .OR. Stp.GE.stmax) )              &
+      if ( brackt .and. (Stp<=stmin .or. Stp>=stmax) )              &
           & Task = 'WARNING: ROUNDING ERRORS PREVENT PROGRESS'
-      IF ( brackt .AND. stmax-stmin.LE.Xtol*stmax )                     &
+      if ( brackt .and. stmax-stmin<=Xtol*stmax )                     &
           & Task = 'WARNING: XTOL TEST SATISFIED'
-      IF ( Stp.EQ.Stpmax .AND. F.LE.ftest .AND. G.LE.gtest )            &
+      if ( Stp==Stpmax .and. f<=ftest .and. g<=gtest )            &
           & Task = 'WARNING: STP = STPMAX'
-      IF ( Stp.EQ.Stpmin .AND. (F.GT.ftest .OR. G.GE.gtest) )           &
+      if ( Stp==Stpmin .and. (f>ftest .or. g>=gtest) )           &
           & Task = 'WARNING: STP = STPMIN'
  
 !     Test for convergence.
  
-      IF ( F.LE.ftest .AND. ABS(G).LE.Gtol*(-ginit) )                   &
+      if ( f<=ftest .and. abs(g)<=Gtol*(-ginit) )                   &
           & Task = 'CONVERGENCE'
  
 !     Test for termination.
  
-      IF ( Task(1:4).EQ.'WARN' .OR. Task(1:4).EQ.'CONV' ) GOTO 100
+      if ( Task(1:4)=='WARN' .or. Task(1:4)=='CONV' ) goto 100
  
 !     A modified function is used to predict the step during the
 !     first stage if a lower function value has been obtained but
 !     the decrease is not sufficient.
  
-      IF ( stage.EQ.1 .AND. F.LE.fx .AND. F.GT.ftest ) THEN
+      if ( stage==1 .and. f<=fx .and. f>ftest ) then
  
 !        Define the modified function and derivative values.
  
-         fm = F - Stp*gtest
+         fm = f - Stp*gtest
          fxm = fx - stx*gtest
          fym = fy - sty*gtest
-         gm = G - gtest
+         gm = g - gtest
          gxm = gx - gtest
          gym = gy - gtest
  
 !        Call dcstep to update stx, sty, and to compute the new step.
  
-         CALL DCSTEP(stx,fxm,gxm,sty,fym,gym,Stp,fm,gm,brackt,stmin,    &
+         call dcstep(stx,fxm,gxm,sty,fym,gym,Stp,fm,gm,brackt,stmin,    &
                    & stmax)
  
 !        Reset the function and derivative values for f.
@@ -3638,56 +3638,56 @@
          gx = gxm + gtest
          gy = gym + gtest
  
-      ELSE
+      else
  
 !       Call dcstep to update stx, sty, and to compute the new step.
  
-         CALL DCSTEP(stx,fx,gx,sty,fy,gy,Stp,F,G,brackt,stmin,stmax)
+         call dcstep(stx,fx,gx,sty,fy,gy,Stp,f,g,brackt,stmin,stmax)
  
-      ENDIF
+      endif
  
 !     Decide if a bisection step is needed.
  
-      IF ( brackt ) THEN
-         IF ( ABS(sty-stx).GE.P66*width1 ) Stp = stx + P5*(sty-stx)
+      if ( brackt ) then
+         if ( abs(sty-stx)>=p66*width1 ) Stp = stx + p5*(sty-stx)
          width1 = width
-         width = ABS(sty-stx)
-      ENDIF
+         width = abs(sty-stx)
+      endif
  
 !     Set the minimum and maximum steps allowed for stp.
  
-      IF ( brackt ) THEN
-         stmin = MIN(stx,sty)
-         stmax = MAX(stx,sty)
-      ELSE
-         stmin = Stp + XTRAPL*(Stp-stx)
-         stmax = Stp + XTRAPU*(Stp-stx)
-      ENDIF
+      if ( brackt ) then
+         stmin = min(stx,sty)
+         stmax = max(stx,sty)
+      else
+         stmin = Stp + xtrapl*(Stp-stx)
+         stmax = Stp + xtrapu*(Stp-stx)
+      endif
  
 !     Force the step to be within the bounds stpmax and stpmin.
  
-      Stp = MAX(Stp,Stpmin)
-      Stp = MIN(Stp,Stpmax)
+      Stp = max(Stp,Stpmin)
+      Stp = min(Stp,Stpmax)
  
 !     If further progress is not possible, let stp be the best
 !     point obtained during the search.
  
-      IF ( brackt .AND. (Stp.LE.stmin .OR. Stp.GE.stmax) .OR.           &
-         & (brackt .AND. stmax-stmin.LE.Xtol*stmax) ) Stp = stx
+      if ( brackt .and. (Stp<=stmin .or. Stp>=stmax) .or.           &
+         & (brackt .and. stmax-stmin<=Xtol*stmax) ) Stp = stx
  
 !     Obtain another function and derivative.
  
       Task = 'FG'
  
- 100  CONTINUE
+ 100  continue
  
 !     Save local variables.
  
-      IF ( brackt ) THEN
+      if ( brackt ) then
          Isave(1) = 1
-      ELSE
+      else
          Isave(1) = 0
-      ENDIF
+      endif
       Isave(2) = stage
       Dsave(1) = ginit
       Dsave(2) = gtest
@@ -3703,17 +3703,17 @@
       Dsave(12) = width
       Dsave(13) = width1
  
-      CONTINUE
-      END
+      continue
+      end
  
 !====================== The end of dcsrch ==============================
  
-      SUBROUTINE DCSTEP(Stx,Fx,Dx,Sty,Fy,Dy,Stp,Fp,Dp,Brackt,Stpmin,    &
+      subroutine dcstep(Stx,Fx,Dx,Sty,Fy,Dy,Stp,Fp,Dp,Brackt,Stpmin,    &
                       & Stpmax)
-      IMPLICIT NONE
+      implicit none
 !*--DCSTEP3735
-      LOGICAL Brackt
-      DOUBLE PRECISION Stx , Fx , Dx , Sty , Fy , Dy , Stp , Fp , Dp ,  &
+      logical Brackt
+      double precision Stx , Fx , Dx , Sty , Fy , Dy , Stp , Fp , Dp ,  &
                      & Stpmin , Stpmax
 !     **********
 !
@@ -3807,163 +3807,163 @@
 !     Brett M. Averick and Jorge J. More'.
 !
 !     **********
-      DOUBLE PRECISION ZERO , P66 , TWO , THREE
-      PARAMETER (ZERO=0.0D0,P66=0.66D0,TWO=2.0D0,THREE=3.0D0)
+      double precision zero , p66 , two , three
+      parameter (zero=0.0d0,p66=0.66d0,two=2.0d0,three=3.0d0)
  
-      DOUBLE PRECISION gamma , p , q , r , s , sgnd , stpc , stpf ,     &
+      double precision gamma , p , q , r , s , sgnd , stpc , stpf ,     &
                      & stpq , theta
  
-      sgnd = Dp*(Dx/ABS(Dx))
+      sgnd = Dp*(Dx/abs(Dx))
  
 !     First case: A higher function value. The minimum is bracketed.
 !     If the cubic step is closer to stx than the quadratic step, the
 !     cubic step is taken, otherwise the average of the cubic and
 !     quadratic steps is taken.
  
-      IF ( Fp.GT.Fx ) THEN
-         theta = THREE*(Fx-Fp)/(Stp-Stx) + Dx + Dp
-         s = MAX(ABS(theta),ABS(Dx),ABS(Dp))
-         gamma = s*SQRT((theta/s)**2-(Dx/s)*(Dp/s))
-         IF ( Stp.LT.Stx ) gamma = -gamma
+      if ( Fp>Fx ) then
+         theta = three*(Fx-Fp)/(Stp-Stx) + Dx + Dp
+         s = max(abs(theta),abs(Dx),abs(Dp))
+         gamma = s*sqrt((theta/s)**2-(Dx/s)*(Dp/s))
+         if ( Stp<Stx ) gamma = -gamma
          p = (gamma-Dx) + theta
          q = ((gamma-Dx)+gamma) + Dp
          r = p/q
          stpc = Stx + r*(Stp-Stx)
-         stpq = Stx + ((Dx/((Fx-Fp)/(Stp-Stx)+Dx))/TWO)*(Stp-Stx)
-         IF ( ABS(stpc-Stx).LT.ABS(stpq-Stx) ) THEN
+         stpq = Stx + ((Dx/((Fx-Fp)/(Stp-Stx)+Dx))/two)*(Stp-Stx)
+         if ( abs(stpc-Stx)<abs(stpq-Stx) ) then
             stpf = stpc
-         ELSE
-            stpf = stpc + (stpq-stpc)/TWO
-         ENDIF
-         Brackt = .TRUE.
+         else
+            stpf = stpc + (stpq-stpc)/two
+         endif
+         Brackt = .true.
  
 !     Second case: A lower function value and derivatives of opposite
 !     sign. The minimum is bracketed. If the cubic step is farther from
 !     stp than the secant step, the cubic step is taken, otherwise the
 !     secant step is taken.
  
-      ELSEIF ( sgnd.LT.ZERO ) THEN
-         theta = THREE*(Fx-Fp)/(Stp-Stx) + Dx + Dp
-         s = MAX(ABS(theta),ABS(Dx),ABS(Dp))
-         gamma = s*SQRT((theta/s)**2-(Dx/s)*(Dp/s))
-         IF ( Stp.GT.Stx ) gamma = -gamma
+      elseif ( sgnd<zero ) then
+         theta = three*(Fx-Fp)/(Stp-Stx) + Dx + Dp
+         s = max(abs(theta),abs(Dx),abs(Dp))
+         gamma = s*sqrt((theta/s)**2-(Dx/s)*(Dp/s))
+         if ( Stp>Stx ) gamma = -gamma
          p = (gamma-Dp) + theta
          q = ((gamma-Dp)+gamma) + Dx
          r = p/q
          stpc = Stp + r*(Stx-Stp)
          stpq = Stp + (Dp/(Dp-Dx))*(Stx-Stp)
-         IF ( ABS(stpc-Stp).GT.ABS(stpq-Stp) ) THEN
+         if ( abs(stpc-Stp)>abs(stpq-Stp) ) then
             stpf = stpc
-         ELSE
+         else
             stpf = stpq
-         ENDIF
-         Brackt = .TRUE.
+         endif
+         Brackt = .true.
  
 !     Third case: A lower function value, derivatives of the same sign,
 !     and the magnitude of the derivative decreases.
  
-      ELSEIF ( ABS(Dp).LT.ABS(Dx) ) THEN
+      elseif ( abs(Dp)<abs(Dx) ) then
  
 !        The cubic step is computed only if the cubic tends to infinity
 !        in the direction of the step or if the minimum of the cubic
 !        is beyond stp. Otherwise the cubic step is defined to be the
 !        secant step.
  
-         theta = THREE*(Fx-Fp)/(Stp-Stx) + Dx + Dp
-         s = MAX(ABS(theta),ABS(Dx),ABS(Dp))
+         theta = three*(Fx-Fp)/(Stp-Stx) + Dx + Dp
+         s = max(abs(theta),abs(Dx),abs(Dp))
  
 !        The case gamma = 0 only arises if the cubic does not tend
 !        to infinity in the direction of the step.
  
-         gamma = s*SQRT(MAX(ZERO,(theta/s)**2-(Dx/s)*(Dp/s)))
-         IF ( Stp.GT.Stx ) gamma = -gamma
+         gamma = s*sqrt(max(zero,(theta/s)**2-(Dx/s)*(Dp/s)))
+         if ( Stp>Stx ) gamma = -gamma
          p = (gamma-Dp) + theta
          q = (gamma+(Dx-Dp)) + gamma
          r = p/q
-         IF ( r.LT.ZERO .AND. gamma.NE.ZERO ) THEN
+         if ( r<zero .and. gamma/=zero ) then
             stpc = Stp + r*(Stx-Stp)
-         ELSEIF ( Stp.GT.Stx ) THEN
+         elseif ( Stp>Stx ) then
             stpc = Stpmax
-         ELSE
+         else
             stpc = Stpmin
-         ENDIF
+         endif
          stpq = Stp + (Dp/(Dp-Dx))*(Stx-Stp)
  
-         IF ( Brackt ) THEN
+         if ( Brackt ) then
  
 !           A minimizer has been bracketed. If the cubic step is
 !           closer to stp than the secant step, the cubic step is
 !           taken, otherwise the secant step is taken.
  
-            IF ( ABS(stpc-Stp).LT.ABS(stpq-Stp) ) THEN
+            if ( abs(stpc-Stp)<abs(stpq-Stp) ) then
                stpf = stpc
-            ELSE
+            else
                stpf = stpq
-            ENDIF
-            IF ( Stp.GT.Stx ) THEN
-               stpf = MIN(Stp+P66*(Sty-Stp),stpf)
-            ELSE
-               stpf = MAX(Stp+P66*(Sty-Stp),stpf)
-            ENDIF
-         ELSE
+            endif
+            if ( Stp>Stx ) then
+               stpf = min(Stp+p66*(Sty-Stp),stpf)
+            else
+               stpf = max(Stp+p66*(Sty-Stp),stpf)
+            endif
+         else
  
 !           A minimizer has not been bracketed. If the cubic step is
 !           farther from stp than the secant step, the cubic step is
 !           taken, otherwise the secant step is taken.
  
-            IF ( ABS(stpc-Stp).GT.ABS(stpq-Stp) ) THEN
+            if ( abs(stpc-Stp)>abs(stpq-Stp) ) then
                stpf = stpc
-            ELSE
+            else
                stpf = stpq
-            ENDIF
-            stpf = MIN(Stpmax,stpf)
-            stpf = MAX(Stpmin,stpf)
-         ENDIF
+            endif
+            stpf = min(Stpmax,stpf)
+            stpf = max(Stpmin,stpf)
+         endif
  
 !     Fourth case: A lower function value, derivatives of the same sign,
 !     and the magnitude of the derivative does not decrease. If the
 !     minimum is not bracketed, the step is either stpmin or stpmax,
 !     otherwise the cubic step is taken.
  
-      ELSE
-         IF ( Brackt ) THEN
-            theta = THREE*(Fp-Fy)/(Sty-Stp) + Dy + Dp
-            s = MAX(ABS(theta),ABS(Dy),ABS(Dp))
-            gamma = s*SQRT((theta/s)**2-(Dy/s)*(Dp/s))
-            IF ( Stp.GT.Sty ) gamma = -gamma
+      else
+         if ( Brackt ) then
+            theta = three*(Fp-Fy)/(Sty-Stp) + Dy + Dp
+            s = max(abs(theta),abs(Dy),abs(Dp))
+            gamma = s*sqrt((theta/s)**2-(Dy/s)*(Dp/s))
+            if ( Stp>Sty ) gamma = -gamma
             p = (gamma-Dp) + theta
             q = ((gamma-Dp)+gamma) + Dy
             r = p/q
             stpc = Stp + r*(Sty-Stp)
             stpf = stpc
-         ELSEIF ( Stp.GT.Stx ) THEN
+         elseif ( Stp>Stx ) then
             stpf = Stpmax
-         ELSE
+         else
             stpf = Stpmin
-         ENDIF
-      ENDIF
+         endif
+      endif
  
 !     Update the interval which contains a minimizer.
  
-      IF ( Fp.GT.Fx ) THEN
+      if ( Fp>Fx ) then
          Sty = Stp
          Fy = Fp
          Dy = Dp
-      ELSE
-         IF ( sgnd.LT.ZERO ) THEN
+      else
+         if ( sgnd<zero ) then
             Sty = Stx
             Fy = Fx
             Dy = Dx
-         ENDIF
+         endif
          Stx = Stp
          Fx = Fp
          Dx = Dp
-      ENDIF
+      endif
  
 !     Compute the new step.
  
       Stp = stpf
  
-      CONTINUE
-      END
+      continue
+      end
  
