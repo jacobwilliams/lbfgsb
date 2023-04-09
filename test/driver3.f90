@@ -1,6 +1,6 @@
 !                                                                                      
-!  L-BFGS-B is released under the “New BSD License” (aka “Modified BSD License”        
-!  or “3-clause license”)                                                              
+!  L-BFGS-B is released under the "New BSD License" (aka "Modified BSD License"        
+!  or "3-clause license")                                                              
 !  Please read attached file License.txt                                               
 !                                        
 !                             DRIVER 3  in Fortran 90
@@ -45,6 +45,8 @@
 !     **************
 
       program driver
+
+      use lbfgsb_module
 
 !     This time-controlled driver shows that it is possible to terminate
 !     a run by elapsed CPU time, and yet be able to print all desired

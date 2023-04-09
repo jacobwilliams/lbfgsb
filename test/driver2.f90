@@ -1,6 +1,6 @@
 !                                                                                      
-!  L-BFGS-B is released under the “New BSD License” (aka “Modified BSD License”        
-!  or “3-clause license”)                                                              
+!  L-BFGS-B is released under the "New BSD License" (aka "Modified BSD License"        
+!  or "3-clause license")                                                              
 !  Please read attached file License.txt                                               
 !                                        
 !
@@ -44,6 +44,8 @@
 !
 !    **************
       program driver
+
+      use lbfgsb_module
 
 !     This driver shows how to replace the default stopping test
 !     by other termination criteria. It also illustrates how to

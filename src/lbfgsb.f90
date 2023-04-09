@@ -43,6 +43,17 @@
 !                        March  2011
 !
 !=============================================================================
+
+    module lbfgsb_module 
+
+    implicit none 
+
+    private 
+
+    public :: setulb
+
+    contains
+
       subroutine setulb(n,m,x,l,u,Nbd,f,g,Factr,Pgtol,Wa,Iwa,Task,      &
                       & Iprint,Csave,Lsave,Isave,Dsave)
       implicit none
@@ -3967,3 +3978,4 @@
       continue
       end
  
+end module lbfgsb_module 
