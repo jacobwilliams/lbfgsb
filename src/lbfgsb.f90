@@ -43,6 +43,12 @@
 
     private
 
+    ! constants:
+    real(wp),parameter :: zero = 0.0_wp
+    real(wp),parameter :: one  = 1.0_wp
+    real(wp),parameter :: two   = 2.0_wp
+    real(wp),parameter :: three = 3.0_wp
+
     public :: setulb
 
     contains
@@ -453,8 +459,6 @@
                      & sbgnrm , ddum , dnorm , dtd , epsmch , cpu1 ,    &
                      & cpu2 , cachyt , sbtime , lnscht , time1 , time2 ,&
                      & gd , gdold , stp , stpmx , time
-      real(wp) one , zero
-      parameter (one=1.0d0,zero=0.0d0)
 
       if ( Task=='START' ) then
 
@@ -992,8 +996,6 @@
 !     ************
 
       integer nbdd , i
-      real(wp) zero
-      parameter (zero=0.0d0)
 
 !     Initialize nbdd, prjctd, cnstnd and boxed.
 
@@ -1362,8 +1364,6 @@
       real(wp) f1 , f2 , dt , dtm , tsum , dibp , zibp , dibp2 ,&
                      & bkmin , tu , tl , wmc , wmp , wmw , tj ,  &
                      & tj0 , neggi , Sbgnrm , f2_org
-      real(wp) one , zero
-      parameter (one=1.0d0,zero=0.0d0)
 
 !     Check the status of the variables, reset iwhere(i) if necessary;
 !       compute the Cauchy direction d and the breakpoints t; initialize
@@ -1755,8 +1755,6 @@
 !     ************
 
       integer i
-      real(wp) zero
-      parameter (zero=0.0d0)
 
 !     Check the input arguments for errors.
 
@@ -1921,8 +1919,6 @@
       integer m2 , ipntr , jpntr , iy , is , jy , js , is1 , js1 , k1 , &
             & i , k , col2 , pbegin , pend , dbegin , dend , upcl
       real(wp) temp1 , temp2 , temp3 , temp4
-      real(wp) zero
-      parameter (zero=0.0d0)
 
 !     Form the lower triangular part of
 !               WN1 = [Y' ZZ'Y   L_a'+R_z']
@@ -2140,8 +2136,6 @@
 
       integer i , j , k , k1
       real(wp) ddum
-      real(wp) zero
-      parameter (zero=0.0d0)
 
 
 !     Form the upper half of  T = theta*SS + L*D^(-1)*L',
@@ -2329,16 +2323,18 @@
 
 !           Add ddum to the heap.
             i = k
- 20         continue
-            if ( i>1 ) then
-               j = i/2
-               if ( ddum<t(j) ) then
-                  t(i) = t(j)
-                  Iorder(i) = Iorder(j)
-                  i = j
-                  goto 20
+            do
+               if ( i>1 ) then
+                  j = i/2
+                  if ( ddum<t(j) ) then
+                     t(i) = t(j)
+                     Iorder(i) = Iorder(j)
+                     i = j
+                     cycle
+                  endif
                endif
-            endif
+               exit
+            end do
             t(i) = ddum
             Iorder(i) = indxin
          enddo
@@ -2356,17 +2352,19 @@
          indxin = Iorder(n)
 
 !        Restore the heap
- 50      continue
-         j = i + i
-         if ( j<=n-1 ) then
-            if ( t(j+1)<t(j) ) j = j + 1
-            if ( t(j)<ddum ) then
-               t(i) = t(j)
-               Iorder(i) = Iorder(j)
-               i = j
-               goto 50
+         do
+            j = i + i
+            if ( j<=n-1 ) then
+               if ( t(j+1)<t(j) ) j = j + 1
+               if ( t(j)<ddum ) then
+                  t(i) = t(j)
+                  Iorder(i) = Iorder(j)
+                  i = j
+                  cycle
+               endif
             endif
-         endif
+            exit
+         end do
          t(i) = ddum
          Iorder(i) = indxin
 
@@ -2418,59 +2416,62 @@
 
       integer i
       real(wp) a1 , a2
-      real(wp) one , zero , big
-      parameter (one=1.0d0,zero=0.0d0,big=1.0d+10)
-      real(wp) ftol , gtol , xtol
-      parameter (ftol=1.0d-3,gtol=0.9d0,xtol=0.1d0)
 
-      if ( Task(1:5)=='FG_LN' ) goto 100
+      real(wp),parameter :: big  = 1.0e+10_wp
+      real(wp),parameter :: ftol = 1.0e-3_wp
+      real(wp),parameter :: gtol = 0.9_wp
+      real(wp),parameter :: xtol = 0.1_wp
 
-      Dtd = ddot(n,d,1,d,1)
-      Dnorm = sqrt(Dtd)
+      if ( Task(1:5)/='FG_LN' ) then
 
-!     Determine the maximum step length.
+         Dtd = ddot(n,d,1,d,1)
+         Dnorm = sqrt(Dtd)
 
-      Stpmx = big
-      if ( Cnstnd ) then
-         if ( Iter==0 ) then
-            Stpmx = one
-         else
-            do i = 1 , n
-               a1 = d(i)
-               if ( Nbd(i)/=0 ) then
-                  if ( a1<zero .and. Nbd(i)<=2 ) then
-                     a2 = l(i) - x(i)
-                     if ( a2>=zero ) then
-                        Stpmx = zero
-                     elseif ( a1*Stpmx<a2 ) then
-                        Stpmx = a2/a1
-                     endif
-                  elseif ( a1>zero .and. Nbd(i)>=2 ) then
-                     a2 = u(i) - x(i)
-                     if ( a2<=zero ) then
-                        Stpmx = zero
-                     elseif ( a1*Stpmx>a2 ) then
-                        Stpmx = a2/a1
+   !     Determine the maximum step length.
+
+         Stpmx = big
+         if ( Cnstnd ) then
+            if ( Iter==0 ) then
+               Stpmx = one
+            else
+               do i = 1 , n
+                  a1 = d(i)
+                  if ( Nbd(i)/=0 ) then
+                     if ( a1<zero .and. Nbd(i)<=2 ) then
+                        a2 = l(i) - x(i)
+                        if ( a2>=zero ) then
+                           Stpmx = zero
+                        elseif ( a1*Stpmx<a2 ) then
+                           Stpmx = a2/a1
+                        endif
+                     elseif ( a1>zero .and. Nbd(i)>=2 ) then
+                        a2 = u(i) - x(i)
+                        if ( a2<=zero ) then
+                           Stpmx = zero
+                        elseif ( a1*Stpmx>a2 ) then
+                           Stpmx = a2/a1
+                        endif
                      endif
                   endif
-               endif
-            enddo
+               enddo
+            endif
          endif
-      endif
 
-      if ( Iter==0 .and. .not.Boxed ) then
-         Stp = min(one/Dnorm,Stpmx)
-      else
-         Stp = one
-      endif
+         if ( Iter==0 .and. .not.Boxed ) then
+            Stp = min(one/Dnorm,Stpmx)
+         else
+            Stp = one
+         endif
 
-      call dcopy(n,x,1,t,1)
-      call dcopy(n,g,1,r,1)
-      Fold = f
-      Ifun = 0
-      Iback = 0
-      Csave = 'START'
- 100  continue
+         call dcopy(n,x,1,t,1)
+         call dcopy(n,g,1,r,1)
+         Fold = f
+         Ifun = 0
+         Iback = 0
+         Csave = 'START'
+
+      end if
+
       Gd = ddot(n,g,1,d,1)
       if ( Ifun==0 ) then
          Gdold = Gd
@@ -2537,8 +2538,6 @@
 !     ************
 
       integer j , pointr
-      real(wp) one
-      parameter (one=1.0d0)
 
 !     Set pointers for matrices WS and WY.
 
@@ -2761,34 +2760,36 @@
 
       integer i
 
-      if ( Task(1:5)=='ERROR' ) goto 100
+      if ( Task(1:5)/='ERROR' ) then
 
-      if ( Iprint>=0 ) then
-         write (6,99001)
-99001    format (/,'           * * *',/,/,                              &
-                &'Tit   = total number of iterations',/,                &
-                &'Tnf   = total number of function evaluations',/,      &
-                &'Tnint = total number of segments explored during',    &
-                &' Cauchy searches',/,                                  &
-                &'Skip  = number of BFGS updates skipped',/,            &
-                &'Nact  = number of active bounds at final generalized',&
-                &' Cauchy point',/,                                     &
-                &'Projg = norm of the final projected gradient',/,      &
-                &'F     = final function value',/,/,'           * * *')
-         write (6,99002)
-99002    format (/,3x,'N',4x,'Tit',5x,'Tnf',2x,'Tnint',2x,'Skip',2x,    &
-                &'Nact',5x,'Projg',8x,'F')
-         write (6,99003) n , Iter , Nfgv , Nintol , Nskip , Nact ,      &
-                       & Sbgnrm , f
-99003    format (i5,2(1x,i6),(1x,i6),(2x,i4),(1x,i5),1p,2(2x,d10.3))
-         if ( Iprint>=100 ) then
-            write (6,99004) 'X =' , (x(i),i=1,n)
+         if ( Iprint>=0 ) then
+            write (6,99001)
+   99001    format (/,'           * * *',/,/,                              &
+                  &'Tit   = total number of iterations',/,                &
+                  &'Tnf   = total number of function evaluations',/,      &
+                  &'Tnint = total number of segments explored during',    &
+                  &' Cauchy searches',/,                                  &
+                  &'Skip  = number of BFGS updates skipped',/,            &
+                  &'Nact  = number of active bounds at final generalized',&
+                  &' Cauchy point',/,                                     &
+                  &'Projg = norm of the final projected gradient',/,      &
+                  &'F     = final function value',/,/,'           * * *')
+            write (6,99002)
+   99002    format (/,3x,'N',4x,'Tit',5x,'Tnf',2x,'Tnint',2x,'Skip',2x,    &
+                  &'Nact',5x,'Projg',8x,'F')
+            write (6,99003) n , Iter , Nfgv , Nintol , Nskip , Nact ,      &
+                        & Sbgnrm , f
+   99003    format (i5,2(1x,i6),(1x,i6),(2x,i4),(1x,i5),1p,2(2x,d10.3))
+            if ( Iprint>=100 ) then
+               write (6,99004) 'X =' , (x(i),i=1,n)
 
-99004       format (/,a4,1p,6(1x,d11.4),/,(4x,1p,6(1x,d11.4)))
+   99004       format (/,a4,1p,6(1x,d11.4),/,(4x,1p,6(1x,d11.4)))
+            endif
+            if ( Iprint>=1 ) write (6,*) ' F =' , f
          endif
-         if ( Iprint>=1 ) write (6,*) ' F =' , f
-      endif
- 100  continue
+
+      end if
+
       if ( Iprint>=0 ) then
          write (6,99008) Task
          if ( Info/=0 ) then
@@ -2887,8 +2888,6 @@
 
       integer i
       real(wp) gi
-      real(wp) zero
-      parameter (zero=0.0d0)
 
       Sbgnrm = zero
       do i = 1 , n
@@ -3096,8 +3095,6 @@
 
       integer pointr , m2 , col2 , ibd , jy , js , i , j , k
       real(wp) alpha , xk , dk , temp1 , temp2
-      real(wp) one , zero
-      parameter (one=1.0d0,zero=0.0d0)
 !
       real(wp) dd_p
 
@@ -3184,71 +3181,71 @@
             x(k) = xk + dk
          endif
       enddo
-!
-      if ( Iword==0 ) goto 100
-!
-!     check sign of the directional derivative
-!
-      dd_p = zero
-      do i = 1 , n
-         dd_p = dd_p + (x(i)-Xx(i))*Gg(i)
-      enddo
-      if ( dd_p>zero ) then
+
+      main : block
+
+         if ( Iword==0 ) exit main
+   !
+   !     check sign of the directional derivative
+   !
+         dd_p = zero
+         do i = 1 , n
+            dd_p = dd_p + (x(i)-Xx(i))*Gg(i)
+         enddo
+         if ( dd_p<=zero ) exit main
+
          call dcopy(n,Xp,1,x,1)
          write (6,*) ' Positive dir derivative in projection '
          write (6,*) ' Using the backtracking step '
-      else
-         goto 100
-      endif
-!
-!-----------------------------------------------------------------
-!
-      alpha = one
-      temp1 = alpha
-      ibd = 0
-      do i = 1 , Nsub
-         k = Ind(i)
-         dk = d(i)
-         if ( Nbd(k)/=0 ) then
-            if ( dk<zero .and. Nbd(k)<=2 ) then
-               temp2 = l(k) - x(k)
-               if ( temp2>=zero ) then
-                  temp1 = zero
-               elseif ( dk*alpha<temp2 ) then
-                  temp1 = temp2/dk
+   !
+   !-----------------------------------------------------------------
+   !
+         alpha = one
+         temp1 = alpha
+         ibd = 0
+         do i = 1 , Nsub
+            k = Ind(i)
+            dk = d(i)
+            if ( Nbd(k)/=0 ) then
+               if ( dk<zero .and. Nbd(k)<=2 ) then
+                  temp2 = l(k) - x(k)
+                  if ( temp2>=zero ) then
+                     temp1 = zero
+                  elseif ( dk*alpha<temp2 ) then
+                     temp1 = temp2/dk
+                  endif
+               elseif ( dk>zero .and. Nbd(k)>=2 ) then
+                  temp2 = u(k) - x(k)
+                  if ( temp2<=zero ) then
+                     temp1 = zero
+                  elseif ( dk*alpha>temp2 ) then
+                     temp1 = temp2/dk
+                  endif
                endif
-            elseif ( dk>zero .and. Nbd(k)>=2 ) then
-               temp2 = u(k) - x(k)
-               if ( temp2<=zero ) then
-                  temp1 = zero
-               elseif ( dk*alpha>temp2 ) then
-                  temp1 = temp2/dk
+               if ( temp1<alpha ) then
+                  alpha = temp1
+                  ibd = i
                endif
             endif
-            if ( temp1<alpha ) then
-               alpha = temp1
-               ibd = i
-            endif
-         endif
-      enddo
+         enddo
 
-      if ( alpha<one ) then
-         dk = d(ibd)
-         k = Ind(ibd)
-         if ( dk>zero ) then
-            x(k) = u(k)
-            d(ibd) = zero
-         elseif ( dk<zero ) then
-            x(k) = l(k)
-            d(ibd) = zero
+         if ( alpha<one ) then
+            dk = d(ibd)
+            k = Ind(ibd)
+            if ( dk>zero ) then
+               x(k) = u(k)
+               d(ibd) = zero
+            elseif ( dk<zero ) then
+               x(k) = l(k)
+               d(ibd) = zero
+            endif
          endif
-      endif
-      do i = 1 , Nsub
-         k = Ind(i)
-         x(k) = x(k) + alpha*d(i)
-      enddo
-!ccccc
- 100  continue
+         do i = 1 , Nsub
+            k = Ind(i)
+            x(k) = x(k) + alpha*d(i)
+         enddo
+
+      end block main
 
       if ( Iprint>=99 ) write (6,99002)
 99002 format (/,'----------------exit SUBSM --------------------',/)
@@ -3396,10 +3393,10 @@
 !     Brett M. Averick, Richard G. Carter, and Jorge J. More'.
 !
 !     **********
-      real(wp) zero , p5 , p66
-      parameter (zero=0.0d0,p5=0.5d0,p66=0.66d0)
-      real(wp) xtrapl , xtrapu
-      parameter (xtrapl=1.1d0,xtrapu=4.0d0)
+      real(wp), parameter :: p5     = 0.5_wp
+      real(wp), parameter :: p66    = 0.66_wp
+      real(wp), parameter :: xtrapl = 1.1_wp
+      real(wp), parameter :: xtrapu = 4.0_wp
 
       logical brackt
       integer stage
@@ -3453,7 +3450,8 @@
          stmax = Stp + xtrapu*Stp
          Task = 'FG'
 
-         goto 100
+         call save_locals()
+         return
 
       else
 
@@ -3505,7 +3503,10 @@
 
 !     Test for termination.
 
-      if ( Task(1:4)=='WARN' .or. Task(1:4)=='CONV' ) goto 100
+      if ( Task(1:4)=='WARN' .or. Task(1:4)=='CONV' ) then
+         call save_locals()
+         return
+      end if
 
 !     A modified function is used to predict the step during the
 !     first stage if a lower function value has been obtained but
@@ -3575,29 +3576,35 @@
 
       Task = 'FG'
 
- 100  continue
+      call save_locals()
 
-!     Save local variables.
+      contains
 
-      if ( brackt ) then
-         Isave(1) = 1
-      else
-         Isave(1) = 0
-      endif
-      Isave(2) = stage
-      Dsave(1) = ginit
-      Dsave(2) = gtest
-      Dsave(3) = gx
-      Dsave(4) = gy
-      Dsave(5) = finit
-      Dsave(6) = fx
-      Dsave(7) = fy
-      Dsave(8) = stx
-      Dsave(9) = sty
-      Dsave(10) = stmin
-      Dsave(11) = stmax
-      Dsave(12) = width
-      Dsave(13) = width1
+      subroutine save_locals()
+
+      !! Save local variables.
+
+         if ( brackt ) then
+            Isave(1) = 1
+         else
+            Isave(1) = 0
+         endif
+         Isave(2) = stage
+         Dsave(1) = ginit
+         Dsave(2) = gtest
+         Dsave(3) = gx
+         Dsave(4) = gy
+         Dsave(5) = finit
+         Dsave(6) = fx
+         Dsave(7) = fy
+         Dsave(8) = stx
+         Dsave(9) = sty
+         Dsave(10) = stmin
+         Dsave(11) = stmax
+         Dsave(12) = width
+         Dsave(13) = width1
+
+      end subroutine save_locals
 
       end subroutine dcsrch
 
@@ -3700,8 +3707,8 @@
 !     Brett M. Averick and Jorge J. More'.
 !
 !     **********
-      real(wp) zero , p66 , two , three
-      parameter (zero=0.0d0,p66=0.66d0,two=2.0d0,three=3.0d0)
+
+      real(wp),parameter :: p66 = 0.66_wp
 
       real(wp) gamma , p , q , r , s , sgnd , stpc , stpf ,     &
                      & stpq , theta
