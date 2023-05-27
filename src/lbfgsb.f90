@@ -35,9 +35,9 @@
 
     module lbfgsb_module
 
-    use iso_fortran_env, only: wp => real64 ! for now
-    use linpack
-    use blas
+    use lbfgsb_kinds_module, only: wp => lbfgsb_wp
+    use lbfgsb_linpack_module
+    use lbfgsb_blas_module
 
     implicit none
 
@@ -274,9 +274,9 @@
       lwa = Isave(16)
 
       call mainlb(n,m,x,l,u,Nbd,f,g,Factr,Pgtol,Wa(lws),Wa(lwy),Wa(lsy),&
-                & Wa(lss),Wa(lwt),Wa(lwn),Wa(lsnd),Wa(lz),Wa(lr),Wa(ld),&
-                & Wa(lt),Wa(lxp),Wa(lwa),Iwa(1),Iwa(n+1),Iwa(2*n+1),    &
-                & Task,Iprint,Csave,Lsave,Isave(22),Dsave)
+                  Wa(lss),Wa(lwt),Wa(lwn),Wa(lsnd),Wa(lz),Wa(lr),Wa(ld),&
+                  Wa(lt),Wa(lxp),Wa(lwa),Iwa(1),Iwa(n+1),Iwa(2*n+1),    &
+                  Task,Iprint,Csave,Lsave,Isave(22),Dsave)
 
       end subroutine setulb
 !*******************************************************************************
@@ -309,17 +309,16 @@
                         Iprint,Csave,Lsave,Isave,Dsave)
       implicit none
 
-      character*60 Task , Csave
-      logical Lsave(4)
-      integer n , m , Iprint , Nbd(n) , Index(n) , Iwhere(n) , Indx2(n) &
-            & , Isave(23)
+      character*60 :: Task , Csave
+      logical :: Lsave(4)
+      integer :: n , m , Iprint , Nbd(n) , Index(n) , Iwhere(n) , Indx2(n), &
+                 Isave(23)
 
-      real(wp) f , Factr , Pgtol , x(n) , l(n) , u(n) , g(n) ,  &
-                     & z(n) , r(n) , d(n) , t(n) , Xp(n) , Wa(8*m) ,    &
-                     & Ws(n,m) , Wy(n,m) , Sy(m,m) , Ss(m,m) , Wt(m,m) ,&
-                     & Wn(2*m,2*m) , Snd(2*m,2*m) , Dsave(29)
+      real(wp) :: f , Factr , Pgtol , x(n) , l(n) , u(n) , g(n) ,  &
+                  z(n) , r(n) , d(n) , t(n) , Xp(n) , Wa(8*m) ,    &
+                  Ws(n,m) , Wy(n,m) , Sy(m,m) , Ss(m,m) , Wt(m,m) ,&
+                  Wn(2*m,2*m) , Snd(2*m,2*m) , Dsave(29)
 
-!
 !     n is an integer variable.
 !       On entry n is the number of variables.
 !       On exit n is unchanged.
@@ -449,16 +448,15 @@
 !
 !     dsave is a real(wp) working array of dimension 29.
 
-
-      logical prjctd , cnstnd , boxed , updatd , wrk
-      character*3 word
-      integer i , k , nintol , itfile , iback , nskip , head , col ,    &
-            & iter , itail , iupdat , nseg , nfgv , info , ifun ,       &
-            & iword , nfree , nact , ileave , nenter
-      real(wp) theta , fold , dr , rr , tol , xstep ,    &
-                     & sbgnrm , ddum , dnorm , dtd , epsmch , cpu1 ,    &
-                     & cpu2 , cachyt , sbtime , lnscht , time1 , time2 ,&
-                     & gd , gdold , stp , stpmx , time
+      logical :: prjctd , cnstnd , boxed , updatd , wrk
+      character*3 :: word
+      integer :: i , k , nintol , itfile , iback , nskip , head , col ,    &
+                 iter , itail , iupdat , nseg , nfgv , info , ifun ,       &
+                 iword , nfree , nact , ileave , nenter
+      real(wp) :: theta , fold , dr , rr , tol , xstep ,    &
+                  sbgnrm , ddum , dnorm , dtd , epsmch , cpu1 ,    &
+                  cpu2 , cachyt , sbtime , lnscht , time1 , time2 ,&
+                  gd , gdold , stp , stpmx , time
 
       if ( Task=='START' ) then
 
@@ -466,9 +464,9 @@
 
          call cpu_time(time1)
 
-!        Initialize counters and scalars when task='START'.
+         ! Initialize counters and scalars when task='START'.
 
-!           for the limited memory BFGS matrices:
+         ! for the limited memory BFGS matrices:
          col = 0
          head = 1
          theta = one
@@ -490,7 +488,7 @@
          gdold = zero
          dtd = zero
 
-!           for operation counts:
+         ! for operation counts:
          iter = 0
          nfgv = 0
          nseg = 0
@@ -498,25 +496,25 @@
          nskip = 0
          nfree = n
          ifun = 0
-!           for stopping tolerance:
+         ! for stopping tolerance:
          tol = Factr*epsmch
 
-!           for measuring running time:
+         ! for measuring running time:
          cachyt = 0
          sbtime = 0
          lnscht = 0
 
-!           'word' records the status of subspace solutions.
+         ! 'word' records the status of subspace solutions.
          word = '---'
 
-!           'info' records the termination information.
+         ! 'info' records the termination information.
          info = 0
 
          itfile = 8
-!                                open a summary file 'iterate.dat'
+         ! open a summary file 'iterate.dat'
          if ( Iprint>=1 ) open (8,file='iterate.dat',status='unknown')
 
-!        Check the input arguments for errors.
+         ! Check the input arguments for errors.
 
          call errclb(n,m,Factr,l,u,Nbd,Task,info,k)
          if ( Task(1:5)=='ERROR' ) then
@@ -528,14 +526,14 @@
 
          call prn1lb(n,m,l,u,x,Iprint,itfile,epsmch)
 
-!        Initialize iwhere & project x onto the feasible set.
+         ! Initialize iwhere & project x onto the feasible set.
 
          call active(n,l,u,Nbd,x,Iwhere,Iprint,prjctd,cnstnd,boxed)
 
-!        The end of the initialization.
+         ! The end of the initialization.
 
       else
-!          restore local variables.
+         ! restore local variables.
 
          prjctd = Lsave(1)
          cnstnd = Lsave(2)
@@ -578,15 +576,15 @@
          gdold = Dsave(15)
          dtd = Dsave(16)
 
-!        After returning from the driver go to the point where execution
-!        is to resume.
+         ! After returning from the driver go to the point where execution
+         ! is to resume.
 
          if ( Task(1:5)=='FG_LN' ) goto 600
          if ( Task(1:5)=='NEW_X' ) goto 700
          if ( Task(1:5)=='FG_ST' ) goto 100
          if ( Task(1:4)=='STOP' ) then
             if ( Task(7:9)=='CPU' ) then
-!                                          restore the previous iterate.
+               ! restore the previous iterate.
                call dcopy(n,t,1,x,1)
                call dcopy(n,r,1,g,1)
                f = fold
@@ -595,15 +593,17 @@
          endif
       endif
 
-!     Compute f0 and g0.
+      ! Compute f0 and g0.
 
       Task = 'FG_START'
-!          return to the driver to calculate f and g; reenter at 111.
-      goto 1000
+      ! return to the driver to calculate f and g; reenter at 111.
+      call save_locals()
+      return
+
  100  continue
       nfgv = 1
 
-!     Compute the infinity norm of the (-) projected gradient.
+      ! Compute the infinity norm of the (-) projected gradient.
 
       call projgr(n,l,u,Nbd,x,g,sbgnrm)
 
@@ -616,7 +616,7 @@
                & 1p,2(1x,d10.3))
       endif
       if ( sbgnrm<=Pgtol ) then
-!                                terminate the algorithm.
+         ! terminate the algorithm.
          Task = 'CONVERGENCE: NORM_OF_PROJECTED_GRADIENT_<=_PGTOL'
          goto 900
       endif
@@ -628,9 +628,9 @@
 
 99003 format (//,'ITERATION ',i5)
       iword = -1
-!
+
       if ( .not.cnstnd .and. col>0 ) then
-!                                            skip the search for GCP.
+         ! skip the search for GCP.
          call dcopy(n,x,1,z,1)
          wrk = updatd
          nseg = 0
@@ -648,7 +648,7 @@
                 & col,head,Wa(1),Wa(2*m+1),Wa(4*m+1),Wa(6*m+1),nseg,    &
                 & Iprint,sbgnrm,info,epsmch)
       if ( info/=0 ) then
-!         singular triangular system detected; refresh the lbfgs memory.
+         ! singular triangular system detected; refresh the lbfgs memory.
          if ( Iprint>=1 ) write (6,99008)
          info = 0
          col = 0
@@ -664,8 +664,8 @@
       cachyt = cachyt + cpu2 - cpu1
       nintol = nintol + nseg
 
-!     Count the entering and leaving variables for iter > 0;
-!     find the index set of free and active variables at the GCP.
+      ! Count the entering and leaving variables for iter > 0;
+      ! find the index set of free and active variables at the GCP.
 
       call freev(n,nfree,Index,nenter,ileave,Indx2,Iwhere,wrk,updatd,   &
                & cnstnd,Iprint,iter)
@@ -673,8 +673,8 @@
 
  300  continue
 
-!     If there are no free variables or B=theta*I, then
-!                                        skip the subspace minimization.
+      ! If there are no free variables or B=theta*I, then
+      ! skip the subspace minimization.
 
       if ( nfree==0 .or. col==0 ) goto 500
 
@@ -686,18 +686,18 @@
 
       call cpu_time(cpu1)
 
-!     Form  the LEL^T factorization of the indefinite
-!       matrix    K = [-D -Y'ZZ'Y/theta     L_a'-R_z'  ]
-!                     [L_a -R_z           theta*S'AA'S ]
-!       where     E = [-I  0]
-!                     [ 0  I]
+      !     Form  the LEL^T factorization of the indefinite
+      !       matrix    K = [-D -Y'ZZ'Y/theta     L_a'-R_z'  ]
+      !                     [L_a -R_z           theta*S'AA'S ]
+      !       where     E = [-I  0]
+      !                     [ 0  I]
 
       if ( wrk ) call formk(n,nfree,Index,nenter,ileave,Indx2,iupdat,   &
                           & updatd,Wn,Snd,m,Ws,Wy,Sy,theta,col,head,    &
                           & info)
       if ( info/=0 ) then
-!          nonpositive definiteness in Cholesky factorization;
-!          refresh the lbfgs memory and restart the iteration.
+         ! nonpositive definiteness in Cholesky factorization;
+         ! refresh the lbfgs memory and restart the iteration.
          if ( Iprint>=1 ) write (6,99004)
 99004    format (/,                                                     &
         &' Nonpositive definiteness in Cholesky factorization in formk;'&
@@ -713,20 +713,20 @@
          goto 200
       endif
 
-!        compute r=-Z'B(xcp-xk)-Z'g (using wa(2m+1)=W'(xcp-x)
-!                                                   from 'cauchy').
+      ! compute r=-Z'B(xcp-xk)-Z'g (using wa(2m+1)=W'(xcp-x)
+      ! from 'cauchy').
       call cmprlb(n,m,x,g,Ws,Wy,Sy,Wt,z,r,Wa,Index,theta,col,head,nfree,&
                 & cnstnd,info)
       if ( info/=0 ) goto 400
 
-!-jlm-jn   call the direct method.
+      !-jlm-jn   call the direct method.
 
-      call subsm(n,m,nfree,Index,l,u,Nbd,z,r,Xp,Ws,Wy,theta,x,g,col,    &
-               & head,iword,Wa,Wn,Iprint,info)
+      call subsm(n,m,nfree,Index,l,u,Nbd,z,r,Xp,Ws,Wy,theta,x,g,col, &
+                 head,iword,Wa,Wn,Iprint,info)
  400  continue
       if ( info/=0 ) then
-!          singular triangular system detected;
-!          refresh the lbfgs memory and restart the iteration.
+         ! singular triangular system detected;
+         ! refresh the lbfgs memory and restart the iteration.
          if ( Iprint>=1 ) write (6,99008)
          info = 0
          col = 0
@@ -749,7 +749,7 @@
 !
 !ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 
-!     Generate the search direction d:=z-x.
+      ! Generate the search direction d:=z-x.
 
       do i = 1 , n
          d(i) = z(i) - x(i)
@@ -760,15 +760,15 @@
                 & xstep,stpmx,iter,ifun,iback,nfgv,info,Task,boxed,     &
                 & cnstnd,Csave,Isave(22),Dsave(17))
       if ( info/=0 .or. iback>=20 ) then
-!          restore the previous iterate.
+         ! restore the previous iterate.
          call dcopy(n,t,1,x,1)
          call dcopy(n,r,1,g,1)
          f = fold
          if ( col==0 ) then
-!             abnormal termination.
+            ! abnormal termination.
             if ( info==0 ) then
                info = -9
-!                restore the actual number of f and g evaluations etc.
+               ! restore the actual number of f and g evaluations etc.
                nfgv = nfgv - 1
                ifun = ifun - 1
                iback = iback - 1
@@ -777,7 +777,7 @@
             iter = iter + 1
             goto 900
          else
-!             refresh the lbfgs memory and restart the iteration.
+            ! refresh the lbfgs memory and restart the iteration.
             if ( Iprint>=1 ) write (6,99005)
 99005       format (/,' Bad direction in the line search;',/,           &
                &'   refresh the lbfgs memory and restart the iteration.'&
@@ -795,44 +795,46 @@
             goto 200
          endif
       elseif ( Task(1:5)=='FG_LN' ) then
-!          return to the driver for calculating f and g; reenter at 666.
-         goto 1000
+         ! return to the driver for calculating f and g; reenter at 666.
+         call save_locals()
+         return
       else
-!          calculate and print out the quantities related to the new X.
+         ! calculate and print out the quantities related to the new X.
          call cpu_time(cpu2)
          lnscht = lnscht + cpu2 - cpu1
          iter = iter + 1
 
-!        Compute the infinity norm of the projected (-)gradient.
+         ! Compute the infinity norm of the projected (-)gradient.
 
          call projgr(n,l,u,Nbd,x,g,sbgnrm)
 
-!        Print iteration information.
+         ! Print iteration information.
 
          call prn2lb(n,x,f,g,Iprint,itfile,iter,nfgv,nact,sbgnrm,nseg,  &
-                   & word,iword,iback,stp,xstep)
-         goto 1000
+                     word,iword,iback,stp,xstep)
+         call save_locals()
+         return
       endif
  700  continue
 
-!     Test for termination.
+      ! Test for termination.
 
       if ( sbgnrm<=Pgtol ) then
-!                                terminate the algorithm.
+         ! terminate the algorithm.
          Task = 'CONVERGENCE: NORM_OF_PROJECTED_GRADIENT_<=_PGTOL'
          goto 900
       endif
 
       ddum = max(abs(fold),abs(f),one)
       if ( (fold-f)<=tol*ddum ) then
-!                                        terminate the algorithm.
+         ! terminate the algorithm.
          Task = 'CONVERGENCE: REL_REDUCTION_OF_F_<=_FACTR*EPSMCH'
          if ( iback>=10 ) info = -5
-!           i.e., to issue a warning if iback>10 in the line search.
+         ! i.e., to issue a warning if iback>10 in the line search.
          goto 900
       endif
 
-!     Compute d=newx-oldx, r=newg-oldg, rr=y'y and dr=y's.
+      ! Compute d=newx-oldx, r=newg-oldg, rr=y'y and dr=y's.
 
       do i = 1 , n
          r(i) = g(i) - r(i)
@@ -848,12 +850,11 @@
       endif
 
       if ( dr<=epsmch*ddum ) then
-!                            skip the L-BFGS update.
+         ! skip the L-BFGS update.
          nskip = nskip + 1
          updatd = .false.
          if ( Iprint>=1 ) write (6,99006) dr , ddum
-99006    format ('  ys=',1p,e10.3,'  -gs=',1p,e10.3,                    &
-                &' BFGS update SKIPPED')
+99006    format ('  ys=',1p,e10.3,'  -gs=',1p,e10.3, ' BFGS update SKIPPED')
          goto 800
       endif
 
@@ -866,21 +867,21 @@
       updatd = .true.
       iupdat = iupdat + 1
 
-!     Update matrices WS and WY and form the middle matrix in B.
+      ! Update matrices WS and WY and form the middle matrix in B.
 
       call matupd(n,m,Ws,Wy,Sy,Ss,d,r,itail,iupdat,col,head,theta,rr,dr,&
                 & stp,dtd)
 
-!     Form the upper half of the pds T = theta*SS + L*D^(-1)*L';
-!        Store T in the upper triangular of the array wt;
-!        Cholesky factorize T to J*J' with
-!           J' stored in the upper triangular of wt.
+      ! Form the upper half of the pds T = theta*SS + L*D^(-1)*L';
+      !    Store T in the upper triangular of the array wt;
+      !    Cholesky factorize T to J*J' with
+      !       J' stored in the upper triangular of wt.
 
       call formt(m,Wt,Sy,Ss,col,theta,info)
 
       if ( info/=0 ) then
-!          nonpositive definiteness in Cholesky factorization;
-!          refresh the lbfgs memory and restart the iteration.
+         ! nonpositive definiteness in Cholesky factorization;
+         ! refresh the lbfgs memory and restart the iteration.
          if ( Iprint>=1 ) write (6,99007)
 99007    format (/,                                                     &
         &' Nonpositive definiteness in Cholesky factorization in formt;'&
@@ -894,10 +895,10 @@
          goto 200
       endif
 
-!     Now the inverse of the middle matrix in B is
+      ! Now the inverse of the middle matrix in B is
 
-!       [  D^(1/2)      O ] [ -D^(1/2)  D^(-1/2)*L' ]
-!       [ -L*D^(-1/2)   J ] [  0        J'          ]
+      ! [  D^(1/2)      O ] [ -D^(1/2)  D^(-1/2)*L' ]
+      ! [ -L*D^(-1/2)   J ] [  0        J'          ]
 
  800  continue
 
@@ -908,56 +909,60 @@
       call cpu_time(time2)
       time = time2 - time1
       call prn3lb(n,x,f,Task,Iprint,info,itfile,iter,nfgv,nintol,nskip, &
-                & nact,sbgnrm,time,nseg,word,iback,stp,xstep,k,cachyt,  &
-                & sbtime,lnscht)
- 1000 continue
+                  nact,sbgnrm,time,nseg,word,iback,stp,xstep,k,cachyt,  &
+                  sbtime,lnscht)
+      call save_locals()
 
-!     Save local variables.
-
-      Lsave(1) = prjctd
-      Lsave(2) = cnstnd
-      Lsave(3) = boxed
-      Lsave(4) = updatd
-
-      Isave(1) = nintol
-      Isave(3) = itfile
-      Isave(4) = iback
-      Isave(5) = nskip
-      Isave(6) = head
-      Isave(7) = col
-      Isave(8) = itail
-      Isave(9) = iter
-      Isave(10) = iupdat
-      Isave(12) = nseg
-      Isave(13) = nfgv
-      Isave(14) = info
-      Isave(15) = ifun
-      Isave(16) = iword
-      Isave(17) = nfree
-      Isave(18) = nact
-      Isave(19) = ileave
-      Isave(20) = nenter
-
-      Dsave(1) = theta
-      Dsave(2) = fold
-      Dsave(3) = tol
-      Dsave(4) = dnorm
-      Dsave(5) = epsmch
-      Dsave(6) = cpu1
-      Dsave(7) = cachyt
-      Dsave(8) = sbtime
-      Dsave(9) = lnscht
-      Dsave(10) = time1
-      Dsave(11) = gd
-      Dsave(12) = stpmx
-      Dsave(13) = sbgnrm
-      Dsave(14) = stp
-      Dsave(15) = gdold
-      Dsave(16) = dtd
-
-      continue
-99008 format (/,' Singular triangular system detected;',/,              &
+99008 format (/,' Singular triangular system detected;',/, &
              &'   refresh the lbfgs memory and restart the iteration.')
+
+      contains
+
+         subroutine save_locals()
+
+            !! Save local variables.
+
+            Lsave(1) = prjctd
+            Lsave(2) = cnstnd
+            Lsave(3) = boxed
+            Lsave(4) = updatd
+
+            Isave(1) = nintol
+            Isave(3) = itfile
+            Isave(4) = iback
+            Isave(5) = nskip
+            Isave(6) = head
+            Isave(7) = col
+            Isave(8) = itail
+            Isave(9) = iter
+            Isave(10) = iupdat
+            Isave(12) = nseg
+            Isave(13) = nfgv
+            Isave(14) = info
+            Isave(15) = ifun
+            Isave(16) = iword
+            Isave(17) = nfree
+            Isave(18) = nact
+            Isave(19) = ileave
+            Isave(20) = nenter
+
+            Dsave(1) = theta
+            Dsave(2) = fold
+            Dsave(3) = tol
+            Dsave(4) = dnorm
+            Dsave(5) = epsmch
+            Dsave(6) = cpu1
+            Dsave(7) = cachyt
+            Dsave(8) = sbtime
+            Dsave(9) = lnscht
+            Dsave(10) = time1
+            Dsave(11) = gd
+            Dsave(12) = stpmx
+            Dsave(13) = sbgnrm
+            Dsave(14) = stp
+            Dsave(15) = gdold
+            Dsave(16) = dtd
+         end subroutine save_locals
 
       end subroutine mainlb
 !*******************************************************************************
@@ -1160,7 +1165,7 @@
          p(i) = -p(i)/sqrt(Sy(i,i))
       enddo
       do i = 1 , Col
-         sum = 0.d0
+         sum = zero
          do k = i + 1 , Col
             sum = sum + Sy(k,i)*p(Col+k)/Sy(i,i)
          enddo
