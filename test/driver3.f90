@@ -1,11 +1,11 @@
-!                                                                                      
-!  L-BFGS-B is released under the "New BSD License" (aka "Modified BSD License"        
-!  or "3-clause license")                                                              
-!  Please read attached file License.txt                                               
-!                                        
+!
+!  L-BFGS-B is released under the "New BSD License" (aka "Modified BSD License"
+!  or "3-clause license")
+!  Please read attached file License.txt
+!
 !                             DRIVER 3  in Fortran 90
 !     --------------------------------------------------------------
-!            TIME-CONTROLLED DRIVER FOR L-BFGS-B 
+!            TIME-CONTROLLED DRIVER FOR L-BFGS-B
 !     --------------------------------------------------------------
 !
 !        L-BFGS-B is a code for solving large nonlinear optimization
@@ -16,7 +16,7 @@
 !                          code L-BFGS.
 !
 !        This driver shows how to terminate a run after some prescribed
-!        CPU time has elapsed, and how to print the desired information 
+!        CPU time has elapsed, and how to print the desired information
 !        before exiting.
 !
 !     References:
@@ -52,20 +52,20 @@
 !     a run by elapsed CPU time, and yet be able to print all desired
 !     information. This driver also illustrates the use of two
 !     stopping criteria that may be used in conjunction with a limit
-!     on execution time. The sample problem used here is the same as in 
-!     driver1 and driver2 (the extended Rosenbrock function with bounds 
+!     on execution time. The sample problem used here is the same as in
+!     driver1 and driver2 (the extended Rosenbrock function with bounds
 !     on the variables).
 
       implicit none
 
 !     We specify a limit on the CPU time (tlimit = 10 seconds)
 !
-!     We suppress the default output (iprint = -1). The user could 
+!     We suppress the default output (iprint = -1). The user could
 !       also elect to use the default output by choosing iprint >= 0.)
 !     We suppress the code-supplied stopping tests because we will
 !       provide our own termination conditions
 !     We specify the dimension n of the sample problem and the number
-!        m of limited memory corrections stored. 
+!        m of limited memory corrections stored.
 
       integer,  parameter    :: n = 1000, m = 10, iprint = -1
       integer,  parameter    :: dp = kind(1.0d0)
@@ -91,14 +91,14 @@
 !     a run by elapsed CPU time, and yet be able to print all desired
 !     information. This driver also illustrates the use of two
 !     stopping criteria that may be used in conjunction with a limit
-!     on execution time. The sample problem used here is the same as in 
-!     driver1 and driver2 (the extended Rosenbrock function with bounds 
+!     on execution time. The sample problem used here is the same as in
+!     driver1 and driver2 (the extended Rosenbrock function with bounds
 !     on the variables).
- 
+
 !     We now specify nbd which defines the bounds on the variables:
 !                    l   specifies the lower bounds,
-!                    u   specifies the upper bounds. 
- 
+!                    u   specifies the upper bounds.
+
 !     First set bounds on the odd-numbered variables.
 
       do 10 i=1, n,2
@@ -120,38 +120,38 @@
       do 14 i=1, n
          x(i)=3.0d0
   14  continue
- 
+
 !     We now write the heading of the output.
 
       write (6,16)
   16  format(/,5x, 'Solving sample problem.',&
-             /,5x, ' (f = 0.0 at the optimal solution.)',/) 
+             /,5x, ' (f = 0.0 at the optimal solution.)',/)
 
 !     We start the iteration by initializing task.
- 
+
       task = 'START'
 
 !        ------- the beginning of the loop ----------
 
 !     We begin counting the CPU time.
 
-      call timer(time1)
+      call cpu_time(time1)
 
       do while( task(1:2).eq.'FG'.or.task.eq.'NEW_X'.or. &
                 task.eq.'START')
-      
+
 !     This is the call to the L-BFGS-B code.
- 
+
          call setulb(n,m,x,l,u,nbd,f,g,factr,pgtol,wa,iwa, &
                      task,iprint, csave,lsave,isave,dsave)
- 
+
          if (task(1:2) .eq. 'FG') then
 
 !        the minimization routine has returned to request the
 !        function f and gradient g values at the current x.
 !        Before evaluating f and g we check the CPU time spent.
 
-         call timer(time2)
+         call cpu_time(time2)
          if (time2-time1 .gt. tlimit) then
             task='STOP: CPU EXCEEDING THE TIME LIMIT.'
 
@@ -171,10 +171,10 @@
               write (6,*) task
 
 !          We print the latest iterate contained in wa(j+1:j+n), where
- 
+
               j = 3*n+2*m*n+11*m**2
               write (6,*) 'Latest iterate X ='
-              write (6,'((1x,1p, 6(1x,d11.4)))') (wa(i),i = j+1,j+n) 
+              write (6,'((1x,1p, 6(1x,d11.4)))') (wa(i),i = j+1,j+n)
 
 !          We print the function value f and the norm of the projected
 !          gradient |proj g| at the last iterate; they are stored in
@@ -208,7 +208,7 @@
 !          go back to the minimization routine.
          else
 
-           if (task(1:5) .eq. 'NEW_X') then        
+           if (task(1:5) .eq. 'NEW_X') then
 
 !        the minimization routine has returned with a new iterate.
 !        The time limit has not been reached, and we test whether
@@ -233,7 +233,7 @@
 !
 !        See the comments at the end of driver1 for a description
 !        of the variables isave and dsave.
-         
+
             write (6,'(2(a,i5,4x),a,1p,d12.5,4x,a,1p,d12.5)') 'Iterate' &
             ,isave(30),'nfg =',isave(34),'f =',f,'|proj g| =',dsave(13)
 
@@ -241,15 +241,15 @@
 !        contained in task as well as the final value of x.
 
             if (task(1:4) .eq. 'STOP') then
-               write (6,*) task  
+               write (6,*) task
                write (6,*) 'Final X='
                write (6,'((1x,1p, 6(1x,d11.4)))') (x(i),i = 1,n)
             endif
 
           endif
-        end if 
+        end if
       end do
- 
+
 !     If task is neither FG nor NEW_X we terminate execution.
 
       end program driver
