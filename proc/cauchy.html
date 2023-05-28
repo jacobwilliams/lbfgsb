@@ -92,7 +92,7 @@
           <li id="statements"><i class="fa fa-list-ol"></i>
             <a data-toggle="tooltip"
                data-placement="bottom" data-html="true"
-               title="10.7% of total for procedures.">194 statements</a>
+               title="10.6% of total for procedures.">194 statements</a>
           </li>
 
             <li id="source-file">
@@ -380,7 +380,7 @@ The routine returns the GCP in xcp.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-g~3"></span>
+              <span class="anchor" id="variable-g~4"></span>
               real(kind=wp)
             </td>
 <td></td>
@@ -1182,7 +1182,7 @@ implementation in a submodule of an interface in a parent module.
 <span class="w">            </span><span class="n">Iwhere</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w"></span>
 <span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">xlower</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
 <span class="k">               if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">neggi</span><span class="o">&lt;=</span><span class="n">zero</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">Iwhere</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
-<span class="w">            </span><span class="n">elseif</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">xupper</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="w">            </span><span class="k">else if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">xupper</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
 <span class="k">               if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">neggi</span><span class="o">&gt;=</span><span class="n">zero</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">Iwhere</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="w"></span>
 <span class="w">            </span><span class="k">else</span>
 <span class="k">               if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">abs</span><span class="p">(</span><span class="n">neggi</span><span class="p">)</span><span class="o">&lt;=</span><span class="n">zero</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">Iwhere</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="mi">3</span><span class="w"></span>
@@ -1209,7 +1209,7 @@ implementation in a submodule of an interface in a parent module.
 <span class="k">                  </span><span class="n">bkmin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">t</span><span class="p">(</span><span class="n">nbreak</span><span class="p">)</span><span class="w"></span>
 <span class="w">                  </span><span class="n">ibkmin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nbreak</span><span class="w"></span>
 <span class="w">               </span><span class="k">endif</span>
-<span class="k">            </span><span class="n">elseif</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">Nbd</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">&gt;=</span><span class="mi">2</span><span class="w"> </span><span class="p">.</span><span class="nb">and</span><span class="p">.</span><span class="w"> </span><span class="n">neggi</span><span class="o">&gt;</span><span class="n">zero</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span><span class="w"></span>
+<span class="k">            else if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">Nbd</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">&gt;=</span><span class="mi">2</span><span class="w"> </span><span class="p">.</span><span class="nb">and</span><span class="p">.</span><span class="w"> </span><span class="n">neggi</span><span class="o">&gt;</span><span class="n">zero</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span><span class="w"></span>
 <span class="w">               </span><span class="c">! x(i) + d(i) is bounded; compute t(i).</span>
 <span class="w">               </span><span class="n">nbreak</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nbreak</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
 <span class="w">               </span><span class="n">Iorder</span><span class="p">(</span><span class="n">nbreak</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">i</span><span class="w"></span>
@@ -1388,7 +1388,7 @@ implementation in a submodule of an interface in a parent module.
 <span class="k">         </span><span class="n">dtm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="n">f1</span><span class="o">/</span><span class="n">f2</span><span class="w"></span>
 <span class="w">         </span><span class="k">goto</span><span class="w"> </span><span class="mi">100</span><span class="w"></span>
 <span class="w">         </span><span class="c">! to repeat the loop for unsearched intervals.</span>
-<span class="w">      </span><span class="n">elseif</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">bnded</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="w">      </span><span class="k">else if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">bnded</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
 <span class="k">         </span><span class="n">f1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">zero</span><span class="w"></span>
 <span class="w">         </span><span class="n">f2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">zero</span><span class="w"></span>
 <span class="w">         </span><span class="n">dtm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">zero</span><span class="w"></span>

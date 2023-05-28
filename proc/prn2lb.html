@@ -92,7 +92,7 @@
           <li id="statements"><i class="fa fa-list-ol"></i>
             <a data-toggle="tooltip"
                data-placement="bottom" data-html="true"
-               title=" 1.8% of total for procedures.">32 statements</a>
+               title=" 1.7% of total for procedures.">32 statements</a>
           </li>
 
             <li id="source-file">
@@ -212,7 +212,7 @@ line search.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-f~4"></span>
+              <span class="anchor" id="variable-f~5"></span>
               real(kind=wp)
             </td>
 <td></td>
@@ -227,7 +227,7 @@ line search.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-g~6"></span>
+              <span class="anchor" id="variable-g~7"></span>
               real(kind=wp)
             </td>
 <td></td>
@@ -392,7 +392,7 @@ line search.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-stp~3"></span>
+              <span class="anchor" id="variable-stp~5"></span>
               real(kind=wp)
             </td>
 <td></td>
@@ -611,10 +611,10 @@ implementation in a submodule of an interface in a parent module.
 <span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">Iword</span><span class="o">==</span><span class="mi">0</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span><span class="w"></span>
 <span class="w">         </span><span class="c">! the subspace minimization converged.</span>
 <span class="w">         </span><span class="n">Word</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;con&#39;</span><span class="w"></span>
-<span class="w">      </span><span class="n">elseif</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">Iword</span><span class="o">==</span><span class="mi">1</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span><span class="w"></span>
+<span class="w">      </span><span class="k">else if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">Iword</span><span class="o">==</span><span class="mi">1</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span><span class="w"></span>
 <span class="w">         </span><span class="c">! the subspace minimization stopped at a bound.</span>
 <span class="w">         </span><span class="n">Word</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;bnd&#39;</span><span class="w"></span>
-<span class="w">      </span><span class="n">elseif</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">Iword</span><span class="o">==</span><span class="mi">5</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span><span class="w"></span>
+<span class="w">      </span><span class="k">else if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">Iword</span><span class="o">==</span><span class="mi">5</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span><span class="w"></span>
 <span class="w">         </span><span class="c">! the truncated Newton step has been used.</span>
 <span class="w">         </span><span class="n">Word</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;TNT&#39;</span><span class="w"></span>
 <span class="w">      </span><span class="k">else</span>
@@ -628,7 +628,7 @@ implementation in a submodule of an interface in a parent module.
 <span class="k">            write</span><span class="w"> </span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">99002</span><span class="p">)</span><span class="w"> </span><span class="s1">&#39;X =&#39;</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="p">(</span><span class="n">i</span><span class="p">),</span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">n</span><span class="p">)</span><span class="w"></span>
 <span class="w">            </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">99002</span><span class="p">)</span><span class="w"> </span><span class="s1">&#39;G =&#39;</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="n">g</span><span class="p">(</span><span class="n">i</span><span class="p">),</span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">n</span><span class="p">)</span><span class="w"></span>
 <span class="w">         </span><span class="k">endif</span>
-<span class="k">      </span><span class="n">elseif</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">Iprint</span><span class="o">&gt;</span><span class="mi">0</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">      else if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">Iprint</span><span class="o">&gt;</span><span class="mi">0</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
 <span class="k">         </span><span class="n">imod</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">mod</span><span class="p">(</span><span class="n">Iter</span><span class="p">,</span><span class="n">Iprint</span><span class="p">)</span><span class="w"></span>
 <span class="w">         </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">imod</span><span class="o">==</span><span class="mi">0</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">99003</span><span class="p">)</span><span class="w"> </span><span class="n">Iter</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">f</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">Sbgnrm</span><span class="w"></span>
 <span class="w">      </span><span class="k">endif</span>

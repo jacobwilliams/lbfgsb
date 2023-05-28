@@ -92,7 +92,7 @@
           <li id="statements"><i class="fa fa-list-ol"></i>
             <a data-toggle="tooltip"
                data-placement="bottom" data-html="true"
-               title="86.5% of total for modules and submodules.">1611 statements</a>
+               title="86.6% of total for modules and submodules.">1628 statements</a>
           </li>
 
             <li id="source-file">
@@ -231,9 +231,9 @@
       <ul class="list-group">
           <li class="list-group-item">
             <ul class="list-inline">
-                <li><a href='../module/lbfgsb_kinds_module.html'>lbfgsb_kinds_module</a></li>
                 <li><a href='../module/lbfgsb_linpack_module.html'>lbfgsb_linpack_module</a></li>
                 <li><a href='../module/lbfgsb_blas_module.html'>lbfgsb_blas_module</a></li>
+                <li><a href='../module/lbfgsb_kinds_module.html'>lbfgsb_kinds_module</a></li>
             </ul>
           </li>
           <li class="list-group-item">
@@ -5039,7 +5039,7 @@ gradient.</p><a href="../proc/projgr.html" class="pull-right"><emph>Read more&he
     <div class="panel-body">
           
   <p>This routine contains the major changes in the updated version.
-The changes are described in the accompanying paper</p><a href="../proc/subsm.html" class="pull-right"><emph>Read more&hellip;</emph></a>
+  The changes are described in the accompanying paper</p><a href="../proc/subsm.html" class="pull-right"><emph>Read more&hellip;</emph></a>
 
   <h4>Arguments</h4>
       <table class="table table-striped varlist">
@@ -5395,7 +5395,7 @@ The changes are described in the accompanying paper</p><a href="../proc/subsm.ht
     <div class="panel-body">
           
   <p>This subroutine finds a step that satisfies a sufficient
-decrease condition and a curvature condition.</p><a href="../proc/dcsrch.html" class="pull-right"><emph>Read more&hellip;</emph></a>
+  decrease condition and a curvature condition.</p><a href="../proc/dcsrch.html" class="pull-right"><emph>Read more&hellip;</emph></a>
 
   <h4>Arguments</h4>
       <table class="table table-striped varlist">
@@ -5411,136 +5411,140 @@ decrease condition and a curvature condition.</p><a href="../proc/dcsrch.html" c
         <tr>
             <td>
               <span class="anchor" ></span>
-              real(kind=wp)
+              real(kind=wp),
             </td>
-<td></td>
+<td>intent(inout)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>f</strong></td>
             <td>
-
+<a href="../proc/dcsrch.html#variable-f~2" class="pull-right"><emph>Read more&hellip;</emph></a>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" ></span>
-              real(kind=wp)
+              real(kind=wp),
             </td>
-<td></td>
+<td>intent(inout)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>g</strong></td>
             <td>
-
+<a href="../proc/dcsrch.html#variable-g~2" class="pull-right"><emph>Read more&hellip;</emph></a>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" ></span>
-              real(kind=wp)
+              real(kind=wp),
             </td>
-<td></td>
+<td>intent(inout)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>Stp</strong></td>
             <td>
-
+<a href="../proc/dcsrch.html#variable-stp" class="pull-right"><emph>Read more&hellip;</emph></a>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" ></span>
-              real(kind=wp)
+              real(kind=wp),
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>Ftol</strong></td>
             <td>
-
+<p><code>ftol</code> specifies a nonnegative tolerance for the
+sufficient decrease condition.</p>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" ></span>
-              real(kind=wp)
+              real(kind=wp),
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>Gtol</strong></td>
             <td>
-
+<p><code>gtol</code> specifies a nonnegative tolerance for the curvature condition.</p>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" ></span>
-              real(kind=wp)
+              real(kind=wp),
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>Xtol</strong></td>
             <td>
-
+<p><code>xtol</code> specifies a nonnegative relative tolerance
+for an acceptable step. The subroutine exits with a
+warning if the relative difference between <code>sty</code> and <code>stx</code>
+is less than <code>xtol</code>.</p>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" ></span>
-              real(kind=wp)
+              real(kind=wp),
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>Stpmin</strong></td>
             <td>
-
+<p>a nonnegative lower bound for the step.</p>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" ></span>
-              real(kind=wp)
+              real(kind=wp),
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>Stpmax</strong></td>
             <td>
-
+<p>a nonnegative upper bound for the step.</p>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" ></span>
-              character(len=*)
+              character(len=*),
             </td>
-<td></td>
+<td>intent(inout)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>Task</strong></td>
             <td>
-
+<p><code>task</code> is a character variable of length at least 60:</p><a href="../proc/dcsrch.html#variable-task~2" class="pull-right"><emph>Read more&hellip;</emph></a>
             </td>
         </tr>
         <tr>
@@ -5555,7 +5559,7 @@ decrease condition and a curvature condition.</p><a href="../proc/dcsrch.html" c
             <td>::</td>
             <td><strong>Isave</strong>(2)</td>
             <td>
-
+<p>integer work array</p>
             </td>
         </tr>
         <tr>
@@ -5570,7 +5574,7 @@ decrease condition and a curvature condition.</p><a href="../proc/dcsrch.html" c
             <td>::</td>
             <td><strong>Dsave</strong>(13)</td>
             <td>
-
+<p>real work array</p>
             </td>
         </tr>
     </tbody>
@@ -5586,8 +5590,8 @@ decrease condition and a curvature condition.</p><a href="../proc/dcsrch.html" c
     <div class="panel-body">
           
   <p>This subroutine computes a safeguarded step for a search
-procedure and updates an interval that contains a step that
-satisfies a sufficient decrease and a curvature condition.</p><a href="../proc/dcstep.html" class="pull-right"><emph>Read more&hellip;</emph></a>
+  procedure and updates an interval that contains a step that
+  satisfies a sufficient decrease and a curvature condition.</p><a href="../proc/dcstep.html" class="pull-right"><emph>Read more&hellip;</emph></a>
 
   <h4>Arguments</h4>
       <table class="table table-striped varlist">
@@ -5603,181 +5607,196 @@ satisfies a sufficient decrease and a curvature condition.</p><a href="../proc/d
         <tr>
             <td>
               <span class="anchor" ></span>
-              real(kind=wp)
+              real(kind=wp),
             </td>
-<td></td>
+<td>intent(inout)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>Stx</strong></td>
             <td>
-
+<p>On entry <code>stx</code> is the best step obtained so far and is an
+endpoint of the interval that contains the minimizer.
+On exit `stx is the updated best step.</p>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" ></span>
-              real(kind=wp)
+              real(kind=wp),
             </td>
-<td></td>
+<td>intent(inout)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>Fx</strong></td>
             <td>
-
+<p>On entry <code>fx</code> is the function at <code>stx</code>.
+On exit <code>fx</code> is the function at <code>stx</code>.</p>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" ></span>
-              real(kind=wp)
+              real(kind=wp),
             </td>
-<td></td>
+<td>intent(inout)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>Dx</strong></td>
             <td>
-
+<p>On entry <code>dx</code> is the derivative of the function at
+<code>stx</code>. The derivative must be negative in the direction of
+the step, that is, <code>dx</code> and <code>stp - stx</code> must have opposite
+signs.
+On exit <code>dx</code> is the derivative of the function at <code>stx</code>.</p>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" ></span>
-              real(kind=wp)
+              real(kind=wp),
             </td>
-<td></td>
+<td>intent(inout)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>Sty</strong></td>
             <td>
-
+<p>On entry <code>sty</code> is the second endpoint of the interval that contains the minimizer.
+On exit <code>sty</code> is the updated endpoint of the interval that contains the minimizer.</p>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" ></span>
-              real(kind=wp)
+              real(kind=wp),
             </td>
-<td></td>
+<td>intent(inout)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>Fy</strong></td>
             <td>
-
+<p>On entry <code>fy</code> is the function at <code>sty</code>.
+On exit <code>fy</code> is the function at <code>sty</code>.</p>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" ></span>
-              real(kind=wp)
+              real(kind=wp),
             </td>
-<td></td>
+<td>intent(inout)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>Dy</strong></td>
             <td>
-
+<p>On entry <code>dy</code> is the derivative of the function at <code>sty</code>.
+On exit <code>dy</code> is the derivative of the function at the exit <code>sty</code>.</p>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" ></span>
-              real(kind=wp)
+              real(kind=wp),
             </td>
-<td></td>
+<td>intent(inout)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>Stp</strong></td>
             <td>
-
+<p>On entry <code>stp</code> is the current step. If <code>brackt</code> is set to .true.
+then on input <code>stp</code> must be between <code>stx</code> and <code>sty</code>.
+On exit <code>stp</code> is a new trial step.</p>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" ></span>
-              real(kind=wp)
+              real(kind=wp),
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>Fp</strong></td>
             <td>
-
+<p>the function at <code>stp</code>.</p>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" ></span>
-              real(kind=wp)
+              real(kind=wp),
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>Dp</strong></td>
             <td>
-
+<p>the derivative of the function at <code>stp</code>.</p>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" ></span>
-              logical
+              logical,
             </td>
-<td></td>
+<td>intent(inout)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>Brackt</strong></td>
             <td>
-
+<p>On entry <code>brackt</code> specifies if a minimizer has been bracketed.
+Initially <code>brackt</code> must be set to .false.
+On exit <code>brackt</code> specifies if a minimizer has been bracketed.
+When a minimizer is bracketed <code>brackt</code> is set to .true.</p>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" ></span>
-              real(kind=wp)
+              real(kind=wp),
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>Stpmin</strong></td>
             <td>
-
+<p>a lower bound for the step.</p>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" ></span>
-              real(kind=wp)
+              real(kind=wp),
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>Stpmax</strong></td>
             <td>
-
+<p>an upper bound for the step.</p>
             </td>
         </tr>
     </tbody>

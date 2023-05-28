@@ -92,7 +92,7 @@
           <li id="statements"><i class="fa fa-list-ol"></i>
             <a data-toggle="tooltip"
                data-placement="bottom" data-html="true"
-               title=" 7.0% of total for procedures.">128 statements</a>
+               title=" 7.3% of total for procedures.">135 statements</a>
           </li>
 
             <li id="source-file">
@@ -157,124 +157,44 @@
     
 
     <p>This subroutine finds a step that satisfies a sufficient
-decrease condition and a curvature condition.</p>
+  decrease condition and a curvature condition.</p>
 <p>Each call of the subroutine updates an interval with
-   endpoints stx and sty. The interval is initially chosen
-   so that it contains a minimizer of the modified function</p>
-<div class="codehilite"><pre><span></span><code>     psi(stp) = f(stp) - f(0) - ftol*stp*f&#39;(0).
-</code></pre></div>
-
+  endpoints stx and sty. The interval is initially chosen
+  so that it contains a minimizer of the modified function</p>
+<p><code>psi(stp) = f(stp) - f(0) - ftol*stp*f'(0)</code>.</p>
 <p>If psi(stp) &lt;= 0 and f'(stp) &gt;= 0 for some step, then the
-   interval is chosen so that it contains a minimizer of f.</p>
+  interval is chosen so that it contains a minimizer of f.</p>
 <p>The algorithm is designed to find a step that satisfies
-   the sufficient decrease condition</p>
-<div class="codehilite"><pre><span></span><code>     f(stp) &lt;= f(0) + ftol*stp*f&#39;(0),
-</code></pre></div>
-
+  the sufficient decrease condition</p>
+<p><code>f(stp) &lt;= f(0) + ftol*stp*f'(0)</code>,</p>
 <p>and the curvature condition</p>
-<div class="codehilite"><pre><span></span><code>     abs(f&#39;(stp)) &lt;= gtol*abs(f&#39;(0)).
-</code></pre></div>
-
+<p><code>abs(f'(stp)) &lt;= gtol*abs(f'(0))</code>.</p>
 <p>If ftol is less than gtol and if, for example, the function
-   is bounded below, then there is always a step which satisfies
-   both conditions.</p>
+  is bounded below, then there is always a step which satisfies
+  both conditions.</p>
 <p>If no step can be found that satisfies both conditions, then
-   the algorithm stops with a warning. In this case stp only
-   satisfies the sufficient decrease condition.</p>
+  the algorithm stops with a warning. In this case stp only
+  satisfies the sufficient decrease condition.</p>
 <p>A typical invocation of dcsrch has the following outline:</p>
-<p>task = 'START'
-10 continue
-      call dcsrch( ... )
-      if (task == 'FG') then
-         Evaluate the function and the gradient at stp
-         goto 10
-         end if</p>
-<p>NOTE: The user must no alter work arrays between calls.</p>
-<p>The subroutine statement is</p>
-<div class="codehilite"><pre><span></span><code>  subroutine dcsrch(f,g,stp,ftol,gtol,xtol,stpmin,stpmax,
-                    task,isave,dsave)
+<div class="codehilite"><pre><span></span><code><span class="w">     </span><span class="n">task</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;START&#39;</span><span class="w"></span>
+<span class="w">  </span><span class="mi">10</span><span class="w"> </span><span class="k">continue</span>
+<span class="k">     call </span><span class="n">dcsrch</span><span class="p">(</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">     </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">task</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s1">&#39;FG&#39;</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">        </span><span class="n">Evaluate</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="k">function </span><span class="nb">and </span><span class="n">the</span><span class="w"> </span><span class="n">gradient</span><span class="w"> </span><span class="n">at</span><span class="w"> </span><span class="n">stp</span><span class="w"></span>
+<span class="w">        </span><span class="k">goto</span><span class="w"> </span><span class="mi">10</span><span class="w"></span>
+<span class="w">     </span><span class="k">end if</span><span class="w"></span>
 </code></pre></div>
 
-<p>where</p>
-<div class="codehilite"><pre><span></span><code><span class="w"> </span><span class="n">f</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w"> </span><span class="n">variable</span><span class="o">.</span><span class="w"></span>
-<span class="w">   </span><span class="n">On</span><span class="w"> </span><span class="n">initial</span><span class="w"> </span><span class="n">entry</span><span class="w"> </span><span class="n">f</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">function</span><span class="w"> </span><span class="n">at</span><span class="w"> </span><span class="mf">0.</span><span class="w"></span>
-<span class="w">      </span><span class="n">On</span><span class="w"> </span><span class="n">subsequent</span><span class="w"> </span><span class="n">entries</span><span class="w"> </span><span class="n">f</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">the</span><span class="w"></span>
-<span class="w">      </span><span class="n">function</span><span class="w"> </span><span class="n">at</span><span class="w"> </span><span class="n">stp</span><span class="o">.</span><span class="w"></span>
-<span class="w">   </span><span class="n">On</span><span class="w"> </span><span class="n">exit</span><span class="w"> </span><span class="n">f</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">function</span><span class="w"> </span><span class="n">at</span><span class="w"> </span><span class="n">stp</span><span class="o">.</span><span class="w"></span>
-
-<span class="w"> </span><span class="n">g</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w"> </span><span class="n">variable</span><span class="o">.</span><span class="w"></span>
-<span class="w">   </span><span class="n">On</span><span class="w"> </span><span class="n">initial</span><span class="w"> </span><span class="n">entry</span><span class="w"> </span><span class="n">g</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">derivative</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">function</span><span class="w"> </span><span class="n">at</span><span class="w"> </span><span class="mf">0.</span><span class="w"></span>
-<span class="w">      </span><span class="n">On</span><span class="w"> </span><span class="n">subsequent</span><span class="w"> </span><span class="n">entries</span><span class="w"> </span><span class="n">g</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">derivative</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">the</span><span class="w"></span>
-<span class="w">      </span><span class="n">function</span><span class="w"> </span><span class="n">at</span><span class="w"> </span><span class="n">stp</span><span class="o">.</span><span class="w"></span>
-<span class="w">   </span><span class="n">On</span><span class="w"> </span><span class="n">exit</span><span class="w"> </span><span class="n">g</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">derivative</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">function</span><span class="w"> </span><span class="n">at</span><span class="w"> </span><span class="n">stp</span><span class="o">.</span><span class="w"></span>
-
-<span class="w"> </span><span class="n">stp</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w"> </span><span class="n">variable</span><span class="o">.</span><span class="w"></span>
-<span class="w">   </span><span class="n">On</span><span class="w"> </span><span class="n">entry</span><span class="w"> </span><span class="n">stp</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">current</span><span class="w"> </span><span class="n">estimate</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">satisfactory</span><span class="w"></span>
-<span class="w">      </span><span class="n">step</span><span class="o">.</span><span class="w"> </span><span class="n">On</span><span class="w"> </span><span class="n">initial</span><span class="w"> </span><span class="n">entry</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">positive</span><span class="w"> </span><span class="n">initial</span><span class="w"> </span><span class="n">estimate</span><span class="w"></span>
-<span class="w">      </span><span class="n">must</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">provided</span><span class="o">.</span><span class="w"></span>
-<span class="w">   </span><span class="n">On</span><span class="w"> </span><span class="n">exit</span><span class="w"> </span><span class="n">stp</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">current</span><span class="w"> </span><span class="n">estimate</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">satisfactory</span><span class="w"> </span><span class="n">step</span><span class="w"></span>
-<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="n">task</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;FG&#39;</span><span class="o">.</span><span class="w"> </span><span class="n">If</span><span class="w"> </span><span class="n">task</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;CONV&#39;</span><span class="w"> </span><span class="n">then</span><span class="w"> </span><span class="n">stp</span><span class="w"> </span><span class="n">satisfies</span><span class="w"></span>
-<span class="w">      </span><span class="n">the</span><span class="w"> </span><span class="n">sufficient</span><span class="w"> </span><span class="n">decrease</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="n">curvature</span><span class="w"> </span><span class="n">condition</span><span class="o">.</span><span class="w"></span>
-
-<span class="w"> </span><span class="n">ftol</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w"> </span><span class="n">variable</span><span class="o">.</span><span class="w"></span>
-<span class="w">   </span><span class="n">On</span><span class="w"> </span><span class="n">entry</span><span class="w"> </span><span class="n">ftol</span><span class="w"> </span><span class="n">specifies</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">nonnegative</span><span class="w"> </span><span class="n">tolerance</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">the</span><span class="w"></span>
-<span class="w">      </span><span class="n">sufficient</span><span class="w"> </span><span class="n">decrease</span><span class="w"> </span><span class="n">condition</span><span class="o">.</span><span class="w"></span>
-<span class="w">   </span><span class="n">On</span><span class="w"> </span><span class="n">exit</span><span class="w"> </span><span class="n">ftol</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">unchanged</span><span class="o">.</span><span class="w"></span>
-
-<span class="w"> </span><span class="n">gtol</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w"> </span><span class="n">variable</span><span class="o">.</span><span class="w"></span>
-<span class="w">   </span><span class="n">On</span><span class="w"> </span><span class="n">entry</span><span class="w"> </span><span class="n">gtol</span><span class="w"> </span><span class="n">specifies</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">nonnegative</span><span class="w"> </span><span class="n">tolerance</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">the</span><span class="w"></span>
-<span class="w">      </span><span class="n">curvature</span><span class="w"> </span><span class="n">condition</span><span class="o">.</span><span class="w"></span>
-<span class="w">   </span><span class="n">On</span><span class="w"> </span><span class="n">exit</span><span class="w"> </span><span class="n">gtol</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">unchanged</span><span class="o">.</span><span class="w"></span>
-
-<span class="w"> </span><span class="n">xtol</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w"> </span><span class="n">variable</span><span class="o">.</span><span class="w"></span>
-<span class="w">   </span><span class="n">On</span><span class="w"> </span><span class="n">entry</span><span class="w"> </span><span class="n">xtol</span><span class="w"> </span><span class="n">specifies</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">nonnegative</span><span class="w"> </span><span class="n">relative</span><span class="w"> </span><span class="n">tolerance</span><span class="w"></span>
-<span class="w">      </span><span class="k">for</span><span class="w"> </span><span class="n">an</span><span class="w"> </span><span class="n">acceptable</span><span class="w"> </span><span class="n">step</span><span class="o">.</span><span class="w"> </span><span class="n">The</span><span class="w"> </span><span class="n">subroutine</span><span class="w"> </span><span class="n">exits</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">a</span><span class="w"></span>
-<span class="w">      </span><span class="n">warning</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">relative</span><span class="w"> </span><span class="n">difference</span><span class="w"> </span><span class="n">between</span><span class="w"> </span><span class="n">sty</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="n">stx</span><span class="w"></span>
-<span class="w">      </span><span class="k">is</span><span class="w"> </span><span class="n">less</span><span class="w"> </span><span class="n">than</span><span class="w"> </span><span class="n">xtol</span><span class="o">.</span><span class="w"></span>
-<span class="w">   </span><span class="n">On</span><span class="w"> </span><span class="n">exit</span><span class="w"> </span><span class="n">xtol</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">unchanged</span><span class="o">.</span><span class="w"></span>
-
-<span class="w"> </span><span class="n">stpmin</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w"> </span><span class="n">variable</span><span class="o">.</span><span class="w"></span>
-<span class="w">   </span><span class="n">On</span><span class="w"> </span><span class="n">entry</span><span class="w"> </span><span class="n">stpmin</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">nonnegative</span><span class="w"> </span><span class="n">lower</span><span class="w"> </span><span class="n">bound</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">step</span><span class="o">.</span><span class="w"></span>
-<span class="w">   </span><span class="n">On</span><span class="w"> </span><span class="n">exit</span><span class="w"> </span><span class="n">stpmin</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">unchanged</span><span class="o">.</span><span class="w"></span>
-
-<span class="w"> </span><span class="n">stpmax</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w"> </span><span class="n">variable</span><span class="o">.</span><span class="w"></span>
-<span class="w">   </span><span class="n">On</span><span class="w"> </span><span class="n">entry</span><span class="w"> </span><span class="n">stpmax</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">nonnegative</span><span class="w"> </span><span class="n">upper</span><span class="w"> </span><span class="n">bound</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">step</span><span class="o">.</span><span class="w"></span>
-<span class="w">   </span><span class="n">On</span><span class="w"> </span><span class="n">exit</span><span class="w"> </span><span class="n">stpmax</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">unchanged</span><span class="o">.</span><span class="w"></span>
-
-<span class="w"> </span><span class="n">task</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">character</span><span class="w"> </span><span class="n">variable</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">length</span><span class="w"> </span><span class="n">at</span><span class="w"> </span><span class="n">least</span><span class="w"> </span><span class="mf">60.</span><span class="w"></span>
-<span class="w">   </span><span class="n">On</span><span class="w"> </span><span class="n">initial</span><span class="w"> </span><span class="n">entry</span><span class="w"> </span><span class="n">task</span><span class="w"> </span><span class="n">must</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">set</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="s1">&#39;START&#39;</span><span class="o">.</span><span class="w"></span>
-<span class="w">   </span><span class="n">On</span><span class="w"> </span><span class="n">exit</span><span class="w"> </span><span class="n">task</span><span class="w"> </span><span class="n">indicates</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">required</span><span class="w"> </span><span class="n">action</span><span class="p">:</span><span class="w"></span>
-
-<span class="w">      </span><span class="n">If</span><span class="w"> </span><span class="n">task</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;FG&#39;</span><span class="w"> </span><span class="n">then</span><span class="w"> </span><span class="n">evaluate</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">function</span><span class="w"> </span><span class="ow">and</span><span class="w"></span>
-<span class="w">      </span><span class="n">derivative</span><span class="w"> </span><span class="n">at</span><span class="w"> </span><span class="n">stp</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="n">call</span><span class="w"> </span><span class="n">dcsrch</span><span class="w"> </span><span class="n">again</span><span class="o">.</span><span class="w"></span>
-
-<span class="w">      </span><span class="n">If</span><span class="w"> </span><span class="n">task</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="mi">4</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;CONV&#39;</span><span class="w"> </span><span class="n">then</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">search</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">successful</span><span class="o">.</span><span class="w"></span>
-
-<span class="w">      </span><span class="n">If</span><span class="w"> </span><span class="n">task</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="mi">4</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;WARN&#39;</span><span class="w"> </span><span class="n">then</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">subroutine</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="ow">not</span><span class="w"> </span><span class="n">able</span><span class="w"></span>
-<span class="w">      </span><span class="n">to</span><span class="w"> </span><span class="n">satisfy</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">convergence</span><span class="w"> </span><span class="n">conditions</span><span class="o">.</span><span class="w"> </span><span class="n">The</span><span class="w"> </span><span class="n">exit</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="n">of</span><span class="w"></span>
-<span class="w">      </span><span class="n">stp</span><span class="w"> </span><span class="n">contains</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">best</span><span class="w"> </span><span class="n">point</span><span class="w"> </span><span class="n">found</span><span class="w"> </span><span class="n">during</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">search</span><span class="o">.</span><span class="w"></span>
-
-<span class="w">      </span><span class="n">If</span><span class="w"> </span><span class="n">task</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="mi">5</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;ERROR&#39;</span><span class="w"> </span><span class="n">then</span><span class="w"> </span><span class="n">there</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">an</span><span class="w"> </span><span class="n">error</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">the</span><span class="w"></span>
-<span class="w">      </span><span class="n">input</span><span class="w"> </span><span class="n">arguments</span><span class="o">.</span><span class="w"></span>
-
-<span class="w">   </span><span class="n">On</span><span class="w"> </span><span class="n">exit</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">convergence</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">warning</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="n">an</span><span class="w"> </span><span class="n">error</span><span class="p">,</span><span class="w"> </span><span class="n">the</span><span class="w"></span>
-<span class="w">      </span><span class="n">variable</span><span class="w"> </span><span class="n">task</span><span class="w"> </span><span class="n">contains</span><span class="w"> </span><span class="n">additional</span><span class="w"> </span><span class="n">information</span><span class="o">.</span><span class="w"></span>
-
-<span class="w"> </span><span class="n">isave</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">an</span><span class="w"> </span><span class="n">integer</span><span class="w"> </span><span class="n">work</span><span class="w"> </span><span class="n">array</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">dimension</span><span class="w"> </span><span class="mf">2.</span><span class="w"></span>
-
-<span class="w"> </span><span class="n">dsave</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w"> </span><span class="n">work</span><span class="w"> </span><span class="n">array</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">dimension</span><span class="w"> </span><span class="mf">13.</span><span class="w"></span>
-</code></pre></div>
-
-<p>Subprograms called</p>
-<div class="codehilite"><pre><span></span><code> MINPACK-2 ... dcstep
-</code></pre></div>
-
-<p>MINPACK-1 Project. June 1983.
-   Argonne National Laboratory.
-   Jorge J. More' and David J. Thuente.</p>
-<p>MINPACK-2 Project. October 1993.
-   Argonne National Laboratory and University of Minnesota.
-   Brett M. Averick, Richard G. Carter, and Jorge J. More'.</p>
+<p>NOTE: The user must not alter work arrays between calls.</p>
+<h3>Credits</h3>
+<ul>
+<li>MINPACK-1 Project. June 1983.
+    Argonne National Laboratory.
+    Jorge J. More' and David J. Thuente.</li>
+<li>MINPACK-2 Project. October 1993.
+    Argonne National Laboratory and University of Minnesota.
+    Brett M. Averick, Richard G. Carter, and Jorge J. More'.</li>
+</ul>
 
 
     <h3>Arguments</h3>
@@ -290,142 +210,179 @@ decrease condition and a curvature condition.</p>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-f~6"></span>
-              real(kind=wp)
+              <span class="anchor" id="variable-f~2"></span>
+              real(kind=wp),
             </td>
-<td></td>
+<td>intent(inout)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>f</strong></td>
             <td>
-                
+                <ul>
+<li>On initial entry <code>f</code> is the value of the function at 0.
+  On subsequent entries <code>f</code> is the value of the
+  function at <code>stp</code>.</li>
+<li>On exit <code>f</code> is the value of the function at <code>stp</code>.</li>
+</ul>
             </td>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-g~8"></span>
-              real(kind=wp)
+              <span class="anchor" id="variable-g~2"></span>
+              real(kind=wp),
             </td>
-<td></td>
+<td>intent(inout)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>g</strong></td>
             <td>
-                
+                <ul>
+<li>On initial entry <code>g</code> is the derivative of the function at 0.
+  On subsequent entries <code>g</code> is the derivative of the
+  function at <code>stp</code>.</li>
+<li>On exit <code>g</code> is the derivative of the function at <code>stp</code>.</li>
+</ul>
             </td>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-stp~5"></span>
-              real(kind=wp)
+              <span class="anchor" id="variable-stp"></span>
+              real(kind=wp),
             </td>
-<td></td>
+<td>intent(inout)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>Stp</strong></td>
             <td>
-                
+                <ul>
+<li>On entry <code>stp</code> is the current estimate of a satisfactory
+  step. On initial entry, a positive initial estimate
+  must be provided.</li>
+<li>On exit <code>stp</code> is the current estimate of a satisfactory step
+  if <code>task = 'FG'</code>. If <code>task = 'CONV'</code> then <code>stp</code> satisfies
+  the sufficient decrease and curvature condition.</li>
+</ul>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" id="variable-ftol"></span>
-              real(kind=wp)
+              real(kind=wp),
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>Ftol</strong></td>
             <td>
-                
+                <p><code>ftol</code> specifies a nonnegative tolerance for the
+sufficient decrease condition.</p>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" id="variable-gtol"></span>
-              real(kind=wp)
+              real(kind=wp),
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>Gtol</strong></td>
             <td>
-                
+                <p><code>gtol</code> specifies a nonnegative tolerance for the curvature condition.</p>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" id="variable-xtol"></span>
-              real(kind=wp)
+              real(kind=wp),
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>Xtol</strong></td>
             <td>
-                
+                <p><code>xtol</code> specifies a nonnegative relative tolerance
+for an acceptable step. The subroutine exits with a
+warning if the relative difference between <code>sty</code> and <code>stx</code>
+is less than <code>xtol</code>.</p>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" id="variable-stpmin"></span>
-              real(kind=wp)
+              real(kind=wp),
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>Stpmin</strong></td>
             <td>
-                
+                <p>a nonnegative lower bound for the step.</p>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" id="variable-stpmax"></span>
-              real(kind=wp)
+              real(kind=wp),
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>Stpmax</strong></td>
             <td>
-                
+                <p>a nonnegative upper bound for the step.</p>
             </td>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-task~6"></span>
-              character(len=*)
+              <span class="anchor" id="variable-task~2"></span>
+              character(len=*),
             </td>
-<td></td>
+<td>intent(inout)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>Task</strong></td>
             <td>
-                
+                <p><code>task</code> is a character variable of length at least 60:</p>
+<ul>
+<li>On initial entry <code>task</code> must be set to 'START'.</li>
+<li>On exit <code>task</code> indicates the required action:<ul>
+<li>If <code>task(1:2) = 'FG'</code> then evaluate the function and
+  derivative at stp and call dcsrch again.</li>
+<li>If <code>task(1:4) = 'CONV'</code> then the search is successful.</li>
+<li>If <code>task(1:4) = 'WARN'</code> then the subroutine is not able
+  to satisfy the convergence conditions. The exit value of
+  <code>stp</code> contains the best point found during the search.</li>
+<li>If <code>task(1:5) = 'ERROR'</code> then there is an error in the
+  input arguments.</li>
+</ul>
+</li>
+<li>On exit with convergence, a warning or an error, the
+   variable task contains additional information.</li>
+</ul>
             </td>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-isave~4"></span>
+              <span class="anchor" id="variable-isave~2"></span>
               integer
             </td>
 <td></td>
@@ -435,12 +392,12 @@ decrease condition and a curvature condition.</p>
             <td>::</td>
             <td><strong>Isave</strong>(2)</td>
             <td>
-                
+                <p>integer work array</p>
             </td>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-dsave~4"></span>
+              <span class="anchor" id="variable-dsave~2"></span>
               real(kind=wp)
             </td>
 <td></td>
@@ -450,7 +407,7 @@ decrease condition and a curvature condition.</p>
             <td>::</td>
             <td><strong>Dsave</strong>(13)</td>
             <td>
-                
+                <p>real work array</p>
             </td>
         </tr>
     </tbody>
@@ -760,15 +717,49 @@ implementation in a submodule of an interface in a parent module.
     
     <section>
     <h2><span class="anchor" id="src"></span>Source Code</h2>
-    <div class="highlight"><pre><span></span><span class="w">      </span><span class="k">subroutine </span><span class="n">dcsrch</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="n">g</span><span class="p">,</span><span class="n">Stp</span><span class="p">,</span><span class="n">Ftol</span><span class="p">,</span><span class="n">Gtol</span><span class="p">,</span><span class="n">Xtol</span><span class="p">,</span><span class="n">Stpmin</span><span class="p">,</span><span class="n">Stpmax</span><span class="p">,</span><span class="n">Task</span><span class="p">,</span><span class="n">Isave</span><span class="p">,&amp;</span><span class="w"></span>
-<span class="w">                        </span><span class="n">Dsave</span><span class="p">)</span><span class="w"></span>
+    <div class="highlight"><pre><span></span><span class="w">      </span><span class="k">subroutine </span><span class="n">dcsrch</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="n">g</span><span class="p">,</span><span class="n">Stp</span><span class="p">,</span><span class="n">Ftol</span><span class="p">,</span><span class="n">Gtol</span><span class="p">,</span><span class="n">Xtol</span><span class="p">,</span><span class="n">Stpmin</span><span class="p">,</span><span class="n">Stpmax</span><span class="p">,</span><span class="n">Task</span><span class="p">,</span><span class="n">Isave</span><span class="p">,</span><span class="n">Dsave</span><span class="p">)</span><span class="w"></span>
+
 <span class="w">      </span><span class="k">implicit none</span>
 
-<span class="k">      </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Task</span><span class="w"></span>
-<span class="w">      </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Isave</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="w"></span>
-<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">f</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">g</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">Stp</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">Ftol</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">Gtol</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">Xtol</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">Stpmin</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span><span class="w"></span>
-<span class="w">                  </span><span class="n">Stpmax</span><span class="w"></span>
-<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Dsave</span><span class="p">(</span><span class="mi">13</span><span class="p">)</span><span class="w"></span>
+<span class="k">      </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Task</span><span class="w"> </span><span class="c">!! `task` is a character variable of length at least 60:</span>
+<span class="w">                                             </span><span class="c">!!</span>
+<span class="w">                                             </span><span class="c">!!  * On initial entry `task` must be set to &#39;START&#39;.</span>
+<span class="w">                                             </span><span class="c">!!  * On exit `task` indicates the required action:</span>
+<span class="w">                                             </span><span class="c">!!     * If `task(1:2) = &#39;FG&#39;` then evaluate the function and</span>
+<span class="w">                                             </span><span class="c">!!       derivative at stp and call dcsrch again.</span>
+<span class="w">                                             </span><span class="c">!!     * If `task(1:4) = &#39;CONV&#39;` then the search is successful.</span>
+<span class="w">                                             </span><span class="c">!!     * If `task(1:4) = &#39;WARN&#39;` then the subroutine is not able</span>
+<span class="w">                                             </span><span class="c">!!       to satisfy the convergence conditions. The exit value of</span>
+<span class="w">                                             </span><span class="c">!!       `stp` contains the best point found during the search.</span>
+<span class="w">                                             </span><span class="c">!!     * If `task(1:5) = &#39;ERROR&#39;` then there is an error in the</span>
+<span class="w">                                             </span><span class="c">!!       input arguments.</span>
+<span class="w">                                             </span><span class="c">!!  * On exit with convergence, a warning or an error, the</span>
+<span class="w">                                             </span><span class="c">!!    variable task contains additional information.</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">f</span><span class="w"> </span><span class="c">!! * On initial entry `f` is the value of the function at 0.</span>
+<span class="w">                                  </span><span class="c">!!   On subsequent entries `f` is the value of the</span>
+<span class="w">                                  </span><span class="c">!!   function at `stp`.</span>
+<span class="w">                                  </span><span class="c">!! * On exit `f` is the value of the function at `stp`.</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">g</span><span class="w"> </span><span class="c">!! * On initial entry `g` is the derivative of the function at 0.</span>
+<span class="w">                                  </span><span class="c">!!   On subsequent entries `g` is the derivative of the</span>
+<span class="w">                                  </span><span class="c">!!   function at `stp`.</span>
+<span class="w">                                  </span><span class="c">!! * On exit `g` is the derivative of the function at `stp`.</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Stp</span><span class="w"> </span><span class="c">!! * On entry `stp` is the current estimate of a satisfactory</span>
+<span class="w">                                    </span><span class="c">!!   step. On initial entry, a positive initial estimate</span>
+<span class="w">                                    </span><span class="c">!!   must be provided.</span>
+<span class="w">                                    </span><span class="c">!! * On exit `stp` is the current estimate of a satisfactory step</span>
+<span class="w">                                    </span><span class="c">!!   if `task = &#39;FG&#39;`. If `task = &#39;CONV&#39;` then `stp` satisfies</span>
+<span class="w">                                    </span><span class="c">!!   the sufficient decrease and curvature condition.</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Ftol</span><span class="w"> </span><span class="c">!! `ftol` specifies a nonnegative tolerance for the</span>
+<span class="w">                                  </span><span class="c">!! sufficient decrease condition.</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Gtol</span><span class="w"> </span><span class="c">!! `gtol` specifies a nonnegative tolerance for the curvature condition.</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Xtol</span><span class="w"> </span><span class="c">!! `xtol` specifies a nonnegative relative tolerance</span>
+<span class="w">                                  </span><span class="c">!! for an acceptable step. The subroutine exits with a</span>
+<span class="w">                                  </span><span class="c">!! warning if the relative difference between `sty` and `stx`</span>
+<span class="w">                                  </span><span class="c">!! is less than `xtol`.</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Stpmin</span><span class="w"> </span><span class="c">!! a nonnegative lower bound for the step.</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Stpmax</span><span class="w"> </span><span class="c">!! a nonnegative upper bound for the step.</span>
+<span class="w">      </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Isave</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="c">!! integer work array</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Dsave</span><span class="p">(</span><span class="mi">13</span><span class="p">)</span><span class="w"> </span><span class="c">!! real work array</span>
 
 <span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="w"> </span><span class="k">parameter</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">p5</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="mf">0.5_wp</span><span class="w"></span>
 <span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="w"> </span><span class="k">parameter</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">p66</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="mf">0.66_wp</span><span class="w"></span>
@@ -958,7 +949,7 @@ implementation in a submodule of an interface in a parent module.
 
 <span class="k">      subroutine </span><span class="n">save_locals</span><span class="p">()</span><span class="w"></span>
 
-<span class="w">      </span><span class="c">!! Save local variables.</span>
+<span class="w">         </span><span class="c">!! Save local variables.</span>
 
 <span class="w">         </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">brackt</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
 <span class="k">            </span><span class="n">Isave</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>

@@ -796,7 +796,7 @@
             lnscht = lnscht + cpu2 - cpu1
             goto 200
          endif
-      elseif ( Task(1:5)=='FG_LN' ) then
+      else if ( Task(1:5)=='FG_LN' ) then
          ! return to the driver for calculating f and g; reenter at 666.
          call save_locals()
          return
@@ -1021,7 +1021,7 @@
                   x(i) = l(i)
                endif
                nbdd = nbdd + 1
-            elseif ( Nbd(i)>=2 .and. x(i)>=u(i) ) then
+            else if ( Nbd(i)>=2 .and. x(i)>=u(i) ) then
                if ( x(i)>u(i) ) then
                   Prjctd = .true.
                   x(i) = u(i)
@@ -1397,7 +1397,7 @@
             Iwhere(i) = 0
             if ( xlower ) then
                if ( neggi<=zero ) Iwhere(i) = 1
-            elseif ( xupper ) then
+            else if ( xupper ) then
                if ( neggi>=zero ) Iwhere(i) = 2
             else
                if ( abs(neggi)<=zero ) Iwhere(i) = -3
@@ -1424,7 +1424,7 @@
                   bkmin = t(nbreak)
                   ibkmin = nbreak
                endif
-            elseif ( Nbd(i)>=2 .and. neggi>zero ) then
+            else if ( Nbd(i)>=2 .and. neggi>zero ) then
                ! x(i) + d(i) is bounded; compute t(i).
                nbreak = nbreak + 1
                Iorder(nbreak) = i
@@ -1603,7 +1603,7 @@
          dtm = -f1/f2
          goto 100
          ! to repeat the loop for unsearched intervals.
-      elseif ( bnded ) then
+      else if ( bnded ) then
          f1 = zero
          f2 = zero
          dtm = zero
@@ -2372,14 +2372,14 @@
                         a2 = l(i) - x(i)
                         if ( a2>=zero ) then
                            Stpmx = zero
-                        elseif ( a1*Stpmx<a2 ) then
+                        else if ( a1*Stpmx<a2 ) then
                            Stpmx = a2/a1
                         endif
-                     elseif ( a1>zero .and. Nbd(i)>=2 ) then
+                     else if ( a1>zero .and. Nbd(i)>=2 ) then
                         a2 = u(i) - x(i)
                         if ( a2<=zero ) then
                            Stpmx = zero
-                        elseif ( a1*Stpmx>a2 ) then
+                        else if ( a1*Stpmx>a2 ) then
                            Stpmx = a2/a1
                         endif
                      endif
@@ -2602,10 +2602,10 @@
       if ( Iword==0 ) then
          ! the subspace minimization converged.
          Word = 'con'
-      elseif ( Iword==1 ) then
+      else if ( Iword==1 ) then
          ! the subspace minimization stopped at a bound.
          Word = 'bnd'
-      elseif ( Iword==5 ) then
+      else if ( Iword==5 ) then
          ! the truncated Newton step has been used.
          Word = 'TNT'
       else
@@ -2619,7 +2619,7 @@
             write (6,99002) 'X =' , (x(i),i=1,n)
             write (6,99002) 'G =' , (g(i),i=1,n)
          endif
-      elseif ( Iprint>0 ) then
+      else if ( Iprint>0 ) then
          imod = mod(Iter,Iprint)
          if ( imod==0 ) write (6,99003) Iter , f , Sbgnrm
       endif
@@ -2812,19 +2812,19 @@
 !  This routine contains the major changes in the updated version.
 !  The changes are described in the accompanying paper
 !
-!      Jose Luis Morales, Jorge Nocedal
-!      "Remark On Algorithm 788: L-BFGS-B: Fortran Subroutines for Large-Scale
-!       Bound Constrained Optimization". Decemmber 27, 2010.
+!  Jose Luis Morales, Jorge Nocedal
+!  "Remark On Algorithm 788: L-BFGS-B: Fortran Subroutines for Large-Scale
+!   Bound Constrained Optimization". Decemmber 27, 2010.
 !
-!             J.L. Morales  Departamento de Matematicas,
-!                           Instituto Tecnologico Autonomo de Mexico
-!                           Mexico D.F.
+!         J.L. Morales  Departamento de Matematicas,
+!                       Instituto Tecnologico Autonomo de Mexico
+!                       Mexico D.F.
 !
-!             J, Nocedal    Department of Electrical Engineering and
-!                           Computer Science.
-!                           Northwestern University. Evanston, IL. USA
+!         J, Nocedal    Department of Electrical Engineering and
+!                       Computer Science.
+!                       Northwestern University. Evanston, IL. USA
 !
-!                           January 17, 2011
+!                       January 17, 2011
 !
 !      **********************************************************************
 !
@@ -2893,7 +2893,7 @@
 !     x is a real(wp) array of dimension n.
 !       On entry x specifies the Cauchy point xcp.
 !       On exit x(i) is the minimizer of Q over the subspace of
-!                                                        free variables.
+!       free variables.
 !
 !     d is a real(wp) array of dimension n.
 !       On entry d is the reduced gradient of Q at xcp.
@@ -2958,23 +2958,22 @@
 !                    = nonzero for abnormal return
 !                                  when the matrix K is ill-conditioned.
 !
-!     References:
+!### References
 !
-!       [1] R. H. Byrd, P. Lu, J. Nocedal and C. Zhu, "A limited
-!       memory algorithm for bound constrained optimization",
-!       SIAM J. Scientific Computing 16 (1995), no. 5, pp. 1190--1208.
+!  1. R. H. Byrd, P. Lu, J. Nocedal and C. Zhu, "A limited
+!     memory algorithm for bound constrained optimization",
+!     SIAM J. Scientific Computing 16 (1995), no. 5, pp. 1190--1208.
 !
-!                           *  *  *
+!### Credits
 !
-!     NEOS, November 1994. (Latest revision June 1996.)
-!     Optimization Technology Center.
-!     Argonne National Laboratory and Northwestern University.
-!     Written by
-!                        Ciyou Zhu
-!     in collaboration with R.H. Byrd, P. Lu-Chen and J. Nocedal.
+!  * NEOS, November 1994. (Latest revision June 1996.)
+!    Optimization Technology Center.
+!    Argonne National Laboratory and Northwestern University.
+!    Written by Ciyou Zhu
+!    in collaboration with R.H. Byrd, P. Lu-Chen and J. Nocedal.
 
       subroutine subsm(n,m,Nsub,Ind,l,u,Nbd,x,d,Xp,Ws,Wy,Theta,Xx,Gg, &
-                     & Col,Head,Iword,Wv,Wn,Iprint,Info)
+                       Col,Head,Iword,Wv,Wn,Iprint,Info)
       implicit none
 
       integer :: n , m , Nsub , Col , Head , Iword , Iprint , Info , &
@@ -2985,7 +2984,6 @@
 
       integer :: pointr , m2 , col2 , ibd , jy , js , i , j , k
       real(wp) :: alpha , xk , dk , temp1 , temp2
-
       real(wp) :: dd_p
 
       if ( Nsub<=0 ) return
@@ -3100,14 +3098,14 @@
                   temp2 = l(k) - x(k)
                   if ( temp2>=zero ) then
                      temp1 = zero
-                  elseif ( dk*alpha<temp2 ) then
+                  else if ( dk*alpha<temp2 ) then
                      temp1 = temp2/dk
                   endif
-               elseif ( dk>zero .and. Nbd(k)>=2 ) then
+               else if ( dk>zero .and. Nbd(k)>=2 ) then
                   temp2 = u(k) - x(k)
                   if ( temp2<=zero ) then
                      temp1 = zero
-                  elseif ( dk*alpha>temp2 ) then
+                  else if ( dk*alpha>temp2 ) then
                      temp1 = temp2/dk
                   endif
                endif
@@ -3124,7 +3122,7 @@
             if ( dk>zero ) then
                x(k) = u(k)
                d(ibd) = zero
-            elseif ( dk<zero ) then
+            else if ( dk<zero ) then
                x(k) = l(k)
                d(ibd) = zero
             endif
@@ -3147,139 +3145,98 @@
 !  This subroutine finds a step that satisfies a sufficient
 !  decrease condition and a curvature condition.
 !
-!     Each call of the subroutine updates an interval with
-!     endpoints stx and sty. The interval is initially chosen
-!     so that it contains a minimizer of the modified function
+!  Each call of the subroutine updates an interval with
+!  endpoints stx and sty. The interval is initially chosen
+!  so that it contains a minimizer of the modified function
 !
-!           psi(stp) = f(stp) - f(0) - ftol*stp*f'(0).
+!  `psi(stp) = f(stp) - f(0) - ftol*stp*f'(0)`.
 !
-!     If psi(stp) <= 0 and f'(stp) >= 0 for some step, then the
-!     interval is chosen so that it contains a minimizer of f.
+!  If psi(stp) <= 0 and f'(stp) >= 0 for some step, then the
+!  interval is chosen so that it contains a minimizer of f.
 !
-!     The algorithm is designed to find a step that satisfies
-!     the sufficient decrease condition
+!  The algorithm is designed to find a step that satisfies
+!  the sufficient decrease condition
 !
-!           f(stp) <= f(0) + ftol*stp*f'(0),
+!  `f(stp) <= f(0) + ftol*stp*f'(0)`,
 !
-!     and the curvature condition
+!  and the curvature condition
 !
-!           abs(f'(stp)) <= gtol*abs(f'(0)).
+!  `abs(f'(stp)) <= gtol*abs(f'(0))`.
 !
-!     If ftol is less than gtol and if, for example, the function
-!     is bounded below, then there is always a step which satisfies
-!     both conditions.
+!  If ftol is less than gtol and if, for example, the function
+!  is bounded below, then there is always a step which satisfies
+!  both conditions.
 !
-!     If no step can be found that satisfies both conditions, then
-!     the algorithm stops with a warning. In this case stp only
-!     satisfies the sufficient decrease condition.
+!  If no step can be found that satisfies both conditions, then
+!  the algorithm stops with a warning. In this case stp only
+!  satisfies the sufficient decrease condition.
 !
-!     A typical invocation of dcsrch has the following outline:
+!  A typical invocation of dcsrch has the following outline:
 !
+!```fortran
 !     task = 'START'
 !  10 continue
-!        call dcsrch( ... )
-!        if (task == 'FG') then
-!           Evaluate the function and the gradient at stp
-!           goto 10
-!           end if
+!     call dcsrch( ... )
+!     if (task == 'FG') then
+!        Evaluate the function and the gradient at stp
+!        goto 10
+!     end if
+!```
 !
-!     NOTE: The user must no alter work arrays between calls.
+!  NOTE: The user must not alter work arrays between calls.
 !
-!     The subroutine statement is
+!### Credits
 !
-!        subroutine dcsrch(f,g,stp,ftol,gtol,xtol,stpmin,stpmax,
-!                          task,isave,dsave)
-!     where
-!
-!       f is a real(wp) variable.
-!         On initial entry f is the value of the function at 0.
-!            On subsequent entries f is the value of the
-!            function at stp.
-!         On exit f is the value of the function at stp.
-!
-!       g is a real(wp) variable.
-!         On initial entry g is the derivative of the function at 0.
-!            On subsequent entries g is the derivative of the
-!            function at stp.
-!         On exit g is the derivative of the function at stp.
-!
-!       stp is a real(wp) variable.
-!         On entry stp is the current estimate of a satisfactory
-!            step. On initial entry, a positive initial estimate
-!            must be provided.
-!         On exit stp is the current estimate of a satisfactory step
-!            if task = 'FG'. If task = 'CONV' then stp satisfies
-!            the sufficient decrease and curvature condition.
-!
-!       ftol is a real(wp) variable.
-!         On entry ftol specifies a nonnegative tolerance for the
-!            sufficient decrease condition.
-!         On exit ftol is unchanged.
-!
-!       gtol is a real(wp) variable.
-!         On entry gtol specifies a nonnegative tolerance for the
-!            curvature condition.
-!         On exit gtol is unchanged.
-!
-!       xtol is a real(wp) variable.
-!         On entry xtol specifies a nonnegative relative tolerance
-!            for an acceptable step. The subroutine exits with a
-!            warning if the relative difference between sty and stx
-!            is less than xtol.
-!         On exit xtol is unchanged.
-!
-!       stpmin is a real(wp) variable.
-!         On entry stpmin is a nonnegative lower bound for the step.
-!         On exit stpmin is unchanged.
-!
-!       stpmax is a real(wp) variable.
-!         On entry stpmax is a nonnegative upper bound for the step.
-!         On exit stpmax is unchanged.
-!
-!       task is a character variable of length at least 60.
-!         On initial entry task must be set to 'START'.
-!         On exit task indicates the required action:
-!
-!            If task(1:2) = 'FG' then evaluate the function and
-!            derivative at stp and call dcsrch again.
-!
-!            If task(1:4) = 'CONV' then the search is successful.
-!
-!            If task(1:4) = 'WARN' then the subroutine is not able
-!            to satisfy the convergence conditions. The exit value of
-!            stp contains the best point found during the search.
-!
-!            If task(1:5) = 'ERROR' then there is an error in the
-!            input arguments.
-!
-!         On exit with convergence, a warning or an error, the
-!            variable task contains additional information.
-!
-!       isave is an integer work array of dimension 2.
-!
-!       dsave is a real(wp) work array of dimension 13.
-!
-!     Subprograms called
-!
-!       MINPACK-2 ... dcstep
-!
-!     MINPACK-1 Project. June 1983.
-!     Argonne National Laboratory.
-!     Jorge J. More' and David J. Thuente.
-!
-!     MINPACK-2 Project. October 1993.
-!     Argonne National Laboratory and University of Minnesota.
-!     Brett M. Averick, Richard G. Carter, and Jorge J. More'.
+!  * MINPACK-1 Project. June 1983.
+!    Argonne National Laboratory.
+!    Jorge J. More' and David J. Thuente.
+!  * MINPACK-2 Project. October 1993.
+!    Argonne National Laboratory and University of Minnesota.
+!    Brett M. Averick, Richard G. Carter, and Jorge J. More'.
 
-      subroutine dcsrch(f,g,Stp,Ftol,Gtol,Xtol,Stpmin,Stpmax,Task,Isave,&
-                        Dsave)
+      subroutine dcsrch(f,g,Stp,Ftol,Gtol,Xtol,Stpmin,Stpmax,Task,Isave,Dsave)
+
       implicit none
 
-      character(len=*) :: Task
-      integer :: Isave(2)
-      real(wp) :: f , g , Stp , Ftol , Gtol , Xtol , Stpmin , &
-                  Stpmax
-      real(wp) :: Dsave(13)
+      character(len=*),intent(inout) :: Task !! `task` is a character variable of length at least 60:
+                                             !!
+                                             !!  * On initial entry `task` must be set to 'START'.
+                                             !!  * On exit `task` indicates the required action:
+                                             !!     * If `task(1:2) = 'FG'` then evaluate the function and
+                                             !!       derivative at stp and call dcsrch again.
+                                             !!     * If `task(1:4) = 'CONV'` then the search is successful.
+                                             !!     * If `task(1:4) = 'WARN'` then the subroutine is not able
+                                             !!       to satisfy the convergence conditions. The exit value of
+                                             !!       `stp` contains the best point found during the search.
+                                             !!     * If `task(1:5) = 'ERROR'` then there is an error in the
+                                             !!       input arguments.
+                                             !!  * On exit with convergence, a warning or an error, the
+                                             !!    variable task contains additional information.
+      real(wp),intent(inout) :: f !! * On initial entry `f` is the value of the function at 0.
+                                  !!   On subsequent entries `f` is the value of the
+                                  !!   function at `stp`.
+                                  !! * On exit `f` is the value of the function at `stp`.
+      real(wp),intent(inout) :: g !! * On initial entry `g` is the derivative of the function at 0.
+                                  !!   On subsequent entries `g` is the derivative of the
+                                  !!   function at `stp`.
+                                  !! * On exit `g` is the derivative of the function at `stp`.
+      real(wp),intent(inout) :: Stp !! * On entry `stp` is the current estimate of a satisfactory
+                                    !!   step. On initial entry, a positive initial estimate
+                                    !!   must be provided.
+                                    !! * On exit `stp` is the current estimate of a satisfactory step
+                                    !!   if `task = 'FG'`. If `task = 'CONV'` then `stp` satisfies
+                                    !!   the sufficient decrease and curvature condition.
+      real(wp),intent(in) :: Ftol !! `ftol` specifies a nonnegative tolerance for the
+                                  !! sufficient decrease condition.
+      real(wp),intent(in) :: Gtol !! `gtol` specifies a nonnegative tolerance for the curvature condition.
+      real(wp),intent(in) :: Xtol !! `xtol` specifies a nonnegative relative tolerance
+                                  !! for an acceptable step. The subroutine exits with a
+                                  !! warning if the relative difference between `sty` and `stx`
+                                  !! is less than `xtol`.
+      real(wp),intent(in) :: Stpmin !! a nonnegative lower bound for the step.
+      real(wp),intent(in) :: Stpmax !! a nonnegative upper bound for the step.
+      integer :: Isave(2) !! integer work array
+      real(wp) :: Dsave(13) !! real work array
 
       real(wp), parameter :: p5     = 0.5_wp
       real(wp), parameter :: p66    = 0.66_wp
@@ -3469,7 +3426,7 @@
 
       subroutine save_locals()
 
-      !! Save local variables.
+         !! Save local variables.
 
          if ( brackt ) then
             Isave(1) = 1
@@ -3502,96 +3459,57 @@
 !  procedure and updates an interval that contains a step that
 !  satisfies a sufficient decrease and a curvature condition.
 !
-!  The parameter stx contains the step with the least function
-!  value. If brackt is set to .true. then a minimizer has
-!  been bracketed in an interval with endpoints stx and sty.
-!  The parameter stp contains the current step.
-!  The subroutine assumes that if brackt is set to .true. then
+!  The parameter `stx` contains the step with the least function
+!  value. If `brackt` is set to .true. then a minimizer has
+!  been bracketed in an interval with endpoints `stx` and `sty`.
+!  The parameter `stp` contains the current step.
+!  The subroutine assumes that if `brackt` is set to .true. then
 !
-!    min(stx,sty) < stp < max(stx,sty),
+!  `min(stx,sty) < stp < max(stx,sty)`
 !
-!  and that the derivative at stx is negative in the direction
+!  and that the derivative at `stx` is negative in the direction
 !  of the step.
 !
-!  The subroutine statement is
+!### Credits
 !
-!       subroutine dcstep(stx,fx,dx,sty,fy,dy,stp,fp,dp,brackt,
-!                         stpmin,stpmax)
-!
-!     where
-!
-!       stx is a real(wp) variable.
-!         On entry stx is the best step obtained so far and is an
-!            endpoint of the interval that contains the minimizer.
-!         On exit stx is the updated best step.
-!
-!       fx is a real(wp) variable.
-!         On entry fx is the function at stx.
-!         On exit fx is the function at stx.
-!
-!       dx is a real(wp) variable.
-!         On entry dx is the derivative of the function at
-!            stx. The derivative must be negative in the direction of
-!            the step, that is, dx and stp - stx must have opposite
-!            signs.
-!         On exit dx is the derivative of the function at stx.
-!
-!       sty is a real(wp) variable.
-!         On entry sty is the second endpoint of the interval that
-!            contains the minimizer.
-!         On exit sty is the updated endpoint of the interval that
-!            contains the minimizer.
-!
-!       fy is a real(wp) variable.
-!         On entry fy is the function at sty.
-!         On exit fy is the function at sty.
-!
-!       dy is a real(wp) variable.
-!         On entry dy is the derivative of the function at sty.
-!         On exit dy is the derivative of the function at the exit sty.
-!
-!       stp is a real(wp) variable.
-!         On entry stp is the current step. If brackt is set to .true.
-!            then on input stp must be between stx and sty.
-!         On exit stp is a new trial step.
-!
-!       fp is a real(wp) variable.
-!         On entry fp is the function at stp
-!         On exit fp is unchanged.
-!
-!       dp is a real(wp) variable.
-!         On entry dp is the the derivative of the function at stp.
-!         On exit dp is unchanged.
-!
-!       brackt is an logical variable.
-!         On entry brackt specifies if a minimizer has been bracketed.
-!            Initially brackt must be set to .false.
-!         On exit brackt specifies if a minimizer has been bracketed.
-!            When a minimizer is bracketed brackt is set to .true.
-!
-!       stpmin is a real(wp) variable.
-!         On entry stpmin is a lower bound for the step.
-!         On exit stpmin is unchanged.
-!
-!       stpmax is a real(wp) variable.
-!         On entry stpmax is an upper bound for the step.
-!         On exit stpmax is unchanged.
-!
-!     MINPACK-1 Project. June 1983
-!     Argonne National Laboratory.
-!     Jorge J. More' and David J. Thuente.
-!
-!     MINPACK-2 Project. October 1993.
-!     Argonne National Laboratory and University of Minnesota.
-!     Brett M. Averick and Jorge J. More'.
+!  * MINPACK-1 Project. June 1983
+!    Argonne National Laboratory.
+!    Jorge J. More' and David J. Thuente.
+!  * MINPACK-2 Project. October 1993.
+!    Argonne National Laboratory and University of Minnesota.
+!    Brett M. Averick and Jorge J. More'.
 
       subroutine dcstep(Stx,Fx,Dx,Sty,Fy,Dy,Stp,Fp,Dp,Brackt,Stpmin, &
                         Stpmax)
       implicit none
 
-      logical :: Brackt
-      real(wp) :: Stx , Fx , Dx , Sty , Fy , Dy , Stp , Fp , Dp ,  &
-                  Stpmin , Stpmax
+      logical,intent(inout) :: Brackt  !! On entry `brackt` specifies if a minimizer has been bracketed.
+                                       !! Initially `brackt` must be set to .false.
+                                       !! On exit `brackt` specifies if a minimizer has been bracketed.
+                                       !! When a minimizer is bracketed `brackt` is set to .true.
+      real(wp),intent(inout) :: Stx !! On entry `stx` is the best step obtained so far and is an
+                                    !! endpoint of the interval that contains the minimizer.
+                                    !! On exit `stx is the updated best step.
+      real(wp),intent(inout) :: Fx !! On entry `fx` is the function at `stx`.
+                                   !! On exit `fx` is the function at `stx`.
+      real(wp),intent(inout) :: Dx !! On entry `dx` is the derivative of the function at
+                                   !! `stx`. The derivative must be negative in the direction of
+                                   !! the step, that is, `dx` and `stp - stx` must have opposite
+                                   !! signs.
+                                   !! On exit `dx` is the derivative of the function at `stx`.
+      real(wp),intent(inout) :: Sty !! On entry `sty` is the second endpoint of the interval that contains the minimizer.
+                                    !! On exit `sty` is the updated endpoint of the interval that contains the minimizer.
+      real(wp),intent(inout) :: Fy !! On entry `fy` is the function at `sty`.
+                                   !! On exit `fy` is the function at `sty`.
+      real(wp),intent(inout) :: Dy !! On entry `dy` is the derivative of the function at `sty`.
+                                   !! On exit `dy` is the derivative of the function at the exit `sty`.
+      real(wp),intent(inout) :: Stp !! On entry `stp` is the current step. If `brackt` is set to .true.
+                                    !! then on input `stp` must be between `stx` and `sty`.
+                                    !! On exit `stp` is a new trial step.
+      real(wp),intent(in) :: Fp !! the function at `stp`.
+      real(wp),intent(in) :: Dp !! the derivative of the function at `stp`.
+      real(wp),intent(in) :: Stpmin !! a lower bound for the step.
+      real(wp),intent(in) :: Stpmax !! an upper bound for the step.
 
       real(wp),parameter :: p66 = 0.66_wp
 
@@ -3627,7 +3545,7 @@
          ! stp than the secant step, the cubic step is taken, otherwise the
          ! secant step is taken.
 
-      elseif ( sgnd<zero ) then
+      else if ( sgnd<zero ) then
          theta = three*(Fx-Fp)/(Stp-Stx) + Dx + Dp
          s = max(abs(theta),abs(Dx),abs(Dp))
          gamma = s*sqrt((theta/s)**2-(Dx/s)*(Dp/s))
@@ -3647,7 +3565,7 @@
          ! Third case: A lower function value, derivatives of the same sign,
          ! and the magnitude of the derivative decreases.
 
-      elseif ( abs(Dp)<abs(Dx) ) then
+      else if ( abs(Dp)<abs(Dx) ) then
 
          ! The cubic step is computed only if the cubic tends to infinity
          ! in the direction of the step or if the minimum of the cubic
@@ -3667,7 +3585,7 @@
          r = p/q
          if ( r<zero .and. gamma/=zero ) then
             stpc = Stp + r*(Stx-Stp)
-         elseif ( Stp>Stx ) then
+         else if ( Stp>Stx ) then
             stpc = Stpmax
          else
             stpc = Stpmin
@@ -3721,7 +3639,7 @@
             r = p/q
             stpc = Stp + r*(Sty-Stp)
             stpf = stpc
-         elseif ( Stp>Stx ) then
+         else if ( Stp>Stx ) then
             stpf = Stpmax
          else
             stpf = Stpmin

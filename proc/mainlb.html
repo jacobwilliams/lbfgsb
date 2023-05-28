@@ -92,7 +92,7 @@
           <li id="statements"><i class="fa fa-list-ol"></i>
             <a data-toggle="tooltip"
                data-placement="bottom" data-html="true"
-               title="18.1% of total for procedures.">329 statements</a>
+               title="17.9% of total for procedures.">329 statements</a>
           </li>
 
             <li id="source-file">
@@ -283,7 +283,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-f~2"></span>
+              <span class="anchor" id="variable-f~3"></span>
               real(kind=wp)
             </td>
 <td></td>
@@ -298,7 +298,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-g~2"></span>
+              <span class="anchor" id="variable-g~3"></span>
               real(kind=wp)
             </td>
 <td></td>
@@ -583,7 +583,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-task~2"></span>
+              <span class="anchor" id="variable-task~3"></span>
               character(len=60)
             </td>
 <td></td>
@@ -643,7 +643,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-isave~2"></span>
+              <span class="anchor" id="variable-isave~3"></span>
               integer
             </td>
 <td></td>
@@ -658,7 +658,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-dsave~2"></span>
+              <span class="anchor" id="variable-dsave~3"></span>
               real(kind=wp)
             </td>
 <td></td>
@@ -1891,7 +1891,7 @@ implementation in a submodule of an interface in a parent module.
 <span class="w">            </span><span class="n">lnscht</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lnscht</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">cpu2</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">cpu1</span><span class="w"></span>
 <span class="w">            </span><span class="k">goto</span><span class="w"> </span><span class="mi">200</span><span class="w"></span>
 <span class="w">         </span><span class="k">endif</span>
-<span class="k">      </span><span class="n">elseif</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">Task</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="mi">5</span><span class="p">)</span><span class="o">==</span><span class="s1">&#39;FG_LN&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span><span class="w"></span>
+<span class="k">      else if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">Task</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="mi">5</span><span class="p">)</span><span class="o">==</span><span class="s1">&#39;FG_LN&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span><span class="w"></span>
 <span class="w">         </span><span class="c">! return to the driver for calculating f and g; reenter at 666.</span>
 <span class="w">         </span><span class="k">call </span><span class="n">save_locals</span><span class="p">()</span><span class="w"></span>
 <span class="w">         </span><span class="k">return</span>
