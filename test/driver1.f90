@@ -1,6 +1,6 @@
 !                                                                                      
-!  L-BFGS-B is released under the “New BSD License” (aka “Modified BSD License”        
-!  or “3-clause license”)                                                              
+!  L-BFGS-B is released under the "New BSD License" (aka "Modified BSD License"        
+!  or "3-clause license")                                                              
 !  Please read attached file License.txt                                               
 !                                        
 !
@@ -188,6 +188,8 @@
 !     --------------------------------------------------------------
 !    
       program driver
+
+      use lbfgsb_module
 !
 !     This simple driver demonstrates how to call the L-BFGS-B code to
 !       solve a sample problem (the extended Rosenbrock function 
