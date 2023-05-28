@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="description" content="lbfgsb optimization library">
+    <meta name="author" content="Jacob Williams" >
+    <link rel="icon" href="../favicon.png">
+
+    <title>daxpy &ndash; lbfgsb</title>
+
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/pygments.css" rel="stylesheet">
+    <link href="../css/font-awesome.min.css" rel="stylesheet">
+    <link href="../css/local.css" rel="stylesheet">
+      <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+         <script src="../js/jquery-2.1.3.min.js"></script>
+         <script src="../js/svg-pan-zoom.min.js"></script>
+
+  </head>
+
+  <body>
+
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../index.html">lbfgsb </a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class="dropdown hidden-xs visible-sm visible-md hidden-lg">
+              <a href="#" class="dropdown-toggle"
+                 data-toggle="dropdown" role="button"
+                 aria-haspopup="true"
+                 aria-expanded="false">
+                 Contents <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu">
+                    <li><a href="../lists/files.html">Source Files</a></li>
+                  <li><a href="../lists/modules.html">Modules</a></li>
+                  <li><a href="../lists/procedures.html">Procedures</a></li>
+              </ul>
+            </li>
+                <li class="visible-xs hidden-sm visible-lg">
+                  <a href="../lists/files.html">Source Files</a>
+                </li>
+              <li class="visible-xs hidden-sm visible-lg">
+                <a href="../lists/modules.html">Modules</a>
+              </li>
+              <li class="visible-xs hidden-sm visible-lg">
+                <a href="../lists/procedures.html">Procedures</a>
+              </li>
+          </ul>
+            <form action="../search.html" class="navbar-form navbar-right" role="search">
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+              </div>
+              <!--
+                  <button type="submit" class="btn btn-default">Submit</button>
+                  -->
+            </form>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+    <div class="container">
+  <div class="row">
+    <h1>daxpy
+      <small>Subroutine</small>
+      
+    </h1>
+      <div class="row" id="info-bar">
+    <div class="col-lg-12">
+      <div class="well well-sm">
+        <ul class="list-inline" style="margin-bottom:0px;display:inline">
+
+          <li id="statements"><i class="fa fa-list-ol"></i>
+            <a data-toggle="tooltip"
+               data-placement="bottom" data-html="true"
+               title=" 2.1% of total for procedures.">38 statements</a>
+          </li>
+
+            <li id="source-file">
+              <i class="fa fa-code"></i>
+              <a href="../src/lbfgsb_blas_module.F90"> Source File</a>
+            </li>
+        </ul>
+        <ol class="breadcrumb in-well text-right">
+              <li><a href='../sourcefile/lbfgsb_blas_module.f90.html'>lbfgsb_blas_module.F90</a></li>
+              <li><a href='../module/lbfgsb_blas_module.html'>lbfgsb_blas_module</a></li>
+          <li class="active">daxpy</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+  <script>
+    $(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+    })
+  </script>
+
+  </div>
+  
+  <div class="row">
+    <div class="col-md-3 hidden-xs hidden-sm visible-md visible-lg">
+      <div id="sidebar">
+      <h3>Contents</h3>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+    <div class="panel panel-primary">
+      <div class="panel-heading text-left"><h3 class="panel-title">Source Code</h3></div>
+      <div class="list-group">
+        <a class="list-group-item" href="../proc/daxpy.html#src">daxpy</a>
+      </div>
+    </div>
+
+
+  </div>
+
+    </div>
+    
+    <div class="col-md-9" id='text'>
+    <h2>public  subroutine daxpy(n, da, dx, incx, dy, incy)  
+</h2>
+    
+
+    <p>constant times a vector plus a vector.
+  uses unrolled loops for increments equal to one.</p>
+<h3>Author</h3>
+<p>jack dongarra, linpack, 3/11/78.</p>
+
+
+    <h3>Arguments</h3>
+        <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th>Type</th>
+<th>Intent</th><th>Optional</th>        <th>Attributes</th>
+        <th></th>
+        <th>Name</th>
+        <th></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-n~20"></span>
+              integer,
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>n</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-da"></span>
+              real(kind=wp),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>da</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-dx~2"></span>
+              real(kind=wp),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>dx</strong>(*)</td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-incx~2"></span>
+              integer,
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>incx</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-dy~2"></span>
+              real(kind=wp),
+            </td>
+<td>intent(inout)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>dy</strong>(*)</td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-incy~2"></span>
+              integer,
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>incy</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+    <br>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+  <h3 class="panel-title">Called by</h3>
+      </div>
+      <div class="panel-body">
+  <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.43.0 (0)
+ -->
+<!-- Title: proc~~daxpy~~CalledByGraph Pages: 1 -->
+<svg id="procdaxpyCalledByGraph" width="641pt" height="96pt"
+ viewBox="0.00 0.00 641.00 95.78" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="proc~~daxpy~~CalledByGraph" class="graph" transform="scale(1.63 1.63) rotate(0) translate(4 152)">
+<title>proc~~daxpy~~CalledByGraph</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-152 1040,-152 1040,4 -4,4"/>
+<!-- proc~daxpy -->
+<g id="proc~~daxpy~~CalledByGraph_node1" class="node">
+<title>proc~daxpy</title>
+<polygon fill="none" stroke="black" points="1036,-107 879,-107 879,-83 1036,-83 1036,-107"/>
+<text text-anchor="middle" x="957.5" y="-92.6" font-family="Helvetica,sans-Serif" font-size="10.50">lbfgsb_blas_module::daxpy</text>
+</g>
+<!-- proc~cauchy -->
+<g id="proc~~daxpy~~CalledByGraph_node2" class="node">
+<title>proc~cauchy</title>
+<g id="a_proc~~daxpy~~CalledByGraph_node2"><a xlink:href=".././proc/cauchy.html" xlink:title="lbfgsb_module::cauchy">
+<polygon fill="#d9534f" stroke="#d9534f" points="473,-148 337,-148 337,-124 473,-124 473,-148"/>
+<text text-anchor="middle" x="405" y="-133.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lbfgsb_module::cauchy</text>
+</a>
+</g>
+</g>
+<!-- proc~cauchy&#45;&gt;proc~daxpy -->
+<g id="proc~~daxpy~~CalledByGraph_edge1" class="edge">
+<title>proc~cauchy&#45;&gt;proc~daxpy</title>
+<path fill="none" stroke="#000000" d="M473.23,-130.99C572.52,-123.6 758.49,-109.75 868.52,-101.55"/>
+<polygon fill="#000000" stroke="#000000" points="868.88,-105.04 878.6,-100.8 868.36,-98.05 868.88,-105.04"/>
+</g>
+<!-- proc~bmv -->
+<g id="proc~~daxpy~~CalledByGraph_node4" class="node">
+<title>proc~bmv</title>
+<g id="a_proc~~daxpy~~CalledByGraph_node4"><a xlink:href=".././proc/bmv.html" xlink:title="lbfgsb_module::bmv">
+<polygon fill="#d9534f" stroke="#d9534f" points="636,-108 515,-108 515,-84 636,-84 636,-108"/>
+<text text-anchor="middle" x="575.5" y="-93.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lbfgsb_module::bmv</text>
+</a>
+</g>
+</g>
+<!-- proc~cauchy&#45;&gt;proc~bmv -->
+<g id="proc~~daxpy~~CalledByGraph_edge7" class="edge">
+<title>proc~cauchy&#45;&gt;proc~bmv</title>
+<path fill="none" stroke="#000000" d="M456.56,-124C474.55,-119.73 495,-114.87 513.76,-110.42"/>
+<polygon fill="#000000" stroke="#000000" points="514.77,-113.78 523.69,-108.06 513.15,-106.97 514.77,-113.78"/>
+</g>
+<!-- proc~dtrsl -->
+<g id="proc~~daxpy~~CalledByGraph_node3" class="node">
+<title>proc~dtrsl</title>
+<g id="a_proc~~daxpy~~CalledByGraph_node3"><a xlink:href=".././proc/dtrsl.html" xlink:title="lbfgsb_linpack_module::dtrsl">
+<polygon fill="#d9534f" stroke="#d9534f" points="843,-87 678,-87 678,-63 843,-63 843,-87"/>
+<text text-anchor="middle" x="760.5" y="-72.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lbfgsb_linpack_module::dtrsl</text>
+</a>
+</g>
+</g>
+<!-- proc~dtrsl&#45;&gt;proc~daxpy -->
+<g id="proc~~daxpy~~CalledByGraph_edge2" class="edge">
+<title>proc~dtrsl&#45;&gt;proc~daxpy</title>
+<path fill="none" stroke="#000000" d="M843.07,-83.37C851.54,-84.24 860.19,-85.12 868.73,-86"/>
+<polygon fill="#000000" stroke="#000000" points="868.39,-89.48 878.69,-87.02 869.1,-82.52 868.39,-89.48"/>
+</g>
+<!-- proc~bmv&#45;&gt;proc~dtrsl -->
+<g id="proc~~daxpy~~CalledByGraph_edge4" class="edge">
+<title>proc~bmv&#45;&gt;proc~dtrsl</title>
+<path fill="none" stroke="#000000" d="M636.17,-89.15C646.29,-87.99 657,-86.76 667.71,-85.53"/>
+<polygon fill="#000000" stroke="#000000" points="668.43,-88.97 677.97,-84.36 667.63,-82.02 668.43,-88.97"/>
+</g>
+<!-- proc~formk -->
+<g id="proc~~daxpy~~CalledByGraph_node5" class="node">
+<title>proc~formk</title>
+<g id="a_proc~~daxpy~~CalledByGraph_node5"><a xlink:href=".././proc/formk.html" xlink:title="lbfgsb_module::formk">
+<polygon fill="#d9534f" stroke="#d9534f" points="640.5,-66 510.5,-66 510.5,-42 640.5,-42 640.5,-66"/>
+<text text-anchor="middle" x="575.5" y="-51.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lbfgsb_module::formk</text>
+</a>
+</g>
+</g>
+<!-- proc~formk&#45;&gt;proc~dtrsl -->
+<g id="proc~~daxpy~~CalledByGraph_edge5" class="edge">
+<title>proc~formk&#45;&gt;proc~dtrsl</title>
+<path fill="none" stroke="#000000" d="M640.5,-61.34C649.36,-62.36 658.6,-63.42 667.83,-64.48"/>
+<polygon fill="#000000" stroke="#000000" points="667.5,-67.97 677.84,-65.63 668.3,-61.01 667.5,-67.97"/>
+</g>
+<!-- proc~mainlb -->
+<g id="proc~~daxpy~~CalledByGraph_node6" class="node">
+<title>proc~mainlb</title>
+<g id="a_proc~~daxpy~~CalledByGraph_node6"><a xlink:href=".././proc/mainlb.html" xlink:title="lbfgsb_module::mainlb">
+<polygon fill="#d9534f" stroke="#d9534f" points="301,-86 166,-86 166,-62 301,-62 301,-86"/>
+<text text-anchor="middle" x="233.5" y="-71.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lbfgsb_module::mainlb</text>
+</a>
+</g>
+</g>
+<!-- proc~mainlb&#45;&gt;proc~cauchy -->
+<g id="proc~~daxpy~~CalledByGraph_edge3" class="edge">
+<title>proc~mainlb&#45;&gt;proc~cauchy</title>
+<path fill="none" stroke="#000000" d="M262.99,-86.08C283.44,-94.58 311.72,-106 337,-115 342.52,-116.96 348.32,-118.93 354.12,-120.83"/>
+<polygon fill="#000000" stroke="#000000" points="353.21,-124.22 363.8,-123.95 355.35,-117.55 353.21,-124.22"/>
+</g>
+<!-- proc~mainlb&#45;&gt;proc~formk -->
+<g id="proc~~daxpy~~CalledByGraph_edge9" class="edge">
+<title>proc~mainlb&#45;&gt;proc~formk</title>
+<path fill="none" stroke="#000000" d="M301.27,-70.07C358.58,-66.7 441.09,-61.85 500.42,-58.36"/>
+<polygon fill="#000000" stroke="#000000" points="500.7,-61.85 510.48,-57.77 500.29,-54.86 500.7,-61.85"/>
+</g>
+<!-- proc~subsm -->
+<g id="proc~~daxpy~~CalledByGraph_node7" class="node">
+<title>proc~subsm</title>
+<g id="a_proc~~daxpy~~CalledByGraph_node7"><a xlink:href=".././proc/subsm.html" xlink:title="lbfgsb_module::subsm">
+<polygon fill="#d9534f" stroke="#d9534f" points="642,-24 509,-24 509,0 642,0 642,-24"/>
+<text text-anchor="middle" x="575.5" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lbfgsb_module::subsm</text>
+</a>
+</g>
+</g>
+<!-- proc~mainlb&#45;&gt;proc~subsm -->
+<g id="proc~~daxpy~~CalledByGraph_edge11" class="edge">
+<title>proc~mainlb&#45;&gt;proc~subsm</title>
+<path fill="none" stroke="#000000" d="M300.46,-61.97C357.23,-51.62 439.16,-36.68 498.64,-25.83"/>
+<polygon fill="#000000" stroke="#000000" points="499.52,-29.23 508.73,-23.99 498.26,-22.35 499.52,-29.23"/>
+</g>
+<!-- proc~cmprlb -->
+<g id="proc~~daxpy~~CalledByGraph_node8" class="node">
+<title>proc~cmprlb</title>
+<g id="a_proc~~daxpy~~CalledByGraph_node8"><a xlink:href=".././proc/cmprlb.html" xlink:title="lbfgsb_module::cmprlb">
+<polygon fill="#d9534f" stroke="#d9534f" points="473,-106 337,-106 337,-82 473,-82 473,-106"/>
+<text text-anchor="middle" x="405" y="-91.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lbfgsb_module::cmprlb</text>
+</a>
+</g>
+</g>
+<!-- proc~mainlb&#45;&gt;proc~cmprlb -->
+<g id="proc~~daxpy~~CalledByGraph_edge12" class="edge">
+<title>proc~mainlb&#45;&gt;proc~cmprlb</title>
+<path fill="none" stroke="#000000" d="M301,-81.85C309.47,-82.85 318.19,-83.88 326.81,-84.89"/>
+<polygon fill="#000000" stroke="#000000" points="326.51,-88.38 336.85,-86.08 327.33,-81.43 326.51,-88.38"/>
+</g>
+<!-- proc~subsm&#45;&gt;proc~dtrsl -->
+<g id="proc~~daxpy~~CalledByGraph_edge6" class="edge">
+<title>proc~subsm&#45;&gt;proc~dtrsl</title>
+<path fill="none" stroke="#000000" d="M614.67,-24C623.65,-26.89 633.18,-30.01 642,-33 667.02,-41.48 694.87,-51.41 717.17,-59.49"/>
+<polygon fill="#000000" stroke="#000000" points="716.09,-62.82 726.68,-62.94 718.48,-56.24 716.09,-62.82"/>
+</g>
+<!-- proc~cmprlb&#45;&gt;proc~bmv -->
+<g id="proc~~daxpy~~CalledByGraph_edge8" class="edge">
+<title>proc~cmprlb&#45;&gt;proc~bmv</title>
+<path fill="none" stroke="#000000" d="M473.08,-94.8C483.4,-94.92 494.09,-95.05 504.48,-95.17"/>
+<polygon fill="#000000" stroke="#000000" points="504.7,-98.67 514.74,-95.29 504.78,-91.67 504.7,-98.67"/>
+</g>
+<!-- proc~setulb -->
+<g id="proc~~daxpy~~CalledByGraph_node9" class="node">
+<title>proc~setulb</title>
+<g id="a_proc~~daxpy~~CalledByGraph_node9"><a xlink:href=".././proc/setulb.html" xlink:title="lbfgsb_module::setulb">
+<polygon fill="#d9534f" stroke="#d9534f" points="130,-86 0,-86 0,-62 130,-62 130,-86"/>
+<text text-anchor="middle" x="65" y="-71.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lbfgsb_module::setulb</text>
+</a>
+</g>
+</g>
+<!-- proc~setulb&#45;&gt;proc~mainlb -->
+<g id="proc~~daxpy~~CalledByGraph_edge10" class="edge">
+<title>proc~setulb&#45;&gt;proc~mainlb</title>
+<path fill="none" stroke="#000000" d="M130.37,-74C138.64,-74 147.16,-74 155.6,-74"/>
+<polygon fill="#000000" stroke="#000000" points="155.82,-77.5 165.82,-74 155.82,-70.5 155.82,-77.5"/>
+</g>
+</g>
+</svg>
+</div>                <script>
+                  var panprocdaxpyCalledByGraph = svgPanZoom('#procdaxpyCalledByGraph',
+                    {zoomEnabled: true, controlIconsEnabled: true, fit: true, center: true,}
+                  );
+                </script>        <div><a type="button" class="graph-help" data-toggle="modal" href="#graph-help-text">Help</a></div>
+          <div class="modal fade" id="graph-help-text" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                  <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                </div>
+              <div class="modal-body">
+<p>Nodes of different colours represent the following: </p>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.43.0 (0)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="597pt" height="32pt"
+ viewBox="0.00 0.00 596.50 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 28)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-28 592.5,-28 592.5,4 -4,4"/>
+<!-- Subroutine -->
+<g id="node1" class="node">
+<title>Subroutine</title>
+<polygon fill="#d9534f" stroke="#d9534f" points="70,-24 0,-24 0,0 70,0 70,-24"/>
+<text text-anchor="middle" x="35" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
+</g>
+<!-- Function -->
+<g id="node2" class="node">
+<title>Function</title>
+<polygon fill="#d94e8f" stroke="#d94e8f" points="146,-24 88,-24 88,0 146,0 146,-24"/>
+<text text-anchor="middle" x="117" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
+</g>
+<!-- Interface -->
+<g id="node3" class="node">
+<title>Interface</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="225.5,-24 164.5,-24 164.5,0 225.5,0 225.5,-24"/>
+<text text-anchor="middle" x="195" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Interface</text>
+</g>
+<!-- Unknown Procedure Type -->
+<g id="node4" class="node">
+<title>Unknown Procedure Type</title>
+<polygon fill="#777777" stroke="#777777" points="388.5,-24 243.5,-24 243.5,0 388.5,0 388.5,-24"/>
+<text text-anchor="middle" x="316" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Unknown Procedure Type</text>
+</g>
+<!-- Program -->
+<g id="node5" class="node">
+<title>Program</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="465,-24 407,-24 407,0 465,0 465,-24"/>
+<text text-anchor="middle" x="436" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node6" class="node">
+<title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="588.5,-24 483.5,-24 483.5,0 588.5,0 588.5,-24"/>
+<text text-anchor="middle" x="536" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+<p>Solid arrows point from a procedure to one which it calls. Dashed 
+arrows point from an interface to procedures which implement that interface.
+This could include the module procedures in a generic interface or the
+implementation in a submodule of an interface in a parent module.
+</p>
+ </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+
+    <section class="visible-xs visible-sm hidden-md">
+        <h3>Contents</h3>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+    <div class="panel panel-primary">
+      <div class="panel-heading text-left"><h3 class="panel-title">Source Code</h3></div>
+      <div class="list-group">
+        <a class="list-group-item" href="../proc/daxpy.html#src">daxpy</a>
+      </div>
+    </div>
+
+
+    </section>
+    <br class="visible-xs visible-sm hidden-md">
+
+
+    
+    
+
+    
+    
+
+
+    
+    <section>
+    <h2><span class="anchor" id="src"></span>Source Code</h2>
+    <div class="highlight"><pre><span></span><span class="w">      </span><span class="k">subroutine </span><span class="n">daxpy</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">da</span><span class="p">,</span><span class="n">dx</span><span class="p">,</span><span class="n">incx</span><span class="p">,</span><span class="n">dy</span><span class="p">,</span><span class="n">incy</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="k">implicit none</span>
+
+<span class="k">      </span><span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">n</span><span class="w"></span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">da</span><span class="w"></span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">  </span><span class="kd">::</span><span class="w"> </span><span class="n">dx</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">  </span><span class="kd">::</span><span class="w"> </span><span class="n">incx</span><span class="w"></span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">dy</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">  </span><span class="kd">::</span><span class="w"> </span><span class="n">incy</span><span class="w"></span>
+
+<span class="w">      </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">ix</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">iy</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">m</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">mp1</span><span class="w"></span>
+
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">n</span><span class="o">&lt;=</span><span class="mi">0</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">return</span>
+<span class="k">      if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">da</span><span class="o">==</span><span class="n">zero</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">return</span>
+<span class="k">      if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">incx</span><span class="o">==</span><span class="mi">1</span><span class="w"> </span><span class="p">.</span><span class="nb">and</span><span class="p">.</span><span class="w"> </span><span class="n">incy</span><span class="o">==</span><span class="mi">1</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span><span class="w"></span>
+
+<span class="w">        </span><span class="c">! code for both increments equal to 1</span>
+
+<span class="w">        </span><span class="c">! clean-up loop</span>
+
+<span class="w">         </span><span class="n">m</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">mod</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span><span class="w"></span>
+<span class="w">         </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">m</span><span class="o">/=</span><span class="mi">0</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">            do </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">m</span><span class="w"></span>
+<span class="w">               </span><span class="n">dy</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dy</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">da</span><span class="o">*</span><span class="n">dx</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="k">end do</span>
+<span class="k">            if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">n</span><span class="o">&lt;</span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">return</span>
+<span class="k">         end if</span>
+<span class="k">         </span><span class="n">mp1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">m</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="w">         </span><span class="k">do </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mp1</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="w"></span>
+<span class="w">            </span><span class="n">dy</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dy</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">da</span><span class="o">*</span><span class="n">dx</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="n">dy</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dy</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">da</span><span class="o">*</span><span class="n">dx</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="n">dy</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dy</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">da</span><span class="o">*</span><span class="n">dx</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">2</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="n">dy</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">3</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dy</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">3</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">da</span><span class="o">*</span><span class="n">dx</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">3</span><span class="p">)</span><span class="w"></span>
+<span class="w">         </span><span class="k">end do</span>
+
+<span class="k">      else</span><span class="w"></span>
+
+<span class="w">         </span><span class="c">! code for unequal increments or equal increments</span>
+<span class="w">         </span><span class="c">! not equal to 1</span>
+
+<span class="w">         </span><span class="n">ix</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="w">         </span><span class="n">iy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="w">         </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">incx</span><span class="o">&lt;</span><span class="mi">0</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">ix</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="o">-</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">incx</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="w">         </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">incy</span><span class="o">&lt;</span><span class="mi">0</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">iy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="o">-</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">incy</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="w">         </span><span class="k">do </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="w"></span>
+<span class="w">            </span><span class="n">dy</span><span class="p">(</span><span class="n">iy</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dy</span><span class="p">(</span><span class="n">iy</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">da</span><span class="o">*</span><span class="n">dx</span><span class="p">(</span><span class="n">ix</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="n">ix</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ix</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">incx</span><span class="w"></span>
+<span class="w">            </span><span class="n">iy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">iy</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">incy</span><span class="w"></span>
+<span class="w">         </span><span class="k">end do</span>
+
+<span class="k">      end if</span>
+
+<span class="k">      end subroutine </span><span class="n">daxpy</span><span class="w"></span>
+</pre></div>
+
+    </section>
+    <br>
+    
+    </div>
+  </div>
+
+      <hr>
+    </div> <!-- /container -->
+    <footer>
+      <div class="container">
+        <div class="row">
+          <div class="col-xs-6 col-md-6"><p>lbfgsb was developed by Jacob Williams<br>&copy; 2023 
+</p>
+          </div>
+          <div class="col-xs-6 col-md-6">
+            <p class="text-right">
+              Documentation generated by
+              <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
+            </p>
+          </div>
+        </div>
+        <br>
+      </div> <!-- /container -->
+    </footer>
+
+    <!-- Bootstrap core JavaScript
+         ================================================== -->
+         <!-- Placed at the end of the document so the pages load faster -->
+    <!--
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        -->
+        <script src="../js/bootstrap.min.js"></script>
+        <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+        <script src="../js/ie10-viewport-bug-workaround.js"></script>
+
+        <!-- MathJax JavaScript
+             ================================================== -->
+             <!-- Placed at the end of the document so the pages load faster -->
+        <script type="text/x-mathjax-config">
+          MathJax.Hub.Config({
+          TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } },
+          jax: ['input/TeX','input/MathML','output/HTML-CSS'],
+          extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']
+          });
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+          <script src="../tipuesearch/tipuesearch_content.js"></script>
+          <script src="../tipuesearch/tipuesearch_set.js"></script>
+          <script src="../tipuesearch/tipuesearch.js"></script>
+
+  </body>
+</html>
