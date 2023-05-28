@@ -975,9 +975,9 @@
       subroutine active(n,l,u,Nbd,x,Iwhere,Iprint,Prjctd,Cnstnd,Boxed)
       implicit none
 
-      logical Prjctd , Cnstnd , Boxed
-      integer n , Iprint , Nbd(n) , Iwhere(n)
-      real(wp) x(n) , l(n) , u(n)
+      logical :: Prjctd , Cnstnd , Boxed
+      integer :: n , Iprint , Nbd(n) , Iwhere(n)
+      real(wp) :: x(n) , l(n) , u(n)
 
 !
 !     iwhere is an integer array of dimension n.
@@ -1002,14 +1002,14 @@
 
       integer nbdd , i
 
-!     Initialize nbdd, prjctd, cnstnd and boxed.
+      ! Initialize nbdd, prjctd, cnstnd and boxed.
 
       nbdd = 0
       Prjctd = .false.
       Cnstnd = .false.
       Boxed = .true.
 
-!     Project the initial x to the feasible set if necessary.
+      ! Project the initial x to the feasible set if necessary.
 
       do i = 1 , n
          if ( Nbd(i)>0 ) then
@@ -1029,19 +1029,18 @@
          endif
       enddo
 
-!     Initialize iwhere and assign values to cnstnd and boxed.
+      ! Initialize iwhere and assign values to cnstnd and boxed.
 
       do i = 1 , n
          if ( Nbd(i)/=2 ) Boxed = .false.
          if ( Nbd(i)==0 ) then
-!                                this variable is always free
+            ! this variable is always free
             Iwhere(i) = -1
-
-!           otherwise set x(i)=mid(x(i), u(i), l(i)).
+            ! otherwise set x(i)=mid(x(i), u(i), l(i)).
          else
             Cnstnd = .true.
             if ( Nbd(i)==2 .and. u(i)-l(i)<=zero ) then
-!                   this variable is always fixed
+               ! this variable is always fixed
                Iwhere(i) = 3
             else
                Iwhere(i) = 0
@@ -1050,8 +1049,8 @@
       enddo
 
       if ( Iprint>=0 ) then
-         if ( Prjctd ) write (6,*)                                      &
-           &'The initial X is infeasible.  Restart with its projection.'
+         if ( Prjctd ) write (6,*) &
+            'The initial X is infeasible.  Restart with its projection.'
          if ( .not.Cnstnd ) write (6,*) 'This problem is unconstrained.'
       endif
 
@@ -1061,15 +1060,8 @@
 
       end subroutine active
 
-      subroutine bmv(m,Sy,Wt,Col,v,p,Info)
-      implicit none
-
-      integer m , Col , Info
-      real(wp) Sy(m,m) , Wt(m,m) , v(2*Col) , p(2*Col)
-
-!     ************
-!
-!     Subroutine bmv
+!*******************************************************************************
+!>
 !
 !     This subroutine computes the product of the 2m x 2m middle matrix
 !       in the compact L-BFGS formula of B and a 2m vector v;
@@ -1108,11 +1100,6 @@
 !                    = nonzero for abnormal return when the system
 !                                to be solved by dtrsl is singular.
 !
-!     Subprograms called:
-!
-!       Linpack ... dtrsl.
-!
-!
 !                           *  *  *
 !
 !     NEOS, November 1994. (Latest revision June 1996.)
@@ -1121,46 +1108,49 @@
 !     Written by
 !                        Ciyou Zhu
 !     in collaboration with R.H. Byrd, P. Lu-Chen and J. Nocedal.
-!
-!
-!     ************
 
-      integer i , k , i2
-      real(wp) sum
+      subroutine bmv(m,Sy,Wt,Col,v,p,Info)
+      implicit none
+
+      integer :: m , Col , Info
+      real(wp) :: Sy(m,m) , Wt(m,m) , v(2*Col) , p(2*Col)
+
+      integer :: i , k , i2
+      real(wp) :: sum
 
       if ( Col==0 ) return
 
-!     PART I: solve [  D^(1/2)      O ] [ p1 ] = [ v1 ]
-!                   [ -L*D^(-1/2)   J ] [ p2 ]   [ v2 ].
+      ! PART I: solve [  D^(1/2)      O ] [ p1 ] = [ v1 ]
+      !               [ -L*D^(-1/2)   J ] [ p2 ]   [ v2 ].
 
-!       solve Jp2=v2+LD^(-1)v1.
+      ! solve Jp2=v2+LD^(-1)v1.
       p(Col+1) = v(Col+1)
       do i = 2 , Col
          i2 = Col + i
-         sum = 0.0d0
+         sum = zero
          do k = 1 , i - 1
             sum = sum + Sy(i,k)*v(k)/Sy(k,k)
          enddo
          p(i2) = v(i2) + sum
       enddo
-!     Solve the triangular system
+      ! Solve the triangular system
       call dtrsl(Wt,m,Col,p(Col+1),11,Info)
       if ( Info/=0 ) return
 
-!       solve D^(1/2)p1=v1.
+      ! solve D^(1/2)p1=v1.
       do i = 1 , Col
          p(i) = v(i)/sqrt(Sy(i,i))
       enddo
 
-!     PART II: solve [ -D^(1/2)   D^(-1/2)*L'  ] [ p1 ] = [ p1 ]
-!                    [  0         J'           ] [ p2 ]   [ p2 ].
+      ! PART II: solve [ -D^(1/2)   D^(-1/2)*L'  ] [ p1 ] = [ p1 ]
+      !                [  0         J'           ] [ p2 ]   [ p2 ].
 
-!       solve J^Tp2=p2.
+      ! solve J^Tp2=p2.
       call dtrsl(Wt,m,Col,p(Col+1),01,Info)
       if ( Info/=0 ) return
 
-!       compute p1=-D^(-1/2)(p1-D^(-1/2)L'p2)
-!                 =-D^(-1/2)p1+D^(-1)L'p2.
+      ! compute p1=-D^(-1/2)(p1-D^(-1/2)L'p2)
+      !           =-D^(-1/2)p1+D^(-1)L'p2.
       do i = 1 , Col
          p(i) = -p(i)/sqrt(Sy(i,i))
       enddo
@@ -1173,33 +1163,20 @@
       enddo
 
       end subroutine bmv
+!*******************************************************************************
 
-      subroutine cauchy(n,x,l,u,Nbd,g,Iorder,Iwhere,t,d,Xcp,m,Wy,Ws,Sy, &
-                      & Wt,Theta,Col,Head,p,c,Wbp,v,Nseg,Iprint,Sbgnrm, &
-                      & Info,Epsmch)
-      implicit none
-
-      integer n , m , Head , Col , Nseg , Iprint , Info , Nbd(n) ,      &
-            & Iorder(n) , Iwhere(n)
-      real(wp) Theta , Epsmch , x(n) , l(n) , u(n) , g(n) ,     &
-                     & t(n) , d(n) , Xcp(n) , Wy(n,Col) , Ws(n,Col) ,   &
-                     & Sy(m,m) , Wt(m,m) , p(2*m) , c(2*m) , Wbp(2*m) , &
-                     & v(2*m)
-
-!     ************
+!*******************************************************************************
+!>
+!  For given x, l, u, g (with sbgnrm > 0), and a limited memory
+!  BFGS matrix B defined in terms of matrices WY, WS, WT, and
+!  scalars head, col, and theta, this subroutine computes the
+!  generalized Cauchy point (GCP), defined as the first local
+!  minimizer of the quadratic
 !
-!     Subroutine cauchy
+!    Q(x + s) = g's + 1/2 s'Bs
 !
-!     For given x, l, u, g (with sbgnrm > 0), and a limited memory
-!       BFGS matrix B defined in terms of matrices WY, WS, WT, and
-!       scalars head, col, and theta, this subroutine computes the
-!       generalized Cauchy point (GCP), defined as the first local
-!       minimizer of the quadratic
-!
-!                  Q(x + s) = g's + 1/2 s'Bs
-!
-!       along the projected gradient direction P(x-tg,l,u).
-!       The routine returns the GCP in xcp.
+!  along the projected gradient direction P(x-tg,l,u).
+!  The routine returns the GCP in xcp.
 !
 !     n is an integer variable.
 !       On entry n is the dimension of the problem.
@@ -1330,13 +1307,6 @@
 !                    = nonzero for abnormal return when the the system
 !                              used in routine bmv is singular.
 !
-!     Subprograms called:
-!
-!       L-BFGS-B Library ... hpsolb, bmv.
-!
-!       Linpack ... dscal dcopy, daxpy.
-!
-!
 !     References:
 !
 !       [1] R. H. Byrd, P. Lu, J. Nocedal and C. Zhu, "A limited
@@ -1359,20 +1329,29 @@
 !     Written by
 !                        Ciyou Zhu
 !     in collaboration with R.H. Byrd, P. Lu-Chen and J. Nocedal.
-!
-!
-!     ************
 
-      logical xlower , xupper , bnded
-      integer i , j , col2 , nfree , nbreak , pointr , ibp , nleft ,    &
-            & ibkmin , iter
-      real(wp) f1 , f2 , dt , dtm , tsum , dibp , zibp , dibp2 ,&
-                     & bkmin , tu , tl , wmc , wmp , wmw , tj ,  &
-                     & tj0 , neggi , Sbgnrm , f2_org
+      subroutine cauchy(n,x,l,u,Nbd,g,Iorder,Iwhere,t,d,Xcp,m,Wy,Ws,Sy, &
+                      & Wt,Theta,Col,Head,p,c,Wbp,v,Nseg,Iprint,Sbgnrm, &
+                      & Info,Epsmch)
+      implicit none
 
-!     Check the status of the variables, reset iwhere(i) if necessary;
-!       compute the Cauchy direction d and the breakpoints t; initialize
-!       the derivative f1 and the vector p = W'd (for theta = 1).
+      integer :: n , m , Head , Col , Nseg , Iprint , Info , Nbd(n) , &
+                 Iorder(n) , Iwhere(n)
+      real(wp) :: Theta , Epsmch , x(n) , l(n) , u(n) , g(n) ,     &
+                  t(n) , d(n) , Xcp(n) , Wy(n,Col) , Ws(n,Col) ,   &
+                  Sy(m,m) , Wt(m,m) , p(2*m) , c(2*m) , Wbp(2*m) , &
+                  v(2*m)
+
+      logical :: xlower , xupper , bnded
+      integer :: i , j , col2 , nfree , nbreak , pointr , ibp , nleft , &
+                 ibkmin , iter
+      real(wp) :: f1 , f2 , dt , dtm , tsum , dibp , zibp , dibp2 ,&
+                  bkmin , tu , tl , wmc , wmp , wmw , tj ,  &
+                  tj0 , neggi , Sbgnrm , f2_org
+
+      ! Check the status of the variables, reset iwhere(i) if necessary;
+      ! compute the Cauchy direction d and the breakpoints t; initialize
+      ! the derivative f1 and the vector p = W'd (for theta = 1).
 
       if ( Sbgnrm<=zero ) then
          if ( Iprint>=0 ) write (6,*) 'Subgnorm = 0.  GCP = X.'
@@ -1389,30 +1368,30 @@
       if ( Iprint>=99 ) write (6,99001)
 99001 format (/,'---------------- CAUCHY entered-------------------')
 
-!     We set p to zero and build it up as we determine d.
+      ! We set p to zero and build it up as we determine d.
 
       do i = 1 , col2
          p(i) = zero
       enddo
 
-!     In the following loop we determine for each variable its bound
-!        status and its breakpoint, and update p accordingly.
-!        Smallest breakpoint is identified.
+      ! In the following loop we determine for each variable its bound
+      ! status and its breakpoint, and update p accordingly.
+      ! Smallest breakpoint is identified.
 
       do i = 1 , n
          neggi = -g(i)
          if ( Iwhere(i)/=3 .and. Iwhere(i)/=-1 ) then
-!             if x(i) is not a constant and has bounds,
-!             compute the difference between x(i) and its bounds.
+            ! if x(i) is not a constant and has bounds,
+            ! compute the difference between x(i) and its bounds.
             if ( Nbd(i)<=2 ) tl = x(i) - l(i)
             if ( Nbd(i)>=2 ) tu = u(i) - x(i)
 
-!           If a variable is close enough to a bound
-!             we treat it as at bound.
+            ! If a variable is close enough to a bound
+            ! we treat it as at bound.
             xlower = Nbd(i)<=2 .and. tl<=zero
             xupper = Nbd(i)>=2 .and. tu<=zero
 
-!              reset iwhere(i).
+            ! reset iwhere(i).
             Iwhere(i) = 0
             if ( xlower ) then
                if ( neggi<=zero ) Iwhere(i) = 1
@@ -1428,15 +1407,14 @@
          else
             d(i) = neggi
             f1 = f1 - neggi*neggi
-!             calculate p := p - W'e_i* (g_i).
+            ! calculate p := p - W'e_i* (g_i).
             do j = 1 , Col
                p(j) = p(j) + Wy(i,pointr)*neggi
                p(Col+j) = p(Col+j) + Ws(i,pointr)*neggi
                pointr = mod(pointr,m) + 1
             enddo
-            if ( Nbd(i)<=2 .and. Nbd(i)/=0 .and. neggi<zero )    &
-               & then
-!                                 x(i) + d(i) is bounded; compute t(i).
+            if ( Nbd(i)<=2 .and. Nbd(i)/=0 .and. neggi<zero ) then
+               ! x(i) + d(i) is bounded; compute t(i).
                nbreak = nbreak + 1
                Iorder(nbreak) = i
                t(nbreak) = tl/(-neggi)
@@ -1445,7 +1423,7 @@
                   ibkmin = nbreak
                endif
             elseif ( Nbd(i)>=2 .and. neggi>zero ) then
-!                                 x(i) + d(i) is bounded; compute t(i).
+               ! x(i) + d(i) is bounded; compute t(i).
                nbreak = nbreak + 1
                Iorder(nbreak) = i
                t(nbreak) = tu/neggi
@@ -1454,7 +1432,7 @@
                   ibkmin = nbreak
                endif
             else
-!                x(i) + d(i) is not bounded.
+               ! x(i) + d(i) is not bounded.
                nfree = nfree - 1
                Iorder(nfree) = i
                if ( abs(neggi)>zero ) bnded = .false.
@@ -1462,30 +1440,30 @@
          endif
       enddo
 
-!     The indices of the nonzero components of d are now stored
-!       in iorder(1),...,iorder(nbreak) and iorder(nfree),...,iorder(n).
-!       The smallest of the nbreak breakpoints is in t(ibkmin)=bkmin.
+      ! The indices of the nonzero components of d are now stored
+      ! in iorder(1),...,iorder(nbreak) and iorder(nfree),...,iorder(n).
+      ! The smallest of the nbreak breakpoints is in t(ibkmin)=bkmin.
 
-!                   complete the initialization of p for theta not= one.
+      ! complete the initialization of p for theta not= one.
       if ( Theta/=one ) call dscal(Col,Theta,p(Col+1),1)
 
-!     Initialize GCP xcp = x.
+      ! Initialize GCP xcp = x.
 
       call dcopy(n,x,1,Xcp,1)
 
       if ( nbreak==0 .and. nfree==n+1 ) then
-!                  is a zero vector, return with the initial xcp as GCP.
+         ! is a zero vector, return with the initial xcp as GCP.
          if ( Iprint>100 ) write (6,99006) (Xcp(i),i=1,n)
          return
       endif
 
-!     Initialize c = W'(xcp - x) = 0.
+      ! Initialize c = W'(xcp - x) = 0.
 
       do j = 1 , col2
          c(j) = zero
       enddo
 
-!     Initialize derivative f2.
+      ! Initialize derivative f2.
 
       f2 = -Theta*f1
       f2_org = f2
@@ -1497,16 +1475,15 @@
       dtm = -f1/f2
       tsum = zero
       Nseg = 1
-      if ( Iprint>=99 ) write (6,*) 'There are ' , nbreak ,           &
+      if ( Iprint>=99 ) write (6,*) 'There are ' , nbreak , &
                                      &'  breakpoints '
 
-!     If there are no breakpoints, locate the GCP and return.
+      ! If there are no breakpoints, locate the GCP and return.
 
       if ( nbreak==0 ) goto 200
 
       nleft = nbreak
       iter = 1
-
 
       tj = zero
 
@@ -1514,26 +1491,26 @@
 
  100  continue
 
-!     Find the next smallest breakpoint;
-!       compute dt = t(nleft) - t(nleft + 1).
+      ! Find the next smallest breakpoint;
+      ! compute dt = t(nleft) - t(nleft + 1).
 
       tj0 = tj
       if ( iter==1 ) then
-!         Since we already have the smallest breakpoint we need not do
-!         heapsort yet. Often only one breakpoint is used and the
-!         cost of heapsort is avoided.
+         ! Since we already have the smallest breakpoint we need not do
+         ! heapsort yet. Often only one breakpoint is used and the
+         ! cost of heapsort is avoided.
          tj = bkmin
          ibp = Iorder(ibkmin)
       else
          if ( iter==2 ) then
-!             Replace the already used smallest breakpoint with the
-!             breakpoint numbered nbreak > nlast, before heapsort call.
+            ! Replace the already used smallest breakpoint with the
+            ! breakpoint numbered nbreak > nlast, before heapsort call.
             if ( ibkmin/=nbreak ) then
                t(ibkmin) = t(nbreak)
                Iorder(ibkmin) = Iorder(nbreak)
             endif
-!        Update heap structure of breakpoints
-!           (if iter=2, initialize heap).
+            ! Update heap structure of breakpoints
+            ! (if iter=2, initialize heap).
          endif
          call hpsolb(nleft,t,Iorder,iter-2)
          tj = t(nleft)
@@ -1551,12 +1528,12 @@
          write (6,99007) dtm
       endif
 
-!     If a minimizer is within this interval, locate the GCP and return.
+      ! If a minimizer is within this interval, locate the GCP and return.
 
       if ( dtm<dt ) goto 200
 
-!     Otherwise fix one variable and
-!       reset the corresponding component of d to zero.
+      ! Otherwise fix one variable and
+      ! reset the corresponding component of d to zero.
 
       tsum = tsum + dt
       nleft = nleft - 1
@@ -1572,32 +1549,31 @@
          Xcp(ibp) = l(ibp)
          Iwhere(ibp) = 1
       endif
-      if ( Iprint>=100 ) write (6,*) 'Variable  ' , ibp ,             &
-                                      &'  is fixed.'
+      if ( Iprint>=100 ) write (6,*) 'Variable  ' , ibp , '  is fixed.'
       if ( nleft==0 .and. nbreak==n ) then
-!                                             all n variables are fixed,
-!                                                return with xcp as GCP.
+         ! all n variables are fixed,
+         ! return with xcp as GCP.
          dtm = dt
          goto 300
       endif
 
-!     Update the derivative information.
+      ! Update the derivative information.
 
       Nseg = Nseg + 1
       dibp2 = dibp**2
 
-!     Update f1 and f2.
+      ! Update f1 and f2.
 
-!        temporarily set f1 and f2 for col=0.
+      ! temporarily set f1 and f2 for col=0.
       f1 = f1 + dt*f2 + dibp2 - Theta*dibp*zibp
       f2 = f2 - Theta*dibp2
 
       if ( Col>0 ) then
-!                          update c = c + dt*p.
+         ! update c = c + dt*p.
          call daxpy(col2,dt,p,1,c,1)
 
-!           choose wbp,
-!           the row of W corresponding to the breakpoint encountered.
+         ! choose wbp,
+         ! the row of W corresponding to the breakpoint encountered.
          pointr = Head
          do j = 1 , Col
             Wbp(j) = Wy(ibp,pointr)
@@ -1605,26 +1581,26 @@
             pointr = mod(pointr,m) + 1
          enddo
 
-!           compute (wbp)Mc, (wbp)Mp, and (wbp)M(wbp)'.
+         ! compute (wbp)Mc, (wbp)Mp, and (wbp)M(wbp)'.
          call bmv(m,Sy,Wt,Col,Wbp,v,Info)
          if ( Info/=0 ) return
          wmc = ddot(col2,c,1,v,1)
          wmp = ddot(col2,p,1,v,1)
          wmw = ddot(col2,Wbp,1,v,1)
 
-!           update p = p - dibp*wbp.
+         ! update p = p - dibp*wbp.
          call daxpy(col2,-dibp,Wbp,1,p,1)
 
 !           complete updating f1 and f2 while col > 0.
          f1 = f1 + dibp*wmc
-         f2 = f2 + 2.0d0*dibp*wmp - dibp2*wmw
+         f2 = f2 + two*dibp*wmp - dibp2*wmw
       endif
 
       f2 = max(Epsmch*f2_org,f2)
       if ( nleft>0 ) then
          dtm = -f1/f2
          goto 100
-!                 to repeat the loop for unsearched intervals.
+         ! to repeat the loop for unsearched intervals.
       elseif ( bnded ) then
          f1 = zero
          f2 = zero
@@ -1640,22 +1616,22 @@
          write (6,*)
          write (6,*) 'GCP found in this segment'
          write (6,99004) Nseg , f1 , f2
-99004    format ('Piece    ',i3,' --f1, f2 at start point ',1p,         &
+99004    format ('Piece    ',i3,' --f1, f2 at start point ',1p, &
                & 2(1x,d11.4))
          write (6,99007) dtm
       endif
       if ( dtm<=zero ) dtm = zero
       tsum = tsum + dtm
 
-!     Move free variables (i.e., the ones w/o breakpoints) and
-!       the variables whose breakpoints haven't been reached.
+      ! Move free variables (i.e., the ones w/o breakpoints) and
+      ! the variables whose breakpoints haven't been reached.
 
       call daxpy(n,tsum,d,1,Xcp,1)
 
  300  continue
 
-!     Update c = c + dtm*p = W'(x^c - x)
-!       which will be used in computing r = Z'(B(x^c - x) + g).
+      ! Update c = c + dtm*p = W'(x^c - x)
+      ! which will be used in computing r = Z'(B(x^c - x) + g).
 
       if ( Col>0 ) call daxpy(col2,dtm,p,1,c,1)
       if ( Iprint>100 ) write (6,99006) (Xcp(i),i=1,n)
@@ -1668,27 +1644,12 @@
 99007 format ('Distance to the stationary point =  ',1p,d11.4)
 
       end subroutine cauchy
+!*******************************************************************************
 
-      subroutine cmprlb(n,m,x,g,Ws,Wy,Sy,Wt,z,r,Wa,Index,Theta,Col,Head,&
-                      & Nfree,Cnstnd,Info)
-      implicit none
-
-      logical Cnstnd
-      integer n , m , Col , Head , Nfree , Info , Index(n)
-      real(wp) Theta , x(n) , g(n) , z(n) , r(n) , Wa(4*m) ,    &
-                     & Ws(n,m) , Wy(n,m) , Sy(m,m) , Wt(m,m)
-
-!     ************
-!
-!     Subroutine cmprlb
-!
-!       This subroutine computes r=-Z'B(xcp-xk)-Z'g by using
-!         wa(2m+1)=W'(xcp-x) from subroutine cauchy.
-!
-!     Subprograms called:
-!
-!       L-BFGS-B Library ... bmv.
-!
+!*******************************************************************************
+!>
+!  This subroutine computes r=-Z'B(xcp-xk)-Z'g by using
+!  wa(2m+1)=W'(xcp-x) from subroutine cauchy.
 !
 !                           *  *  *
 !
@@ -1698,12 +1659,18 @@
 !     Written by
 !                        Ciyou Zhu
 !     in collaboration with R.H. Byrd, P. Lu-Chen and J. Nocedal.
-!
-!
-!     ************
 
-      integer i , j , k , pointr
-      real(wp) a1 , a2
+      subroutine cmprlb(n,m,x,g,Ws,Wy,Sy,Wt,z,r,Wa,Index,Theta,Col,Head,&
+                      & Nfree,Cnstnd,Info)
+      implicit none
+
+      logical :: Cnstnd
+      integer :: n , m , Col , Head , Nfree , Info , Index(n)
+      real(wp) :: Theta , x(n) , g(n) , z(n) , r(n) , Wa(4*m) , &
+                  Ws(n,m) , Wy(n,m) , Sy(m,m) , Wt(m,m)
+
+      integer :: i , j , k , pointr
+      real(wp) :: a1 , a2
 
       if ( .not.Cnstnd .and. Col>0 ) then
          do i = 1 , n
@@ -1732,20 +1699,11 @@
       endif
 
       end subroutine cmprlb
+!*******************************************************************************
 
-      subroutine errclb(n,m,Factr,l,u,Nbd,Task,Info,k)
-      implicit none
-
-      character*60 Task
-      integer n , m , Info , k , Nbd(n)
-      real(wp) Factr , l(n) , u(n)
-
-!     ************
-!
-!     Subroutine errclb
-!
-!     This subroutine checks the validity of the input data.
-!
+!*******************************************************************************
+!>
+!  This subroutine checks the validity of the input data.
 !
 !                           *  *  *
 !
@@ -1755,30 +1713,34 @@
 !     Written by
 !                        Ciyou Zhu
 !     in collaboration with R.H. Byrd, P. Lu-Chen and J. Nocedal.
-!
-!
-!     ************
 
-      integer i
+      subroutine errclb(n,m,Factr,l,u,Nbd,Task,Info,k)
+      implicit none
 
-!     Check the input arguments for errors.
+      character*60 :: Task
+      integer :: n , m , Info , k , Nbd(n)
+      real(wp) :: Factr , l(n) , u(n)
+
+      integer :: i
+
+      ! Check the input arguments for errors.
 
       if ( n<=0 ) Task = 'ERROR: N <= 0'
       if ( m<=0 ) Task = 'ERROR: M <= 0'
       if ( Factr<zero ) Task = 'ERROR: FACTR < 0'
 
-!     Check the validity of the arrays nbd(i), u(i), and l(i).
+      ! Check the validity of the arrays nbd(i), u(i), and l(i).
 
       do i = 1 , n
          if ( Nbd(i)<0 .or. Nbd(i)>3 ) then
-!                                                   return
+            ! return
             Task = 'ERROR: INVALID NBD'
             Info = -6
             k = i
          endif
          if ( Nbd(i)==2 ) then
             if ( l(i)>u(i) ) then
-!                                    return
+               ! return
                Task = 'ERROR: NO FEASIBLE SOLUTION'
                Info = -7
                k = i
@@ -1787,30 +1749,20 @@
       enddo
 
       end subroutine errclb
+!*******************************************************************************
 
-      subroutine formk(n,Nsub,Ind,Nenter,Ileave,Indx2,Iupdat,Updatd,Wn, &
-                     & Wn1,m,Ws,Wy,Sy,Theta,Col,Head,Info)
-      implicit none
-
-      integer n , Nsub , m , Col , Head , Nenter , Ileave , Iupdat ,    &
-            & Info , Ind(n) , Indx2(n)
-      real(wp) Theta , Wn(2*m,2*m) , Wn1(2*m,2*m) , Ws(n,m) ,   &
-                     & Wy(n,m) , Sy(m,m)
-      logical Updatd
-
-!     ************
-!
-!     Subroutine formk
-!
-!     This subroutine forms  the LEL^T factorization of the indefinite
+!*******************************************************************************
+!>
+!  This subroutine forms the LEL^T factorization of the indefinite
 !
 !       matrix    K = [-D -Y'ZZ'Y/theta     L_a'-R_z'  ]
 !                     [L_a -R_z           theta*S'AA'S ]
 !                                                    where E = [-I  0]
 !                                                              [ 0  I]
-!     The matrix K can be shown to be equal to the matrix M^[-1]N
-!       occurring in section 5.1 of [1], as well as to the matrix
-!       Mbar^[-1] Nbar in section 5.3.
+!
+!  The matrix K can be shown to be equal to the matrix M^[-1]N
+!  occurring in section 5.1 of [1], as well as to the matrix
+!  Mbar^[-1] Nbar in section 5.3.
 !
 !     n is an integer variable.
 !       On entry n is the dimension of the problem.
@@ -1891,11 +1843,6 @@
 !                    = -1 when the 1st Cholesky factorization failed;
 !                    = -2 when the 2st Cholesky factorization failed.
 !
-!     Subprograms called:
-!
-!       Linpack ... dcopy, dpofa, dtrsl.
-!
-!
 !     References:
 !       [1] R. H. Byrd, P. Lu, J. Nocedal and C. Zhu, "A limited
 !       memory algorithm for bound constrained optimization",
@@ -1917,23 +1864,30 @@
 !     Written by
 !                        Ciyou Zhu
 !     in collaboration with R.H. Byrd, P. Lu-Chen and J. Nocedal.
-!
-!
-!     ************
 
-      integer m2 , ipntr , jpntr , iy , is , jy , js , is1 , js1 , k1 , &
-            & i , k , col2 , pbegin , pend , dbegin , dend , upcl
-      real(wp) temp1 , temp2 , temp3 , temp4
+      subroutine formk(n,Nsub,Ind,Nenter,Ileave,Indx2,Iupdat,Updatd,Wn, &
+                       Wn1,m,Ws,Wy,Sy,Theta,Col,Head,Info)
+      implicit none
 
-!     Form the lower triangular part of
-!               WN1 = [Y' ZZ'Y   L_a'+R_z']
-!                     [L_a+R_z   S'AA'S   ]
-!        where L_a is the strictly lower triangular part of S'AA'Y
-!              R_z is the upper triangular part of S'ZZ'Y.
+      integer :: n , Nsub , m , Col , Head , Nenter , Ileave , Iupdat , &
+                 Info , Ind(n) , Indx2(n)
+      real(wp) :: Theta , Wn(2*m,2*m) , Wn1(2*m,2*m) , Ws(n,m) , &
+                  Wy(n,m) , Sy(m,m)
+      logical :: Updatd
+
+      integer :: m2 , ipntr , jpntr , iy , is , jy , js , is1 , js1 , k1 , &
+                 i , k , col2 , pbegin , pend , dbegin , dend , upcl
+      real(wp) :: temp1 , temp2 , temp3 , temp4
+
+      !     Form the lower triangular part of
+      !               WN1 = [Y' ZZ'Y   L_a'+R_z']
+      !                     [L_a+R_z   S'AA'S   ]
+      !        where L_a is the strictly lower triangular part of S'AA'Y
+      !              R_z is the upper triangular part of S'ZZ'Y.
 
       if ( Updatd ) then
          if ( Iupdat>m ) then
-!                                 shift old part of WN1.
+            ! shift old part of WN1.
             do jy = 1 , m - 1
                js = m + jy
                call dcopy(m-jy,Wn1(jy+1,jy+1),1,Wn1(jy,jy),1)
@@ -1942,7 +1896,7 @@
             enddo
          endif
 
-!          put new rows in blocks (1,1), (2,1) and (2,2).
+         ! put new rows in blocks (1,1), (2,1) and (2,2).
          pbegin = 1
          pend = Nsub
          dbegin = Nsub + 1
@@ -1957,12 +1911,12 @@
             temp1 = zero
             temp2 = zero
             temp3 = zero
-!             compute element jy of row 'col' of Y'ZZ'Y
+            ! compute element jy of row 'col' of Y'ZZ'Y
             do k = pbegin , pend
                k1 = Ind(k)
                temp1 = temp1 + Wy(k1,ipntr)*Wy(k1,jpntr)
             enddo
-!             compute elements jy of row 'col' of L_a and S'AA'S
+            ! compute elements jy of row 'col' of L_a and S'AA'S
             do k = dbegin , dend
                k1 = Ind(k)
                temp2 = temp2 + Ws(k1,ipntr)*Ws(k1,jpntr)
@@ -1974,7 +1928,7 @@
             jpntr = mod(jpntr,m) + 1
          enddo
 
-!          put new column in block (2,1).
+         ! put new column in block (2,1).
          jy = Col
          jpntr = Head + Col - 1
          if ( jpntr>m ) jpntr = jpntr - m
@@ -1982,7 +1936,7 @@
          do i = 1 , Col
             is = m + i
             temp3 = zero
-!             compute element i of column 'col' of R_z
+            ! compute element i of column 'col' of R_z
             do k = pbegin , pend
                k1 = Ind(k)
                temp3 = temp3 + Ws(k1,ipntr)*Wy(k1,jpntr)
@@ -1995,8 +1949,8 @@
          upcl = Col
       endif
 
-!       modify the old parts in blocks (1,1) and (2,2) due to changes
-!       in the set of free variables.
+      ! modify the old parts in blocks (1,1) and (2,2) due to changes
+      ! in the set of free variables.
       ipntr = Head
       do iy = 1 , upcl
          is = m + iy
@@ -2024,7 +1978,7 @@
          ipntr = mod(ipntr,m) + 1
       enddo
 
-!       modify the old parts in block (2,1).
+      ! modify the old parts in block (2,1).
       ipntr = Head
       do is = m + 1 , m + upcl
          jpntr = Head
@@ -2049,8 +2003,8 @@
          ipntr = mod(ipntr,m) + 1
       enddo
 
-!     Form the upper triangle of WN = [D+Y' ZZ'Y/theta   -L_a'+R_z' ]
-!                                     [-L_a +R_z        S'AA'S*theta]
+      ! Form the upper triangle of WN = [D+Y' ZZ'Y/theta   -L_a'+R_z' ]
+      !                                 [-L_a +R_z        S'AA'S*theta]
 
       m2 = 2*m
       do iy = 1 , Col
@@ -2071,25 +2025,24 @@
          Wn(iy,iy) = Wn(iy,iy) + Sy(iy,iy)
       enddo
 
-!     Form the upper triangle of WN= [  LL'            L^-1(-L_a'+R_z')]
-!                                    [(-L_a +R_z)L'^-1   S'AA'S*theta  ]
+      ! Form the upper triangle of WN= [  LL'            L^-1(-L_a'+R_z')]
+      !                                [(-L_a +R_z)L'^-1   S'AA'S*theta  ]
 
-!        first Cholesky factor (1,1) block of wn to get LL'
-!                          with L' stored in the upper triangle of wn.
+      ! first Cholesky factor (1,1) block of wn to get LL'
+      ! with L' stored in the upper triangle of wn.
       call dpofa(Wn,m2,Col,Info)
       if ( Info/=0 ) then
          Info = -1
          return
       endif
-!        then form L^-1(-L_a'+R_z') in the (1,2) block.
+      ! then form L^-1(-L_a'+R_z') in the (1,2) block.
       col2 = 2*Col
       do js = Col + 1 , col2
          call dtrsl(Wn,m2,Col,Wn(1,js),11,Info)
       enddo
 
-!     Form S'AA'S*theta + (L^-1(-L_a'+R_z'))'L^-1(-L_a'+R_z') in the
-!        upper triangle of (2,2) block of wn.
-
+      ! Form S'AA'S*theta + (L^-1(-L_a'+R_z'))'L^-1(-L_a'+R_z') in the
+      ! upper triangle of (2,2) block of wn.
 
       do is = Col + 1 , col2
          do js = is , col2
@@ -2097,7 +2050,7 @@
          enddo
       enddo
 
-!     Cholesky factorization of (2,2) block of wn.
+      ! Cholesky factorization of (2,2) block of wn.
 
       call dpofa(Wn(Col+1,Col+1),m2,Col,Info)
       if ( Info/=0 ) then
@@ -2106,26 +2059,14 @@
       endif
 
       end subroutine formk
+!*******************************************************************************
 
-      subroutine formt(m,Wt,Sy,Ss,Col,Theta,Info)
-      implicit none
-
-      integer m , Col , Info
-      real(wp) Theta , Wt(m,m) , Sy(m,m) , Ss(m,m)
-
-!     ************
-!
-!     Subroutine formt
-!
-!       This subroutine forms the upper half of the pos. def. and symm.
-!         T = theta*SS + L*D^(-1)*L', stores T in the upper triangle
-!         of the array wt, and performs the Cholesky factorization of T
-!         to produce J*J', with J' stored in the upper triangle of wt.
-!
-!     Subprograms called:
-!
-!       Linpack ... dpofa.
-!
+!*******************************************************************************
+!>
+!  This subroutine forms the upper half of the pos. def. and symm.
+!  T = theta*SS + L*D^(-1)*L', stores T in the upper triangle
+!  of the array wt, and performs the Cholesky factorization of T
+!  to produce J*J', with J' stored in the upper triangle of wt.
 !
 !                           *  *  *
 !
@@ -2135,16 +2076,18 @@
 !     Written by
 !                        Ciyou Zhu
 !     in collaboration with R.H. Byrd, P. Lu-Chen and J. Nocedal.
-!
-!
-!     ************
 
-      integer i , j , k , k1
-      real(wp) ddum
+      subroutine formt(m,Wt,Sy,Ss,Col,Theta,Info)
+      implicit none
 
+      integer :: m , Col , Info
+      real(wp) :: Theta , Wt(m,m) , Sy(m,m) , Ss(m,m)
 
-!     Form the upper half of  T = theta*SS + L*D^(-1)*L',
-!        store T in the upper triangle of the array wt.
+      integer :: i , j , k , k1
+      real(wp) :: ddum
+
+      ! Form the upper half of  T = theta*SS + L*D^(-1)*L',
+      ! store T in the upper triangle of the array wt.
 
       do j = 1 , Col
          Wt(1,j) = Theta*Ss(1,j)
@@ -2160,29 +2103,20 @@
          enddo
       enddo
 
-!     Cholesky factorize T to J*J' with
-!        J' stored in the upper triangle of wt.
+      ! Cholesky factorize T to J*J' with
+      ! J' stored in the upper triangle of wt.
 
       call dpofa(Wt,m,Col,Info)
       if ( Info/=0 ) Info = -3
 
       end subroutine formt
+!*******************************************************************************
 
-      subroutine freev(n,Nfree,Index,Nenter,Ileave,Indx2,Iwhere,Wrk,    &
-                     & Updatd,Cnstnd,Iprint,Iter)
-      implicit none
-
-      integer n , Nfree , Nenter , Ileave , Iprint , Iter , Index(n) ,  &
-            & Indx2(n) , Iwhere(n)
-      logical Wrk , Updatd , Cnstnd
-
-!     ************
-!
-!     Subroutine freev
-!
-!     This subroutine counts the entering and leaving variables when
-!       iter > 0, and finds the index set of free and active variables
-!       at the GCP.
+!*******************************************************************************
+!>
+!  This subroutine counts the entering and leaving variables when
+!  iter > 0, and finds the index set of free and active variables
+!  at the GCP.
 !
 !     cnstnd is a logical variable indicating whether bounds are present
 !
@@ -2201,7 +2135,6 @@
 !       For i= 1,...,nenter, indx2(i) have changed from bound to free.
 !       For i= ileave+1,...,n, indx2(i) have changed from free to bound.
 !
-!
 !                           *  *  *
 !
 !     NEOS, November 1994. (Latest revision June 1996.)
@@ -2210,26 +2143,31 @@
 !     Written by
 !                        Ciyou Zhu
 !     in collaboration with R.H. Byrd, P. Lu-Chen and J. Nocedal.
-!
-!
-!     ************
 
-      integer iact , i , k
+      subroutine freev(n,Nfree,Index,Nenter,Ileave,Indx2,Iwhere,Wrk, &
+                       Updatd,Cnstnd,Iprint,Iter)
+      implicit none
+
+      integer :: n , Nfree , Nenter , Ileave , Iprint , Iter , Index(n) , &
+                 Indx2(n) , Iwhere(n)
+      logical :: Wrk , Updatd , Cnstnd
+
+      integer :: iact , i , k
 
       Nenter = 0
       Ileave = n + 1
       if ( Iter>0 .and. Cnstnd ) then
-!                           count the entering and leaving variables.
+         ! count the entering and leaving variables.
          do i = 1 , Nfree
             k = Index(i)
 
-!            write(6,*) ' k  = index(i) ', k
-!            write(6,*) ' index = ', i
+            ! write(6,*) ' k  = index(i) ', k
+            ! write(6,*) ' index = ', i
 
             if ( Iwhere(k)>0 ) then
                Ileave = Ileave - 1
                Indx2(Ileave) = k
-               if ( Iprint>=100 ) write (6,*) 'Variable ' , k ,       &
+               if ( Iprint>=100 ) write (6,*) 'Variable ' , k , &
                    &' leaves the set of free variables'
             endif
          enddo
@@ -2238,17 +2176,17 @@
             if ( Iwhere(k)<=0 ) then
                Nenter = Nenter + 1
                Indx2(Nenter) = k
-               if ( Iprint>=100 ) write (6,*) 'Variable ' , k ,       &
+               if ( Iprint>=100 ) write (6,*) 'Variable ' , k , &
                    &' enters the set of free variables'
             endif
          enddo
-         if ( Iprint>=99 ) write (6,*) n + 1 - Ileave ,               &
-                                   &' variables leave; ' , Nenter ,     &
+         if ( Iprint>=99 ) write (6,*) n + 1 - Ileave , &
+                                   &' variables leave; ' , Nenter , &
                                    &' variables enter'
       endif
       Wrk = (Ileave<n+1) .or. (Nenter>0) .or. Updatd
 
-!     Find the index set of free and active variables at the GCP.
+      ! Find the index set of free and active variables at the GCP.
 
       Nfree = 0
       iact = n + 1
@@ -2261,24 +2199,17 @@
             Index(iact) = i
          endif
       enddo
-      if ( Iprint>=99 ) write (6,*) Nfree ,                           &
-                                     &' variables are free at GCP ' ,   &
-                                    & Iter + 1
+      if ( Iprint>=99 ) write (6,*) Nfree , &
+                                    ' variables are free at GCP ' , &
+                                    Iter + 1
 
       end subroutine freev
+!*******************************************************************************
 
-      subroutine hpsolb(n,t,Iorder,Iheap)
-      implicit none
-
-      integer Iheap , n , Iorder(n)
-      real(wp) t(n)
-
-!     ************
-!
-!     Subroutine hpsolb
-!
-!     This subroutine sorts out the least element of t, and puts the
-!       remaining elements of t in a heap.
+!*******************************************************************************
+!>
+!  This subroutine sorts out the least element of t, and puts the
+!  remaining elements of t in a heap.
 !
 !     n is an integer variable.
 !       On entry n is the dimension of the arrays t and iorder.
@@ -2300,7 +2231,6 @@
 !         iheap /= 0 if otherwise.
 !       On exit iheap is unchanged.
 !
-!
 !     References:
 !       Algorithm 232 of CACM (J. W. J. Williams): HEAPSORT.
 !
@@ -2312,21 +2242,25 @@
 !     Written by
 !                        Ciyou Zhu
 !     in collaboration with R.H. Byrd, P. Lu-Chen and J. Nocedal.
-!
-!     ************
 
-      integer i , j , k , indxin , indxou
-      real(wp) ddum , out
+      subroutine hpsolb(n,t,Iorder,Iheap)
+      implicit none
+
+      integer :: Iheap , n , Iorder(n)
+      real(wp) :: t(n)
+
+      integer :: i , j , k , indxin , indxou
+      real(wp) :: ddum , out
 
       if ( Iheap==0 ) then
 
-!        Rearrange the elements t(1) to t(n) to form a heap.
+         ! Rearrange the elements t(1) to t(n) to form a heap.
 
          do k = 2 , n
             ddum = t(k)
             indxin = Iorder(k)
 
-!           Add ddum to the heap.
+            ! Add ddum to the heap.
             i = k
             do
                if ( i>1 ) then
@@ -2345,9 +2279,9 @@
          enddo
       endif
 
-!     Assign to 'out' the value of t(1), the least member of the heap,
-!        and rearrange the remaining members to form a heap as
-!        elements 1 to n-1 of t.
+      ! Assign to 'out' the value of t(1), the least member of the heap,
+      ! and rearrange the remaining members to form a heap as
+      ! elements 1 to n-1 of t.
 
       if ( n>1 ) then
          i = 1
@@ -2356,7 +2290,7 @@
          ddum = t(n)
          indxin = Iorder(n)
 
-!        Restore the heap
+         ! Restore the heap
          do
             j = i + i
             if ( j<=n-1 ) then
@@ -2373,39 +2307,20 @@
          t(i) = ddum
          Iorder(i) = indxin
 
-!     Put the least member in t(n).
+         ! Put the least member in t(n).
 
          t(n) = out
          Iorder(n) = indxou
       endif
 
       end subroutine hpsolb
+!*******************************************************************************
 
-      subroutine lnsrlb(n,l,u,Nbd,x,f,Fold,Gd,Gdold,g,d,r,t,z,Stp,Dnorm,&
-                      & Dtd,Xstep,Stpmx,Iter,Ifun,Iback,Nfgv,Info,Task, &
-                      & Boxed,Cnstnd,Csave,Isave,Dsave)
-      implicit none
-
-      character*60 Task , Csave
-      logical Boxed , Cnstnd
-      integer n , Iter , Ifun , Iback , Nfgv , Info , Nbd(n) , Isave(2)
-      real(wp) f , Fold , Gd , Gdold , Stp , Dnorm , Dtd ,      &
-                     & Xstep , Stpmx , x(n) , l(n) , u(n) , g(n) ,      &
-                     & d(n) , r(n) , t(n) , z(n) , Dsave(13)
-!     **********
-!
-!     Subroutine lnsrlb
-!
-!     This subroutine calls subroutine dcsrch from the Minpack2 library
-!       to perform the line search.  Subroutine dscrch is safeguarded so
-!       that all trial points lie within the feasible region.
-!
-!     Subprograms called:
-!
-!       Minpack2 Library ... dcsrch.
-!
-!       Linpack ... dtrsl, ddot.
-!
+!*******************************************************************************
+!>
+!  This subroutine calls subroutine dcsrch from the Minpack2 library
+!  to perform the line search.  Subroutine dscrch is safeguarded so
+!  that all trial points lie within the feasible region.
 !
 !                           *  *  *
 !
@@ -2415,12 +2330,21 @@
 !     Written by
 !                        Ciyou Zhu
 !     in collaboration with R.H. Byrd, P. Lu-Chen and J. Nocedal.
-!
-!
-!     **********
 
-      integer i
-      real(wp) a1 , a2
+      subroutine lnsrlb(n,l,u,Nbd,x,f,Fold,Gd,Gdold,g,d,r,t,z,Stp,Dnorm,&
+                      & Dtd,Xstep,Stpmx,Iter,Ifun,Iback,Nfgv,Info,Task, &
+                      & Boxed,Cnstnd,Csave,Isave,Dsave)
+      implicit none
+
+      character*60 :: Task , Csave
+      logical :: Boxed , Cnstnd
+      integer :: n , Iter , Ifun , Iback , Nfgv , Info , Nbd(n) , Isave(2)
+      real(wp) :: f , Fold , Gd , Gdold , Stp , Dnorm , Dtd , &
+                  Xstep , Stpmx , x(n) , l(n) , u(n) , g(n) , &
+                  d(n) , r(n) , t(n) , z(n) , Dsave(13)
+
+      integer :: i
+      real(wp) :: a1 , a2
 
       real(wp),parameter :: big  = 1.0e+10_wp
       real(wp),parameter :: ftol = 1.0e-3_wp
@@ -2432,7 +2356,7 @@
          Dtd = ddot(n,d,1,d,1)
          Dnorm = sqrt(Dtd)
 
-   !     Determine the maximum step length.
+         ! Determine the maximum step length.
 
          Stpmx = big
          if ( Cnstnd ) then
@@ -2481,8 +2405,8 @@
       if ( Ifun==0 ) then
          Gdold = Gd
          if ( Gd>=zero ) then
-!                               the directional derivative >=0.
-!                               Line search is impossible.
+            ! the directional derivative >=0.
+            ! Line search is impossible.
             write (6,*) ' ascent direction in projection gd = ' , Gd
             Info = -4
             return
@@ -2509,26 +2433,12 @@
       endif
 
       end subroutine lnsrlb
+!*******************************************************************************
 
-      subroutine matupd(n,m,Ws,Wy,Sy,Ss,d,r,Itail,Iupdat,Col,Head,Theta,&
-                      & Rr,Dr,Stp,Dtd)
-      implicit none
-
-      integer n , m , Itail , Iupdat , Col , Head
-      real(wp) Theta , Rr , Dr , Stp , Dtd , d(n) , r(n) ,      &
-                     & Ws(n,m) , Wy(n,m) , Sy(m,m) , Ss(m,m)
-
-!     ************
-!
-!     Subroutine matupd
-!
-!       This subroutine updates matrices WS and WY, and forms the
-!         middle matrix in B.
-!
-!     Subprograms called:
-!
-!       Linpack ... dcopy, ddot.
-!
+!*******************************************************************************
+!>
+!  This subroutine updates matrices WS and WY, and forms the
+!  middle matrix in B.
 !
 !                           *  *  *
 !
@@ -2538,13 +2448,18 @@
 !     Written by
 !                        Ciyou Zhu
 !     in collaboration with R.H. Byrd, P. Lu-Chen and J. Nocedal.
-!
-!
-!     ************
 
-      integer j , pointr
+      subroutine matupd(n,m,Ws,Wy,Sy,Ss,d,r,Itail,Iupdat,Col,Head,Theta,&
+                      & Rr,Dr,Stp,Dtd)
+      implicit none
 
-!     Set pointers for matrices WS and WY.
+      integer :: n , m , Itail , Iupdat , Col , Head
+      real(wp) :: Theta , Rr , Dr , Stp , Dtd , d(n) , r(n) , &
+                  Ws(n,m) , Wy(n,m) , Sy(m,m) , Ss(m,m)
+
+      integer :: j , pointr
+
+      ! Set pointers for matrices WS and WY.
 
       if ( Iupdat<=m ) then
          Col = Iupdat
@@ -2554,28 +2469,28 @@
          Head = mod(Head,m) + 1
       endif
 
-!     Update matrices WS and WY.
+      ! Update matrices WS and WY.
 
       call dcopy(n,d,1,Ws(1,Itail),1)
       call dcopy(n,r,1,Wy(1,Itail),1)
 
-!     Set theta=yy/ys.
+      ! Set theta=yy/ys.
 
       Theta = Rr/Dr
 
-!     Form the middle matrix in B.
+      ! Form the middle matrix in B.
 
-!        update the upper triangle of SS,
-!                                         and the lower triangle of SY:
+      ! update the upper triangle of SS,
+      ! and the lower triangle of SY:
       if ( Iupdat>m ) then
-!                              move old information
+         ! move old information
          do j = 1 , Col - 1
             call dcopy(j,Ss(2,j+1),1,Ss(1,j),1)
             call dcopy(Col-j,Sy(j+1,j+1),1,Sy(j,j),1)
          enddo
       endif
-!        add new information: the last row of SY
-!                                             and the last column of SS:
+      ! add new information: the last row of SY
+      ! and the last column of SS:
       pointr = Head
       do j = 1 , Col - 1
          Sy(Col,j) = ddot(n,d,1,Wy(1,pointr),1)
@@ -2590,21 +2505,13 @@
       Sy(Col,Col) = Dr
 
       end subroutine matupd
+!*******************************************************************************
 
-      subroutine prn1lb(n,m,l,u,x,Iprint,Itfile,Epsmch)
-      implicit none
-
-      integer n , m , Iprint , Itfile
-      real(wp) Epsmch , x(n) , l(n) , u(n)
-
-!     ************
-!
-!     Subroutine prn1lb
-!
-!     This subroutine prints the input data, initial point, upper and
-!       lower bounds of each variable, machine precision, as well as
-!       the headings of the output.
-!
+!*******************************************************************************
+!>
+!  This subroutine prints the input data, initial point, upper and
+!  lower bounds of each variable, machine precision, as well as
+!  the headings of the output.
 !
 !                           *  *  *
 !
@@ -2614,11 +2521,14 @@
 !     Written by
 !                        Ciyou Zhu
 !     in collaboration with R.H. Byrd, P. Lu-Chen and J. Nocedal.
-!
-!
-!     ************
 
-      integer i
+      subroutine prn1lb(n,m,l,u,x,Iprint,Itfile,Epsmch)
+      implicit none
+
+      integer :: n , m , Iprint , Itfile
+      real(wp) :: Epsmch , x(n) , l(n) , u(n)
+
+      integer :: i
 
       if ( Iprint>=0 ) then
          write (6,99001) Epsmch
@@ -2633,9 +2543,9 @@
          &'nseg  = number of segments explored during the Cauchy search'&
         & ,/,                                                           &
       &'nact  = number of active bounds at the generalized Cauchy point'&
-     & ,/,                                                              &
+      & ,/,                                                             &
       &'sub   = manner in which the subspace minimization terminated:', &
-     & /,'        con = converged, bnd = a bound was reached',/,        &
+      & /,'        con = converged, bnd = a bound was reached',/,       &
       &'itls  = number of iterations performed in the line search',/,   &
       &'stepl = step length used',/,                                    &
       &'tstep = norm of the displacement (total step)',/,               &
@@ -2659,23 +2569,12 @@
 99004 format (/,a4,1p,6(1x,d11.4),/,(4x,1p,6(1x,d11.4)))
 
       end subroutine prn1lb
+!*******************************************************************************
 
-      subroutine prn2lb(n,x,f,g,Iprint,Itfile,Iter,Nfgv,Nact,Sbgnrm,    &
-                      & Nseg,Word,Iword,Iback,Stp,Xstep)
-      implicit none
-
-      character*3 Word
-      integer n , Iprint , Itfile , Iter , Nfgv , Nact , Nseg , Iword , &
-            & Iback
-      real(wp) f , Sbgnrm , Stp , Xstep , x(n) , g(n)
-
-!     ************
-!
-!     Subroutine prn2lb
-!
-!     This subroutine prints out new information after a successful
-!       line search.
-!
+!*******************************************************************************
+!>
+!  This subroutine prints out new information after a successful
+!  line search.
 !
 !                           *  *  *
 !
@@ -2685,21 +2584,27 @@
 !     Written by
 !                        Ciyou Zhu
 !     in collaboration with R.H. Byrd, P. Lu-Chen and J. Nocedal.
-!
-!
-!     ************
 
-      integer i , imod
+      subroutine prn2lb(n,x,f,g,Iprint,Itfile,Iter,Nfgv,Nact,Sbgnrm, &
+                        Nseg,Word,Iword,Iback,Stp,Xstep)
+      implicit none
 
-!           'word' records the status of subspace solutions.
+      character*3 :: Word
+      integer :: n , Iprint , Itfile , Iter , Nfgv , Nact , Nseg , Iword , &
+                 Iback
+      real(wp) :: f , Sbgnrm , Stp , Xstep , x(n) , g(n)
+
+      integer :: i , imod
+
+      ! 'word' records the status of subspace solutions.
       if ( Iword==0 ) then
-!                            the subspace minimization converged.
+         ! the subspace minimization converged.
          Word = 'con'
       elseif ( Iword==1 ) then
-!                          the subspace minimization stopped at a bound.
+         ! the subspace minimization stopped at a bound.
          Word = 'bnd'
       elseif ( Iword==5 ) then
-!                             the truncated Newton step has been used.
+         ! the truncated Newton step has been used.
          Word = 'TNT'
       else
          Word = '---'
@@ -2729,27 +2634,13 @@
             & d12.5)
 
       end subroutine prn2lb
+!*******************************************************************************
 
-      subroutine prn3lb(n,x,f,Task,Iprint,Info,Itfile,Iter,Nfgv,Nintol, &
-                      & Nskip,Nact,Sbgnrm,Time,Nseg,Word,Iback,Stp,     &
-                      & Xstep,k,Cachyt,Sbtime,Lnscht)
-      implicit none
-
-      character*60 Task
-      character*3 Word
-      integer n , Iprint , Info , Itfile , Iter , Nfgv , Nintol ,       &
-            & Nskip , Nact , Nseg , Iback , k
-      real(wp) f , Sbgnrm , Time , Stp , Xstep , Cachyt ,       &
-                     & Sbtime , Lnscht , x(n)
-
-!     ************
-!
-!     Subroutine prn3lb
-!
-!     This subroutine prints out information when either a built-in
-!       convergence test is satisfied or when an error message is
-!       generated.
-!
+!*******************************************************************************
+!>
+!  This subroutine prints out information when either a built-in
+!  convergence test is satisfied or when an error message is
+!  generated.
 !
 !                           *  *  *
 !
@@ -2759,11 +2650,20 @@
 !     Written by
 !                        Ciyou Zhu
 !     in collaboration with R.H. Byrd, P. Lu-Chen and J. Nocedal.
-!
-!
-!     ************
 
-      integer i
+      subroutine prn3lb(n,x,f,Task,Iprint,Info,Itfile,Iter,Nfgv,Nintol, &
+                        Nskip,Nact,Sbgnrm,Time,Nseg,Word,Iback,Stp, &
+                        Xstep,k,Cachyt,Sbtime,Lnscht)
+      implicit none
+
+      character*60 :: Task
+      character*3 :: Word
+      integer :: n , Iprint , Info , Itfile , Iter , Nfgv , Nintol , &
+                 Nskip , Nact , Nseg , Iback , k
+      real(wp) :: f , Sbgnrm , Time , Stp , Xstep , Cachyt , &
+                  Sbtime , Lnscht , x(n)
+
+      integer :: i
 
       if ( Task(1:5)/='ERROR' ) then
 
@@ -2864,20 +2764,12 @@
       & /,'                  2 rounding error dominate computation.')
 
       end subroutine prn3lb
+!*******************************************************************************
 
-      subroutine projgr(n,l,u,Nbd,x,g,Sbgnrm)
-      implicit none
-
-      integer n , Nbd(n)
-      real(wp) Sbgnrm , x(n) , l(n) , u(n) , g(n)
-
-!     ************
-!
-!     Subroutine projgr
-!
-!     This subroutine computes the infinity norm of the projected
-!       gradient.
-!
+!*******************************************************************************
+!>
+!  This subroutine computes the infinity norm of the projected
+!  gradient.
 !
 !                           *  *  *
 !
@@ -2887,12 +2779,15 @@
 !     Written by
 !                        Ciyou Zhu
 !     in collaboration with R.H. Byrd, P. Lu-Chen and J. Nocedal.
-!
-!
-!     ************
 
-      integer i
-      real(wp) gi
+      subroutine projgr(n,l,u,Nbd,x,g,Sbgnrm)
+      implicit none
+
+      integer :: n , Nbd(n)
+      real(wp) :: Sbgnrm , x(n) , l(n) , u(n) , g(n)
+
+      integer :: i
+      real(wp) :: gi
 
       Sbgnrm = zero
       do i = 1 , n
@@ -2908,21 +2803,12 @@
       enddo
 
       end subroutine projgr
+!*******************************************************************************
 
-      subroutine subsm(n,m,Nsub,Ind,l,u,Nbd,x,d,Xp,Ws,Wy,Theta,Xx,Gg,   &
-                     & Col,Head,Iword,Wv,Wn,Iprint,Info)
-      implicit none
-
-      integer n , m , Nsub , Col , Head , Iword , Iprint , Info ,       &
-            & Ind(Nsub) , Nbd(n)
-      real(wp) Theta , l(n) , u(n) , x(n) , d(n) , Xp(n) ,      &
-                     & Xx(n) , Gg(n) , Ws(n,m) , Wy(n,m) , Wv(2*m) ,    &
-                     & Wn(2*m,2*m)
-
-!     **********************************************************************
-!
-!     This routine contains the major changes in the updated version.
-!     The changes are described in the accompanying paper
+!*******************************************************************************
+!>
+!  This routine contains the major changes in the updated version.
+!  The changes are described in the accompanying paper
 !
 !      Jose Luis Morales, Jorge Nocedal
 !      "Remark On Algorithm 788: L-BFGS-B: Fortran Subroutines for Large-Scale
@@ -2939,9 +2825,6 @@
 !                           January 17, 2011
 !
 !      **********************************************************************
-!
-!
-!     Subroutine subsm
 !
 !     Given xcp, l, u, r, an index set that specifies
 !       the active set at xcp, and an l-BFGS matrix B
@@ -3073,18 +2956,11 @@
 !                    = nonzero for abnormal return
 !                                  when the matrix K is ill-conditioned.
 !
-!     Subprograms called:
-!
-!       Linpack dtrsl.
-!
-!
 !     References:
 !
 !       [1] R. H. Byrd, P. Lu, J. Nocedal and C. Zhu, "A limited
 !       memory algorithm for bound constrained optimization",
 !       SIAM J. Scientific Computing 16 (1995), no. 5, pp. 1190--1208.
-!
-!
 !
 !                           *  *  *
 !
@@ -3094,21 +2970,28 @@
 !     Written by
 !                        Ciyou Zhu
 !     in collaboration with R.H. Byrd, P. Lu-Chen and J. Nocedal.
-!
-!
-!     ************
 
-      integer pointr , m2 , col2 , ibd , jy , js , i , j , k
-      real(wp) alpha , xk , dk , temp1 , temp2
-!
-      real(wp) dd_p
+      subroutine subsm(n,m,Nsub,Ind,l,u,Nbd,x,d,Xp,Ws,Wy,Theta,Xx,Gg, &
+                     & Col,Head,Iword,Wv,Wn,Iprint,Info)
+      implicit none
+
+      integer :: n , m , Nsub , Col , Head , Iword , Iprint , Info , &
+                 Ind(Nsub) , Nbd(n)
+      real(wp) :: Theta , l(n) , u(n) , x(n) , d(n) , Xp(n) , &
+                  Xx(n) , Gg(n) , Ws(n,m) , Wy(n,m) , Wv(2*m) , &
+                  Wn(2*m,2*m)
+
+      integer :: pointr , m2 , col2 , ibd , jy , js , i , j , k
+      real(wp) :: alpha , xk , dk , temp1 , temp2
+
+      real(wp) :: dd_p
 
       if ( Nsub<=0 ) return
       if ( Iprint>=99 ) write (6,99001)
 
 99001 format (/,'----------------SUBSM entered-----------------',/)
 
-!     Compute wv = W'Zd.
+      ! Compute wv = W'Zd.
 
       pointr = Head
       do i = 1 , Col
@@ -3124,7 +3007,7 @@
          pointr = mod(pointr,m) + 1
       enddo
 
-!     Compute wv:=K^(-1)wv.
+      ! Compute wv:=K^(-1)wv.
 
       m2 = 2*m
       col2 = 2*Col
@@ -3136,52 +3019,51 @@
       call dtrsl(Wn,m2,col2,Wv,01,Info)
       if ( Info/=0 ) return
 
-!     Compute d = (1/theta)d + (1/theta**2)Z'W wv.
+      ! Compute d = (1/theta)d + (1/theta**2)Z'W wv.
 
       pointr = Head
       do jy = 1 , Col
          js = Col + jy
          do i = 1 , Nsub
             k = Ind(i)
-            d(i) = d(i) + Wy(k,pointr)*Wv(jy)/Theta + Ws(k,pointr)      &
-                 & *Wv(js)
+            d(i) = d(i) + Wy(k,pointr)*Wv(jy)/Theta + Ws(k,pointr)*Wv(js)
          enddo
          pointr = mod(pointr,m) + 1
       enddo
 
       call dscal(Nsub,one/Theta,d,1)
-!
-!-----------------------------------------------------------------
-!     Let us try the projection, d is the Newton direction
+
+      !-----------------------------------------------------------------
+      ! Let us try the projection, d is the Newton direction
 
       Iword = 0
 
       call dcopy(n,x,1,Xp,1)
-!
+
       do i = 1 , Nsub
          k = Ind(i)
          dk = d(i)
          xk = x(k)
          if ( Nbd(k)/=0 ) then
-!
+
             if ( Nbd(k)==1 ) then          ! lower bounds only
                x(k) = max(l(k),xk+dk)
                if ( x(k)==l(k) ) Iword = 1
             else
-!
+
                if ( Nbd(k)==2 ) then       ! upper and lower bounds
                   xk = max(l(k),xk+dk)
                   x(k) = min(u(k),xk)
                   if ( x(k)==l(k) .or. x(k)==u(k) ) Iword = 1
                else
-!
+
                   if ( Nbd(k)==3 ) then    ! upper bounds only
                      x(k) = min(u(k),xk+dk)
                      if ( x(k)==u(k) ) Iword = 1
                   endif
                endif
             endif
-!
+
          else                                ! free variables
             x(k) = xk + dk
          endif
@@ -3190,9 +3072,9 @@
       main : block
 
          if ( Iword==0 ) exit main
-   !
-   !     check sign of the directional derivative
-   !
+
+         ! check sign of the directional derivative
+
          dd_p = zero
          do i = 1 , n
             dd_p = dd_p + (x(i)-Xx(i))*Gg(i)
@@ -3202,9 +3084,9 @@
          call dcopy(n,Xp,1,x,1)
          write (6,*) ' Positive dir derivative in projection '
          write (6,*) ' Using the backtracking step '
-   !
-   !-----------------------------------------------------------------
-   !
+
+         !-----------------------------------------------------------------
+
          alpha = one
          temp1 = alpha
          ibd = 0
@@ -3256,22 +3138,12 @@
 99002 format (/,'----------------exit SUBSM --------------------',/)
 
       end subroutine subsm
+!*******************************************************************************
 
-      subroutine dcsrch(f,g,Stp,Ftol,Gtol,Xtol,Stpmin,Stpmax,Task,Isave,&
-                      & Dsave)
-      implicit none
-
-      character*(*) Task
-      integer Isave(2)
-      real(wp) f , g , Stp , Ftol , Gtol , Xtol , Stpmin ,      &
-                     & Stpmax
-      real(wp) Dsave(13)
-!     **********
-!
-!     Subroutine dcsrch
-!
-!     This subroutine finds a step that satisfies a sufficient
-!     decrease condition and a curvature condition.
+!*******************************************************************************
+!>
+!  This subroutine finds a step that satisfies a sufficient
+!  decrease condition and a curvature condition.
 !
 !     Each call of the subroutine updates an interval with
 !     endpoints stx and sty. The interval is initially chosen
@@ -3396,39 +3268,48 @@
 !     MINPACK-2 Project. October 1993.
 !     Argonne National Laboratory and University of Minnesota.
 !     Brett M. Averick, Richard G. Carter, and Jorge J. More'.
-!
-!     **********
+
+      subroutine dcsrch(f,g,Stp,Ftol,Gtol,Xtol,Stpmin,Stpmax,Task,Isave,&
+                        Dsave)
+      implicit none
+
+      character(len=*) :: Task
+      integer :: Isave(2)
+      real(wp) :: f , g , Stp , Ftol , Gtol , Xtol , Stpmin , &
+                  Stpmax
+      real(wp) :: Dsave(13)
+
       real(wp), parameter :: p5     = 0.5_wp
       real(wp), parameter :: p66    = 0.66_wp
       real(wp), parameter :: xtrapl = 1.1_wp
       real(wp), parameter :: xtrapu = 4.0_wp
 
-      logical brackt
-      integer stage
-      real(wp) finit , ftest , fm , fx , fxm , fy , fym ,       &
-                     & ginit , gtest , gm , gx , gxm , gy , gym , stx , &
-                     & sty , stmin , stmax , width , width1
+      logical :: brackt
+      integer :: stage
+      real(wp) :: finit , ftest , fm , fx , fxm , fy , fym ,       &
+                  ginit , gtest , gm , gx , gxm , gy , gym , stx , &
+                  sty , stmin , stmax , width , width1
 
-!     Initialization block.
+      ! Initialization block.
 
       if ( Task(1:5)=='START' ) then
 
-!        Check the input arguments for errors.
+         ! Check the input arguments for errors.
 
-         if ( Stp<Stpmin ) Task = 'ERROR: STP < STPMIN'
-         if ( Stp>Stpmax ) Task = 'ERROR: STP > STPMAX'
-         if ( g>=zero ) Task = 'ERROR: INITIAL G >= ZERO'
-         if ( Ftol<zero ) Task = 'ERROR: FTOL < ZERO'
-         if ( Gtol<zero ) Task = 'ERROR: GTOL < ZERO'
-         if ( Xtol<zero ) Task = 'ERROR: XTOL < ZERO'
-         if ( Stpmin<zero ) Task = 'ERROR: STPMIN < ZERO'
+         if ( Stp<Stpmin )    Task = 'ERROR: STP < STPMIN'
+         if ( Stp>Stpmax )    Task = 'ERROR: STP > STPMAX'
+         if ( g>=zero )       Task = 'ERROR: INITIAL G >= ZERO'
+         if ( Ftol<zero )     Task = 'ERROR: FTOL < ZERO'
+         if ( Gtol<zero )     Task = 'ERROR: GTOL < ZERO'
+         if ( Xtol<zero )     Task = 'ERROR: XTOL < ZERO'
+         if ( Stpmin<zero )   Task = 'ERROR: STPMIN < ZERO'
          if ( Stpmax<Stpmin ) Task = 'ERROR: STPMAX < STPMIN'
 
-!        Exit if there are errors on input.
+         ! Exit if there are errors on input.
 
          if ( Task(1:5)=='ERROR' ) return
 
-!        Initialize local variables.
+         ! Initialize local variables.
 
          brackt = .false.
          stage = 1
@@ -3438,12 +3319,12 @@
          width = Stpmax - Stpmin
          width1 = width/p5
 
-!        The variables stx, fx, gx contain the values of the step,
-!        function, and derivative at the best step.
-!        The variables sty, fy, gy contain the value of the step,
-!        function, and derivative at sty.
-!        The variables stp, f, g contain the values of the step,
-!        function, and derivative at stp.
+         ! The variables stx, fx, gx contain the values of the step,
+         ! function, and derivative at the best step.
+         ! The variables sty, fy, gy contain the value of the step,
+         ! function, and derivative at sty.
+         ! The variables stp, f, g contain the values of the step,
+         ! function, and derivative at stp.
 
          stx = zero
          fx = finit
@@ -3460,7 +3341,7 @@
 
       else
 
-!        Restore local variables.
+         ! Restore local variables.
 
          if ( Isave(1)==1 ) then
             brackt = .true.
@@ -3484,42 +3365,41 @@
 
       endif
 
-!     If psi(stp) <= 0 and f'(stp) >= 0 for some step, then the
-!     algorithm enters the second stage.
+      ! If psi(stp) <= 0 and f'(stp) >= 0 for some step, then the
+      ! algorithm enters the second stage.
 
       ftest = finit + Stp*gtest
       if ( stage==1 .and. f<=ftest .and. g>=zero ) stage = 2
 
-!     Test for warnings.
+      ! Test for warnings.
 
-      if ( brackt .and. (Stp<=stmin .or. Stp>=stmax) )              &
-          & Task = 'WARNING: ROUNDING ERRORS PREVENT PROGRESS'
-      if ( brackt .and. stmax-stmin<=Xtol*stmax )                     &
-          & Task = 'WARNING: XTOL TEST SATISFIED'
-      if ( Stp==Stpmax .and. f<=ftest .and. g<=gtest )            &
-          & Task = 'WARNING: STP = STPMAX'
+      if ( brackt .and. (Stp<=stmin .or. Stp>=stmax) )           &
+           Task = 'WARNING: ROUNDING ERRORS PREVENT PROGRESS'
+      if ( brackt .and. stmax-stmin<=Xtol*stmax )                &
+           Task = 'WARNING: XTOL TEST SATISFIED'
+      if ( Stp==Stpmax .and. f<=ftest .and. g<=gtest )           &
+           Task = 'WARNING: STP = STPMAX'
       if ( Stp==Stpmin .and. (f>ftest .or. g>=gtest) )           &
-          & Task = 'WARNING: STP = STPMIN'
+           Task = 'WARNING: STP = STPMIN'
 
-!     Test for convergence.
+      ! Test for convergence.
 
-      if ( f<=ftest .and. abs(g)<=Gtol*(-ginit) )                   &
-          & Task = 'CONVERGENCE'
+      if ( f<=ftest .and. abs(g)<=Gtol*(-ginit) ) Task = 'CONVERGENCE'
 
-!     Test for termination.
+      ! Test for termination.
 
       if ( Task(1:4)=='WARN' .or. Task(1:4)=='CONV' ) then
          call save_locals()
          return
       end if
 
-!     A modified function is used to predict the step during the
-!     first stage if a lower function value has been obtained but
-!     the decrease is not sufficient.
+      ! A modified function is used to predict the step during the
+      ! first stage if a lower function value has been obtained but
+      ! the decrease is not sufficient.
 
       if ( stage==1 .and. f<=fx .and. f>ftest ) then
 
-!        Define the modified function and derivative values.
+         ! Define the modified function and derivative values.
 
          fm = f - Stp*gtest
          fxm = fx - stx*gtest
@@ -3528,12 +3408,12 @@
          gxm = gx - gtest
          gym = gy - gtest
 
-!        Call dcstep to update stx, sty, and to compute the new step.
+         ! Call dcstep to update stx, sty, and to compute the new step.
 
-         call dcstep(stx,fxm,gxm,sty,fym,gym,Stp,fm,gm,brackt,stmin,    &
-                   & stmax)
+         call dcstep(stx,fxm,gxm,sty,fym,gym,Stp,fm,gm,brackt,stmin, &
+                     stmax)
 
-!        Reset the function and derivative values for f.
+         ! Reset the function and derivative values for f.
 
          fx = fxm + stx*gtest
          fy = fym + sty*gtest
@@ -3542,13 +3422,13 @@
 
       else
 
-!       Call dcstep to update stx, sty, and to compute the new step.
+         ! Call dcstep to update stx, sty, and to compute the new step.
 
          call dcstep(stx,fx,gx,sty,fy,gy,Stp,f,g,brackt,stmin,stmax)
 
       endif
 
-!     Decide if a bisection step is needed.
+      ! Decide if a bisection step is needed.
 
       if ( brackt ) then
          if ( abs(sty-stx)>=p66*width1 ) Stp = stx + p5*(sty-stx)
@@ -3556,7 +3436,7 @@
          width = abs(sty-stx)
       endif
 
-!     Set the minimum and maximum steps allowed for stp.
+      ! Set the minimum and maximum steps allowed for stp.
 
       if ( brackt ) then
          stmin = min(stx,sty)
@@ -3566,18 +3446,18 @@
          stmax = Stp + xtrapu*(Stp-stx)
       endif
 
-!     Force the step to be within the bounds stpmax and stpmin.
+      ! Force the step to be within the bounds stpmax and stpmin.
 
       Stp = max(Stp,Stpmin)
       Stp = min(Stp,Stpmax)
 
-!     If further progress is not possible, let stp be the best
-!     point obtained during the search.
+      ! If further progress is not possible, let stp be the best
+      ! point obtained during the search.
 
-      if ( brackt .and. (Stp<=stmin .or. Stp>=stmax) .or.           &
+      if ( brackt .and. (Stp<=stmin .or. Stp>=stmax) .or. &
          & (brackt .and. stmax-stmin<=Xtol*stmax) ) Stp = stx
 
-!     Obtain another function and derivative.
+      ! Obtain another function and derivative.
 
       Task = 'FG'
 
@@ -3612,34 +3492,26 @@
       end subroutine save_locals
 
       end subroutine dcsrch
+!*******************************************************************************
 
-      subroutine dcstep(Stx,Fx,Dx,Sty,Fy,Dy,Stp,Fp,Dp,Brackt,Stpmin,    &
-                      & Stpmax)
-      implicit none
-
-      logical Brackt
-      real(wp) Stx , Fx , Dx , Sty , Fy , Dy , Stp , Fp , Dp ,  &
-                     & Stpmin , Stpmax
-!     **********
+!*******************************************************************************
+!>
+!  This subroutine computes a safeguarded step for a search
+!  procedure and updates an interval that contains a step that
+!  satisfies a sufficient decrease and a curvature condition.
 !
-!     Subroutine dcstep
+!  The parameter stx contains the step with the least function
+!  value. If brackt is set to .true. then a minimizer has
+!  been bracketed in an interval with endpoints stx and sty.
+!  The parameter stp contains the current step.
+!  The subroutine assumes that if brackt is set to .true. then
 !
-!     This subroutine computes a safeguarded step for a search
-!     procedure and updates an interval that contains a step that
-!     satisfies a sufficient decrease and a curvature condition.
+!    min(stx,sty) < stp < max(stx,sty),
 !
-!     The parameter stx contains the step with the least function
-!     value. If brackt is set to .true. then a minimizer has
-!     been bracketed in an interval with endpoints stx and sty.
-!     The parameter stp contains the current step.
-!     The subroutine assumes that if brackt is set to .true. then
+!  and that the derivative at stx is negative in the direction
+!  of the step.
 !
-!           min(stx,sty) < stp < max(stx,sty),
-!
-!     and that the derivative at stx is negative in the direction
-!     of the step.
-!
-!     The subroutine statement is
+!  The subroutine statement is
 !
 !       subroutine dcstep(stx,fx,dx,sty,fy,dy,stp,fp,dp,brackt,
 !                         stpmin,stpmax)
@@ -3710,20 +3582,26 @@
 !     MINPACK-2 Project. October 1993.
 !     Argonne National Laboratory and University of Minnesota.
 !     Brett M. Averick and Jorge J. More'.
-!
-!     **********
+
+      subroutine dcstep(Stx,Fx,Dx,Sty,Fy,Dy,Stp,Fp,Dp,Brackt,Stpmin, &
+                        Stpmax)
+      implicit none
+
+      logical :: Brackt
+      real(wp) :: Stx , Fx , Dx , Sty , Fy , Dy , Stp , Fp , Dp ,  &
+                  Stpmin , Stpmax
 
       real(wp),parameter :: p66 = 0.66_wp
 
-      real(wp) gamma , p , q , r , s , sgnd , stpc , stpf ,     &
-                     & stpq , theta
+      real(wp) :: gamma , p , q , r , s , sgnd , stpc , stpf , &
+                  stpq , theta
 
       sgnd = Dp*(Dx/abs(Dx))
 
-!     First case: A higher function value. The minimum is bracketed.
-!     If the cubic step is closer to stx than the quadratic step, the
-!     cubic step is taken, otherwise the average of the cubic and
-!     quadratic steps is taken.
+      ! First case: A higher function value. The minimum is bracketed.
+      ! If the cubic step is closer to stx than the quadratic step, the
+      ! cubic step is taken, otherwise the average of the cubic and
+      ! quadratic steps is taken.
 
       if ( Fp>Fx ) then
          theta = three*(Fx-Fp)/(Stp-Stx) + Dx + Dp
@@ -3742,10 +3620,10 @@
          endif
          Brackt = .true.
 
-!     Second case: A lower function value and derivatives of opposite
-!     sign. The minimum is bracketed. If the cubic step is farther from
-!     stp than the secant step, the cubic step is taken, otherwise the
-!     secant step is taken.
+         ! Second case: A lower function value and derivatives of opposite
+         ! sign. The minimum is bracketed. If the cubic step is farther from
+         ! stp than the secant step, the cubic step is taken, otherwise the
+         ! secant step is taken.
 
       elseif ( sgnd<zero ) then
          theta = three*(Fx-Fp)/(Stp-Stx) + Dx + Dp
@@ -3764,21 +3642,21 @@
          endif
          Brackt = .true.
 
-!     Third case: A lower function value, derivatives of the same sign,
-!     and the magnitude of the derivative decreases.
+         ! Third case: A lower function value, derivatives of the same sign,
+         ! and the magnitude of the derivative decreases.
 
       elseif ( abs(Dp)<abs(Dx) ) then
 
-!        The cubic step is computed only if the cubic tends to infinity
-!        in the direction of the step or if the minimum of the cubic
-!        is beyond stp. Otherwise the cubic step is defined to be the
-!        secant step.
+         ! The cubic step is computed only if the cubic tends to infinity
+         ! in the direction of the step or if the minimum of the cubic
+         ! is beyond stp. Otherwise the cubic step is defined to be the
+         ! secant step.
 
          theta = three*(Fx-Fp)/(Stp-Stx) + Dx + Dp
          s = max(abs(theta),abs(Dx),abs(Dp))
 
-!        The case gamma = 0 only arises if the cubic does not tend
-!        to infinity in the direction of the step.
+         ! The case gamma = 0 only arises if the cubic does not tend
+         ! to infinity in the direction of the step.
 
          gamma = s*sqrt(max(zero,(theta/s)**2-(Dx/s)*(Dp/s)))
          if ( Stp>Stx ) gamma = -gamma
@@ -3796,9 +3674,9 @@
 
          if ( Brackt ) then
 
-!           A minimizer has been bracketed. If the cubic step is
-!           closer to stp than the secant step, the cubic step is
-!           taken, otherwise the secant step is taken.
+            ! A minimizer has been bracketed. If the cubic step is
+            ! closer to stp than the secant step, the cubic step is
+            ! taken, otherwise the secant step is taken.
 
             if ( abs(stpc-Stp)<abs(stpq-Stp) ) then
                stpf = stpc
@@ -3812,9 +3690,9 @@
             endif
          else
 
-!           A minimizer has not been bracketed. If the cubic step is
-!           farther from stp than the secant step, the cubic step is
-!           taken, otherwise the secant step is taken.
+            ! A minimizer has not been bracketed. If the cubic step is
+            ! farther from stp than the secant step, the cubic step is
+            ! taken, otherwise the secant step is taken.
 
             if ( abs(stpc-Stp)>abs(stpq-Stp) ) then
                stpf = stpc
@@ -3825,10 +3703,10 @@
             stpf = max(Stpmin,stpf)
          endif
 
-!     Fourth case: A lower function value, derivatives of the same sign,
-!     and the magnitude of the derivative does not decrease. If the
-!     minimum is not bracketed, the step is either stpmin or stpmax,
-!     otherwise the cubic step is taken.
+         ! Fourth case: A lower function value, derivatives of the same sign,
+         ! and the magnitude of the derivative does not decrease. If the
+         ! minimum is not bracketed, the step is either stpmin or stpmax,
+         ! otherwise the cubic step is taken.
 
       else
          if ( Brackt ) then
@@ -3848,7 +3726,7 @@
          endif
       endif
 
-!     Update the interval which contains a minimizer.
+      ! Update the interval which contains a minimizer.
 
       if ( Fp>Fx ) then
          Sty = Stp
@@ -3865,10 +3743,13 @@
          Dx = Dp
       endif
 
-!     Compute the new step.
+      ! Compute the new step.
 
       Stp = stpf
 
       end subroutine dcstep
+!*******************************************************************************
 
-end module lbfgsb_module
+!*******************************************************************************
+   end module lbfgsb_module
+!*******************************************************************************
