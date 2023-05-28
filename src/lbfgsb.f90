@@ -43,6 +43,8 @@
 
     private
 
+    integer,parameter, public :: lbfgsp_wp = wp
+
     ! constants:
     real(wp),parameter :: zero = 0.0_wp
     real(wp),parameter :: one  = 1.0_wp
