@@ -45,8 +45,7 @@ jobs:
     - name: Install GFortran Linux
       if: contains( matrix.os, 'ubuntu')
       run: |
-        sudo apt-get install lcov=1.13-4
-        lcov --version
+        sudo apt-get install lcov
         sudo add-apt-repository ppa:ubuntu-toolchain-r/test
         sudo apt-get update
         sudo apt-get install -y gcc-${{ matrix.gcc_v }} gfortran-${{ matrix.gcc_v }}
@@ -63,6 +62,8 @@ jobs:
 
     - name: Create coverage report
       run: |
+        lcov --version
+        lcov --help
         mkdir -p ${{ env.COV_DIR }}
         lcov --capture --initial --base-directory . --directory build/gfortran_*/ --output-file ${{ env.COV_DIR }}/coverage.base
         lcov --capture --base-directory . --directory build/gfortran_*/ --output-file ${{ env.COV_DIR }}/coverage.capture
