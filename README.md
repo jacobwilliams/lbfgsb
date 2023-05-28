@@ -27,8 +27,7 @@ The simplest way to use the code is to modify one of the
 drivers provided in the package.  Most users will only need to make
 a few changes to the drivers to run their applications.
 
-The
-user is required to calculate the function value f and its gradient g.
+The user is required to calculate the function value `f` and its gradient `g`.
 In order to allow the user complete control over these computations,
 reverse communication is used.  The routine `setulb` must be called
 repeatedly under the control of the variable task.  The calling
