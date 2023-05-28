@@ -45,7 +45,8 @@ jobs:
     - name: Install GFortran Linux
       if: contains( matrix.os, 'ubuntu')
       run: |
-        # sudo apt-get install lcov
+        sudo apt-get install lcov
+        lcov --version
         sudo add-apt-repository ppa:ubuntu-toolchain-r/test
         sudo apt-get update
         sudo apt-get install -y gcc-${{ matrix.gcc_v }} gfortran-${{ matrix.gcc_v }}
