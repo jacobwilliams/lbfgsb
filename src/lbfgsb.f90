@@ -1127,135 +1127,6 @@
 !  along the projected gradient direction P(x-tg,l,u).
 !  The routine returns the GCP in xcp.
 !
-!     n is an integer variable.
-!       On entry n is the dimension of the problem.
-!       On exit n is unchanged.
-!
-!     x is a real(wp) array of dimension n.
-!       On entry x is the starting point for the GCP computation.
-!       On exit x is unchanged.
-!
-!     l is a real(wp) array of dimension n.
-!       On entry l is the lower bound of x.
-!       On exit l is unchanged.
-!
-!     u is a real(wp) array of dimension n.
-!       On entry u is the upper bound of x.
-!       On exit u is unchanged.
-!
-!     nbd is an integer array of dimension n.
-!       On entry nbd represents the type of bounds imposed on the
-!         variables, and must be specified as follows:
-!         nbd(i)=0 if x(i) is unbounded,
-!                1 if x(i) has only a lower bound,
-!                2 if x(i) has both lower and upper bounds, and
-!                3 if x(i) has only an upper bound.
-!       On exit nbd is unchanged.
-!
-!     g is a real(wp) array of dimension n.
-!       On entry g is the gradient of f(x).  g must be a nonzero vector.
-!       On exit g is unchanged.
-!
-!     iorder is an integer working array of dimension n.
-!       iorder will be used to store the breakpoints in the piecewise
-!       linear path and free variables encountered. On exit,
-!         iorder(1),...,iorder(nleft) are indices of breakpoints
-!                                which have not been encountered;
-!         iorder(nleft+1),...,iorder(nbreak) are indices of
-!                                     encountered breakpoints; and
-!         iorder(nfree),...,iorder(n) are indices of variables which
-!                 have no bound constraits along the search direction.
-!
-!     iwhere is an integer array of dimension n.
-!       On entry iwhere indicates only the permanently fixed (iwhere=3)
-!       or free (iwhere= -1) components of x.
-!       On exit iwhere records the status of the current x variables.
-!       iwhere(i)=-3  if x(i) is free and has bounds, but is not moved
-!                 0   if x(i) is free and has bounds, and is moved
-!                 1   if x(i) is fixed at l(i), and l(i) /= u(i)
-!                 2   if x(i) is fixed at u(i), and u(i) /= l(i)
-!                 3   if x(i) is always fixed, i.e.,  u(i)=x(i)=l(i)
-!                 -1  if x(i) is always free, i.e., it has no bounds.
-!
-!     t is a real(wp) working array of dimension n.
-!       t will be used to store the break points.
-!
-!     d is a real(wp) array of dimension n used to store
-!       the Cauchy direction P(x-tg)-x.
-!
-!     xcp is a real(wp) array of dimension n used to return the
-!       GCP on exit.
-!
-!     m is an integer variable.
-!       On entry m is the maximum number of variable metric corrections
-!         used to define the limited memory matrix.
-!       On exit m is unchanged.
-!
-!     ws, wy, sy, and wt are real(wp) arrays.
-!       On entry they store information that defines the
-!                             limited memory BFGS matrix:
-!         ws(n,m) stores S, a set of s-vectors;
-!         wy(n,m) stores Y, a set of y-vectors;
-!         sy(m,m) stores S'Y;
-!         wt(m,m) stores the
-!                 Cholesky factorization of (theta*S'S+LD^(-1)L').
-!       On exit these arrays are unchanged.
-!
-!     theta is a real(wp) variable.
-!       On entry theta is the scaling factor specifying B_0 = theta I.
-!       On exit theta is unchanged.
-!
-!     col is an integer variable.
-!       On entry col is the actual number of variable metric
-!         corrections stored so far.
-!       On exit col is unchanged.
-!
-!     head is an integer variable.
-!       On entry head is the location of the first s-vector (or y-vector)
-!         in S (or Y).
-!       On exit col is unchanged.
-!
-!     p is a real(wp) working array of dimension 2m.
-!       p will be used to store the vector p = W^(T)d.
-!
-!     c is a real(wp) working array of dimension 2m.
-!       c will be used to store the vector c = W^(T)(xcp-x).
-!
-!     wbp is a real(wp) working array of dimension 2m.
-!       wbp will be used to store the row of W corresponding
-!         to a breakpoint.
-!
-!     v is a real(wp) working array of dimension 2m.
-!
-!     nseg is an integer variable.
-!       On exit nseg records the number of quadratic segments explored
-!         in searching for the GCP.
-!
-!     sg and yg are real(wp) arrays of dimension m.
-!       On entry sg  and yg store S'g and Y'g correspondingly.
-!       On exit they are unchanged.
-!
-!     iprint is an INTEGER variable that must be set by the user.
-!       It controls the frequency and type of output generated:
-!        iprint<0    no output is generated;
-!        iprint=0    print only one line at the last iteration;
-!        0<iprint<99 print also f and |proj g| every iprint iterations;
-!        iprint=99   print details of every iteration except n-vectors;
-!        iprint=100  print also the changes of active set and final x;
-!        iprint>100  print details of every iteration including x and g;
-!       When iprint > 0, the file iterate.dat will be created to
-!                        summarize the iteration.
-!
-!     sbgnrm is a real(wp) variable.
-!       On entry sbgnrm is the norm of the projected gradient at x.
-!       On exit sbgnrm is unchanged.
-!
-!     info is an integer variable.
-!       On entry info is 0.
-!       On exit info = 0       for normal return,
-!                    = nonzero for abnormal return when the the system
-!                              used in routine bmv is singular.
-!
 !### References
 !
 !  1. R. H. Byrd, P. Lu, J. Nocedal and C. Zhu, "A limited
@@ -1279,19 +1150,84 @@
                         Info,Epsmch)
       implicit none
 
-      integer :: n , m , Head , Col , Nseg , Iprint , Info , Nbd(n) , &
-                 Iorder(n) , Iwhere(n)
-      real(wp) :: Theta , Epsmch , x(n) , l(n) , u(n) , g(n) ,     &
-                  t(n) , d(n) , Xcp(n) , Wy(n,Col) , Ws(n,Col) ,   &
-                  Sy(m,m) , Wt(m,m) , p(2*m) , c(2*m) , Wbp(2*m) , &
-                  v(2*m)
+
+      integer,intent(in) :: n !! the dimension of the problem.
+      integer,intent(in) :: m !! the maximum number of variable metric corrections
+                              !! used to define the limited memory matrix.
+      integer,intent(in) :: Head !! the location of the first s-vector (or y-vector) in S (or Y).
+      integer,intent(in) :: Col !! the actual number of variable metric corrections stored so far.
+      integer,intent(out) :: Nseg !! records the number of quadratic segments explored
+                                  !! in searching for the GCP.
+      integer,intent(in) :: Iprint !! controls the frequency and type of output generated:
+                                   !!
+                                   !!  * `iprint<0   ` no output is generated;
+                                   !!  * `iprint=0   ` print only one line at the last iteration;
+                                   !!  * `0<iprint<99` print also f and |proj g| every iprint iterations;
+                                   !!  * `iprint=99  ` print details of every iteration except n-vectors;
+                                   !!  * `iprint=100 ` print also the changes of active set and final x;
+                                   !!  * `iprint>100 ` print details of every iteration including x and g;
+                                   !!
+                                   !! When `iprint > 0`, the file `iterate.dat` will be created to
+                                   !! summarize the iteration.
+      integer,intent(inout) :: Info !! On entry info is 0.
+                                    !! On exit:
+                                    !!
+                                    !!  * `info = 0`  for normal return,
+                                    !!  * `info /= 0` for abnormal return when the system
+                                    !!     used in routine [[bmv]] is singular.
+      integer,intent(in) :: Nbd(n) !! On entry nbd represents the type of bounds imposed on the
+                                   !! variables, and must be specified as follows:
+                                   !!
+                                   !!  * `nbd(i)=0` if `x(i)` is unbounded,
+                                   !!  * `nbd(i)=1` if `x(i)` has only a lower bound,
+                                   !!  * `nbd(i)=2` if `x(i)` has both lower and upper bounds, and
+                                   !!  * `nbd(i)=3` if `x(i)` has only an upper bound.
+      integer :: Iorder(n) !! working array used to store the breakpoints in the piecewise
+                           !! linear path and free variables encountered. On exit:
+                           !!
+                           !!  * `iorder(1),...,iorder(nleft)` are indices of breakpoints
+                           !!    which have not been encountered;
+                           !!  * `iorder(nleft+1),...,iorder(nbreak)` are indices of
+                           !!    encountered breakpoints; and
+                           !!  * `iorder(nfree),...,iorder(n)` are indices of variables which
+                           !!    have no bound constraits along the search direction.
+      integer,intent(inout) :: Iwhere(n) !! On entry `iwhere` indicates only the permanently fixed (`iwhere=3`)
+                                         !! or free (`iwhere= -1`) components of `x`.
+                                         !!
+                                         !! On exit `iwhere` records the status of the current `x` variables:
+                                         !!
+                                         !!  * `iwhere(i) = -3`  if `x(i)` is free and has bounds, but is not moved
+                                         !!  * `iwhere(i) =  0 ` if `x(i)` is free and has bounds, and is moved
+                                         !!  * `iwhere(i) =  1 ` if `x(i)` is fixed at l(i), and l(i) /= u(i)
+                                         !!  * `iwhere(i) =  2 ` if `x(i)` is fixed at u(i), and u(i) /= l(i)
+                                         !!  * `iwhere(i) =  3 ` if `x(i)` is always fixed, i.e.,  u(i)=x(i)=l(i)
+                                         !!  * `iwhere(i) = -1`  if `x(i)` is always free, i.e., it has no bounds.
+      real(wp),intent(in) :: Theta !! the scaling factor specifying `B_0 = theta I`.
+      real(wp),intent(in) :: Epsmch !! machine precision
+      real(wp),intent(in) :: x(n) !! the starting point for the GCP computation.
+      real(wp),intent(in) :: l(n) !! the lower bound of `x`.
+      real(wp),intent(in) :: u(n) !! the upper bound of `x`.
+      real(wp),intent(in) :: g(n) !! the gradient of `f(x)`. `g` must be a nonzero vector.
+      real(wp) :: t(n) !! used to store the break points.
+      real(wp) :: d(n) !! used to store the Cauchy direction `P(x-tg)-x`.
+      real(wp),intent(out) :: Xcp(n) !! used to return the GCP on exit.
+      real(wp),intent(in) :: Wy(n,Col) !! stores information that defines the limited memory BFGS matrix: wy(n,m) stores Y, a set of y-vectors;
+      real(wp),intent(in) :: Ws(n,Col) !! stores information that defines the limited memory BFGS matrix: ws(n,m) stores S, a set of s-vectors;
+      real(wp),intent(in) :: Sy(m,m) !! stores information that defines the limited memory BFGS matrix: sy(m,m) stores S'Y;
+      real(wp),intent(in) :: Wt(m,m) !! stores information that defines the limited memory BFGS matrix: wt(m,m) stores the Cholesky factorization of (theta*S'S+LD^(-1)L').
+      real(wp) :: p(2*m) !! working array used to store the vector `p = W^(T)d`.
+      real(wp) :: c(2*m) !! working array used to store the vector `c = W^(T)(xcp-x)`.
+      real(wp) :: Wbp(2*m) !! working array used to store the
+                           !! row of `W` corresponding to a breakpoint.
+      real(wp) :: v(2*m) !! working array
+      real(wp),intent(in) :: Sbgnrm !! the norm of the projected gradient at `x`.
 
       logical :: xlower , xupper , bnded
       integer :: i , j , col2 , nfree , nbreak , pointr , ibp , nleft , &
                  ibkmin , iter
       real(wp) :: f1 , f2 , dt , dtm , tsum , dibp , zibp , dibp2 ,&
                   bkmin , tu , tl , wmc , wmp , wmw , tj ,  &
-                  tj0 , neggi , Sbgnrm , f2_org
+                  tj0 , neggi , f2_org
 
       ! Check the status of the variables, reset iwhere(i) if necessary;
       ! compute the Cauchy direction d and the breakpoints t; initialize
@@ -2122,7 +2058,8 @@
 !  remaining elements of t in a heap.
 !
 !### Reference
-!  * Algorithm 232 of CACM (J. W. J. Williams): HEAPSORT.
+!  * J. W. J. Williams, "Algorithm 232: Heapsort",
+!    Communications of the ACM 7 (6): 347-348 (1964)
 !
 !### Credits
 !
