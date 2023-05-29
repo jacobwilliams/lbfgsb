@@ -92,7 +92,7 @@
           <li id="statements"><i class="fa fa-list-ol"></i>
             <a data-toggle="tooltip"
                data-placement="bottom" data-html="true"
-               title="87.3% of total for modules and submodules.">1718 statements</a>
+               title="87.4% of total for modules and submodules.">1744 statements</a>
           </li>
 
             <li id="source-file">
@@ -231,9 +231,9 @@
       <ul class="list-group">
           <li class="list-group-item">
             <ul class="list-inline">
+                <li><a href='../module/lbfgsb_blas_module.html'>lbfgsb_blas_module</a></li>
                 <li><a href='../module/lbfgsb_kinds_module.html'>lbfgsb_kinds_module</a></li>
                 <li><a href='../module/lbfgsb_linpack_module.html'>lbfgsb_linpack_module</a></li>
-                <li><a href='../module/lbfgsb_blas_module.html'>lbfgsb_blas_module</a></li>
             </ul>
           </li>
           <li class="list-group-item">
@@ -1778,91 +1778,92 @@ entering and leaving this subroutine.</p>
         <tr>
             <td>
               <span class="anchor" ></span>
-              integer
+              integer,
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>n</strong></td>
             <td>
-
+<p>the dimension of the problem.</p>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" ></span>
-              real(kind=wp)
+              real(kind=wp),
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>x</strong>(n)</td>
             <td>
-
+<p>the starting point for the GCP computation.</p>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" ></span>
-              real(kind=wp)
+              real(kind=wp),
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>l</strong>(n)</td>
             <td>
-
+<p>the lower bound of <code>x</code>.</p>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" ></span>
-              real(kind=wp)
+              real(kind=wp),
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>u</strong>(n)</td>
             <td>
-
+<p>the upper bound of <code>x</code>.</p>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" ></span>
-              integer
+              integer,
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>Nbd</strong>(n)</td>
             <td>
-
+<p>On entry nbd represents the type of bounds imposed on the
+variables, and must be specified as follows:</p><a href="../proc/cauchy.html#variable-nbd~3" class="pull-right"><emph>Read more&hellip;</emph></a>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" ></span>
-              real(kind=wp)
+              real(kind=wp),
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>g</strong>(n)</td>
             <td>
-
+<p>the gradient of <code>f(x)</code>. <code>g</code> must be a nonzero vector.</p>
             </td>
         </tr>
         <tr>
@@ -1877,22 +1878,24 @@ entering and leaving this subroutine.</p>
             <td>::</td>
             <td><strong>Iorder</strong>(n)</td>
             <td>
-
+<p>working array used to store the breakpoints in the piecewise
+linear path and free variables encountered. On exit:</p><a href="../proc/cauchy.html#variable-iorder" class="pull-right"><emph>Read more&hellip;</emph></a>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" ></span>
-              integer
+              integer,
             </td>
-<td></td>
+<td>intent(inout)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>Iwhere</strong>(n)</td>
             <td>
-
+<p>On entry <code>iwhere</code> indicates only the permanently fixed (<code>iwhere=3</code>)
+or free (<code>iwhere= -1</code>) components of <code>x</code>.</p><a href="../proc/cauchy.html#variable-iwhere~3" class="pull-right"><emph>Read more&hellip;</emph></a>
             </td>
         </tr>
         <tr>
@@ -1907,7 +1910,7 @@ entering and leaving this subroutine.</p>
             <td>::</td>
             <td><strong>t</strong>(n)</td>
             <td>
-
+<p>used to store the break points.</p>
             </td>
         </tr>
         <tr>
@@ -1922,142 +1925,143 @@ entering and leaving this subroutine.</p>
             <td>::</td>
             <td><strong>d</strong>(n)</td>
             <td>
-
+<p>used to store the Cauchy direction <code>P(x-tg)-x</code>.</p>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" ></span>
-              real(kind=wp)
+              real(kind=wp),
             </td>
-<td></td>
+<td>intent(out)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>Xcp</strong>(n)</td>
             <td>
-
+<p>used to return the GCP on exit.</p>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" ></span>
-              integer
+              integer,
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>m</strong></td>
             <td>
-
+<p>the maximum number of variable metric corrections
+used to define the limited memory matrix.</p>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" ></span>
-              real(kind=wp)
+              real(kind=wp),
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>Wy</strong>(n,Col)</td>
             <td>
-
+<p>stores information that defines the limited memory BFGS matrix: wy(n,m) stores Y, a set of y-vectors;</p>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" ></span>
-              real(kind=wp)
+              real(kind=wp),
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>Ws</strong>(n,Col)</td>
             <td>
-
+<p>stores information that defines the limited memory BFGS matrix: ws(n,m) stores S, a set of s-vectors;</p>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" ></span>
-              real(kind=wp)
+              real(kind=wp),
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>Sy</strong>(m,m)</td>
             <td>
-
+<p>stores information that defines the limited memory BFGS matrix: sy(m,m) stores S'Y;</p>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" ></span>
-              real(kind=wp)
+              real(kind=wp),
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>Wt</strong>(m,m)</td>
             <td>
-
+<p>stores information that defines the limited memory BFGS matrix: wt(m,m) stores the Cholesky factorization of (theta*S'S+LD^(-1)L').</p>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" ></span>
-              real(kind=wp)
+              real(kind=wp),
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>Theta</strong></td>
             <td>
-
+<p>the scaling factor specifying <code>B_0 = theta I</code>.</p>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" ></span>
-              integer
+              integer,
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>Col</strong></td>
             <td>
-
+<p>the actual number of variable metric corrections stored so far.</p>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" ></span>
-              integer
+              integer,
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>Head</strong></td>
             <td>
-
+<p>the location of the first s-vector (or y-vector) in S (or Y).</p>
             </td>
         </tr>
         <tr>
@@ -2072,7 +2076,7 @@ entering and leaving this subroutine.</p>
             <td>::</td>
             <td><strong>p</strong>(2*m)</td>
             <td>
-
+<p>working array used to store the vector <code>p = W^(T)d</code>.</p>
             </td>
         </tr>
         <tr>
@@ -2087,7 +2091,7 @@ entering and leaving this subroutine.</p>
             <td>::</td>
             <td><strong>c</strong>(2*m)</td>
             <td>
-
+<p>working array used to store the vector <code>c = W^(T)(xcp-x)</code>.</p>
             </td>
         </tr>
         <tr>
@@ -2102,7 +2106,8 @@ entering and leaving this subroutine.</p>
             <td>::</td>
             <td><strong>Wbp</strong>(2*m)</td>
             <td>
-
+<p>working array used to store the
+row of <code>W</code> corresponding to a breakpoint.</p>
             </td>
         </tr>
         <tr>
@@ -2117,82 +2122,84 @@ entering and leaving this subroutine.</p>
             <td>::</td>
             <td><strong>v</strong>(2*m)</td>
             <td>
-
+<p>working array</p>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" ></span>
-              integer
+              integer,
             </td>
-<td></td>
+<td>intent(out)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>Nseg</strong></td>
             <td>
-
+<p>records the number of quadratic segments explored
+in searching for the GCP.</p>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" ></span>
-              integer
+              integer,
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>Iprint</strong></td>
             <td>
-
+<p>controls the frequency and type of output generated:</p><a href="../proc/cauchy.html#variable-iprint~3" class="pull-right"><emph>Read more&hellip;</emph></a>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" ></span>
-              real(kind=wp)
+              real(kind=wp),
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>Sbgnrm</strong></td>
             <td>
-
+<p>the norm of the projected gradient at <code>x</code>.</p>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" ></span>
-              integer
+              integer,
             </td>
-<td></td>
+<td>intent(inout)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>Info</strong></td>
             <td>
-
+<p>On entry info is 0.
+On exit:</p><a href="../proc/cauchy.html#variable-info" class="pull-right"><emph>Read more&hellip;</emph></a>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" ></span>
-              real(kind=wp)
+              real(kind=wp),
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>Epsmch</strong></td>
             <td>
-
+<p>machine precision</p>
             </td>
         </tr>
     </tbody>
@@ -2947,7 +2954,7 @@ used to define the limited memory matrix.</p>
             <td>::</td>
             <td><strong>Info</strong></td>
             <td>
-<p>On exit:</p><a href="../proc/formk.html#variable-info" class="pull-right"><emph>Read more&hellip;</emph></a>
+<p>On exit:</p><a href="../proc/formk.html#variable-info~2" class="pull-right"><emph>Read more&hellip;</emph></a>
             </td>
         </tr>
     </tbody>
@@ -5186,7 +5193,7 @@ used to define the limited memory matrix.</p>
             <td><strong>Nbd</strong>(n)</td>
             <td>
 <p>represents the type of bounds imposed on the
-variables, and must be specified as follows:</p><a href="../proc/subsm.html#variable-nbd~3" class="pull-right"><emph>Read more&hellip;</emph></a>
+variables, and must be specified as follows:</p><a href="../proc/subsm.html#variable-nbd~4" class="pull-right"><emph>Read more&hellip;</emph></a>
             </td>
         </tr>
         <tr>
@@ -5419,7 +5426,7 @@ head is the location of the 1st s- (or y-) vector in S (or Y)</p>
             <td>::</td>
             <td><strong>Info</strong></td>
             <td>
-<p>On exit:</p><a href="../proc/subsm.html#variable-info~2" class="pull-right"><emph>Read more&hellip;</emph></a>
+<p>On exit:</p><a href="../proc/subsm.html#variable-info~3" class="pull-right"><emph>Read more&hellip;</emph></a>
             </td>
         </tr>
     </tbody>
@@ -5475,7 +5482,7 @@ head is the location of the 1st s- (or y-) vector in S (or Y)</p>
             <td>::</td>
             <td><strong>g</strong></td>
             <td>
-<a href="../proc/dcsrch.html#variable-g~3" class="pull-right"><emph>Read more&hellip;</emph></a>
+<a href="../proc/dcsrch.html#variable-g~4" class="pull-right"><emph>Read more&hellip;</emph></a>
             </td>
         </tr>
         <tr>
