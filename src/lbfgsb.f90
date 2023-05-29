@@ -652,15 +652,15 @@
       !                     [ 0  I]
 
       if ( wrk ) call formk(n,nfree,Index,nenter,ileave,Indx2,iupdat,   &
-                          & updatd,Wn,Snd,m,Ws,Wy,Sy,theta,col,head,    &
-                          & info)
+                            updatd,Wn,Snd,m,Ws,Wy,Sy,theta,col,head,    &
+                            info)
       if ( info/=0 ) then
          ! nonpositive definiteness in Cholesky factorization;
          ! refresh the lbfgs memory and restart the iteration.
          if ( Iprint>=1 ) write (6,99004)
 99004    format (/,                                                     &
         &' Nonpositive definiteness in Cholesky factorization in formk;'&
-       & ,/,'   refresh the lbfgs memory and restart the iteration.')
+        &,/,'   refresh the lbfgs memory and restart the iteration.')
          info = 0
          col = 0
          head = 1
@@ -675,14 +675,13 @@
       ! compute r=-Z'B(xcp-xk)-Z'g (using wa(2m+1)=W'(xcp-x)
       ! from 'cauchy').
       call cmprlb(n,m,x,g,Ws,Wy,Sy,Wt,z,r,Wa,Index,theta,col,head,nfree,&
-                & cnstnd,info)
-      if ( info/=0 ) goto 400
+                  cnstnd,info)
+      if ( info==0 ) then
+         !-jlm-jn   call the direct method.
+         call subsm(n,m,nfree,Index,l,u,Nbd,z,r,Xp,Ws,Wy,theta,x,g,col, &
+                    head,iword,Wa,Wn,Iprint,info)
+      end if
 
-      !-jlm-jn   call the direct method.
-
-      call subsm(n,m,nfree,Index,l,u,Nbd,z,r,Xp,Ws,Wy,theta,x,g,col, &
-                 head,iword,Wa,Wn,Iprint,info)
- 400  continue
       if ( info/=0 ) then
          ! singular triangular system detected;
          ! refresh the lbfgs memory and restart the iteration.
@@ -1333,7 +1332,7 @@
 
       if ( nbreak==0 .and. nfree==n+1 ) then
          ! is a zero vector, return with the initial xcp as GCP.
-         if ( Iprint>100 ) write (6,99006) (Xcp(i),i=1,n)
+         if ( Iprint>100 ) write (6,'(A,/,(4x,1p,6(1x,d11.4)))') 'Cauchy X =  ', (Xcp(i),i=1,n)
          return
       endif
 
@@ -1355,150 +1354,149 @@
       dtm = -f1/f2
       tsum = zero
       Nseg = 1
-      if ( Iprint>=99 ) write (6,*) 'There are ' , nbreak , &
-                                     &'  breakpoints '
+      if ( Iprint>=99 ) write (6,*) 'There are ' , nbreak , '  breakpoints '
 
       ! If there are no breakpoints, locate the GCP and return.
+      if ( nbreak/=0 ) then
 
-      if ( nbreak==0 ) goto 200
+         nleft = nbreak
+         iter = 1
 
-      nleft = nbreak
-      iter = 1
+         tj = zero
 
-      tj = zero
+         !------------------- the beginning of the loop -------------------------
+         main : do
 
-!------------------- the beginning of the loop -------------------------
+            ! Find the next smallest breakpoint;
+            ! compute dt = t(nleft) - t(nleft + 1).
 
- 100  continue
-
-      ! Find the next smallest breakpoint;
-      ! compute dt = t(nleft) - t(nleft + 1).
-
-      tj0 = tj
-      if ( iter==1 ) then
-         ! Since we already have the smallest breakpoint we need not do
-         ! heapsort yet. Often only one breakpoint is used and the
-         ! cost of heapsort is avoided.
-         tj = bkmin
-         ibp = Iorder(ibkmin)
-      else
-         if ( iter==2 ) then
-            ! Replace the already used smallest breakpoint with the
-            ! breakpoint numbered nbreak > nlast, before heapsort call.
-            if ( ibkmin/=nbreak ) then
-               t(ibkmin) = t(nbreak)
-               Iorder(ibkmin) = Iorder(nbreak)
+            tj0 = tj
+            if ( iter==1 ) then
+               ! Since we already have the smallest breakpoint we need not do
+               ! heapsort yet. Often only one breakpoint is used and the
+               ! cost of heapsort is avoided.
+               tj = bkmin
+               ibp = Iorder(ibkmin)
+            else
+               if ( iter==2 ) then
+                  ! Replace the already used smallest breakpoint with the
+                  ! breakpoint numbered nbreak > nlast, before heapsort call.
+                  if ( ibkmin/=nbreak ) then
+                     t(ibkmin) = t(nbreak)
+                     Iorder(ibkmin) = Iorder(nbreak)
+                  endif
+                  ! Update heap structure of breakpoints
+                  ! (if iter=2, initialize heap).
+               endif
+               call hpsolb(nleft,t,Iorder,iter-2)
+               tj = t(nleft)
+               ibp = Iorder(nleft)
             endif
-            ! Update heap structure of breakpoints
-            ! (if iter=2, initialize heap).
-         endif
-         call hpsolb(nleft,t,Iorder,iter-2)
-         tj = t(nleft)
-         ibp = Iorder(nleft)
-      endif
 
-      dt = tj - tj0
+            dt = tj - tj0
 
-      if ( dt/=zero .and. Iprint>=100 ) then
-         write (6,99002) Nseg , f1 , f2
-99002    format (/,'Piece    ',i3,' --f1, f2 at start point ',1p,       &
-               & 2(1x,d11.4))
-         write (6,99003) dt
-99003    format ('Distance to the next break point =  ',1p,d11.4)
-         write (6,99007) dtm
-      endif
+            if ( dt/=zero .and. Iprint>=100 ) then
+               write (6,99002) Nseg , f1 , f2
+      99002    format (/,'Piece    ',i3,' --f1, f2 at start point ',1p,2(1x,d11.4))
+               write (6,99003) dt
+      99003    format ('Distance to the next break point =  ',1p,d11.4)
+               write (6,'(A,1p,d11.4)') 'Distance to the stationary point =  ',dtm
+            endif
 
-      ! If a minimizer is within this interval, locate the GCP and return.
+            ! If a minimizer is within this interval, locate the GCP and return.
 
-      if ( dtm<dt ) goto 200
+            if ( dtm<dt ) exit main
 
-      ! Otherwise fix one variable and
-      ! reset the corresponding component of d to zero.
+            ! Otherwise fix one variable and
+            ! reset the corresponding component of d to zero.
 
-      tsum = tsum + dt
-      nleft = nleft - 1
-      iter = iter + 1
-      dibp = d(ibp)
-      d(ibp) = zero
-      if ( dibp>zero ) then
-         zibp = u(ibp) - x(ibp)
-         Xcp(ibp) = u(ibp)
-         Iwhere(ibp) = 2
-      else
-         zibp = l(ibp) - x(ibp)
-         Xcp(ibp) = l(ibp)
-         Iwhere(ibp) = 1
-      endif
-      if ( Iprint>=100 ) write (6,*) 'Variable  ' , ibp , '  is fixed.'
-      if ( nleft==0 .and. nbreak==n ) then
-         ! all n variables are fixed,
-         ! return with xcp as GCP.
-         dtm = dt
-         goto 300
-      endif
+            tsum = tsum + dt
+            nleft = nleft - 1
+            iter = iter + 1
+            dibp = d(ibp)
+            d(ibp) = zero
+            if ( dibp>zero ) then
+               zibp = u(ibp) - x(ibp)
+               Xcp(ibp) = u(ibp)
+               Iwhere(ibp) = 2
+            else
+               zibp = l(ibp) - x(ibp)
+               Xcp(ibp) = l(ibp)
+               Iwhere(ibp) = 1
+            endif
+            if ( Iprint>=100 ) write (6,*) 'Variable  ' , ibp , '  is fixed.'
+            if ( nleft==0 .and. nbreak==n ) then
+               ! all n variables are fixed,
+               ! return with xcp as GCP.
+               dtm = dt
+               call update()
+               return
+            endif
 
-      ! Update the derivative information.
+            ! Update the derivative information.
 
-      Nseg = Nseg + 1
-      dibp2 = dibp**2
+            Nseg = Nseg + 1
+            dibp2 = dibp**2
 
-      ! Update f1 and f2.
+            ! Update f1 and f2.
 
-      ! temporarily set f1 and f2 for col=0.
-      f1 = f1 + dt*f2 + dibp2 - Theta*dibp*zibp
-      f2 = f2 - Theta*dibp2
+            ! temporarily set f1 and f2 for col=0.
+            f1 = f1 + dt*f2 + dibp2 - Theta*dibp*zibp
+            f2 = f2 - Theta*dibp2
 
-      if ( Col>0 ) then
-         ! update c = c + dt*p.
-         call daxpy(col2,dt,p,1,c,1)
+            if ( Col>0 ) then
+               ! update c = c + dt*p.
+               call daxpy(col2,dt,p,1,c,1)
 
-         ! choose wbp,
-         ! the row of W corresponding to the breakpoint encountered.
-         pointr = Head
-         do j = 1 , Col
-            Wbp(j) = Wy(ibp,pointr)
-            Wbp(Col+j) = Theta*Ws(ibp,pointr)
-            pointr = mod(pointr,m) + 1
-         enddo
+               ! choose wbp,
+               ! the row of W corresponding to the breakpoint encountered.
+               pointr = Head
+               do j = 1 , Col
+                  Wbp(j) = Wy(ibp,pointr)
+                  Wbp(Col+j) = Theta*Ws(ibp,pointr)
+                  pointr = mod(pointr,m) + 1
+               enddo
 
-         ! compute (wbp)Mc, (wbp)Mp, and (wbp)M(wbp)'.
-         call bmv(m,Sy,Wt,Col,Wbp,v,Info)
-         if ( Info/=0 ) return
-         wmc = ddot(col2,c,1,v,1)
-         wmp = ddot(col2,p,1,v,1)
-         wmw = ddot(col2,Wbp,1,v,1)
+               ! compute (wbp)Mc, (wbp)Mp, and (wbp)M(wbp)'.
+               call bmv(m,Sy,Wt,Col,Wbp,v,Info)
+               if ( Info/=0 ) return
+               wmc = ddot(col2,c,1,v,1)
+               wmp = ddot(col2,p,1,v,1)
+               wmw = ddot(col2,Wbp,1,v,1)
 
-         ! update p = p - dibp*wbp.
-         call daxpy(col2,-dibp,Wbp,1,p,1)
+               ! update p = p - dibp*wbp.
+               call daxpy(col2,-dibp,Wbp,1,p,1)
 
-         ! complete updating f1 and f2 while col > 0.
-         f1 = f1 + dibp*wmc
-         f2 = f2 + two*dibp*wmp - dibp2*wmw
-      endif
+               ! complete updating f1 and f2 while col > 0.
+               f1 = f1 + dibp*wmc
+               f2 = f2 + two*dibp*wmp - dibp2*wmw
+            endif
 
-      f2 = max(Epsmch*f2_org,f2)
-      if ( nleft>0 ) then
-         dtm = -f1/f2
-         goto 100
-         ! to repeat the loop for unsearched intervals.
-      else if ( bnded ) then
-         f1 = zero
-         f2 = zero
-         dtm = zero
-      else
-         dtm = -f1/f2
-      endif
+            f2 = max(Epsmch*f2_org,f2)
+            if ( nleft>0 ) then
+               dtm = -f1/f2
+               ! to repeat the loop for unsearched intervals.
+            else if ( bnded ) then
+               f1 = zero
+               f2 = zero
+               dtm = zero
+               exit main
+            else
+               dtm = -f1/f2
+               exit main
+            endif
 
-!------------------- the end of the loop -------------------------------
+         end do main
+         !------------------- the end of the loop -------------------------------
 
- 200  continue
+      end if
+
       if ( Iprint>=99 ) then
          write (6,*)
          write (6,*) 'GCP found in this segment'
          write (6,99004) Nseg , f1 , f2
-99004    format ('Piece    ',i3,' --f1, f2 at start point ',1p, &
-               & 2(1x,d11.4))
-         write (6,99007) dtm
+99004    format ('Piece    ',i3,' --f1, f2 at start point ',1p,2(1x,d11.4))
+         write (6,'(A,1p,d11.4)') 'Distance to the stationary point =  ',dtm
       endif
       if ( dtm<=zero ) dtm = zero
       tsum = tsum + dtm
@@ -1508,20 +1506,20 @@
 
       call daxpy(n,tsum,d,1,Xcp,1)
 
- 300  continue
+      call update()
 
-      ! Update c = c + dtm*p = W'(x^c - x)
-      ! which will be used in computing r = Z'(B(x^c - x) + g).
+      contains
 
-      if ( Col>0 ) call daxpy(col2,dtm,p,1,c,1)
-      if ( Iprint>100 ) write (6,99006) (Xcp(i),i=1,n)
-      if ( Iprint>=99 ) write (6,99005)
-99005 format (/,'---------------- exit CAUCHY----------------------',/)
+      subroutine update()
 
-      continue
+         ! Update c = c + dtm*p = W'(x^c - x)
+         ! which will be used in computing r = Z'(B(x^c - x) + g).
 
-99006 format ('Cauchy X =  ',/,(4x,1p,6(1x,d11.4)))
-99007 format ('Distance to the stationary point =  ',1p,d11.4)
+         if ( Col>0 ) call daxpy(col2,dtm,p,1,c,1)
+         if ( Iprint>100 ) write (6,'(A,/,(4x,1p,6(1x,d11.4)))') 'Cauchy X =  ', (Xcp(i),i=1,n)
+         if ( Iprint>=99 ) write (6,'(/,A,/)') '---------------- exit CAUCHY----------------------'
+
+      end subroutine update
 
       end subroutine cauchy
 !*******************************************************************************
