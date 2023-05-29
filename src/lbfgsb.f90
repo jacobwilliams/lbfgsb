@@ -512,17 +512,16 @@
          ! 'info' records the termination information.
          info = 0
 
-         itfile = 8
          ! open a summary file 'iterate.dat'
-         if ( Iprint>=1 ) open (8,file='iterate.dat',status='unknown')
+         if ( Iprint>=1 ) open (newunit=itfile,file='iterate.dat',status='unknown')
 
          ! Check the input arguments for errors.
 
          call errclb(n,m,Factr,l,u,Nbd,Task,info,k)
          if ( Task(1:5)=='ERROR' ) then
             call prn3lb(n,x,f,Task,Iprint,info,itfile,iter,nfgv,nintol, &
-                      & nskip,nact,sbgnrm,zero,nseg,word,iback,stp,     &
-                      & xstep,k,cachyt,sbtime,lnscht)
+                        nskip,nact,sbgnrm,zero,nseg,word,iback,stp,     &
+                        xstep,k,cachyt,sbtime,lnscht)
             return
          endif
 
@@ -1653,17 +1652,16 @@
 !  This subroutine computes r=-Z'B(xcp-xk)-Z'g by using
 !  wa(2m+1)=W'(xcp-x) from subroutine cauchy.
 !
-!                           *  *  *
+!### Credits
 !
-!     NEOS, November 1994. (Latest revision June 1996.)
-!     Optimization Technology Center.
-!     Argonne National Laboratory and Northwestern University.
-!     Written by
-!                        Ciyou Zhu
-!     in collaboration with R.H. Byrd, P. Lu-Chen and J. Nocedal.
+!  * NEOS, November 1994. (Latest revision June 1996.)
+!    Optimization Technology Center.
+!    Argonne National Laboratory and Northwestern University.
+!    Written by Ciyou Zhu
+!    in collaboration with R.H. Byrd, P. Lu-Chen and J. Nocedal.
 
       subroutine cmprlb(n,m,x,g,Ws,Wy,Sy,Wt,z,r,Wa,Index,Theta,Col,Head,&
-                      & Nfree,Cnstnd,Info)
+                        Nfree,Cnstnd,Info)
       implicit none
 
       logical :: Cnstnd
@@ -1707,31 +1705,38 @@
 !>
 !  This subroutine checks the validity of the input data.
 !
-!                           *  *  *
+!### Credits
 !
-!     NEOS, November 1994. (Latest revision June 1996.)
-!     Optimization Technology Center.
-!     Argonne National Laboratory and Northwestern University.
-!     Written by
-!                        Ciyou Zhu
-!     in collaboration with R.H. Byrd, P. Lu-Chen and J. Nocedal.
+!  * NEOS, November 1994. (Latest revision June 1996.)
+!    Optimization Technology Center.
+!    Argonne National Laboratory and Northwestern University.
+!    Written by Ciyou Zhu
+!    in collaboration with R.H. Byrd, P. Lu-Chen and J. Nocedal.
 
       subroutine errclb(n,m,Factr,l,u,Nbd,Task,Info,k)
       implicit none
 
-      character*60 :: Task
-      integer :: n , m , Info , k , Nbd(n)
-      real(wp) :: Factr , l(n) , u(n)
+      character(len=60) :: Task
+      integer,intent(in) :: n
+      integer,intent(in) :: m
+      integer,intent(inout) :: Info
+      integer,intent(out) :: k
+      integer,intent(in) :: Nbd(n)
+      real(wp),intent(in) :: Factr
+      real(wp),intent(in) :: l(n)
+      real(wp),intent(in) :: u(n)
 
       integer :: i
 
       ! Check the input arguments for errors.
 
-      if ( n<=0 ) Task = 'ERROR: N <= 0'
-      if ( m<=0 ) Task = 'ERROR: M <= 0'
+      if ( n<=0 )       Task = 'ERROR: N <= 0'
+      if ( m<=0 )       Task = 'ERROR: M <= 0'
       if ( Factr<zero ) Task = 'ERROR: FACTR < 0'
 
       ! Check the validity of the arrays nbd(i), u(i), and l(i).
+
+      k = 0 ! JW : added this so it will always be defined
 
       do i = 1 , n
          if ( Nbd(i)<0 .or. Nbd(i)>3 ) then
@@ -1755,127 +1760,81 @@
 
 !*******************************************************************************
 !>
-!  This subroutine forms the LEL^T factorization of the indefinite
+!  This subroutine forms the `LEL^T` factorization of the indefinite
 !
-!       matrix    K = [-D -Y'ZZ'Y/theta     L_a'-R_z'  ]
-!                     [L_a -R_z           theta*S'AA'S ]
-!                                                    where E = [-I  0]
-!                                                              [ 0  I]
+!```
+!  matrix    K = [-D -Y'ZZ'Y/theta     L_a'-R_z'  ]
+!                [L_a -R_z           theta*S'AA'S ]
+!  where E = [-I  0]
+!            [ 0  I]
+!```
 !
 !  The matrix K can be shown to be equal to the matrix M^[-1]N
 !  occurring in section 5.1 of [1], as well as to the matrix
 !  Mbar^[-1] Nbar in section 5.3.
 !
-!     n is an integer variable.
-!       On entry n is the dimension of the problem.
-!       On exit n is unchanged.
+!### References
 !
-!     nsub is an integer variable
-!       On entry nsub is the number of subspace variables in free set.
-!       On exit nsub is not changed.
+!  1. R. H. Byrd, P. Lu, J. Nocedal and C. Zhu, "A limited
+!     memory algorithm for bound constrained optimization",
+!     SIAM J. Scientific Computing 16 (1995), no. 5, pp. 1190--1208.
 !
-!     ind is an integer array of dimension nsub.
-!       On entry ind specifies the indices of subspace variables.
-!       On exit ind is unchanged.
+!  2. C. Zhu, R.H. Byrd, P. Lu, J. Nocedal, "L-BFGS-B: a
+!     limited memory FORTRAN code for solving bound constrained
+!     optimization problems", Tech. Report, NAM-11, EECS Department,
+!     Northwestern University, 1994.
 !
-!     nenter is an integer variable.
-!       On entry nenter is the number of variables entering the
-!         free set.
-!       On exit nenter is unchanged.
+!### Credits
 !
-!     ileave is an integer variable.
-!       On entry indx2(ileave),...,indx2(n) are the variables leaving
-!         the free set.
-!       On exit ileave is unchanged.
-!
-!     indx2 is an integer array of dimension n.
-!       On entry indx2(1),...,indx2(nenter) are the variables entering
-!         the free set, while indx2(ileave),...,indx2(n) are the
-!         variables leaving the free set.
-!       On exit indx2 is unchanged.
-!
-!     iupdat is an integer variable.
-!       On entry iupdat is the total number of BFGS updates made so far.
-!       On exit iupdat is unchanged.
-!
-!     updatd is a logical variable.
-!       On entry 'updatd' is true if the L-BFGS matrix is updatd.
-!       On exit 'updatd' is unchanged.
-!
-!     wn is a real(wp) array of dimension 2m x 2m.
-!       On entry wn is unspecified.
-!       On exit the upper triangle of wn stores the LEL^T factorization
-!         of the 2*col x 2*col indefinite matrix
-!                     [-D -Y'ZZ'Y/theta     L_a'-R_z'  ]
-!                     [L_a -R_z           theta*S'AA'S ]
-!
-!     wn1 is a real(wp) array of dimension 2m x 2m.
-!       On entry wn1 stores the lower triangular part of
-!                     [Y' ZZ'Y   L_a'+R_z']
-!                     [L_a+R_z   S'AA'S   ]
-!         in the previous iteration.
-!       On exit wn1 stores the corresponding updated matrices.
-!       The purpose of wn1 is just to store these inner products
-!       so they can be easily updated and inserted into wn.
-!
-!     m is an integer variable.
-!       On entry m is the maximum number of variable metric corrections
-!         used to define the limited memory matrix.
-!       On exit m is unchanged.
-!
-!     ws, wy, sy, and wtyy are real(wp) arrays;
-!     theta is a real(wp) variable;
-!     col is an integer variable;
-!     head is an integer variable.
-!       On entry they store the information defining the
-!                                          limited memory BFGS matrix:
-!         ws(n,m) stores S, a set of s-vectors;
-!         wy(n,m) stores Y, a set of y-vectors;
-!         sy(m,m) stores S'Y;
-!         wtyy(m,m) stores the Cholesky factorization
-!                                   of (theta*S'S+LD^(-1)L')
-!         theta is the scaling factor specifying B_0 = theta I;
-!         col is the number of variable metric corrections stored;
-!         head is the location of the 1st s- (or y-) vector in S (or Y).
-!       On exit they are unchanged.
-!
-!     info is an integer variable.
-!       On entry info is unspecified.
-!       On exit info =  0 for normal return;
-!                    = -1 when the 1st Cholesky factorization failed;
-!                    = -2 when the 2st Cholesky factorization failed.
-!
-!     References:
-!       [1] R. H. Byrd, P. Lu, J. Nocedal and C. Zhu, "A limited
-!       memory algorithm for bound constrained optimization",
-!       SIAM J. Scientific Computing 16 (1995), no. 5, pp. 1190--1208.
-!
-!       [2] C. Zhu, R.H. Byrd, P. Lu, J. Nocedal, "L-BFGS-B: a
-!       limited memory FORTRAN code for solving bound constrained
-!       optimization problems", Tech. Report, NAM-11, EECS Department,
-!       Northwestern University, 1994.
-!
-!       (Postscript files of these papers are available via anonymous
-!        ftp to eecs.nwu.edu in the directory pub/lbfgs/lbfgs_bcm.)
-!
-!                           *  *  *
-!
-!     NEOS, November 1994. (Latest revision June 1996.)
-!     Optimization Technology Center.
-!     Argonne National Laboratory and Northwestern University.
-!     Written by
-!                        Ciyou Zhu
-!     in collaboration with R.H. Byrd, P. Lu-Chen and J. Nocedal.
+!  * NEOS, November 1994. (Latest revision June 1996.)
+!    Optimization Technology Center.
+!    Argonne National Laboratory and Northwestern University.
+!    Written by Ciyou Zhu
+!    in collaboration with R.H. Byrd, P. Lu-Chen and J. Nocedal.
 
       subroutine formk(n,Nsub,Ind,Nenter,Ileave,Indx2,Iupdat,Updatd,Wn, &
                        Wn1,m,Ws,Wy,Sy,Theta,Col,Head,Info)
       implicit none
 
-      integer :: n , Nsub , m , Col , Head , Nenter , Ileave , Iupdat , &
-                 Info , Ind(n) , Indx2(n)
-      real(wp) :: Theta , Wn(2*m,2*m) , Wn1(2*m,2*m) , Ws(n,m) , &
-                  Wy(n,m) , Sy(m,m)
-      logical :: Updatd
+      integer,intent(in) :: n !! the dimension of the problem.
+      integer,intent(in) :: Nsub !! the number of subspace variables in free set.
+      integer,intent(in) :: m !! the maximum number of variable metric corrections
+                              !! used to define the limited memory matrix.
+      integer,intent(in) :: Nenter !! the number of variables entering the free set.
+      integer,intent(in) :: Ileave !! `indx2(ileave),...,indx2(n)` are the variables leaving the free set.
+      integer,intent(in) :: Iupdat !! the total number of BFGS updates made so far.
+      integer,intent(out) :: Info !!  On exit:
+                                  !!
+                                  !!  * `info =  0` for normal return;
+                                  !!  * `info = -1` when the 1st Cholesky factorization failed;
+                                  !!  * `info = -2` when the 2st Cholesky factorization failed.
+      integer,intent(in) :: Ind(n) !! specifies the indices of subspace variables.
+      integer,intent(in) :: Indx2(n) !! On entry indx2(1),...,indx2(nenter) are the variables entering
+                                     !! the free set, while indx2(ileave),...,indx2(n) are the
+                                     !! variables leaving the free set.
+      real(wp),intent(in) :: Ws(n,m) !! information defining the limited memory BFGS matrix: ws(n,m) stores S, a set of s-vectors
+      real(wp),intent(in) :: Wy(n,m) !! information defining the limited memory BFGS matrix: wy(n,m) stores Y, a set of y-vectors
+      real(wp),intent(in) :: Sy(m,m) !! information defining the limited memory BFGS matrix: sy(m,m) stores S'Y
+      real(wp),intent(in) :: Theta !! information defining the limited memory BFGS matrix: the scaling factor specifying B_0 = theta I
+      integer,intent(in) :: Col !! information defining the limited memory BFGS matrix: the number of variable metric corrections stored
+      integer,intent(in) :: Head !! information defining the limited memory BFGS matrix: the location of the 1st s- (or y-) vector in S (or Y)
+      real(wp) :: Wn(2*m,2*m) !! On exit the upper triangle of wn stores the LEL^T factorization
+                              !! of the 2*col x 2*col indefinite matrix
+                              !!```
+                              !!  [-D -Y'ZZ'Y/theta     L_a'-R_z'  ]
+                              !!  [L_a -R_z           theta*S'AA'S ]
+                              !!```
+      real(wp) :: Wn1(2*m,2*m) !! On entry wn1 stores the lower triangular part of
+                               !!```
+                               !!  [Y' ZZ'Y   L_a'+R_z']
+                               !!  [L_a+R_z   S'AA'S   ]
+                               !!```
+                               !! in the previous iteration.
+                               !!
+                               !! On exit wn1 stores the corresponding updated matrices.
+                               !! The purpose of wn1 is just to store these inner products
+                               !! so they can be easily updated and inserted into wn.
+      logical,intent(in) :: Updatd !! true if the L-BFGS matrix is updatd.
 
       integer :: m2 , ipntr , jpntr , iy , is , jy , js , is1 , js1 , k1 , &
                  i , k , col2 , pbegin , pend , dbegin , dend , upcl
@@ -2070,20 +2029,24 @@
 !  of the array wt, and performs the Cholesky factorization of T
 !  to produce J*J', with J' stored in the upper triangle of wt.
 !
-!                           *  *  *
+!### Credits
 !
-!     NEOS, November 1994. (Latest revision June 1996.)
-!     Optimization Technology Center.
-!     Argonne National Laboratory and Northwestern University.
-!     Written by
-!                        Ciyou Zhu
-!     in collaboration with R.H. Byrd, P. Lu-Chen and J. Nocedal.
+!  * NEOS, November 1994. (Latest revision June 1996.)
+!    Optimization Technology Center.
+!    Argonne National Laboratory and Northwestern University.
+!    Written by Ciyou Zhu
+!    in collaboration with R.H. Byrd, P. Lu-Chen and J. Nocedal.
 
       subroutine formt(m,Wt,Sy,Ss,Col,Theta,Info)
       implicit none
 
-      integer :: m , Col , Info
-      real(wp) :: Theta , Wt(m,m) , Sy(m,m) , Ss(m,m)
+      integer,intent(in) :: m
+      integer :: Col
+      integer :: Info
+      real(wp),intent(in) :: Theta
+      real(wp) :: Wt(m,m)
+      real(wp) :: Sy(m,m)
+      real(wp) :: Ss(m,m)
 
       integer :: i , j , k , k1
       real(wp) :: ddum
@@ -2120,39 +2083,41 @@
 !  iter > 0, and finds the index set of free and active variables
 !  at the GCP.
 !
-!     cnstnd is a logical variable indicating whether bounds are present
+!### Credits
 !
-!     index is an integer array of dimension n
-!       for i=1,...,nfree, index(i) are the indices of free variables
-!       for i=nfree+1,...,n, index(i) are the indices of bound variables
-!       On entry after the first iteration, index gives
-!         the free variables at the previous iteration.
-!       On exit it gives the free variables based on the determination
-!         in cauchy using the array iwhere.
-!
-!     indx2 is an integer array of dimension n
-!       On entry indx2 is unspecified.
-!       On exit with iter>0, indx2 indicates which variables
-!          have changed status since the previous iteration.
-!       For i= 1,...,nenter, indx2(i) have changed from bound to free.
-!       For i= ileave+1,...,n, indx2(i) have changed from free to bound.
-!
-!                           *  *  *
-!
-!     NEOS, November 1994. (Latest revision June 1996.)
-!     Optimization Technology Center.
-!     Argonne National Laboratory and Northwestern University.
-!     Written by
-!                        Ciyou Zhu
-!     in collaboration with R.H. Byrd, P. Lu-Chen and J. Nocedal.
+!  * NEOS, November 1994. (Latest revision June 1996.)
+!    Optimization Technology Center.
+!    Argonne National Laboratory and Northwestern University.
+!    Written by Ciyou Zhu
+!    in collaboration with R.H. Byrd, P. Lu-Chen and J. Nocedal.
 
       subroutine freev(n,Nfree,Index,Nenter,Ileave,Indx2,Iwhere,Wrk, &
                        Updatd,Cnstnd,Iprint,Iter)
       implicit none
 
-      integer :: n , Nfree , Nenter , Ileave , Iprint , Iter , Index(n) , &
-                 Indx2(n) , Iwhere(n)
-      logical :: Wrk , Updatd , Cnstnd
+      integer,intent(in) :: n
+      integer,intent(inout) :: Nfree
+      integer,intent(out) :: Nenter
+      integer,intent(out) :: Ileave
+      integer,intent(in) :: Iprint
+      integer,intent(in) :: Iter
+      integer,intent(inout) :: Index(n) !! * for i=1,...,nfree, index(i) are the indices of free variables
+                                        !! * for i=nfree+1,...,n, index(i) are the indices of bound variables
+                                        !!
+                                        !! * On entry after the first iteration, index gives
+                                        !!   the free variables at the previous iteration.
+                                        !! * On exit it gives the free variables based on the determination
+                                        !!   in cauchy using the array iwhere.
+      integer,intent(inout) :: Indx2(n) !! * On entry indx2 is unspecified.
+                                        !! * On exit with iter>0, indx2 indicates which variables
+                                        !!    have changed status since the previous iteration.
+                                        !!
+                                        !! * For i= 1,...,nenter, indx2(i) have changed from bound to free.
+                                        !! * For i= ileave+1,...,n, indx2(i) have changed from free to bound.
+      integer,intent(in) :: Iwhere(n)
+      logical,intent(out) :: Wrk
+      logical,intent(in) :: Updatd
+      logical,intent(in) :: Cnstnd !! indicating whether bounds are present
 
       integer :: iact , i , k
 
@@ -2213,43 +2178,30 @@
 !  This subroutine sorts out the least element of t, and puts the
 !  remaining elements of t in a heap.
 !
-!     n is an integer variable.
-!       On entry n is the dimension of the arrays t and iorder.
-!       On exit n is unchanged.
+!### Reference
+!  * Algorithm 232 of CACM (J. W. J. Williams): HEAPSORT.
 !
-!     t is a real(wp) array of dimension n.
-!       On entry t stores the elements to be sorted,
-!       On exit t(n) stores the least elements of t, and t(1) to t(n-1)
-!         stores the remaining elements in the form of a heap.
+!### Credits
 !
-!     iorder is an integer array of dimension n.
-!       On entry iorder(i) is the index of t(i).
-!       On exit iorder(i) is still the index of t(i), but iorder may be
-!         permuted in accordance with t.
-!
-!     iheap is an integer variable specifying the task.
-!       On entry iheap should be set as follows:
-!         iheap == 0 if t(1) to t(n) is not in the form of a heap,
-!         iheap /= 0 if otherwise.
-!       On exit iheap is unchanged.
-!
-!     References:
-!       Algorithm 232 of CACM (J. W. J. Williams): HEAPSORT.
-!
-!                           *  *  *
-!
-!     NEOS, November 1994. (Latest revision June 1996.)
-!     Optimization Technology Center.
-!     Argonne National Laboratory and Northwestern University.
-!     Written by
-!                        Ciyou Zhu
-!     in collaboration with R.H. Byrd, P. Lu-Chen and J. Nocedal.
+!  * NEOS, November 1994. (Latest revision June 1996.)
+!    Optimization Technology Center.
+!    Argonne National Laboratory and Northwestern University.
+!    Written by Ciyou Zhu
+!    in collaboration with R.H. Byrd, P. Lu-Chen and J. Nocedal.
 
       subroutine hpsolb(n,t,Iorder,Iheap)
+
       implicit none
 
-      integer :: Iheap , n , Iorder(n)
-      real(wp) :: t(n)
+      integer,intent(in) :: n !! the dimension of the arrays t and iorder.
+      real(wp),intent(inout) :: t(n) !! On entry t stores the elements to be sorted,
+                                     !! On exit t(n) stores the least elements of t, and t(1) to t(n-1)
+                                     !! stores the remaining elements in the form of a heap.
+      integer,intent(inout) :: Iorder(n) !! On entry iorder(i) is the index of t(i).
+                                         !! On exit iorder(i) is still the index of t(i), but iorder may be
+                                         !! permuted in accordance with t.
+      integer,intent(in) :: Iheap !! `iheap == 0` if t(1) to t(n) is not in the form of a heap,
+                                  !! `iheap /= 0` if otherwise.
 
       integer :: i , j , k , indxin , indxou
       real(wp) :: ddum , out
@@ -2324,18 +2276,17 @@
 !  to perform the line search.  Subroutine dscrch is safeguarded so
 !  that all trial points lie within the feasible region.
 !
-!                           *  *  *
+!### Credits
 !
-!     NEOS, November 1994. (Latest revision June 1996.)
-!     Optimization Technology Center.
-!     Argonne National Laboratory and Northwestern University.
-!     Written by
-!                        Ciyou Zhu
-!     in collaboration with R.H. Byrd, P. Lu-Chen and J. Nocedal.
+!  * NEOS, November 1994. (Latest revision June 1996.)
+!    Optimization Technology Center.
+!    Argonne National Laboratory and Northwestern University.
+!    Written by Ciyou Zhu
+!    in collaboration with R.H. Byrd, P. Lu-Chen and J. Nocedal.
 
       subroutine lnsrlb(n,l,u,Nbd,x,f,Fold,Gd,Gdold,g,d,r,t,z,Stp,Dnorm,&
-                      & Dtd,Xstep,Stpmx,Iter,Ifun,Iback,Nfgv,Info,Task, &
-                      & Boxed,Cnstnd,Csave,Isave,Dsave)
+                        Dtd,Xstep,Stpmx,Iter,Ifun,Iback,Nfgv,Info,Task, &
+                        Boxed,Cnstnd,Csave,Isave,Dsave)
       implicit none
 
       character*60 :: Task , Csave
@@ -2442,17 +2393,16 @@
 !  This subroutine updates matrices WS and WY, and forms the
 !  middle matrix in B.
 !
-!                           *  *  *
+!### Credits
 !
-!     NEOS, November 1994. (Latest revision June 1996.)
-!     Optimization Technology Center.
-!     Argonne National Laboratory and Northwestern University.
-!     Written by
-!                        Ciyou Zhu
-!     in collaboration with R.H. Byrd, P. Lu-Chen and J. Nocedal.
+!  * NEOS, November 1994. (Latest revision June 1996.)
+!    Optimization Technology Center.
+!    Argonne National Laboratory and Northwestern University.
+!    Written by Ciyou Zhu
+!    in collaboration with R.H. Byrd, P. Lu-Chen and J. Nocedal.
 
       subroutine matupd(n,m,Ws,Wy,Sy,Ss,d,r,Itail,Iupdat,Col,Head,Theta,&
-                      & Rr,Dr,Stp,Dtd)
+                        Rr,Dr,Stp,Dtd)
       implicit none
 
       integer :: n , m , Itail , Iupdat , Col , Head
@@ -2515,14 +2465,13 @@
 !  lower bounds of each variable, machine precision, as well as
 !  the headings of the output.
 !
-!                           *  *  *
+!### Credits
 !
-!     NEOS, November 1994. (Latest revision June 1996.)
-!     Optimization Technology Center.
-!     Argonne National Laboratory and Northwestern University.
-!     Written by
-!                        Ciyou Zhu
-!     in collaboration with R.H. Byrd, P. Lu-Chen and J. Nocedal.
+!  * NEOS, November 1994. (Latest revision June 1996.)
+!    Optimization Technology Center.
+!    Argonne National Laboratory and Northwestern University.
+!    Written by Ciyou Zhu
+!    in collaboration with R.H. Byrd, P. Lu-Chen and J. Nocedal.
 
       subroutine prn1lb(n,m,l,u,x,Iprint,Itfile,Epsmch)
       implicit none
@@ -2578,14 +2527,13 @@
 !  This subroutine prints out new information after a successful
 !  line search.
 !
-!                           *  *  *
+!### Credits
 !
-!     NEOS, November 1994. (Latest revision June 1996.)
-!     Optimization Technology Center.
-!     Argonne National Laboratory and Northwestern University.
-!     Written by
-!                        Ciyou Zhu
-!     in collaboration with R.H. Byrd, P. Lu-Chen and J. Nocedal.
+!  * NEOS, November 1994. (Latest revision June 1996.)
+!    Optimization Technology Center.
+!    Argonne National Laboratory and Northwestern University.
+!    Written by Ciyou Zhu
+!    in collaboration with R.H. Byrd, P. Lu-Chen and J. Nocedal.
 
       subroutine prn2lb(n,x,f,g,Iprint,Itfile,Iter,Nfgv,Nact,Sbgnrm, &
                         Nseg,Word,Iword,Iback,Stp,Xstep)
@@ -2644,14 +2592,13 @@
 !  convergence test is satisfied or when an error message is
 !  generated.
 !
-!                           *  *  *
+!### Credits
 !
-!     NEOS, November 1994. (Latest revision June 1996.)
-!     Optimization Technology Center.
-!     Argonne National Laboratory and Northwestern University.
-!     Written by
-!                        Ciyou Zhu
-!     in collaboration with R.H. Byrd, P. Lu-Chen and J. Nocedal.
+!  * NEOS, November 1994. (Latest revision June 1996.)
+!    Optimization Technology Center.
+!    Argonne National Laboratory and Northwestern University.
+!    Written by Ciyou Zhu
+!    in collaboration with R.H. Byrd, P. Lu-Chen and J. Nocedal.
 
       subroutine prn3lb(n,x,f,Task,Iprint,Info,Itfile,Iter,Nfgv,Nintol, &
                         Nskip,Nact,Sbgnrm,Time,Nseg,Word,Iback,Stp, &
@@ -2705,10 +2652,8 @@
             if ( Info==-3 ) write (6,99011)
             if ( Info==-4 ) write (6,99012)
             if ( Info==-5 ) write (6,99013)
-            if ( Info==-6 ) write (6,*) ' Input nbd(' , k ,           &
-                                    &') is invalid.'
-            if ( Info==-7 ) write (6,*) ' l(' , k , ') > u(' , k ,    &
-                                    &').  No feasible solution.'
+            if ( Info==-6 ) write (6,*) ' Input nbd(' , k , ') is invalid.'
+            if ( Info==-7 ) write (6,*) ' l(' , k , ') > u(' , k , ').  No feasible solution.'
             if ( Info==-8 ) write (6,99014)
             if ( Info==-9 ) write (6,99015)
          endif
@@ -2719,10 +2664,8 @@
          write (6,99007) Time
          if ( Iprint>=1 ) then
             if ( Info==-4 .or. Info==-9 ) then
-               write (Itfile,99006) Iter , Nfgv , Nseg , Nact , Word ,  &
-                                  & Iback , Stp , Xstep
-99006          format (2(1x,i4),2(1x,i5),2x,a3,1x,i4,1p,2(2x,d7.1),6x,  &
-                      &'-',10x,'-')
+               write (Itfile,99006) Iter , Nfgv , Nseg , Nact , Word , Iback , Stp , Xstep
+99006          format (2(1x,i4),2(1x,i5),2x,a3,1x,i4,1p,2(2x,d7.1),6x,'-',10x,'-')
             endif
             write (Itfile,99008) Task
             if ( Info/=0 ) then
@@ -2773,20 +2716,25 @@
 !  This subroutine computes the infinity norm of the projected
 !  gradient.
 !
-!                           *  *  *
+!### Credits
 !
-!     NEOS, November 1994. (Latest revision June 1996.)
-!     Optimization Technology Center.
-!     Argonne National Laboratory and Northwestern University.
-!     Written by
-!                        Ciyou Zhu
-!     in collaboration with R.H. Byrd, P. Lu-Chen and J. Nocedal.
+!  * NEOS, November 1994. (Latest revision June 1996.)
+!    Optimization Technology Center.
+!    Argonne National Laboratory and Northwestern University.
+!    Written by Ciyou Zhu
+!    in collaboration with R.H. Byrd, P. Lu-Chen and J. Nocedal.
 
       subroutine projgr(n,l,u,Nbd,x,g,Sbgnrm)
+
       implicit none
 
-      integer :: n , Nbd(n)
-      real(wp) :: Sbgnrm , x(n) , l(n) , u(n) , g(n)
+      integer,intent(in) :: n
+      integer :: Nbd(n)
+      real(wp) :: Sbgnrm
+      real(wp) :: x(n)
+      real(wp) :: l(n)
+      real(wp) :: u(n)
+      real(wp) :: g(n)
 
       integer :: i
       real(wp) :: gi
@@ -2812,151 +2760,33 @@
 !  This routine contains the major changes in the updated version.
 !  The changes are described in the accompanying paper
 !
-!  Jose Luis Morales, Jorge Nocedal
-!  "Remark On Algorithm 788: L-BFGS-B: Fortran Subroutines for Large-Scale
-!   Bound Constrained Optimization". Decemmber 27, 2010.
+!  Given xcp, l, u, r, an index set that specifies
+!  the active set at xcp, and an l-BFGS matrix B
+!  (in terms of WY, WS, SY, WT, head, col, and theta),
+!  this subroutine computes an approximate solution
+!  of the subspace problem
 !
-!         J.L. Morales  Departamento de Matematicas,
-!                       Instituto Tecnologico Autonomo de Mexico
-!                       Mexico D.F.
+!  (P)   min Q(x) = r'(x-xcp) + 1/2 (x-xcp)' B (x-xcp)
 !
-!         J, Nocedal    Department of Electrical Engineering and
-!                       Computer Science.
-!                       Northwestern University. Evanston, IL. USA
+!        subject to l<=x<=u
+!                  x_i=xcp_i for all i in A(xcp)
 !
-!                       January 17, 2011
+!  along the subspace unconstrained Newton direction
 !
-!      **********************************************************************
+!     d = -(Z'BZ)^(-1) r.
 !
-!     Given xcp, l, u, r, an index set that specifies
-!       the active set at xcp, and an l-BFGS matrix B
-!       (in terms of WY, WS, SY, WT, head, col, and theta),
-!       this subroutine computes an approximate solution
-!       of the subspace problem
+!  The formula for the Newton direction, given the L-BFGS matrix
+!  and the Sherman-Morrison formula, is
 !
-!       (P)   min Q(x) = r'(x-xcp) + 1/2 (x-xcp)' B (x-xcp)
+!     d = (1/theta)r + (1/theta*2) Z'WK^(-1)W'Z r.
 !
-!             subject to l<=x<=u
-!                       x_i=xcp_i for all i in A(xcp)
+!  where
+!            K = [-D -Y'ZZ'Y/theta     L_a'-R_z'  ]
+!                [L_a -R_z           theta*S'AA'S ]
 !
-!       along the subspace unconstrained Newton direction
-!
-!          d = -(Z'BZ)^(-1) r.
-!
-!       The formula for the Newton direction, given the L-BFGS matrix
-!       and the Sherman-Morrison formula, is
-!
-!          d = (1/theta)r + (1/theta*2) Z'WK^(-1)W'Z r.
-!
-!       where
-!                 K = [-D -Y'ZZ'Y/theta     L_a'-R_z'  ]
-!                     [L_a -R_z           theta*S'AA'S ]
-!
-!     Note that this procedure for computing d differs
-!     from that described in [1]. One can show that the matrix K is
-!     equal to the matrix M^[-1]N in that paper.
-!
-!     n is an integer variable.
-!       On entry n is the dimension of the problem.
-!       On exit n is unchanged.
-!
-!     m is an integer variable.
-!       On entry m is the maximum number of variable metric corrections
-!         used to define the limited memory matrix.
-!       On exit m is unchanged.
-!
-!     nsub is an integer variable.
-!       On entry nsub is the number of free variables.
-!       On exit nsub is unchanged.
-!
-!     ind is an integer array of dimension nsub.
-!       On entry ind specifies the coordinate indices of free variables.
-!       On exit ind is unchanged.
-!
-!     l is a real(wp) array of dimension n.
-!       On entry l is the lower bound of x.
-!       On exit l is unchanged.
-!
-!     u is a real(wp) array of dimension n.
-!       On entry u is the upper bound of x.
-!       On exit u is unchanged.
-!
-!     nbd is a integer array of dimension n.
-!       On entry nbd represents the type of bounds imposed on the
-!         variables, and must be specified as follows:
-!         nbd(i)=0 if x(i) is unbounded,
-!                1 if x(i) has only a lower bound,
-!                2 if x(i) has both lower and upper bounds, and
-!                3 if x(i) has only an upper bound.
-!       On exit nbd is unchanged.
-!
-!     x is a real(wp) array of dimension n.
-!       On entry x specifies the Cauchy point xcp.
-!       On exit x(i) is the minimizer of Q over the subspace of
-!       free variables.
-!
-!     d is a real(wp) array of dimension n.
-!       On entry d is the reduced gradient of Q at xcp.
-!       On exit d is the Newton direction of Q.
-!
-!    xp is a real(wp) array of dimension n.
-!       used to safeguard the projected Newton direction
-!
-!    xx is a real(wp) array of dimension n
-!       On entry it holds the current iterate
-!       On output it is unchanged
-
-!    gg is a real(wp) array of dimension n
-!       On entry it holds the gradient at the current iterate
-!       On output it is unchanged
-!
-!     ws and wy are real(wp) arrays;
-!     theta is a real(wp) variable;
-!     col is an integer variable;
-!     head is an integer variable.
-!       On entry they store the information defining the
-!                                          limited memory BFGS matrix:
-!         ws(n,m) stores S, a set of s-vectors;
-!         wy(n,m) stores Y, a set of y-vectors;
-!         theta is the scaling factor specifying B_0 = theta I;
-!         col is the number of variable metric corrections stored;
-!         head is the location of the 1st s- (or y-) vector in S (or Y).
-!       On exit they are unchanged.
-!
-!     iword is an integer variable.
-!       On entry iword is unspecified.
-!       On exit iword specifies the status of the subspace solution.
-!         iword = 0 if the solution is in the box,
-!                 1 if some bound is encountered.
-!
-!     wv is a real(wp) working array of dimension 2m.
-!
-!     wn is a real(wp) array of dimension 2m x 2m.
-!       On entry the upper triangle of wn stores the LEL^T factorization
-!         of the indefinite matrix
-!
-!              K = [-D -Y'ZZ'Y/theta     L_a'-R_z'  ]
-!                  [L_a -R_z           theta*S'AA'S ]
-!                                                    where E = [-I  0]
-!                                                              [ 0  I]
-!       On exit wn is unchanged.
-!
-!     iprint is an INTEGER variable that must be set by the user.
-!       It controls the frequency and type of output generated:
-!        iprint<0    no output is generated;
-!        iprint=0    print only one line at the last iteration;
-!        0<iprint<99 print also f and |proj g| every iprint iterations;
-!        iprint=99   print details of every iteration except n-vectors;
-!        iprint=100  print also the changes of active set and final x;
-!        iprint>100  print details of every iteration including x and g;
-!       When iprint > 0, the file iterate.dat will be created to
-!                        summarize the iteration.
-!
-!     info is an integer variable.
-!       On entry info is unspecified.
-!       On exit info = 0       for normal return,
-!                    = nonzero for abnormal return
-!                                  when the matrix K is ill-conditioned.
+!  Note that this procedure for computing d differs
+!  from that described in [1]. One can show that the matrix K is
+!  equal to the matrix M^[-1]N in that paper.
 !
 !### References
 !
@@ -2971,25 +2801,74 @@
 !    Argonne National Laboratory and Northwestern University.
 !    Written by Ciyou Zhu
 !    in collaboration with R.H. Byrd, P. Lu-Chen and J. Nocedal.
+!  * Jose Luis Morales, Jorge Nocedal
+!    "Remark On Algorithm 788: L-BFGS-B: Fortran Subroutines for Large-Scale
+!    Bound Constrained Optimization". Decemmber 27, 2010.
+!  * J.L. Morales & J, Nocedal, January 17, 2011
 
       subroutine subsm(n,m,Nsub,Ind,l,u,Nbd,x,d,Xp,Ws,Wy,Theta,Xx,Gg, &
                        Col,Head,Iword,Wv,Wn,Iprint,Info)
+
       implicit none
 
-      integer :: n , m , Nsub , Col , Head , Iword , Iprint , Info , &
-                 Ind(Nsub) , Nbd(n)
-      real(wp) :: Theta , l(n) , u(n) , x(n) , d(n) , Xp(n) , &
-                  Xx(n) , Gg(n) , Ws(n,m) , Wy(n,m) , Wv(2*m) , &
-                  Wn(2*m,2*m)
+      integer,intent(in) :: n !! the dimension of the problem
+      integer,intent(in) :: m !! the maximum number of variable metric corrections
+                              !! used to define the limited memory matrix.
+      integer,intent(in) :: Nsub !! the number of free variables
+      real(wp),intent(in) :: Ws(n,m) !! variable that stores the information defining the limited memory BFGS matrix:
+                                     !! ws(n,m) stores S, a set of s-vectors
+      real(wp),intent(in) :: Wy(n,m) !! variable that stores the information defining the limited memory BFGS matrix:
+                                     ! !wy(n,m) stores Y, a set of y-vectors
+      real(wp),intent(in) :: Theta !! variable that stores the information defining the limited memory BFGS matrix:
+                                   !! theta is the scaling factor specifying B_0 = theta I
+      integer,intent(in) :: Col !! variable that stores the information defining the limited memory BFGS matrix:
+                                !! col is the number of variable metric corrections stored
+      integer,intent(in) :: Head !! variable that stores the information defining the limited memory BFGS matrix:
+                                 !! head is the location of the 1st s- (or y-) vector in S (or Y)
+      integer,intent(out) :: Iword !! On exit iword specifies the status of the subspace solution:
+                                   !!
+                                   !!  * `iword = 0` if the solution is in the box
+                                   !!  * `iword = 1` if some bound is encountered
+      integer,intent(in) :: Iprint !! If iprint >= 99, some minimum debug printing is done.
+      integer,intent(out) :: Info !! On exit:
+                                  !!
+                                  !!  * `info = 0`  for normal return,
+                                  !!  * `info /= 0` for abnormal return
+                                  !!    when the matrix `K` is ill-conditioned.
+      integer,intent(in) :: Ind(Nsub) !! specifies the coordinate indices of free variables.
+      integer,intent(in) :: Nbd(n) !! represents the type of bounds imposed on the
+                                   !! variables, and must be specified as follows:
+                                   !!
+                                   !!  * `nbd(i)=0` if `x(i)` is unbounded,
+                                   !!  * `nbd(i)=1` if `x(i)` has only a lower bound,
+                                   !!  * `nbd(i)=2` if `x(i)` has both lower and upper bounds, and
+                                   !!  * `nbd(i)=3` if `x(i)` has only an upper bound.
+      real(wp),intent(in) :: l(n) !! the lower bound of x.
+      real(wp),intent(in) :: u(n) !! the upper bound of x
+      real(wp),intent(inout) :: x(n) !! On entry x specifies the Cauchy point xcp.
+                                     !! On exit x(i) is the minimizer of Q over the subspace of
+                                     !! free variables.
+      real(wp),intent(inout) :: d(n) !! On entry d is the reduced gradient of Q at xcp.
+                                     !! On exit d is the Newton direction of Q.
+      real(wp) :: Xp(n) !! used to safeguard the projected Newton direction
+      real(wp),intent(in) :: Xx(n) !! the current iterate
+      real(wp),intent(in) :: Gg(n) !! the gradient at the current iterate
+      real(wp) :: Wv(2*m) !! a real(wp) working array of dimension 2m
+      real(wp),intent(in) :: Wn(2*m,2*m) !! The upper triangle of wn stores the LEL^T factorization
+                                         !! of the indefinite matrix
+                                         !!```
+                                         !!  K = [-D -Y'ZZ'Y/theta     L_a'-R_z'  ]
+                                         !!      [L_a -R_z           theta*S'AA'S ]
+                                         !!  where E = [-I  0]
+                                         !!            [ 0  I]
+                                         !!```
 
       integer :: pointr , m2 , col2 , ibd , jy , js , i , j , k
       real(wp) :: alpha , xk , dk , temp1 , temp2
       real(wp) :: dd_p
 
       if ( Nsub<=0 ) return
-      if ( Iprint>=99 ) write (6,99001)
-
-99001 format (/,'----------------SUBSM entered-----------------',/)
+      if ( Iprint>=99 ) write (6,'(/,A,/)') '----------------SUBSM entered-----------------'
 
       ! Compute wv = W'Zd.
 
@@ -3082,8 +2961,8 @@
          if ( dd_p<=zero ) exit main
 
          call dcopy(n,Xp,1,x,1)
-         write (6,*) ' Positive dir derivative in projection '
-         write (6,*) ' Using the backtracking step '
+         if ( Iprint>=0 ) write (6,'(A)') ' Positive dir derivative in projection '
+         if ( Iprint>=0 ) write (6,'(A)') ' Using the backtracking step '
 
          !-----------------------------------------------------------------
 
@@ -3134,8 +3013,7 @@
 
       end block main
 
-      if ( Iprint>=99 ) write (6,99002)
-99002 format (/,'----------------exit SUBSM --------------------',/)
+      if ( Iprint>=99 ) write (6,'(/,A,/)') '----------------exit SUBSM --------------------'
 
       end subroutine subsm
 !*******************************************************************************
