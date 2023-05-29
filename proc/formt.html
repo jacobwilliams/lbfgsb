@@ -92,7 +92,7 @@
           <li id="statements"><i class="fa fa-list-ol"></i>
             <a data-toggle="tooltip"
                data-placement="bottom" data-html="true"
-               title=" 1.2% of total for procedures.">22 statements</a>
+               title=" 1.4% of total for procedures.">27 statements</a>
           </li>
 
             <li id="source-file">
@@ -157,18 +157,17 @@
     
 
     <p>This subroutine forms the upper half of the pos. def. and symm.
-T = theta<em>SS + L</em>D^(-1)<em>L', stores T in the upper triangle
-of the array wt, and performs the Cholesky factorization of T
-to produce J</em>J', with J' stored in the upper triangle of wt.</p>
-<div class="codehilite"><pre><span></span><code>                     *  *  *
-</code></pre></div>
-
-<p>NEOS, November 1994. (Latest revision June 1996.)
-   Optimization Technology Center.
-   Argonne National Laboratory and Northwestern University.
-   Written by
-                      Ciyou Zhu
-   in collaboration with R.H. Byrd, P. Lu-Chen and J. Nocedal.</p>
+  T = theta<em>SS + L</em>D^(-1)<em>L', stores T in the upper triangle
+  of the array wt, and performs the Cholesky factorization of T
+  to produce J</em>J', with J' stored in the upper triangle of wt.</p>
+<h3>Credits</h3>
+<ul>
+<li>NEOS, November 1994. (Latest revision June 1996.)
+    Optimization Technology Center.
+    Argonne National Laboratory and Northwestern University.
+    Written by Ciyou Zhu
+    in collaboration with R.H. Byrd, P. Lu-Chen and J. Nocedal.</li>
+</ul>
 
 
     <h3>Arguments</h3>
@@ -184,10 +183,10 @@ to produce J</em>J', with J' stored in the upper triangle of wt.</p>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-m~8"></span>
-              integer
+              <span class="anchor" id="variable-m~9"></span>
+              integer,
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
@@ -244,7 +243,7 @@ to produce J</em>J', with J' stored in the upper triangle of wt.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-col~5"></span>
+              <span class="anchor" id="variable-col~6"></span>
               integer
             </td>
 <td></td>
@@ -259,10 +258,10 @@ to produce J</em>J', with J' stored in the upper triangle of wt.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-theta~4"></span>
-              real(kind=wp)
+              <span class="anchor" id="variable-theta~5"></span>
+              real(kind=wp),
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
@@ -274,7 +273,7 @@ to produce J</em>J', with J' stored in the upper triangle of wt.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-info~6"></span>
+              <span class="anchor" id="variable-info~7"></span>
               integer
             </td>
 <td></td>
@@ -593,8 +592,13 @@ implementation in a submodule of an interface in a parent module.
     <div class="highlight"><pre><span></span><span class="w">      </span><span class="k">subroutine </span><span class="n">formt</span><span class="p">(</span><span class="n">m</span><span class="p">,</span><span class="n">Wt</span><span class="p">,</span><span class="n">Sy</span><span class="p">,</span><span class="n">Ss</span><span class="p">,</span><span class="n">Col</span><span class="p">,</span><span class="n">Theta</span><span class="p">,</span><span class="n">Info</span><span class="p">)</span><span class="w"></span>
 <span class="w">      </span><span class="k">implicit none</span>
 
-<span class="k">      </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">m</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">Col</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">Info</span><span class="w"></span>
-<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Theta</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">Wt</span><span class="p">(</span><span class="n">m</span><span class="p">,</span><span class="n">m</span><span class="p">)</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">Sy</span><span class="p">(</span><span class="n">m</span><span class="p">,</span><span class="n">m</span><span class="p">)</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">Ss</span><span class="p">(</span><span class="n">m</span><span class="p">,</span><span class="n">m</span><span class="p">)</span><span class="w"></span>
+<span class="k">      </span><span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">m</span><span class="w"></span>
+<span class="w">      </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Col</span><span class="w"></span>
+<span class="w">      </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Info</span><span class="w"></span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Theta</span><span class="w"></span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Wt</span><span class="p">(</span><span class="n">m</span><span class="p">,</span><span class="n">m</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Sy</span><span class="p">(</span><span class="n">m</span><span class="p">,</span><span class="n">m</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Ss</span><span class="p">(</span><span class="n">m</span><span class="p">,</span><span class="n">m</span><span class="p">)</span><span class="w"></span>
 
 <span class="w">      </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">k1</span><span class="w"></span>
 <span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">ddum</span><span class="w"></span>

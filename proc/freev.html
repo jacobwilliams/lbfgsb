@@ -92,7 +92,7 @@
           <li id="statements"><i class="fa fa-list-ol"></i>
             <a data-toggle="tooltip"
                data-placement="bottom" data-html="true"
-               title=" 2.2% of total for procedures.">40 statements</a>
+               title=" 2.6% of total for procedures.">50 statements</a>
           </li>
 
             <li id="source-file">
@@ -157,31 +157,16 @@
     
 
     <p>This subroutine counts the entering and leaving variables when
-iter &gt; 0, and finds the index set of free and active variables
-at the GCP.</p>
-<p>cnstnd is a logical variable indicating whether bounds are present</p>
-<p>index is an integer array of dimension n
-     for i=1,...,nfree, index(i) are the indices of free variables
-     for i=nfree+1,...,n, index(i) are the indices of bound variables
-     On entry after the first iteration, index gives
-       the free variables at the previous iteration.
-     On exit it gives the free variables based on the determination
-       in cauchy using the array iwhere.</p>
-<p>indx2 is an integer array of dimension n
-     On entry indx2 is unspecified.
-     On exit with iter&gt;0, indx2 indicates which variables
-        have changed status since the previous iteration.
-     For i= 1,...,nenter, indx2(i) have changed from bound to free.
-     For i= ileave+1,...,n, indx2(i) have changed from free to bound.</p>
-<div class="codehilite"><pre><span></span><code>                     *  *  *
-</code></pre></div>
-
-<p>NEOS, November 1994. (Latest revision June 1996.)
-   Optimization Technology Center.
-   Argonne National Laboratory and Northwestern University.
-   Written by
-                      Ciyou Zhu
-   in collaboration with R.H. Byrd, P. Lu-Chen and J. Nocedal.</p>
+  iter &gt; 0, and finds the index set of free and active variables
+  at the GCP.</p>
+<h3>Credits</h3>
+<ul>
+<li>NEOS, November 1994. (Latest revision June 1996.)
+    Optimization Technology Center.
+    Argonne National Laboratory and Northwestern University.
+    Written by Ciyou Zhu
+    in collaboration with R.H. Byrd, P. Lu-Chen and J. Nocedal.</li>
+</ul>
 
 
     <h3>Arguments</h3>
@@ -197,10 +182,10 @@ at the GCP.</p>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-n~8"></span>
-              integer
+              <span class="anchor" id="variable-n~10"></span>
+              integer,
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
@@ -213,9 +198,9 @@ at the GCP.</p>
         <tr>
             <td>
               <span class="anchor" id="variable-nfree~2"></span>
-              integer
+              integer,
             </td>
-<td></td>
+<td>intent(inout)</td>
               <td></td>            <td>
               
             </td>
@@ -227,25 +212,36 @@ at the GCP.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-index~3"></span>
-              integer
+              <span class="anchor" id="variable-index"></span>
+              integer,
             </td>
-<td></td>
+<td>intent(inout)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>Index</strong>(n)</td>
             <td>
-                
+                <ul>
+<li>for i=1,...,nfree, index(i) are the indices of free variables</li>
+<li>
+<p>for i=nfree+1,...,n, index(i) are the indices of bound variables</p>
+</li>
+<li>
+<p>On entry after the first iteration, index gives
+  the free variables at the previous iteration.</p>
+</li>
+<li>On exit it gives the free variables based on the determination
+  in cauchy using the array iwhere.</li>
+</ul>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" id="variable-nenter~2"></span>
-              integer
+              integer,
             </td>
-<td></td>
+<td>intent(out)</td>
               <td></td>            <td>
               
             </td>
@@ -258,9 +254,9 @@ at the GCP.</p>
         <tr>
             <td>
               <span class="anchor" id="variable-ileave~2"></span>
-              integer
+              integer,
             </td>
-<td></td>
+<td>intent(out)</td>
               <td></td>            <td>
               
             </td>
@@ -272,25 +268,35 @@ at the GCP.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-indx2~3"></span>
-              integer
+              <span class="anchor" id="variable-indx2~2"></span>
+              integer,
             </td>
-<td></td>
+<td>intent(inout)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>Indx2</strong>(n)</td>
             <td>
-                
+                <ul>
+<li>On entry indx2 is unspecified.</li>
+<li>
+<p>On exit with iter&gt;0, indx2 indicates which variables
+   have changed status since the previous iteration.</p>
+</li>
+<li>
+<p>For i= 1,...,nenter, indx2(i) have changed from bound to free.</p>
+</li>
+<li>For i= ileave+1,...,n, indx2(i) have changed from free to bound.</li>
+</ul>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" id="variable-iwhere~4"></span>
-              integer
+              integer,
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
@@ -303,9 +309,9 @@ at the GCP.</p>
         <tr>
             <td>
               <span class="anchor" id="variable-wrk"></span>
-              logical
+              logical,
             </td>
-<td></td>
+<td>intent(out)</td>
               <td></td>            <td>
               
             </td>
@@ -318,9 +324,9 @@ at the GCP.</p>
         <tr>
             <td>
               <span class="anchor" id="variable-updatd~2"></span>
-              logical
+              logical,
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
@@ -332,25 +338,25 @@ at the GCP.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-cnstnd~3"></span>
-              logical
+              <span class="anchor" id="variable-cnstnd"></span>
+              logical,
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>Cnstnd</strong></td>
             <td>
-                
+                <p>indicating whether bounds are present</p>
             </td>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-iprint~5"></span>
-              integer
+              <span class="anchor" id="variable-iprint~6"></span>
+              integer,
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
@@ -363,9 +369,9 @@ at the GCP.</p>
         <tr>
             <td>
               <span class="anchor" id="variable-iter"></span>
-              integer
+              integer,
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
@@ -555,9 +561,29 @@ implementation in a submodule of an interface in a parent module.
 <span class="w">                       </span><span class="n">Updatd</span><span class="p">,</span><span class="n">Cnstnd</span><span class="p">,</span><span class="n">Iprint</span><span class="p">,</span><span class="n">Iter</span><span class="p">)</span><span class="w"></span>
 <span class="w">      </span><span class="k">implicit none</span>
 
-<span class="k">      </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">Nfree</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">Nenter</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">Ileave</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">Iprint</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">Iter</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="nb">Index</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span><span class="w"></span>
-<span class="w">                 </span><span class="n">Indx2</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">Iwhere</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"></span>
-<span class="w">      </span><span class="kt">logical</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Wrk</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">Updatd</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">Cnstnd</span><span class="w"></span>
+<span class="k">      </span><span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">n</span><span class="w"></span>
+<span class="w">      </span><span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Nfree</span><span class="w"></span>
+<span class="w">      </span><span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Nenter</span><span class="w"></span>
+<span class="w">      </span><span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Ileave</span><span class="w"></span>
+<span class="w">      </span><span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Iprint</span><span class="w"></span>
+<span class="w">      </span><span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Iter</span><span class="w"></span>
+<span class="w">      </span><span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="nb">Index</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="c">!! * for i=1,...,nfree, index(i) are the indices of free variables</span>
+<span class="w">                                        </span><span class="c">!! * for i=nfree+1,...,n, index(i) are the indices of bound variables</span>
+<span class="w">                                        </span><span class="c">!!</span>
+<span class="w">                                        </span><span class="c">!! * On entry after the first iteration, index gives</span>
+<span class="w">                                        </span><span class="c">!!   the free variables at the previous iteration.</span>
+<span class="w">                                        </span><span class="c">!! * On exit it gives the free variables based on the determination</span>
+<span class="w">                                        </span><span class="c">!!   in cauchy using the array iwhere.</span>
+<span class="w">      </span><span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Indx2</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="c">!! * On entry indx2 is unspecified.</span>
+<span class="w">                                        </span><span class="c">!! * On exit with iter&gt;0, indx2 indicates which variables</span>
+<span class="w">                                        </span><span class="c">!!    have changed status since the previous iteration.</span>
+<span class="w">                                        </span><span class="c">!!</span>
+<span class="w">                                        </span><span class="c">!! * For i= 1,...,nenter, indx2(i) have changed from bound to free.</span>
+<span class="w">                                        </span><span class="c">!! * For i= ileave+1,...,n, indx2(i) have changed from free to bound.</span>
+<span class="w">      </span><span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Iwhere</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="kt">logical</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Wrk</span><span class="w"></span>
+<span class="w">      </span><span class="kt">logical</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Updatd</span><span class="w"></span>
+<span class="w">      </span><span class="kt">logical</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Cnstnd</span><span class="w"> </span><span class="c">!! indicating whether bounds are present</span>
 
 <span class="w">      </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">iact</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">k</span><span class="w"></span>
 

@@ -92,7 +92,7 @@
           <li id="statements"><i class="fa fa-list-ol"></i>
             <a data-toggle="tooltip"
                data-placement="bottom" data-html="true"
-               title="86.6% of total for modules and submodules.">1628 statements</a>
+               title="87.1% of total for modules and submodules.">1689 statements</a>
           </li>
 
             <li id="source-file">
@@ -231,9 +231,9 @@
       <ul class="list-group">
           <li class="list-group-item">
             <ul class="list-inline">
-                <li><a href='../module/lbfgsb_linpack_module.html'>lbfgsb_linpack_module</a></li>
                 <li><a href='../module/lbfgsb_blas_module.html'>lbfgsb_blas_module</a></li>
                 <li><a href='../module/lbfgsb_kinds_module.html'>lbfgsb_kinds_module</a></li>
+                <li><a href='../module/lbfgsb_linpack_module.html'>lbfgsb_linpack_module</a></li>
             </ul>
           </li>
           <li class="list-group-item">
@@ -2188,7 +2188,7 @@ minimizer of the quadratic</p><a href="../proc/cauchy.html" class="pull-right"><
     <div class="panel-body">
           
   <p>This subroutine computes r=-Z'B(xcp-xk)-Z'g by using
-wa(2m+1)=W'(xcp-x) from subroutine cauchy.</p><a href="../proc/cmprlb.html" class="pull-right"><emph>Read more&hellip;</emph></a>
+  wa(2m+1)=W'(xcp-x) from subroutine cauchy.</p><a href="../proc/cmprlb.html" class="pull-right"><emph>Read more&hellip;</emph></a>
 
   <h4>Arguments</h4>
       <table class="table table-striped varlist">
@@ -2499,9 +2499,9 @@ wa(2m+1)=W'(xcp-x) from subroutine cauchy.</p><a href="../proc/cmprlb.html" clas
         <tr>
             <td>
               <span class="anchor" ></span>
-              integer
+              integer,
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
@@ -2514,9 +2514,9 @@ wa(2m+1)=W'(xcp-x) from subroutine cauchy.</p><a href="../proc/cmprlb.html" clas
         <tr>
             <td>
               <span class="anchor" ></span>
-              integer
+              integer,
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
@@ -2529,9 +2529,9 @@ wa(2m+1)=W'(xcp-x) from subroutine cauchy.</p><a href="../proc/cmprlb.html" clas
         <tr>
             <td>
               <span class="anchor" ></span>
-              real(kind=wp)
+              real(kind=wp),
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
@@ -2544,9 +2544,9 @@ wa(2m+1)=W'(xcp-x) from subroutine cauchy.</p><a href="../proc/cmprlb.html" clas
         <tr>
             <td>
               <span class="anchor" ></span>
-              real(kind=wp)
+              real(kind=wp),
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
@@ -2559,9 +2559,9 @@ wa(2m+1)=W'(xcp-x) from subroutine cauchy.</p><a href="../proc/cmprlb.html" clas
         <tr>
             <td>
               <span class="anchor" ></span>
-              real(kind=wp)
+              real(kind=wp),
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
@@ -2574,9 +2574,9 @@ wa(2m+1)=W'(xcp-x) from subroutine cauchy.</p><a href="../proc/cmprlb.html" clas
         <tr>
             <td>
               <span class="anchor" ></span>
-              integer
+              integer,
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
@@ -2604,9 +2604,9 @@ wa(2m+1)=W'(xcp-x) from subroutine cauchy.</p><a href="../proc/cmprlb.html" clas
         <tr>
             <td>
               <span class="anchor" ></span>
-              integer
+              integer,
             </td>
-<td></td>
+<td>intent(inout)</td>
               <td></td>            <td>
               
             </td>
@@ -2619,9 +2619,9 @@ wa(2m+1)=W'(xcp-x) from subroutine cauchy.</p><a href="../proc/cmprlb.html" clas
         <tr>
             <td>
               <span class="anchor" ></span>
-              integer
+              integer,
             </td>
-<td></td>
+<td>intent(out)</td>
               <td></td>            <td>
               
             </td>
@@ -2643,7 +2643,7 @@ wa(2m+1)=W'(xcp-x) from subroutine cauchy.</p><a href="../proc/cmprlb.html" clas
 </h3></div>
     <div class="panel-body">
           
-  <p>This subroutine forms the LEL^T factorization of the indefinite</p><a href="../proc/formk.html" class="pull-right"><emph>Read more&hellip;</emph></a>
+  <p>This subroutine forms the <code>LEL^T</code> factorization of the indefinite</p><a href="../proc/formk.html" class="pull-right"><emph>Read more&hellip;</emph></a>
 
   <h4>Arguments</h4>
       <table class="table table-striped varlist">
@@ -2659,121 +2659,123 @@ wa(2m+1)=W'(xcp-x) from subroutine cauchy.</p><a href="../proc/cmprlb.html" clas
         <tr>
             <td>
               <span class="anchor" ></span>
-              integer
+              integer,
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>n</strong></td>
             <td>
-
+<p>the dimension of the problem.</p>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" ></span>
-              integer
+              integer,
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>Nsub</strong></td>
             <td>
-
+<p>the number of subspace variables in free set.</p>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" ></span>
-              integer
+              integer,
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>Ind</strong>(n)</td>
             <td>
-
+<p>specifies the indices of subspace variables.</p>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" ></span>
-              integer
+              integer,
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>Nenter</strong></td>
             <td>
-
+<p>the number of variables entering the free set.</p>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" ></span>
-              integer
+              integer,
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>Ileave</strong></td>
             <td>
-
+<p><code>indx2(ileave),...,indx2(n)</code> are the variables leaving the free set.</p>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" ></span>
-              integer
+              integer,
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>Indx2</strong>(n)</td>
             <td>
-
+<p>On entry indx2(1),...,indx2(nenter) are the variables entering
+the free set, while indx2(ileave),...,indx2(n) are the
+variables leaving the free set.</p>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" ></span>
-              integer
+              integer,
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>Iupdat</strong></td>
             <td>
-
+<p>the total number of BFGS updates made so far.</p>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" ></span>
-              logical
+              logical,
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>Updatd</strong></td>
             <td>
-
+<p>true if the L-BFGS matrix is updatd.</p>
             </td>
         </tr>
         <tr>
@@ -2788,7 +2790,8 @@ wa(2m+1)=W'(xcp-x) from subroutine cauchy.</p><a href="../proc/cmprlb.html" clas
             <td>::</td>
             <td><strong>Wn</strong>(2*m,2*m)</td>
             <td>
-
+<p>On exit the upper triangle of wn stores the LEL^T factorization
+ of the 2<em>col x 2</em>col indefinite matrix</p><a href="../proc/formk.html#variable-wn" class="pull-right"><emph>Read more&hellip;</emph></a>
             </td>
         </tr>
         <tr>
@@ -2803,127 +2806,128 @@ wa(2m+1)=W'(xcp-x) from subroutine cauchy.</p><a href="../proc/cmprlb.html" clas
             <td>::</td>
             <td><strong>Wn1</strong>(2*m,2*m)</td>
             <td>
-
+<p>On entry wn1 stores the lower triangular part of</p><a href="../proc/formk.html#variable-wn1" class="pull-right"><emph>Read more&hellip;</emph></a>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" ></span>
-              integer
+              integer,
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>m</strong></td>
             <td>
-
+<p>the maximum number of variable metric corrections
+used to define the limited memory matrix.</p>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" ></span>
-              real(kind=wp)
+              real(kind=wp),
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>Ws</strong>(n,m)</td>
             <td>
-
+<p>information defining the limited memory BFGS matrix: ws(n,m) stores S, a set of s-vectors</p>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" ></span>
-              real(kind=wp)
+              real(kind=wp),
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>Wy</strong>(n,m)</td>
             <td>
-
+<p>information defining the limited memory BFGS matrix: wy(n,m) stores Y, a set of y-vectors</p>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" ></span>
-              real(kind=wp)
+              real(kind=wp),
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>Sy</strong>(m,m)</td>
             <td>
-
+<p>information defining the limited memory BFGS matrix: sy(m,m) stores S'Y</p>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" ></span>
-              real(kind=wp)
+              real(kind=wp),
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>Theta</strong></td>
             <td>
-
+<p>information defining the limited memory BFGS matrix: the scaling factor specifying B_0 = theta I</p>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" ></span>
-              integer
+              integer,
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>Col</strong></td>
             <td>
-
+<p>information defining the limited memory BFGS matrix: the number of variable metric corrections stored</p>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" ></span>
-              integer
+              integer,
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>Head</strong></td>
             <td>
-
+<p>information defining the limited memory BFGS matrix: the location of the 1st s- (or y-) vector in S (or Y)</p>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" ></span>
-              integer
+              integer,
             </td>
-<td></td>
+<td>intent(out)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>Info</strong></td>
             <td>
-
+<p>On exit:</p><a href="../proc/formk.html#variable-info" class="pull-right"><emph>Read more&hellip;</emph></a>
             </td>
         </tr>
     </tbody>
@@ -2939,9 +2943,9 @@ wa(2m+1)=W'(xcp-x) from subroutine cauchy.</p><a href="../proc/cmprlb.html" clas
     <div class="panel-body">
           
   <p>This subroutine forms the upper half of the pos. def. and symm.
-T = theta<em>SS + L</em>D^(-1)<em>L', stores T in the upper triangle
-of the array wt, and performs the Cholesky factorization of T
-to produce J</em>J', with J' stored in the upper triangle of wt.</p><a href="../proc/formt.html" class="pull-right"><emph>Read more&hellip;</emph></a>
+  T = theta<em>SS + L</em>D^(-1)<em>L', stores T in the upper triangle
+  of the array wt, and performs the Cholesky factorization of T
+  to produce J</em>J', with J' stored in the upper triangle of wt.</p><a href="../proc/formt.html" class="pull-right"><emph>Read more&hellip;</emph></a>
 
   <h4>Arguments</h4>
       <table class="table table-striped varlist">
@@ -2957,9 +2961,9 @@ to produce J</em>J', with J' stored in the upper triangle of wt.</p><a href="../
         <tr>
             <td>
               <span class="anchor" ></span>
-              integer
+              integer,
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
@@ -3032,9 +3036,9 @@ to produce J</em>J', with J' stored in the upper triangle of wt.</p><a href="../
         <tr>
             <td>
               <span class="anchor" ></span>
-              real(kind=wp)
+              real(kind=wp),
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
@@ -3072,8 +3076,8 @@ to produce J</em>J', with J' stored in the upper triangle of wt.</p><a href="../
     <div class="panel-body">
           
   <p>This subroutine counts the entering and leaving variables when
-iter &gt; 0, and finds the index set of free and active variables
-at the GCP.</p><a href="../proc/freev.html" class="pull-right"><emph>Read more&hellip;</emph></a>
+  iter &gt; 0, and finds the index set of free and active variables
+  at the GCP.</p><a href="../proc/freev.html" class="pull-right"><emph>Read more&hellip;</emph></a>
 
   <h4>Arguments</h4>
       <table class="table table-striped varlist">
@@ -3089,9 +3093,9 @@ at the GCP.</p><a href="../proc/freev.html" class="pull-right"><emph>Read more&h
         <tr>
             <td>
               <span class="anchor" ></span>
-              integer
+              integer,
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
@@ -3104,9 +3108,9 @@ at the GCP.</p><a href="../proc/freev.html" class="pull-right"><emph>Read more&h
         <tr>
             <td>
               <span class="anchor" ></span>
-              integer
+              integer,
             </td>
-<td></td>
+<td>intent(inout)</td>
               <td></td>            <td>
               
             </td>
@@ -3119,24 +3123,24 @@ at the GCP.</p><a href="../proc/freev.html" class="pull-right"><emph>Read more&h
         <tr>
             <td>
               <span class="anchor" ></span>
-              integer
+              integer,
             </td>
-<td></td>
+<td>intent(inout)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>Index</strong>(n)</td>
             <td>
-
+<p>for i=nfree+1,...,n, index(i) are the indices of bound variables</p><a href="../proc/freev.html#variable-index" class="pull-right"><emph>Read more&hellip;</emph></a>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" ></span>
-              integer
+              integer,
             </td>
-<td></td>
+<td>intent(out)</td>
               <td></td>            <td>
               
             </td>
@@ -3149,9 +3153,9 @@ at the GCP.</p><a href="../proc/freev.html" class="pull-right"><emph>Read more&h
         <tr>
             <td>
               <span class="anchor" ></span>
-              integer
+              integer,
             </td>
-<td></td>
+<td>intent(out)</td>
               <td></td>            <td>
               
             </td>
@@ -3164,24 +3168,25 @@ at the GCP.</p><a href="../proc/freev.html" class="pull-right"><emph>Read more&h
         <tr>
             <td>
               <span class="anchor" ></span>
-              integer
+              integer,
             </td>
-<td></td>
+<td>intent(inout)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>Indx2</strong>(n)</td>
             <td>
-
+<p>On exit with iter&gt;0, indx2 indicates which variables
+   have changed status since the previous iteration.</p><a href="../proc/freev.html#variable-indx2~2" class="pull-right"><emph>Read more&hellip;</emph></a>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" ></span>
-              integer
+              integer,
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
@@ -3194,9 +3199,9 @@ at the GCP.</p><a href="../proc/freev.html" class="pull-right"><emph>Read more&h
         <tr>
             <td>
               <span class="anchor" ></span>
-              logical
+              logical,
             </td>
-<td></td>
+<td>intent(out)</td>
               <td></td>            <td>
               
             </td>
@@ -3209,9 +3214,9 @@ at the GCP.</p><a href="../proc/freev.html" class="pull-right"><emph>Read more&h
         <tr>
             <td>
               <span class="anchor" ></span>
-              logical
+              logical,
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
@@ -3224,24 +3229,24 @@ at the GCP.</p><a href="../proc/freev.html" class="pull-right"><emph>Read more&h
         <tr>
             <td>
               <span class="anchor" ></span>
-              logical
+              logical,
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>Cnstnd</strong></td>
             <td>
-
+<p>indicating whether bounds are present</p>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" ></span>
-              integer
+              integer,
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
@@ -3254,9 +3259,9 @@ at the GCP.</p><a href="../proc/freev.html" class="pull-right"><emph>Read more&h
         <tr>
             <td>
               <span class="anchor" ></span>
-              integer
+              integer,
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
@@ -3279,7 +3284,7 @@ at the GCP.</p><a href="../proc/freev.html" class="pull-right"><emph>Read more&h
     <div class="panel-body">
           
   <p>This subroutine sorts out the least element of t, and puts the
-remaining elements of t in a heap.</p><a href="../proc/hpsolb.html" class="pull-right"><emph>Read more&hellip;</emph></a>
+  remaining elements of t in a heap.</p><a href="../proc/hpsolb.html" class="pull-right"><emph>Read more&hellip;</emph></a>
 
   <h4>Arguments</h4>
       <table class="table table-striped varlist">
@@ -3295,61 +3300,66 @@ remaining elements of t in a heap.</p><a href="../proc/hpsolb.html" class="pull-
         <tr>
             <td>
               <span class="anchor" ></span>
-              integer
+              integer,
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>n</strong></td>
             <td>
-
+<p>the dimension of the arrays t and iorder.</p>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" ></span>
-              real(kind=wp)
+              real(kind=wp),
             </td>
-<td></td>
+<td>intent(inout)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>t</strong>(n)</td>
             <td>
-
+<p>On entry t stores the elements to be sorted,
+On exit t(n) stores the least elements of t, and t(1) to t(n-1)
+stores the remaining elements in the form of a heap.</p>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" ></span>
-              integer
+              integer,
             </td>
-<td></td>
+<td>intent(inout)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>Iorder</strong>(n)</td>
             <td>
-
+<p>On entry iorder(i) is the index of t(i).
+On exit iorder(i) is still the index of t(i), but iorder may be
+permuted in accordance with t.</p>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" ></span>
-              integer
+              integer,
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>Iheap</strong></td>
             <td>
-
+<p><code>iheap == 0</code> if t(1) to t(n) is not in the form of a heap,
+<code>iheap /= 0</code> if otherwise.</p>
             </td>
         </tr>
     </tbody>
@@ -3365,8 +3375,8 @@ remaining elements of t in a heap.</p><a href="../proc/hpsolb.html" class="pull-
     <div class="panel-body">
           
   <p>This subroutine calls subroutine dcsrch from the Minpack2 library
-to perform the line search.  Subroutine dscrch is safeguarded so
-that all trial points lie within the feasible region.</p><a href="../proc/lnsrlb.html" class="pull-right"><emph>Read more&hellip;</emph></a>
+  to perform the line search.  Subroutine dscrch is safeguarded so
+  that all trial points lie within the feasible region.</p><a href="../proc/lnsrlb.html" class="pull-right"><emph>Read more&hellip;</emph></a>
 
   <h4>Arguments</h4>
       <table class="table table-striped varlist">
@@ -3842,7 +3852,7 @@ that all trial points lie within the feasible region.</p><a href="../proc/lnsrlb
     <div class="panel-body">
           
   <p>This subroutine updates matrices WS and WY, and forms the
-middle matrix in B.</p><a href="../proc/matupd.html" class="pull-right"><emph>Read more&hellip;</emph></a>
+  middle matrix in B.</p><a href="../proc/matupd.html" class="pull-right"><emph>Read more&hellip;</emph></a>
 
   <h4>Arguments</h4>
       <table class="table table-striped varlist">
@@ -4123,8 +4133,8 @@ middle matrix in B.</p><a href="../proc/matupd.html" class="pull-right"><emph>Re
     <div class="panel-body">
           
   <p>This subroutine prints the input data, initial point, upper and
-lower bounds of each variable, machine precision, as well as
-the headings of the output.</p><a href="../proc/prn1lb.html" class="pull-right"><emph>Read more&hellip;</emph></a>
+  lower bounds of each variable, machine precision, as well as
+  the headings of the output.</p><a href="../proc/prn1lb.html" class="pull-right"><emph>Read more&hellip;</emph></a>
 
   <h4>Arguments</h4>
       <table class="table table-striped varlist">
@@ -4270,7 +4280,7 @@ the headings of the output.</p><a href="../proc/prn1lb.html" class="pull-right">
     <div class="panel-body">
           
   <p>This subroutine prints out new information after a successful
-line search.</p><a href="../proc/prn2lb.html" class="pull-right"><emph>Read more&hellip;</emph></a>
+  line search.</p><a href="../proc/prn2lb.html" class="pull-right"><emph>Read more&hellip;</emph></a>
 
   <h4>Arguments</h4>
       <table class="table table-striped varlist">
@@ -4536,8 +4546,8 @@ line search.</p><a href="../proc/prn2lb.html" class="pull-right"><emph>Read more
     <div class="panel-body">
           
   <p>This subroutine prints out information when either a built-in
-convergence test is satisfied or when an error message is
-generated.</p><a href="../proc/prn3lb.html" class="pull-right"><emph>Read more&hellip;</emph></a>
+  convergence test is satisfied or when an error message is
+  generated.</p><a href="../proc/prn3lb.html" class="pull-right"><emph>Read more&hellip;</emph></a>
 
   <h4>Arguments</h4>
       <table class="table table-striped varlist">
@@ -4908,7 +4918,7 @@ generated.</p><a href="../proc/prn3lb.html" class="pull-right"><emph>Read more&h
     <div class="panel-body">
           
   <p>This subroutine computes the infinity norm of the projected
-gradient.</p><a href="../proc/projgr.html" class="pull-right"><emph>Read more&hellip;</emph></a>
+  gradient.</p><a href="../proc/projgr.html" class="pull-right"><emph>Read more&hellip;</emph></a>
 
   <h4>Arguments</h4>
       <table class="table table-striped varlist">
@@ -4924,9 +4934,9 @@ gradient.</p><a href="../proc/projgr.html" class="pull-right"><emph>Read more&he
         <tr>
             <td>
               <span class="anchor" ></span>
-              integer
+              integer,
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
@@ -5055,136 +5065,141 @@ gradient.</p><a href="../proc/projgr.html" class="pull-right"><emph>Read more&he
         <tr>
             <td>
               <span class="anchor" ></span>
-              integer
+              integer,
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>n</strong></td>
             <td>
-
+<p>the dimension of the problem</p>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" ></span>
-              integer
+              integer,
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>m</strong></td>
             <td>
-
+<p>the maximum number of variable metric corrections
+used to define the limited memory matrix.</p>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" ></span>
-              integer
+              integer,
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>Nsub</strong></td>
             <td>
-
+<p>the number of free variables</p>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" ></span>
-              integer
+              integer,
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>Ind</strong>(Nsub)</td>
             <td>
-
+<p>specifies the coordinate indices of free variables.</p>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" ></span>
-              real(kind=wp)
+              real(kind=wp),
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>l</strong>(n)</td>
             <td>
-
+<p>the lower bound of x.</p>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" ></span>
-              real(kind=wp)
+              real(kind=wp),
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>u</strong>(n)</td>
             <td>
-
+<p>the upper bound of x</p>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" ></span>
-              integer
+              integer,
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>Nbd</strong>(n)</td>
             <td>
-
+<p>represents the type of bounds imposed on the
+variables, and must be specified as follows:</p><a href="../proc/subsm.html#variable-nbd~2" class="pull-right"><emph>Read more&hellip;</emph></a>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" ></span>
-              real(kind=wp)
+              real(kind=wp),
             </td>
-<td></td>
+<td>intent(inout)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>x</strong>(n)</td>
             <td>
-
+<p>On entry x specifies the Cauchy point xcp.
+On exit x(i) is the minimizer of Q over the subspace of
+free variables.</p>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" ></span>
-              real(kind=wp)
+              real(kind=wp),
             </td>
-<td></td>
+<td>intent(inout)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>d</strong>(n)</td>
             <td>
-
+<p>On entry d is the reduced gradient of Q at xcp.
+On exit d is the Newton direction of Q.</p>
             </td>
         </tr>
         <tr>
@@ -5199,127 +5214,131 @@ gradient.</p><a href="../proc/projgr.html" class="pull-right"><emph>Read more&he
             <td>::</td>
             <td><strong>Xp</strong>(n)</td>
             <td>
-
+<p>used to safeguard the projected Newton direction</p>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" ></span>
-              real(kind=wp)
+              real(kind=wp),
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>Ws</strong>(n,m)</td>
             <td>
-
+<p>variable that stores the information defining the limited memory BFGS matrix:
+ws(n,m) stores S, a set of s-vectors</p>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" ></span>
-              real(kind=wp)
+              real(kind=wp),
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>Wy</strong>(n,m)</td>
             <td>
-
+<p>variable that stores the information defining the limited memory BFGS matrix:</p>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" ></span>
-              real(kind=wp)
+              real(kind=wp),
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>Theta</strong></td>
             <td>
-
+<p>variable that stores the information defining the limited memory BFGS matrix:
+theta is the scaling factor specifying B_0 = theta I</p>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" ></span>
-              real(kind=wp)
+              real(kind=wp),
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>Xx</strong>(n)</td>
             <td>
-
+<p>the current iterate</p>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" ></span>
-              real(kind=wp)
+              real(kind=wp),
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>Gg</strong>(n)</td>
             <td>
-
+<p>the gradient at the current iterate</p>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" ></span>
-              integer
+              integer,
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>Col</strong></td>
             <td>
-
+<p>variable that stores the information defining the limited memory BFGS matrix:
+col is the number of variable metric corrections stored</p>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" ></span>
-              integer
+              integer,
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>Head</strong></td>
             <td>
-
+<p>variable that stores the information defining the limited memory BFGS matrix:
+head is the location of the 1st s- (or y-) vector in S (or Y)</p>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" ></span>
-              integer
+              integer,
             </td>
-<td></td>
+<td>intent(out)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>Iword</strong></td>
             <td>
-
+<p>On exit iword specifies the status of the subspace solution:</p><a href="../proc/subsm.html#variable-iword" class="pull-right"><emph>Read more&hellip;</emph></a>
             </td>
         </tr>
         <tr>
@@ -5334,52 +5353,53 @@ gradient.</p><a href="../proc/projgr.html" class="pull-right"><emph>Read more&he
             <td>::</td>
             <td><strong>Wv</strong>(2*m)</td>
             <td>
-
+<p>a real(wp) working array of dimension 2m</p>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" ></span>
-              real(kind=wp)
+              real(kind=wp),
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>Wn</strong>(2*m,2*m)</td>
             <td>
-
+<p>The upper triangle of wn stores the LEL^T factorization
+ of the indefinite matrix</p><a href="../proc/subsm.html#variable-wn~2" class="pull-right"><emph>Read more&hellip;</emph></a>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" ></span>
-              integer
+              integer,
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>Iprint</strong></td>
             <td>
-
+<p>If iprint &gt;= 99, some minimum debug printing is done.</p>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" ></span>
-              integer
+              integer,
             </td>
-<td></td>
+<td>intent(out)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>Info</strong></td>
             <td>
-
+<p>On exit:</p><a href="../proc/subsm.html#variable-info~2" class="pull-right"><emph>Read more&hellip;</emph></a>
             </td>
         </tr>
     </tbody>

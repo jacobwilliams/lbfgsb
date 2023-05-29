@@ -97,7 +97,7 @@ scalars head, col, and theta, this subroutine computes the
 generalized Cauchy point (GCP), defined as the first local
 minimizer of the quadratic</p><a href="../proc/cauchy.html" class="pull-right"><emph>Read more&hellip;</emph></a></td></tr>
 			   <tr><td><a href='../proc/cmprlb.html'>cmprlb</a></td><td><a href='../module/lbfgsb_module.html'>lbfgsb_module</a></td><td>Subroutine</td><td><p>This subroutine computes r=-Z'B(xcp-xk)-Z'g by using
-wa(2m+1)=W'(xcp-x) from subroutine cauchy.</p><a href="../proc/cmprlb.html" class="pull-right"><emph>Read more&hellip;</emph></a></td></tr>
+  wa(2m+1)=W'(xcp-x) from subroutine cauchy.</p><a href="../proc/cmprlb.html" class="pull-right"><emph>Read more&hellip;</emph></a></td></tr>
 			   <tr><td><a href='../proc/daxpy.html'>daxpy</a></td><td><a href='../module/lbfgsb_blas_module.html'>lbfgsb_blas_module</a></td><td>Subroutine</td><td><p>constant times a vector plus a vector.
   uses unrolled loops for increments equal to one.</p><a href="../proc/daxpy.html" class="pull-right"><emph>Read more&hellip;</emph></a></td></tr>
 			   <tr><td><a href='../proc/dcopy.html'>dcopy</a></td><td><a href='../module/lbfgsb_blas_module.html'>lbfgsb_blas_module</a></td><td>Subroutine</td><td><p>copies a vector, x, to a vector, y.
@@ -115,33 +115,33 @@ matrix.</p><a href="../proc/dpofa.html" class="pull-right"><emph>Read more&helli
   uses unrolled loops for increment equal to one.</p><a href="../proc/dscal.html" class="pull-right"><emph>Read more&hellip;</emph></a></td></tr>
 			   <tr><td><a href='../proc/dtrsl.html'>dtrsl</a></td><td><a href='../module/lbfgsb_linpack_module.html'>lbfgsb_linpack_module</a></td><td>Subroutine</td><td><p>dtrsl solves systems of the form</p><a href="../proc/dtrsl.html" class="pull-right"><emph>Read more&hellip;</emph></a></td></tr>
 			   <tr><td><a href='../proc/errclb.html'>errclb</a></td><td><a href='../module/lbfgsb_module.html'>lbfgsb_module</a></td><td>Subroutine</td><td><p>This subroutine checks the validity of the input data.</p><a href="../proc/errclb.html" class="pull-right"><emph>Read more&hellip;</emph></a></td></tr>
-			   <tr><td><a href='../proc/formk.html'>formk</a></td><td><a href='../module/lbfgsb_module.html'>lbfgsb_module</a></td><td>Subroutine</td><td><p>This subroutine forms the LEL^T factorization of the indefinite</p><a href="../proc/formk.html" class="pull-right"><emph>Read more&hellip;</emph></a></td></tr>
+			   <tr><td><a href='../proc/formk.html'>formk</a></td><td><a href='../module/lbfgsb_module.html'>lbfgsb_module</a></td><td>Subroutine</td><td><p>This subroutine forms the <code>LEL^T</code> factorization of the indefinite</p><a href="../proc/formk.html" class="pull-right"><emph>Read more&hellip;</emph></a></td></tr>
 			   <tr><td><a href='../proc/formt.html'>formt</a></td><td><a href='../module/lbfgsb_module.html'>lbfgsb_module</a></td><td>Subroutine</td><td><p>This subroutine forms the upper half of the pos. def. and symm.
-T = theta<em>SS + L</em>D^(-1)<em>L', stores T in the upper triangle
-of the array wt, and performs the Cholesky factorization of T
-to produce J</em>J', with J' stored in the upper triangle of wt.</p><a href="../proc/formt.html" class="pull-right"><emph>Read more&hellip;</emph></a></td></tr>
+  T = theta<em>SS + L</em>D^(-1)<em>L', stores T in the upper triangle
+  of the array wt, and performs the Cholesky factorization of T
+  to produce J</em>J', with J' stored in the upper triangle of wt.</p><a href="../proc/formt.html" class="pull-right"><emph>Read more&hellip;</emph></a></td></tr>
 			   <tr><td><a href='../proc/freev.html'>freev</a></td><td><a href='../module/lbfgsb_module.html'>lbfgsb_module</a></td><td>Subroutine</td><td><p>This subroutine counts the entering and leaving variables when
-iter &gt; 0, and finds the index set of free and active variables
-at the GCP.</p><a href="../proc/freev.html" class="pull-right"><emph>Read more&hellip;</emph></a></td></tr>
+  iter &gt; 0, and finds the index set of free and active variables
+  at the GCP.</p><a href="../proc/freev.html" class="pull-right"><emph>Read more&hellip;</emph></a></td></tr>
 			   <tr><td><a href='../proc/hpsolb.html'>hpsolb</a></td><td><a href='../module/lbfgsb_module.html'>lbfgsb_module</a></td><td>Subroutine</td><td><p>This subroutine sorts out the least element of t, and puts the
-remaining elements of t in a heap.</p><a href="../proc/hpsolb.html" class="pull-right"><emph>Read more&hellip;</emph></a></td></tr>
+  remaining elements of t in a heap.</p><a href="../proc/hpsolb.html" class="pull-right"><emph>Read more&hellip;</emph></a></td></tr>
 			   <tr><td><a href='../proc/lnsrlb.html'>lnsrlb</a></td><td><a href='../module/lbfgsb_module.html'>lbfgsb_module</a></td><td>Subroutine</td><td><p>This subroutine calls subroutine dcsrch from the Minpack2 library
-to perform the line search.  Subroutine dscrch is safeguarded so
-that all trial points lie within the feasible region.</p><a href="../proc/lnsrlb.html" class="pull-right"><emph>Read more&hellip;</emph></a></td></tr>
+  to perform the line search.  Subroutine dscrch is safeguarded so
+  that all trial points lie within the feasible region.</p><a href="../proc/lnsrlb.html" class="pull-right"><emph>Read more&hellip;</emph></a></td></tr>
 			   <tr><td><a href='../proc/mainlb.html'>mainlb</a></td><td><a href='../module/lbfgsb_module.html'>lbfgsb_module</a></td><td>Subroutine</td><td><p>This subroutine solves bound constrained optimization problems by
   using the compact formula of the limited memory BFGS updates.</p><a href="../proc/mainlb.html" class="pull-right"><emph>Read more&hellip;</emph></a></td></tr>
 			   <tr><td><a href='../proc/matupd.html'>matupd</a></td><td><a href='../module/lbfgsb_module.html'>lbfgsb_module</a></td><td>Subroutine</td><td><p>This subroutine updates matrices WS and WY, and forms the
-middle matrix in B.</p><a href="../proc/matupd.html" class="pull-right"><emph>Read more&hellip;</emph></a></td></tr>
+  middle matrix in B.</p><a href="../proc/matupd.html" class="pull-right"><emph>Read more&hellip;</emph></a></td></tr>
 			   <tr><td><a href='../proc/prn1lb.html'>prn1lb</a></td><td><a href='../module/lbfgsb_module.html'>lbfgsb_module</a></td><td>Subroutine</td><td><p>This subroutine prints the input data, initial point, upper and
-lower bounds of each variable, machine precision, as well as
-the headings of the output.</p><a href="../proc/prn1lb.html" class="pull-right"><emph>Read more&hellip;</emph></a></td></tr>
+  lower bounds of each variable, machine precision, as well as
+  the headings of the output.</p><a href="../proc/prn1lb.html" class="pull-right"><emph>Read more&hellip;</emph></a></td></tr>
 			   <tr><td><a href='../proc/prn2lb.html'>prn2lb</a></td><td><a href='../module/lbfgsb_module.html'>lbfgsb_module</a></td><td>Subroutine</td><td><p>This subroutine prints out new information after a successful
-line search.</p><a href="../proc/prn2lb.html" class="pull-right"><emph>Read more&hellip;</emph></a></td></tr>
+  line search.</p><a href="../proc/prn2lb.html" class="pull-right"><emph>Read more&hellip;</emph></a></td></tr>
 			   <tr><td><a href='../proc/prn3lb.html'>prn3lb</a></td><td><a href='../module/lbfgsb_module.html'>lbfgsb_module</a></td><td>Subroutine</td><td><p>This subroutine prints out information when either a built-in
-convergence test is satisfied or when an error message is
-generated.</p><a href="../proc/prn3lb.html" class="pull-right"><emph>Read more&hellip;</emph></a></td></tr>
+  convergence test is satisfied or when an error message is
+  generated.</p><a href="../proc/prn3lb.html" class="pull-right"><emph>Read more&hellip;</emph></a></td></tr>
 			   <tr><td><a href='../proc/projgr.html'>projgr</a></td><td><a href='../module/lbfgsb_module.html'>lbfgsb_module</a></td><td>Subroutine</td><td><p>This subroutine computes the infinity norm of the projected
-gradient.</p><a href="../proc/projgr.html" class="pull-right"><emph>Read more&hellip;</emph></a></td></tr>
+  gradient.</p><a href="../proc/projgr.html" class="pull-right"><emph>Read more&hellip;</emph></a></td></tr>
 			   <tr><td><a href='../proc/setulb.html'>setulb</a></td><td><a href='../module/lbfgsb_module.html'>lbfgsb_module</a></td><td>Subroutine</td><td><p>The main routine.</p><a href="../proc/setulb.html" class="pull-right"><emph>Read more&hellip;</emph></a></td></tr>
 			   <tr><td><a href='../proc/subsm.html'>subsm</a></td><td><a href='../module/lbfgsb_module.html'>lbfgsb_module</a></td><td>Subroutine</td><td><p>This routine contains the major changes in the updated version.
   The changes are described in the accompanying paper</p><a href="../proc/subsm.html" class="pull-right"><emph>Read more&hellip;</emph></a></td></tr>

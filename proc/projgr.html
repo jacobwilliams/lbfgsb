@@ -92,7 +92,7 @@
           <li id="statements"><i class="fa fa-list-ol"></i>
             <a data-toggle="tooltip"
                data-placement="bottom" data-html="true"
-               title=" 1.0% of total for procedures.">19 statements</a>
+               title=" 1.3% of total for procedures.">24 statements</a>
           </li>
 
             <li id="source-file">
@@ -157,16 +157,15 @@
     
 
     <p>This subroutine computes the infinity norm of the projected
-gradient.</p>
-<div class="codehilite"><pre><span></span><code>                     *  *  *
-</code></pre></div>
-
-<p>NEOS, November 1994. (Latest revision June 1996.)
-   Optimization Technology Center.
-   Argonne National Laboratory and Northwestern University.
-   Written by
-                      Ciyou Zhu
-   in collaboration with R.H. Byrd, P. Lu-Chen and J. Nocedal.</p>
+  gradient.</p>
+<h3>Credits</h3>
+<ul>
+<li>NEOS, November 1994. (Latest revision June 1996.)
+    Optimization Technology Center.
+    Argonne National Laboratory and Northwestern University.
+    Written by Ciyou Zhu
+    in collaboration with R.H. Byrd, P. Lu-Chen and J. Nocedal.</li>
+</ul>
 
 
     <h3>Arguments</h3>
@@ -182,10 +181,10 @@ gradient.</p>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-n~15"></span>
-              integer
+              <span class="anchor" id="variable-n~16"></span>
+              integer,
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
@@ -197,7 +196,7 @@ gradient.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-l~8"></span>
+              <span class="anchor" id="variable-l~9"></span>
               real(kind=wp)
             </td>
 <td></td>
@@ -212,7 +211,7 @@ gradient.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-u~8"></span>
+              <span class="anchor" id="variable-u~9"></span>
               real(kind=wp)
             </td>
 <td></td>
@@ -227,7 +226,7 @@ gradient.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-nbd~7"></span>
+              <span class="anchor" id="variable-nbd~8"></span>
               integer
             </td>
 <td></td>
@@ -242,7 +241,7 @@ gradient.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-x~10"></span>
+              <span class="anchor" id="variable-x~11"></span>
               real(kind=wp)
             </td>
 <td></td>
@@ -462,10 +461,16 @@ implementation in a submodule of an interface in a parent module.
     <section>
     <h2><span class="anchor" id="src"></span>Source Code</h2>
     <div class="highlight"><pre><span></span><span class="w">      </span><span class="k">subroutine </span><span class="n">projgr</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">l</span><span class="p">,</span><span class="n">u</span><span class="p">,</span><span class="n">Nbd</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">g</span><span class="p">,</span><span class="n">Sbgnrm</span><span class="p">)</span><span class="w"></span>
+
 <span class="w">      </span><span class="k">implicit none</span>
 
-<span class="k">      </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">Nbd</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"></span>
-<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Sbgnrm</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">l</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">u</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">g</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"></span>
+<span class="k">      </span><span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">n</span><span class="w"></span>
+<span class="w">      </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Nbd</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Sbgnrm</span><span class="w"></span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">x</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">l</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">u</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">g</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"></span>
 
 <span class="w">      </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">i</span><span class="w"></span>
 <span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">gi</span><span class="w"></span>

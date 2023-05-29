@@ -92,7 +92,7 @@
           <li id="statements"><i class="fa fa-list-ol"></i>
             <a data-toggle="tooltip"
                data-placement="bottom" data-html="true"
-               title=" 2.8% of total for procedures.">52 statements</a>
+               title=" 2.8% of total for procedures.">54 statements</a>
           </li>
 
             <li id="source-file">
@@ -157,34 +157,19 @@
     
 
     <p>This subroutine sorts out the least element of t, and puts the
-remaining elements of t in a heap.</p>
-<p>n is an integer variable.
-     On entry n is the dimension of the arrays t and iorder.
-     On exit n is unchanged.</p>
-<p>t is a real(wp) array of dimension n.
-     On entry t stores the elements to be sorted,
-     On exit t(n) stores the least elements of t, and t(1) to t(n-1)
-       stores the remaining elements in the form of a heap.</p>
-<p>iorder is an integer array of dimension n.
-     On entry iorder(i) is the index of t(i).
-     On exit iorder(i) is still the index of t(i), but iorder may be
-       permuted in accordance with t.</p>
-<p>iheap is an integer variable specifying the task.
-     On entry iheap should be set as follows:
-       iheap == 0 if t(1) to t(n) is not in the form of a heap,
-       iheap /= 0 if otherwise.
-     On exit iheap is unchanged.</p>
-<p>References:
-     Algorithm 232 of CACM (J. W. J. Williams): HEAPSORT.</p>
-<div class="codehilite"><pre><span></span><code>                     *  *  *
-</code></pre></div>
-
-<p>NEOS, November 1994. (Latest revision June 1996.)
-   Optimization Technology Center.
-   Argonne National Laboratory and Northwestern University.
-   Written by
-                      Ciyou Zhu
-   in collaboration with R.H. Byrd, P. Lu-Chen and J. Nocedal.</p>
+  remaining elements of t in a heap.</p>
+<h3>Reference</h3>
+<ul>
+<li>Algorithm 232 of CACM (J. W. J. Williams): HEAPSORT.</li>
+</ul>
+<h3>Credits</h3>
+<ul>
+<li>NEOS, November 1994. (Latest revision June 1996.)
+    Optimization Technology Center.
+    Argonne National Laboratory and Northwestern University.
+    Written by Ciyou Zhu
+    in collaboration with R.H. Byrd, P. Lu-Chen and J. Nocedal.</li>
+</ul>
 
 
     <h3>Arguments</h3>
@@ -200,62 +185,67 @@ remaining elements of t in a heap.</p>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-n~9"></span>
-              integer
+              <span class="anchor" id="variable-n~3"></span>
+              integer,
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>n</strong></td>
             <td>
-                
+                <p>the dimension of the arrays t and iorder.</p>
             </td>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-t~3"></span>
-              real(kind=wp)
+              <span class="anchor" id="variable-t"></span>
+              real(kind=wp),
             </td>
-<td></td>
+<td>intent(inout)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>t</strong>(n)</td>
             <td>
-                
+                <p>On entry t stores the elements to be sorted,
+On exit t(n) stores the least elements of t, and t(1) to t(n-1)
+stores the remaining elements in the form of a heap.</p>
             </td>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-iorder~2"></span>
-              integer
+              <span class="anchor" id="variable-iorder"></span>
+              integer,
             </td>
-<td></td>
+<td>intent(inout)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>Iorder</strong>(n)</td>
             <td>
-                
+                <p>On entry iorder(i) is the index of t(i).
+On exit iorder(i) is still the index of t(i), but iorder may be
+permuted in accordance with t.</p>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" id="variable-iheap"></span>
-              integer
+              integer,
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>Iheap</strong></td>
             <td>
-                
+                <p><code>iheap == 0</code> if t(1) to t(n) is not in the form of a heap,
+<code>iheap /= 0</code> if otherwise.</p>
             </td>
         </tr>
     </tbody>
@@ -454,10 +444,18 @@ implementation in a submodule of an interface in a parent module.
     <section>
     <h2><span class="anchor" id="src"></span>Source Code</h2>
     <div class="highlight"><pre><span></span><span class="w">      </span><span class="k">subroutine </span><span class="n">hpsolb</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">t</span><span class="p">,</span><span class="n">Iorder</span><span class="p">,</span><span class="n">Iheap</span><span class="p">)</span><span class="w"></span>
+
 <span class="w">      </span><span class="k">implicit none</span>
 
-<span class="k">      </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Iheap</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">Iorder</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"></span>
-<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">t</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"></span>
+<span class="k">      </span><span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="c">!! the dimension of the arrays t and iorder.</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">t</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="c">!! On entry t stores the elements to be sorted,</span>
+<span class="w">                                     </span><span class="c">!! On exit t(n) stores the least elements of t, and t(1) to t(n-1)</span>
+<span class="w">                                     </span><span class="c">!! stores the remaining elements in the form of a heap.</span>
+<span class="w">      </span><span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Iorder</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="c">!! On entry iorder(i) is the index of t(i).</span>
+<span class="w">                                         </span><span class="c">!! On exit iorder(i) is still the index of t(i), but iorder may be</span>
+<span class="w">                                         </span><span class="c">!! permuted in accordance with t.</span>
+<span class="w">      </span><span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Iheap</span><span class="w"> </span><span class="c">!! `iheap == 0` if t(1) to t(n) is not in the form of a heap,</span>
+<span class="w">                                  </span><span class="c">!! `iheap /= 0` if otherwise.</span>
 
 <span class="w">      </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">indxin</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">indxou</span><span class="w"></span>
 <span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">ddum</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">out</span><span class="w"></span>
