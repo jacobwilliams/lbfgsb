@@ -92,7 +92,7 @@
           <li id="statements"><i class="fa fa-list-ol"></i>
             <a data-toggle="tooltip"
                data-placement="bottom" data-html="true"
-               title="17.3% of total for procedures.">328 statements</a>
+               title="18.5% of total for procedures.">356 statements</a>
           </li>
 
             <li id="source-file">
@@ -193,157 +193,175 @@
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-n~5"></span>
-              integer
+              <span class="anchor" id="variable-n~2"></span>
+              integer,
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>n</strong></td>
             <td>
-                
+                <p>the number of variables.</p>
             </td>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-m~4"></span>
-              integer
+              <span class="anchor" id="variable-m~2"></span>
+              integer,
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>m</strong></td>
             <td>
-                
+                <p>the maximum number of variable metric
+corrections allowed in the limited memory matrix.</p>
             </td>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-x~3"></span>
-              real(kind=wp)
+              <span class="anchor" id="variable-x~2"></span>
+              real(kind=wp),
             </td>
-<td></td>
+<td>intent(inout)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>x</strong>(n)</td>
             <td>
-                
+                <p>On entry x is an approximation to the solution.
+On exit x is the current approximation.</p>
             </td>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-l~3"></span>
-              real(kind=wp)
+              <span class="anchor" id="variable-l~2"></span>
+              real(kind=wp),
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>l</strong>(n)</td>
             <td>
-                
+                <p>the lower bound of x.</p>
             </td>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-u~3"></span>
-              real(kind=wp)
+              <span class="anchor" id="variable-u~2"></span>
+              real(kind=wp),
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>u</strong>(n)</td>
             <td>
-                
+                <p>the upper bound of x.</p>
             </td>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-nbd~3"></span>
-              integer
+              <span class="anchor" id="variable-nbd~2"></span>
+              integer,
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>Nbd</strong>(n)</td>
             <td>
-                
+                <p>the type of bounds imposed on the
+variables, and must be specified as follows:</p>
+<ul>
+<li><code>nbd(i)=0</code> if <code>x(i)</code> is unbounded,</li>
+<li><code>nbd(i)=1</code> if <code>x(i)</code> has only a lower bound,</li>
+<li><code>nbd(i)=2</code> if <code>x(i)</code> has both lower and upper bounds,</li>
+<li><code>nbd(i)=3</code> if <code>x(i)</code> has only an upper bound.</li>
+</ul>
             </td>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-f~3"></span>
-              real(kind=wp)
+              <span class="anchor" id="variable-f~2"></span>
+              real(kind=wp),
             </td>
-<td></td>
+<td>intent(inout)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>f</strong></td>
             <td>
-                
+                <p>On first entry f is unspecified.
+On final exit f is the value of the function at x.</p>
             </td>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-g~3"></span>
-              real(kind=wp)
+              <span class="anchor" id="variable-g~2"></span>
+              real(kind=wp),
             </td>
-<td></td>
+<td>intent(inout)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>g</strong>(n)</td>
             <td>
-                
+                <p>On first entry g is unspecified.
+On final exit g is the value of the gradient at x.</p>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" id="variable-factr~2"></span>
-              real(kind=wp)
+              real(kind=wp),
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>Factr</strong></td>
             <td>
-                
+                <p>On entry <code>factr &gt;= 0</code> is specified by the user.  The iteration
+will stop when</p>
+<p><code>(f^k - f^{k+1})/max{|f^k|,|f^{k+1}|,1} &lt;= factr*epsmch</code></p>
+<p>where epsmch is the machine precision, which is automatically
+generated by the code.</p>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" id="variable-pgtol~2"></span>
-              real(kind=wp)
+              real(kind=wp),
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>Pgtol</strong></td>
             <td>
-                
+                <p>On entry pgtol &gt;= 0 is specified by the user.  The iteration
+will stop when</p>
+<p><code>max{|proj g_i | i = 1, ..., n} &lt;= pgtol</code></p>
+<p>where pg_i is the ith component of the projected gradient.</p>
             </td>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-ws~3"></span>
+              <span class="anchor" id="variable-ws"></span>
               real(kind=wp)
             </td>
 <td></td>
@@ -353,12 +371,12 @@
             <td>::</td>
             <td><strong>Ws</strong>(n,m)</td>
             <td>
-                
+                <p>working array used to store information defining the limited memory BFGS matrix: stores S, the matrix of s-vectors;</p>
             </td>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-wy~3"></span>
+              <span class="anchor" id="variable-wy"></span>
               real(kind=wp)
             </td>
 <td></td>
@@ -368,12 +386,12 @@
             <td>::</td>
             <td><strong>Wy</strong>(n,m)</td>
             <td>
-                
+                <p>working array used to store information defining the limited memory BFGS matrix: stores Y, the matrix of y-vectors;</p>
             </td>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-sy~2"></span>
+              <span class="anchor" id="variable-sy"></span>
               real(kind=wp)
             </td>
 <td></td>
@@ -383,7 +401,7 @@
             <td>::</td>
             <td><strong>Sy</strong>(m,m)</td>
             <td>
-                
+                <p>working array used to store information defining the limited memory BFGS matrix: stores S'Y;</p>
             </td>
         </tr>
         <tr>
@@ -398,7 +416,7 @@
             <td>::</td>
             <td><strong>Ss</strong>(m,m)</td>
             <td>
-                
+                <p>working array used to store information defining the limited memory BFGS matrix: stores S'S;</p>
             </td>
         </tr>
         <tr>
@@ -413,12 +431,13 @@
             <td>::</td>
             <td><strong>Wt</strong>(m,m)</td>
             <td>
-                
+                <p>working array used to store information defining the limited memory BFGS matrix: stores the Cholesky factorization
+of (theta*S'S+LD^(-1)L'); see eq. (2.26) in [3].</p>
             </td>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-wn~3"></span>
+              <span class="anchor" id="variable-wn"></span>
               real(kind=wp)
             </td>
 <td></td>
@@ -428,7 +447,16 @@
             <td>::</td>
             <td><strong>Wn</strong>(2*m,2*m)</td>
             <td>
-                
+                <p>working array
+ used to store the LEL^T factorization of the indefinite matrix</p>
+<div class="codehilite"><pre><span></span><code>  K = [-D -Y&#39;ZZ&#39;Y/theta     L_a&#39;-R_z&#39;  ]
+      [L_a -R_z           theta*S&#39;AA&#39;S ]
+</code></pre></div>
+
+<p>where</p>
+<div class="codehilite"><pre><span></span><code>  E = [-I  0]
+      [ 0  I]
+</code></pre></div>
             </td>
         </tr>
         <tr>
@@ -443,7 +471,11 @@
             <td>::</td>
             <td><strong>Snd</strong>(2*m,2*m)</td>
             <td>
-                
+                <p>working array
+ used to store the lower triangular part of</p>
+<div class="codehilite"><pre><span></span><code>  N = [Y&#39; ZZ&#39;Y   L_a&#39;+R_z&#39;]
+      [L_a +R_z  S&#39;AA&#39;S   ]
+</code></pre></div>
             </td>
         </tr>
         <tr>
@@ -458,7 +490,8 @@
             <td>::</td>
             <td><strong>z</strong>(n)</td>
             <td>
-                
+                <p>working array.
+used at different times to store the Cauchy point and the Newton point.</p>
             </td>
         </tr>
         <tr>
@@ -473,12 +506,12 @@
             <td>::</td>
             <td><strong>r</strong>(n)</td>
             <td>
-                
+                <p>working array.</p>
             </td>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-d~2"></span>
+              <span class="anchor" id="variable-d"></span>
               real(kind=wp)
             </td>
 <td></td>
@@ -488,12 +521,12 @@
             <td>::</td>
             <td><strong>d</strong>(n)</td>
             <td>
-                
+                <p>working array.</p>
             </td>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-t~2"></span>
+              <span class="anchor" id="variable-t"></span>
               real(kind=wp)
             </td>
 <td></td>
@@ -503,12 +536,12 @@
             <td>::</td>
             <td><strong>t</strong>(n)</td>
             <td>
-                
+                <p>working array.</p>
             </td>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-xp~2"></span>
+              <span class="anchor" id="variable-xp"></span>
               real(kind=wp)
             </td>
 <td></td>
@@ -518,7 +551,8 @@
             <td>::</td>
             <td><strong>Xp</strong>(n)</td>
             <td>
-                
+                <p>working array.
+used to safeguard the projected Newton direction</p>
             </td>
         </tr>
         <tr>
@@ -533,12 +567,12 @@
             <td>::</td>
             <td><strong>Wa</strong>(8*m)</td>
             <td>
-                
+                <p>working array.</p>
             </td>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-index~2"></span>
+              <span class="anchor" id="variable-index"></span>
               integer
             </td>
 <td></td>
@@ -548,7 +582,9 @@
             <td>::</td>
             <td><strong>Index</strong>(n)</td>
             <td>
-                
+                <p>working array.
+In subroutine <a href="../proc/freev.html">freev</a>, index is used to store the free and fixed
+variables at the Generalized Cauchy Point (GCP).</p>
             </td>
         </tr>
         <tr>
@@ -563,12 +599,20 @@
             <td>::</td>
             <td><strong>Iwhere</strong>(n)</td>
             <td>
-                
+                <p>working array used to record
+the status of the vector x for GCP computation:</p>
+<ul>
+<li><code>iwhere(i)= 0 or -3</code> if <code>x(i)</code> is free and has bounds,</li>
+<li><code>iwhere(i)= 1</code> if <code>x(i)</code> is fixed at l(i), and l(i) /= u(i)</li>
+<li><code>iwhere(i)= 2</code> if <code>x(i)</code> is fixed at u(i), and u(i) /= l(i)</li>
+<li><code>iwhere(i)= 3</code> if <code>x(i)</code> is always fixed, i.e.,  u(i)=x(i)=l(i)</li>
+<li><code>iwhere(i)=-1</code> if <code>x(i)</code> is always free, i.e., no bounds on it.</li>
+</ul>
             </td>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-indx2~3"></span>
+              <span class="anchor" id="variable-indx2"></span>
               integer
             </td>
 <td></td>
@@ -578,37 +622,52 @@
             <td>::</td>
             <td><strong>Indx2</strong>(n)</td>
             <td>
-                
+                <p>integer working array.
+Within subroutine <a href="../proc/cauchy.html">cauchy</a>, indx2 corresponds to the array iorder.
+In subroutine <a href="../proc/freev.html">freev</a>, a list of variables entering and leaving
+the free set is stored in indx2, and it is passed on to
+subroutine <a href="../proc/formk.html">formk</a> with this information.</p>
             </td>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-task~3"></span>
-              character(len=60)
+              <span class="anchor" id="variable-task~2"></span>
+              character(len=60),
             </td>
-<td></td>
+<td>intent(inout)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>Task</strong></td>
             <td>
-                
+                <p>indicates the current job when
+entering and leaving this subroutine.</p>
             </td>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-iprint~3"></span>
-              integer
+              <span class="anchor" id="variable-iprint~2"></span>
+              integer,
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>Iprint</strong></td>
             <td>
-                
+                <p>Controls the frequency and type of output generated:</p>
+<ul>
+<li><code>iprint&lt;0</code> no output is generated;</li>
+<li><code>iprint=0</code> print only one line at the last iteration;</li>
+<li><code>0&lt;iprint&lt;99</code> print also f and |proj g| every iprint iterations;</li>
+<li><code>iprint=99</code> print details of every iteration except n-vectors;</li>
+<li><code>iprint=100</code> print also the changes of active set and final x;</li>
+<li><code>iprint&gt;100</code> print details of every iteration including x and g;</li>
+</ul>
+<p>When <code>iprint &gt; 0</code>, the file <code>iterate.dat</code> will be created to
+summarize the iteration.</p>
             </td>
         </tr>
         <tr>
@@ -623,7 +682,7 @@
             <td>::</td>
             <td><strong>Csave</strong></td>
             <td>
-                
+                <p>working string</p>
             </td>
         </tr>
         <tr>
@@ -638,12 +697,12 @@
             <td>::</td>
             <td><strong>Lsave</strong>(4)</td>
             <td>
-                
+                <p>working array</p>
             </td>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-isave~3"></span>
+              <span class="anchor" id="variable-isave~2"></span>
               integer
             </td>
 <td></td>
@@ -653,12 +712,12 @@
             <td>::</td>
             <td><strong>Isave</strong>(23)</td>
             <td>
-                
+                <p>working array</p>
             </td>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-dsave~3"></span>
+              <span class="anchor" id="variable-dsave~2"></span>
               real(kind=wp)
             </td>
 <td></td>
@@ -668,7 +727,7 @@
             <td>::</td>
             <td><strong>Dsave</strong>(29)</td>
             <td>
-                
+                <p>working array</p>
             </td>
         </tr>
     </tbody>
@@ -1401,152 +1460,110 @@ implementation in a submodule of an interface in a parent module.
     
     <section>
     <h2><span class="anchor" id="src"></span>Source Code</h2>
-    <div class="highlight"><pre><span></span><span class="w">      </span><span class="k">subroutine </span><span class="n">mainlb</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">l</span><span class="p">,</span><span class="n">u</span><span class="p">,</span><span class="n">Nbd</span><span class="p">,</span><span class="n">f</span><span class="p">,</span><span class="n">g</span><span class="p">,</span><span class="n">Factr</span><span class="p">,</span><span class="n">Pgtol</span><span class="p">,</span><span class="n">Ws</span><span class="p">,</span><span class="n">Wy</span><span class="p">,</span><span class="n">Sy</span><span class="p">,</span><span class="n">Ss</span><span class="p">,</span><span class="n">Wt</span><span class="p">,</span><span class="n">Wn</span><span class="p">,&amp;</span><span class="w"></span>
-<span class="w">                        </span><span class="n">Snd</span><span class="p">,</span><span class="n">z</span><span class="p">,</span><span class="n">r</span><span class="p">,</span><span class="n">d</span><span class="p">,</span><span class="n">t</span><span class="p">,</span><span class="n">Xp</span><span class="p">,</span><span class="n">Wa</span><span class="p">,</span><span class="nb">Index</span><span class="p">,</span><span class="n">Iwhere</span><span class="p">,</span><span class="n">Indx2</span><span class="p">,</span><span class="n">Task</span><span class="p">,</span><span class="w">      </span><span class="p">&amp;</span><span class="w"></span>
+    <div class="highlight"><pre><span></span><span class="w">      </span><span class="k">subroutine </span><span class="n">mainlb</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">l</span><span class="p">,</span><span class="n">u</span><span class="p">,</span><span class="n">Nbd</span><span class="p">,</span><span class="n">f</span><span class="p">,</span><span class="n">g</span><span class="p">,</span><span class="n">Factr</span><span class="p">,</span><span class="n">Pgtol</span><span class="p">,</span><span class="n">Ws</span><span class="p">,</span><span class="n">Wy</span><span class="p">,</span><span class="n">Sy</span><span class="p">,</span><span class="n">Ss</span><span class="p">,</span><span class="n">Wt</span><span class="p">,</span><span class="n">Wn</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span><span class="w"></span>
+<span class="w">                        </span><span class="n">Snd</span><span class="p">,</span><span class="n">z</span><span class="p">,</span><span class="n">r</span><span class="p">,</span><span class="n">d</span><span class="p">,</span><span class="n">t</span><span class="p">,</span><span class="n">Xp</span><span class="p">,</span><span class="n">Wa</span><span class="p">,</span><span class="nb">Index</span><span class="p">,</span><span class="n">Iwhere</span><span class="p">,</span><span class="n">Indx2</span><span class="p">,</span><span class="n">Task</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span><span class="w"></span>
 <span class="w">                        </span><span class="n">Iprint</span><span class="p">,</span><span class="n">Csave</span><span class="p">,</span><span class="n">Lsave</span><span class="p">,</span><span class="n">Isave</span><span class="p">,</span><span class="n">Dsave</span><span class="p">)</span><span class="w"></span>
+
 <span class="w">      </span><span class="k">implicit none</span>
 
-<span class="k">      </span><span class="kt">character</span><span class="o">*</span><span class="mi">60</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Task</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">Csave</span><span class="w"></span>
-<span class="w">      </span><span class="kt">logical</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Lsave</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="w"></span>
-<span class="w">      </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">m</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">Iprint</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">Nbd</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="nb">Index</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">Iwhere</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">Indx2</span><span class="p">(</span><span class="n">n</span><span class="p">),</span><span class="w"> </span><span class="p">&amp;</span><span class="w"></span>
-<span class="w">                 </span><span class="n">Isave</span><span class="p">(</span><span class="mi">23</span><span class="p">)</span><span class="w"></span>
-
-<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">f</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">Factr</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">Pgtol</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">l</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">u</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">g</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="p">,</span><span class="w">  </span><span class="p">&amp;</span><span class="w"></span>
-<span class="w">                  </span><span class="n">z</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">r</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">d</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">t</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">Xp</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">Wa</span><span class="p">(</span><span class="mi">8</span><span class="o">*</span><span class="n">m</span><span class="p">)</span><span class="w"> </span><span class="p">,</span><span class="w">    </span><span class="p">&amp;</span><span class="w"></span>
-<span class="w">                  </span><span class="n">Ws</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">m</span><span class="p">)</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">Wy</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">m</span><span class="p">)</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">Sy</span><span class="p">(</span><span class="n">m</span><span class="p">,</span><span class="n">m</span><span class="p">)</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">Ss</span><span class="p">(</span><span class="n">m</span><span class="p">,</span><span class="n">m</span><span class="p">)</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">Wt</span><span class="p">(</span><span class="n">m</span><span class="p">,</span><span class="n">m</span><span class="p">)</span><span class="w"> </span><span class="p">,&amp;</span><span class="w"></span>
-<span class="w">                  </span><span class="n">Wn</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">m</span><span class="p">,</span><span class="mi">2</span><span class="o">*</span><span class="n">m</span><span class="p">)</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">Snd</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">m</span><span class="p">,</span><span class="mi">2</span><span class="o">*</span><span class="n">m</span><span class="p">)</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">Dsave</span><span class="p">(</span><span class="mi">29</span><span class="p">)</span><span class="w"></span>
-
-<span class="c">!     n is an integer variable.</span>
-<span class="c">!       On entry n is the number of variables.</span>
-<span class="c">!       On exit n is unchanged.</span>
-<span class="c">!</span>
-<span class="c">!     m is an integer variable.</span>
-<span class="c">!       On entry m is the maximum number of variable metric</span>
-<span class="c">!          corrections allowed in the limited memory matrix.</span>
-<span class="c">!       On exit m is unchanged.</span>
-<span class="c">!</span>
-<span class="c">!     x is a real(wp) array of dimension n.</span>
-<span class="c">!       On entry x is an approximation to the solution.</span>
-<span class="c">!       On exit x is the current approximation.</span>
-<span class="c">!</span>
-<span class="c">!     l is a real(wp) array of dimension n.</span>
-<span class="c">!       On entry l is the lower bound of x.</span>
-<span class="c">!       On exit l is unchanged.</span>
-<span class="c">!</span>
-<span class="c">!     u is a real(wp) array of dimension n.</span>
-<span class="c">!       On entry u is the upper bound of x.</span>
-<span class="c">!       On exit u is unchanged.</span>
-<span class="c">!</span>
-<span class="c">!     nbd is an integer array of dimension n.</span>
-<span class="c">!       On entry nbd represents the type of bounds imposed on the</span>
-<span class="c">!         variables, and must be specified as follows:</span>
-<span class="c">!         nbd(i)=0 if x(i) is unbounded,</span>
-<span class="c">!                1 if x(i) has only a lower bound,</span>
-<span class="c">!                2 if x(i) has both lower and upper bounds,</span>
-<span class="c">!                3 if x(i) has only an upper bound.</span>
-<span class="c">!       On exit nbd is unchanged.</span>
-<span class="c">!</span>
-<span class="c">!     f is a real(wp) variable.</span>
-<span class="c">!       On first entry f is unspecified.</span>
-<span class="c">!       On final exit f is the value of the function at x.</span>
-<span class="c">!</span>
-<span class="c">!     g is a real(wp) array of dimension n.</span>
-<span class="c">!       On first entry g is unspecified.</span>
-<span class="c">!       On final exit g is the value of the gradient at x.</span>
-<span class="c">!</span>
-<span class="c">!     factr is a real(wp) variable.</span>
-<span class="c">!       On entry factr &gt;= 0 is specified by the user.  The iteration</span>
-<span class="c">!         will stop when</span>
-<span class="c">!</span>
-<span class="c">!         (f^k - f^{k+1})/max{|f^k|,|f^{k+1}|,1} &lt;= factr*epsmch</span>
-<span class="c">!</span>
-<span class="c">!         where epsmch is the machine precision, which is automatically</span>
-<span class="c">!         generated by the code.</span>
-<span class="c">!       On exit factr is unchanged.</span>
-<span class="c">!</span>
-<span class="c">!     pgtol is a real(wp) variable.</span>
-<span class="c">!       On entry pgtol &gt;= 0 is specified by the user.  The iteration</span>
-<span class="c">!         will stop when</span>
-<span class="c">!</span>
-<span class="c">!                 max{|proj g_i | i = 1, ..., n} &lt;= pgtol</span>
-<span class="c">!</span>
-<span class="c">!         where pg_i is the ith component of the projected gradient.</span>
-<span class="c">!       On exit pgtol is unchanged.</span>
-<span class="c">!</span>
-<span class="c">!     ws, wy, sy, and wt are real(wp) working arrays used to</span>
-<span class="c">!       store the following information defining the limited memory</span>
-<span class="c">!          BFGS matrix:</span>
-<span class="c">!          ws, of dimension n x m, stores S, the matrix of s-vectors;</span>
-<span class="c">!          wy, of dimension n x m, stores Y, the matrix of y-vectors;</span>
-<span class="c">!          sy, of dimension m x m, stores S&#39;Y;</span>
-<span class="c">!          ss, of dimension m x m, stores S&#39;S;</span>
-<span class="c">!          yy, of dimension m x m, stores Y&#39;Y;</span>
-<span class="c">!          wt, of dimension m x m, stores the Cholesky factorization</span>
-<span class="c">!                                  of (theta*S&#39;S+LD^(-1)L&#39;); see eq.</span>
-<span class="c">!                                  (2.26) in [3].</span>
-<span class="c">!</span>
-<span class="c">!     wn is a real(wp) working array of dimension 2m x 2m</span>
-<span class="c">!       used to store the LEL^T factorization of the indefinite matrix</span>
-<span class="c">!                 K = [-D -Y&#39;ZZ&#39;Y/theta     L_a&#39;-R_z&#39;  ]</span>
-<span class="c">!                     [L_a -R_z           theta*S&#39;AA&#39;S ]</span>
-<span class="c">!</span>
-<span class="c">!       where     E = [-I  0]</span>
-<span class="c">!                     [ 0  I]</span>
-<span class="c">!</span>
-<span class="c">!     snd is a real(wp) working array of dimension 2m x 2m</span>
-<span class="c">!       used to store the lower triangular part of</span>
-<span class="c">!                 N = [Y&#39; ZZ&#39;Y   L_a&#39;+R_z&#39;]</span>
-<span class="c">!                     [L_a +R_z  S&#39;AA&#39;S   ]</span>
-<span class="c">!</span>
-<span class="c">!     z(n),r(n),d(n),t(n), xp(n),wa(8*m) are real(wp) working arrays.</span>
-<span class="c">!       z  is used at different times to store the Cauchy point and</span>
-<span class="c">!          the Newton point.</span>
-<span class="c">!       xp is used to safeguard the projected Newton direction</span>
-<span class="c">!</span>
-<span class="c">!     sg(m),sgo(m),yg(m),ygo(m) are real(wp) working arrays.</span>
-<span class="c">!</span>
-<span class="c">!     index is an integer working array of dimension n.</span>
-<span class="c">!       In subroutine freev, index is used to store the free and fixed</span>
-<span class="c">!          variables at the Generalized Cauchy Point (GCP).</span>
-<span class="c">!</span>
-<span class="c">!     iwhere is an integer working array of dimension n used to record</span>
-<span class="c">!       the status of the vector x for GCP computation.</span>
-<span class="c">!       iwhere(i)=0 or -3 if x(i) is free and has bounds,</span>
-<span class="c">!                 1       if x(i) is fixed at l(i), and l(i) /= u(i)</span>
-<span class="c">!                 2       if x(i) is fixed at u(i), and u(i) /= l(i)</span>
-<span class="c">!                 3       if x(i) is always fixed, i.e.,  u(i)=x(i)=l(i)</span>
-<span class="c">!                -1       if x(i) is always free, i.e., no bounds on it.</span>
-<span class="c">!</span>
-<span class="c">!     indx2 is an integer working array of dimension n.</span>
-<span class="c">!       Within subroutine cauchy, indx2 corresponds to the array iorder.</span>
-<span class="c">!       In subroutine freev, a list of variables entering and leaving</span>
-<span class="c">!       the free set is stored in indx2, and it is passed on to</span>
-<span class="c">!       subroutine formk with this information.</span>
-<span class="c">!</span>
-<span class="c">!     task is a working string of characters of length 60 indicating</span>
-<span class="c">!       the current job when entering and leaving this subroutine.</span>
-<span class="c">!</span>
-<span class="c">!     iprint is an INTEGER variable that must be set by the user.</span>
-<span class="c">!       It controls the frequency and type of output generated:</span>
-<span class="c">!        iprint&lt;0    no output is generated;</span>
-<span class="c">!        iprint=0    print only one line at the last iteration;</span>
-<span class="c">!        0&lt;iprint&lt;99 print also f and |proj g| every iprint iterations;</span>
-<span class="c">!        iprint=99   print details of every iteration except n-vectors;</span>
-<span class="c">!        iprint=100  print also the changes of active set and final x;</span>
-<span class="c">!        iprint&gt;100  print details of every iteration including x and g;</span>
-<span class="c">!       When iprint &gt; 0, the file iterate.dat will be created to</span>
-<span class="c">!                        summarize the iteration.</span>
-<span class="c">!</span>
-<span class="c">!     csave is a working string of characters of length 60.</span>
-<span class="c">!</span>
-<span class="c">!     lsave is a logical working array of dimension 4.</span>
-<span class="c">!</span>
-<span class="c">!     isave is an integer working array of dimension 23.</span>
-<span class="c">!</span>
-<span class="c">!     dsave is a real(wp) working array of dimension 29.</span>
+<span class="k">      </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="mi">60</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Task</span><span class="w"> </span><span class="c">!! indicates the current job when</span>
+<span class="w">                                              </span><span class="c">!! entering and leaving this subroutine.</span>
+<span class="w">      </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="mi">60</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Csave</span><span class="w"> </span><span class="c">!! working string</span>
+<span class="w">      </span><span class="kt">logical</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Lsave</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="w"> </span><span class="c">!! working array</span>
+<span class="w">      </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Isave</span><span class="p">(</span><span class="mi">23</span><span class="p">)</span><span class="w"> </span><span class="c">!! working array</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Dsave</span><span class="p">(</span><span class="mi">29</span><span class="p">)</span><span class="w"> </span><span class="c">!! working array</span>
+<span class="w">      </span><span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="c">!! the number of variables.</span>
+<span class="w">      </span><span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">m</span><span class="w"> </span><span class="c">!! the maximum number of variable metric</span>
+<span class="w">                              </span><span class="c">!! corrections allowed in the limited memory matrix.</span>
+<span class="w">      </span><span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Iprint</span><span class="w"> </span><span class="c">!! Controls the frequency and type of output generated:</span>
+<span class="w">                                   </span><span class="c">!!</span>
+<span class="w">                                   </span><span class="c">!!  * `iprint&lt;0   ` no output is generated;</span>
+<span class="w">                                   </span><span class="c">!!  * `iprint=0   ` print only one line at the last iteration;</span>
+<span class="w">                                   </span><span class="c">!!  * `0&lt;iprint&lt;99` print also f and |proj g| every iprint iterations;</span>
+<span class="w">                                   </span><span class="c">!!  * `iprint=99  ` print details of every iteration except n-vectors;</span>
+<span class="w">                                   </span><span class="c">!!  * `iprint=100 ` print also the changes of active set and final x;</span>
+<span class="w">                                   </span><span class="c">!!  * `iprint&gt;100 ` print details of every iteration including x and g;</span>
+<span class="w">                                   </span><span class="c">!!</span>
+<span class="w">                                   </span><span class="c">!! When `iprint &gt; 0`, the file `iterate.dat` will be created to</span>
+<span class="w">                                   </span><span class="c">!! summarize the iteration.</span>
+<span class="w">      </span><span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Nbd</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="c">!! the type of bounds imposed on the</span>
+<span class="w">                                   </span><span class="c">!! variables, and must be specified as follows:</span>
+<span class="w">                                   </span><span class="c">!!</span>
+<span class="w">                                   </span><span class="c">!!  * `nbd(i)=0` if `x(i)` is unbounded,</span>
+<span class="w">                                   </span><span class="c">!!  * `nbd(i)=1` if `x(i)` has only a lower bound,</span>
+<span class="w">                                   </span><span class="c">!!  * `nbd(i)=2` if `x(i)` has both lower and upper bounds,</span>
+<span class="w">                                   </span><span class="c">!!  * `nbd(i)=3` if `x(i)` has only an upper bound.</span>
+<span class="w">      </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="nb">Index</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="c">!! working array.</span>
+<span class="w">                          </span><span class="c">!! In subroutine [[freev]], index is used to store the free and fixed</span>
+<span class="w">                          </span><span class="c">!! variables at the Generalized Cauchy Point (GCP).</span>
+<span class="w">      </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Iwhere</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="c">!! working array used to record</span>
+<span class="w">                           </span><span class="c">!! the status of the vector x for GCP computation:</span>
+<span class="w">                           </span><span class="c">!!</span>
+<span class="w">                           </span><span class="c">!!  * `iwhere(i)= 0 or -3` if `x(i)` is free and has bounds,</span>
+<span class="w">                           </span><span class="c">!!  * `iwhere(i)= 1      ` if `x(i)` is fixed at l(i), and l(i) /= u(i)</span>
+<span class="w">                           </span><span class="c">!!  * `iwhere(i)= 2      ` if `x(i)` is fixed at u(i), and u(i) /= l(i)</span>
+<span class="w">                           </span><span class="c">!!  * `iwhere(i)= 3      ` if `x(i)` is always fixed, i.e.,  u(i)=x(i)=l(i)</span>
+<span class="w">                           </span><span class="c">!!  * `iwhere(i)=-1      ` if `x(i)` is always free, i.e., no bounds on it.</span>
+<span class="w">      </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Indx2</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="c">!! integer working array.</span>
+<span class="w">                          </span><span class="c">!! Within subroutine [[cauchy]], indx2 corresponds to the array iorder.</span>
+<span class="w">                          </span><span class="c">!! In subroutine [[freev]], a list of variables entering and leaving</span>
+<span class="w">                          </span><span class="c">!! the free set is stored in indx2, and it is passed on to</span>
+<span class="w">                          </span><span class="c">!! subroutine [[formk]] with this information.</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">f</span><span class="w"> </span><span class="c">!! On first entry f is unspecified.</span>
+<span class="w">                                  </span><span class="c">!! On final exit f is the value of the function at x.</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Factr</span><span class="w"> </span><span class="c">!! On entry `factr &gt;= 0` is specified by the user.  The iteration</span>
+<span class="w">                                   </span><span class="c">!! will stop when</span>
+<span class="w">                                   </span><span class="c">!!</span>
+<span class="w">                                   </span><span class="c">!! `(f^k - f^{k+1})/max{|f^k|,|f^{k+1}|,1} &lt;= factr*epsmch`</span>
+<span class="w">                                   </span><span class="c">!!</span>
+<span class="w">                                   </span><span class="c">!! where epsmch is the machine precision, which is automatically</span>
+<span class="w">                                   </span><span class="c">!! generated by the code.</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Pgtol</span><span class="w"> </span><span class="c">!! On entry pgtol &gt;= 0 is specified by the user.  The iteration</span>
+<span class="w">                                   </span><span class="c">!! will stop when</span>
+<span class="w">                                   </span><span class="c">!!</span>
+<span class="w">                                   </span><span class="c">!! `max{|proj g_i | i = 1, ..., n} &lt;= pgtol`</span>
+<span class="w">                                   </span><span class="c">!!</span>
+<span class="w">                                   </span><span class="c">!! where pg_i is the ith component of the projected gradient.</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">x</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="c">!! On entry x is an approximation to the solution.</span>
+<span class="w">                                     </span><span class="c">!! On exit x is the current approximation.</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">l</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="c">!! the lower bound of x.</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">u</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="c">!! the upper bound of x.</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">g</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="c">!! On first entry g is unspecified.</span>
+<span class="w">                                     </span><span class="c">!! On final exit g is the value of the gradient at x.</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">z</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="c">!! working array.</span>
+<span class="w">                       </span><span class="c">!! used at different times to store the Cauchy point and the Newton point.</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">r</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="c">!! working array.</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">d</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="c">!! working array.</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">t</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="c">!! working array.</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Xp</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="c">!! working array.</span>
+<span class="w">                        </span><span class="c">!! used to safeguard the projected Newton direction</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Wa</span><span class="p">(</span><span class="mi">8</span><span class="o">*</span><span class="n">m</span><span class="p">)</span><span class="w"> </span><span class="c">!! working array.</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Ws</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">m</span><span class="p">)</span><span class="w"> </span><span class="c">!! working array used to store information defining the limited memory BFGS matrix: stores S, the matrix of s-vectors;</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Wy</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">m</span><span class="p">)</span><span class="w"> </span><span class="c">!! working array used to store information defining the limited memory BFGS matrix: stores Y, the matrix of y-vectors;</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Sy</span><span class="p">(</span><span class="n">m</span><span class="p">,</span><span class="n">m</span><span class="p">)</span><span class="w"> </span><span class="c">!! working array used to store information defining the limited memory BFGS matrix: stores S&#39;Y;</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Ss</span><span class="p">(</span><span class="n">m</span><span class="p">,</span><span class="n">m</span><span class="p">)</span><span class="w"> </span><span class="c">!! working array used to store information defining the limited memory BFGS matrix: stores S&#39;S;</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Wt</span><span class="p">(</span><span class="n">m</span><span class="p">,</span><span class="n">m</span><span class="p">)</span><span class="w"> </span><span class="c">!! working array used to store information defining the limited memory BFGS matrix: stores the Cholesky factorization</span>
+<span class="w">                          </span><span class="c">!! of (theta*S&#39;S+LD^(-1)L&#39;); see eq. (2.26) in [3].</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Wn</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">m</span><span class="p">,</span><span class="mi">2</span><span class="o">*</span><span class="n">m</span><span class="p">)</span><span class="w"> </span><span class="c">!! working array</span>
+<span class="w">                              </span><span class="c">!! used to store the LEL^T factorization of the indefinite matrix</span>
+<span class="w">                              </span><span class="c">!!```</span>
+<span class="w">                              </span><span class="c">!!  K = [-D -Y&#39;ZZ&#39;Y/theta     L_a&#39;-R_z&#39;  ]</span>
+<span class="w">                              </span><span class="c">!!      [L_a -R_z           theta*S&#39;AA&#39;S ]</span>
+<span class="w">                              </span><span class="c">!!```</span>
+<span class="w">                              </span><span class="c">!! where</span>
+<span class="w">                              </span><span class="c">!!```</span>
+<span class="w">                              </span><span class="c">!!  E = [-I  0]</span>
+<span class="w">                              </span><span class="c">!!      [ 0  I]</span>
+<span class="w">                              </span><span class="c">!!```</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Snd</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">m</span><span class="p">,</span><span class="mi">2</span><span class="o">*</span><span class="n">m</span><span class="p">)</span><span class="w"> </span><span class="c">!! working array</span>
+<span class="w">                               </span><span class="c">!! used to store the lower triangular part of</span>
+<span class="w">                               </span><span class="c">!!```</span>
+<span class="w">                               </span><span class="c">!!  N = [Y&#39; ZZ&#39;Y   L_a&#39;+R_z&#39;]</span>
+<span class="w">                               </span><span class="c">!!      [L_a +R_z  S&#39;AA&#39;S   ]</span>
+<span class="w">                               </span><span class="c">!!```</span>
 
 <span class="w">      </span><span class="kt">logical</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">prjctd</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">cnstnd</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">boxed</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">updatd</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">wrk</span><span class="w"></span>
-<span class="w">      </span><span class="kt">character</span><span class="o">*</span><span class="mi">3</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">word</span><span class="w"></span>
+<span class="w">      </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">word</span><span class="w"></span>
 <span class="w">      </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">nintol</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">itfile</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">iback</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">nskip</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">head</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="w"> </span><span class="p">,</span><span class="w">    </span><span class="p">&amp;</span><span class="w"></span>
 <span class="w">                 </span><span class="n">iter</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">itail</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">iupdat</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">nseg</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">nfgv</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">info</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">ifun</span><span class="w"> </span><span class="p">,</span><span class="w">       </span><span class="p">&amp;</span><span class="w"></span>
 <span class="w">                 </span><span class="n">iword</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">nfree</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">nact</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">ileave</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">nenter</span><span class="w"></span>
@@ -1853,8 +1870,8 @@ implementation in a submodule of an interface in a parent module.
 <span class="k">      call </span><span class="nb">cpu_time</span><span class="p">(</span><span class="n">cpu1</span><span class="p">)</span><span class="w"></span>
 <span class="w"> </span><span class="mi">600</span><span class="w">  </span><span class="k">continue</span>
 <span class="k">      call </span><span class="n">lnsrlb</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">l</span><span class="p">,</span><span class="n">u</span><span class="p">,</span><span class="n">Nbd</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">f</span><span class="p">,</span><span class="n">fold</span><span class="p">,</span><span class="n">gd</span><span class="p">,</span><span class="n">gdold</span><span class="p">,</span><span class="n">g</span><span class="p">,</span><span class="n">d</span><span class="p">,</span><span class="n">r</span><span class="p">,</span><span class="n">t</span><span class="p">,</span><span class="n">z</span><span class="p">,</span><span class="n">stp</span><span class="p">,</span><span class="n">dnorm</span><span class="p">,</span><span class="n">dtd</span><span class="p">,</span><span class="w">  </span><span class="p">&amp;</span><span class="w"></span>
-<span class="w">                </span><span class="p">&amp;</span><span class="w"> </span><span class="n">xstep</span><span class="p">,</span><span class="n">stpmx</span><span class="p">,</span><span class="n">iter</span><span class="p">,</span><span class="n">ifun</span><span class="p">,</span><span class="n">iback</span><span class="p">,</span><span class="n">nfgv</span><span class="p">,</span><span class="n">info</span><span class="p">,</span><span class="n">Task</span><span class="p">,</span><span class="n">boxed</span><span class="p">,</span><span class="w">     </span><span class="p">&amp;</span><span class="w"></span>
-<span class="w">                </span><span class="p">&amp;</span><span class="w"> </span><span class="n">cnstnd</span><span class="p">,</span><span class="n">Csave</span><span class="p">,</span><span class="n">Isave</span><span class="p">(</span><span class="mi">22</span><span class="p">),</span><span class="n">Dsave</span><span class="p">(</span><span class="mi">17</span><span class="p">))</span><span class="w"></span>
+<span class="w">                  </span><span class="n">xstep</span><span class="p">,</span><span class="n">stpmx</span><span class="p">,</span><span class="n">iter</span><span class="p">,</span><span class="n">ifun</span><span class="p">,</span><span class="n">iback</span><span class="p">,</span><span class="n">nfgv</span><span class="p">,</span><span class="n">info</span><span class="p">,</span><span class="n">Task</span><span class="p">,</span><span class="n">boxed</span><span class="p">,</span><span class="w">     </span><span class="p">&amp;</span><span class="w"></span>
+<span class="w">                  </span><span class="n">cnstnd</span><span class="p">,</span><span class="n">Csave</span><span class="p">,</span><span class="n">Isave</span><span class="p">(</span><span class="mi">22</span><span class="p">),</span><span class="n">Dsave</span><span class="p">(</span><span class="mi">17</span><span class="p">))</span><span class="w"></span>
 <span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">info</span><span class="o">/=</span><span class="mi">0</span><span class="w"> </span><span class="p">.</span><span class="nb">or</span><span class="p">.</span><span class="w"> </span><span class="n">iback</span><span class="o">&gt;=</span><span class="mi">20</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span><span class="w"></span>
 <span class="w">         </span><span class="c">! restore the previous iterate.</span>
 <span class="w">         </span><span class="k">call </span><span class="n">dcopy</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">t</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="w"></span>
@@ -1877,7 +1894,7 @@ implementation in a submodule of an interface in a parent module.
 <span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">Iprint</span><span class="o">&gt;=</span><span class="mi">1</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">99005</span><span class="p">)</span><span class="w"></span>
 <span class="mi">99005</span><span class="w">       </span><span class="k">format</span><span class="w"> </span><span class="p">(</span><span class="o">/</span><span class="p">,</span><span class="s1">&#39; Bad direction in the line search;&#39;</span><span class="p">,</span><span class="o">/</span><span class="p">,</span><span class="w">           </span><span class="p">&amp;</span><span class="w"></span>
 <span class="w">               </span><span class="p">&amp;</span><span class="s1">&#39;   refresh the lbfgs memory and restart the iteration.&#39;</span><span class="p">&amp;</span><span class="w"></span>
-<span class="w">              </span><span class="p">&amp;</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">               </span><span class="p">&amp;</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
 <span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">info</span><span class="o">==</span><span class="mi">0</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">nfgv</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nfgv</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
 <span class="w">            </span><span class="n">info</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w"></span>
 <span class="w">            </span><span class="n">col</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w"></span>
@@ -1966,7 +1983,7 @@ implementation in a submodule of an interface in a parent module.
 <span class="w">      </span><span class="c">! Update matrices WS and WY and form the middle matrix in B.</span>
 
 <span class="w">      </span><span class="k">call </span><span class="n">matupd</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">Ws</span><span class="p">,</span><span class="n">Wy</span><span class="p">,</span><span class="n">Sy</span><span class="p">,</span><span class="n">Ss</span><span class="p">,</span><span class="n">d</span><span class="p">,</span><span class="n">r</span><span class="p">,</span><span class="n">itail</span><span class="p">,</span><span class="n">iupdat</span><span class="p">,</span><span class="n">col</span><span class="p">,</span><span class="n">head</span><span class="p">,</span><span class="n">theta</span><span class="p">,</span><span class="n">rr</span><span class="p">,</span><span class="n">dr</span><span class="p">,&amp;</span><span class="w"></span>
-<span class="w">                </span><span class="p">&amp;</span><span class="w"> </span><span class="n">stp</span><span class="p">,</span><span class="n">dtd</span><span class="p">)</span><span class="w"></span>
+<span class="w">                  </span><span class="n">stp</span><span class="p">,</span><span class="n">dtd</span><span class="p">)</span><span class="w"></span>
 
 <span class="w">      </span><span class="c">! Form the upper half of the pds T = theta*SS + L*D^(-1)*L&#39;;</span>
 <span class="w">      </span><span class="c">!    Store T in the upper triangular of the array wt;</span>
@@ -1981,7 +1998,7 @@ implementation in a submodule of an interface in a parent module.
 <span class="w">         </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">Iprint</span><span class="o">&gt;=</span><span class="mi">1</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">99007</span><span class="p">)</span><span class="w"></span>
 <span class="mi">99007</span><span class="w">    </span><span class="k">format</span><span class="w"> </span><span class="p">(</span><span class="o">/</span><span class="p">,</span><span class="w">                                                     </span><span class="p">&amp;</span><span class="w"></span>
 <span class="w">        </span><span class="p">&amp;</span><span class="s1">&#39; Nonpositive definiteness in Cholesky factorization in formt;&#39;</span><span class="p">&amp;</span><span class="w"></span>
-<span class="w">       </span><span class="p">&amp;</span><span class="w"> </span><span class="p">,</span><span class="o">/</span><span class="p">,</span><span class="s1">&#39;   refresh the lbfgs memory and restart the iteration.&#39;</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="p">&amp;,</span><span class="o">/</span><span class="p">,</span><span class="s1">&#39;   refresh the lbfgs memory and restart the iteration.&#39;</span><span class="p">)</span><span class="w"></span>
 <span class="w">         </span><span class="n">info</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w"></span>
 <span class="w">         </span><span class="n">col</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w"></span>
 <span class="w">         </span><span class="n">head</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>

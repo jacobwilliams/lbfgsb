@@ -92,7 +92,7 @@
           <li id="statements"><i class="fa fa-list-ol"></i>
             <a data-toggle="tooltip"
                data-placement="bottom" data-html="true"
-               title=" 2.5% of total for procedures.">47 statements</a>
+               title=" 2.5% of total for procedures.">48 statements</a>
           </li>
 
             <li id="source-file">
@@ -157,7 +157,15 @@
     
 
     <p>This subroutine initializes iwhere and projects the initial x to
-the feasible set if necessary.</p>
+  the feasible set if necessary.</p>
+<h3>Credits</h3>
+<ul>
+<li>NEOS, November 1994. (Latest revision June 1996.)
+    Optimization Technology Center.
+    Argonne National Laboratory and Northwestern University.
+    Written by Ciyou Zhu
+    in collaboration with R.H. Byrd, P. Lu-Chen and J. Nocedal.</li>
+</ul>
 
 
     <h3>Arguments</h3>
@@ -249,16 +257,21 @@ the feasible set if necessary.</p>
         <tr>
             <td>
               <span class="anchor" id="variable-iwhere~2"></span>
-              integer
+              integer,
             </td>
-<td></td>
+<td>intent(out)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>Iwhere</strong>(n)</td>
             <td>
-                
+                <ul>
+<li><code>iwhere(i)=-1</code> if x(i) has no bounds</li>
+<li><code>iwhere(i)=3</code>  if l(i)=u(i)</li>
+<li><code>iwhere(i)=0</code>  otherwise.</li>
+</ul>
+<p>In <a href="../proc/cauchy.html">cauchy</a>, <code>iwhere</code> is given finer gradations.</p>
             </td>
         </tr>
         <tr>
@@ -501,29 +514,13 @@ implementation in a submodule of an interface in a parent module.
 <span class="w">      </span><span class="k">implicit none</span>
 
 <span class="k">      </span><span class="kt">logical</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Prjctd</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">Cnstnd</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">Boxed</span><span class="w"></span>
-<span class="w">      </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">Iprint</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">Nbd</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">Iwhere</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">Iprint</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">Nbd</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Iwhere</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="c">!! * `iwhere(i)=-1` if x(i) has no bounds</span>
+<span class="w">                                       </span><span class="c">!! * `iwhere(i)=3`  if l(i)=u(i)</span>
+<span class="w">                                       </span><span class="c">!! * `iwhere(i)=0`  otherwise.</span>
+<span class="w">                                       </span><span class="c">!!</span>
+<span class="w">                                       </span><span class="c">!! In [[cauchy]], `iwhere` is given finer gradations.</span>
 <span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">x</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">l</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">u</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"></span>
-
-<span class="c">!</span>
-<span class="c">!     iwhere is an integer array of dimension n.</span>
-<span class="c">!       On entry iwhere is unspecified.</span>
-<span class="c">!       On exit iwhere(i)=-1  if x(i) has no bounds</span>
-<span class="c">!                         3   if l(i)=u(i)</span>
-<span class="c">!                         0   otherwise.</span>
-<span class="c">!       In cauchy, iwhere is given finer gradations.</span>
-<span class="c">!</span>
-<span class="c">!</span>
-<span class="c">!                           *  *  *</span>
-<span class="c">!</span>
-<span class="c">!     NEOS, November 1994. (Latest revision June 1996.)</span>
-<span class="c">!     Optimization Technology Center.</span>
-<span class="c">!     Argonne National Laboratory and Northwestern University.</span>
-<span class="c">!     Written by</span>
-<span class="c">!                        Ciyou Zhu</span>
-<span class="c">!     in collaboration with R.H. Byrd, P. Lu-Chen and J. Nocedal.</span>
-<span class="c">!</span>
-<span class="c">!</span>
-<span class="c">!     ************</span>
 
 <span class="w">      </span><span class="kt">integer </span><span class="n">nbdd</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="w"></span>
 

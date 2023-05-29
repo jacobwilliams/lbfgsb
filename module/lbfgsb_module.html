@@ -92,7 +92,7 @@
           <li id="statements"><i class="fa fa-list-ol"></i>
             <a data-toggle="tooltip"
                data-placement="bottom" data-html="true"
-               title="87.1% of total for modules and submodules.">1689 statements</a>
+               title="87.3% of total for modules and submodules.">1718 statements</a>
           </li>
 
             <li id="source-file">
@@ -231,9 +231,9 @@
       <ul class="list-group">
           <li class="list-group-item">
             <ul class="list-inline">
-                <li><a href='../module/lbfgsb_blas_module.html'>lbfgsb_blas_module</a></li>
                 <li><a href='../module/lbfgsb_kinds_module.html'>lbfgsb_kinds_module</a></li>
                 <li><a href='../module/lbfgsb_linpack_module.html'>lbfgsb_linpack_module</a></li>
+                <li><a href='../module/lbfgsb_blas_module.html'>lbfgsb_blas_module</a></li>
             </ul>
           </li>
           <li class="list-group-item">
@@ -941,151 +941,158 @@ On exit with 'task' = NEW_X, the following information is available:</p><a href=
         <tr>
             <td>
               <span class="anchor" ></span>
-              integer
+              integer,
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>n</strong></td>
             <td>
-
+<p>the number of variables.</p>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" ></span>
-              integer
+              integer,
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>m</strong></td>
             <td>
-
+<p>the maximum number of variable metric
+corrections allowed in the limited memory matrix.</p>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" ></span>
-              real(kind=wp)
+              real(kind=wp),
             </td>
-<td></td>
+<td>intent(inout)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>x</strong>(n)</td>
             <td>
-
+<p>On entry x is an approximation to the solution.
+On exit x is the current approximation.</p>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" ></span>
-              real(kind=wp)
+              real(kind=wp),
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>l</strong>(n)</td>
             <td>
-
+<p>the lower bound of x.</p>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" ></span>
-              real(kind=wp)
+              real(kind=wp),
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>u</strong>(n)</td>
             <td>
-
+<p>the upper bound of x.</p>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" ></span>
-              integer
+              integer,
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>Nbd</strong>(n)</td>
             <td>
-
+<p>the type of bounds imposed on the
+variables, and must be specified as follows:</p><a href="../proc/mainlb.html#variable-nbd~2" class="pull-right"><emph>Read more&hellip;</emph></a>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" ></span>
-              real(kind=wp)
+              real(kind=wp),
             </td>
-<td></td>
+<td>intent(inout)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>f</strong></td>
             <td>
-
+<p>On first entry f is unspecified.
+On final exit f is the value of the function at x.</p>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" ></span>
-              real(kind=wp)
+              real(kind=wp),
             </td>
-<td></td>
+<td>intent(inout)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>g</strong>(n)</td>
             <td>
-
+<p>On first entry g is unspecified.
+On final exit g is the value of the gradient at x.</p>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" ></span>
-              real(kind=wp)
+              real(kind=wp),
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>Factr</strong></td>
             <td>
-
+<p>On entry <code>factr &gt;= 0</code> is specified by the user.  The iteration
+will stop when</p><a href="../proc/mainlb.html#variable-factr~2" class="pull-right"><emph>Read more&hellip;</emph></a>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" ></span>
-              real(kind=wp)
+              real(kind=wp),
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>Pgtol</strong></td>
             <td>
-
+<p>On entry pgtol &gt;= 0 is specified by the user.  The iteration
+will stop when</p><a href="../proc/mainlb.html#variable-pgtol~2" class="pull-right"><emph>Read more&hellip;</emph></a>
             </td>
         </tr>
         <tr>
@@ -1100,7 +1107,7 @@ On exit with 'task' = NEW_X, the following information is available:</p><a href=
             <td>::</td>
             <td><strong>Ws</strong>(n,m)</td>
             <td>
-
+<p>working array used to store information defining the limited memory BFGS matrix: stores S, the matrix of s-vectors;</p>
             </td>
         </tr>
         <tr>
@@ -1115,7 +1122,7 @@ On exit with 'task' = NEW_X, the following information is available:</p><a href=
             <td>::</td>
             <td><strong>Wy</strong>(n,m)</td>
             <td>
-
+<p>working array used to store information defining the limited memory BFGS matrix: stores Y, the matrix of y-vectors;</p>
             </td>
         </tr>
         <tr>
@@ -1130,7 +1137,7 @@ On exit with 'task' = NEW_X, the following information is available:</p><a href=
             <td>::</td>
             <td><strong>Sy</strong>(m,m)</td>
             <td>
-
+<p>working array used to store information defining the limited memory BFGS matrix: stores S'Y;</p>
             </td>
         </tr>
         <tr>
@@ -1145,7 +1152,7 @@ On exit with 'task' = NEW_X, the following information is available:</p><a href=
             <td>::</td>
             <td><strong>Ss</strong>(m,m)</td>
             <td>
-
+<p>working array used to store information defining the limited memory BFGS matrix: stores S'S;</p>
             </td>
         </tr>
         <tr>
@@ -1160,7 +1167,8 @@ On exit with 'task' = NEW_X, the following information is available:</p><a href=
             <td>::</td>
             <td><strong>Wt</strong>(m,m)</td>
             <td>
-
+<p>working array used to store information defining the limited memory BFGS matrix: stores the Cholesky factorization
+of (theta*S'S+LD^(-1)L'); see eq. (2.26) in [3].</p>
             </td>
         </tr>
         <tr>
@@ -1175,7 +1183,8 @@ On exit with 'task' = NEW_X, the following information is available:</p><a href=
             <td>::</td>
             <td><strong>Wn</strong>(2*m,2*m)</td>
             <td>
-
+<p>working array
+ used to store the LEL^T factorization of the indefinite matrix</p><a href="../proc/mainlb.html#variable-wn" class="pull-right"><emph>Read more&hellip;</emph></a>
             </td>
         </tr>
         <tr>
@@ -1190,7 +1199,8 @@ On exit with 'task' = NEW_X, the following information is available:</p><a href=
             <td>::</td>
             <td><strong>Snd</strong>(2*m,2*m)</td>
             <td>
-
+<p>working array
+ used to store the lower triangular part of</p><a href="../proc/mainlb.html#variable-snd" class="pull-right"><emph>Read more&hellip;</emph></a>
             </td>
         </tr>
         <tr>
@@ -1205,7 +1215,8 @@ On exit with 'task' = NEW_X, the following information is available:</p><a href=
             <td>::</td>
             <td><strong>z</strong>(n)</td>
             <td>
-
+<p>working array.
+used at different times to store the Cauchy point and the Newton point.</p>
             </td>
         </tr>
         <tr>
@@ -1220,7 +1231,7 @@ On exit with 'task' = NEW_X, the following information is available:</p><a href=
             <td>::</td>
             <td><strong>r</strong>(n)</td>
             <td>
-
+<p>working array.</p>
             </td>
         </tr>
         <tr>
@@ -1235,7 +1246,7 @@ On exit with 'task' = NEW_X, the following information is available:</p><a href=
             <td>::</td>
             <td><strong>d</strong>(n)</td>
             <td>
-
+<p>working array.</p>
             </td>
         </tr>
         <tr>
@@ -1250,7 +1261,7 @@ On exit with 'task' = NEW_X, the following information is available:</p><a href=
             <td>::</td>
             <td><strong>t</strong>(n)</td>
             <td>
-
+<p>working array.</p>
             </td>
         </tr>
         <tr>
@@ -1265,7 +1276,8 @@ On exit with 'task' = NEW_X, the following information is available:</p><a href=
             <td>::</td>
             <td><strong>Xp</strong>(n)</td>
             <td>
-
+<p>working array.
+used to safeguard the projected Newton direction</p>
             </td>
         </tr>
         <tr>
@@ -1280,7 +1292,7 @@ On exit with 'task' = NEW_X, the following information is available:</p><a href=
             <td>::</td>
             <td><strong>Wa</strong>(8*m)</td>
             <td>
-
+<p>working array.</p>
             </td>
         </tr>
         <tr>
@@ -1295,7 +1307,9 @@ On exit with 'task' = NEW_X, the following information is available:</p><a href=
             <td>::</td>
             <td><strong>Index</strong>(n)</td>
             <td>
-
+<p>working array.
+In subroutine <a href="../proc/freev.html">freev</a>, index is used to store the free and fixed
+variables at the Generalized Cauchy Point (GCP).</p>
             </td>
         </tr>
         <tr>
@@ -1310,7 +1324,8 @@ On exit with 'task' = NEW_X, the following information is available:</p><a href=
             <td>::</td>
             <td><strong>Iwhere</strong>(n)</td>
             <td>
-
+<p>working array used to record
+the status of the vector x for GCP computation:</p><a href="../proc/mainlb.html#variable-iwhere" class="pull-right"><emph>Read more&hellip;</emph></a>
             </td>
         </tr>
         <tr>
@@ -1325,37 +1340,42 @@ On exit with 'task' = NEW_X, the following information is available:</p><a href=
             <td>::</td>
             <td><strong>Indx2</strong>(n)</td>
             <td>
-
+<p>integer working array.
+Within subroutine <a href="../proc/cauchy.html">cauchy</a>, indx2 corresponds to the array iorder.
+In subroutine <a href="../proc/freev.html">freev</a>, a list of variables entering and leaving
+the free set is stored in indx2, and it is passed on to
+subroutine <a href="../proc/formk.html">formk</a> with this information.</p>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" ></span>
-              character(len=60)
+              character(len=60),
             </td>
-<td></td>
+<td>intent(inout)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>Task</strong></td>
             <td>
-
+<p>indicates the current job when
+entering and leaving this subroutine.</p>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" ></span>
-              integer
+              integer,
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>Iprint</strong></td>
             <td>
-
+<p>Controls the frequency and type of output generated:</p><a href="../proc/mainlb.html#variable-iprint~2" class="pull-right"><emph>Read more&hellip;</emph></a>
             </td>
         </tr>
         <tr>
@@ -1370,7 +1390,7 @@ On exit with 'task' = NEW_X, the following information is available:</p><a href=
             <td>::</td>
             <td><strong>Csave</strong></td>
             <td>
-
+<p>working string</p>
             </td>
         </tr>
         <tr>
@@ -1385,7 +1405,7 @@ On exit with 'task' = NEW_X, the following information is available:</p><a href=
             <td>::</td>
             <td><strong>Lsave</strong>(4)</td>
             <td>
-
+<p>working array</p>
             </td>
         </tr>
         <tr>
@@ -1400,7 +1420,7 @@ On exit with 'task' = NEW_X, the following information is available:</p><a href=
             <td>::</td>
             <td><strong>Isave</strong>(23)</td>
             <td>
-
+<p>working array</p>
             </td>
         </tr>
         <tr>
@@ -1415,7 +1435,7 @@ On exit with 'task' = NEW_X, the following information is available:</p><a href=
             <td>::</td>
             <td><strong>Dsave</strong>(29)</td>
             <td>
-
+<p>working array</p>
             </td>
         </tr>
     </tbody>
@@ -1431,7 +1451,7 @@ On exit with 'task' = NEW_X, the following information is available:</p><a href=
     <div class="panel-body">
           
   <p>This subroutine initializes iwhere and projects the initial x to
-the feasible set if necessary.</p>
+  the feasible set if necessary.</p><a href="../proc/active.html" class="pull-right"><emph>Read more&hellip;</emph></a>
 
   <h4>Arguments</h4>
       <table class="table table-striped varlist">
@@ -1522,16 +1542,16 @@ the feasible set if necessary.</p>
         <tr>
             <td>
               <span class="anchor" ></span>
-              integer
+              integer,
             </td>
-<td></td>
+<td>intent(out)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>Iwhere</strong>(n)</td>
             <td>
-
+<p>In <a href="../proc/cauchy.html">cauchy</a>, <code>iwhere</code> is given finer gradations.</p><a href="../proc/active.html#variable-iwhere~2" class="pull-right"><emph>Read more&hellip;</emph></a>
             </td>
         </tr>
         <tr>
@@ -1739,10 +1759,10 @@ the feasible set if necessary.</p>
     <div class="panel-body">
           
   <p>For given x, l, u, g (with sbgnrm &gt; 0), and a limited memory
-BFGS matrix B defined in terms of matrices WY, WS, WT, and
-scalars head, col, and theta, this subroutine computes the
-generalized Cauchy point (GCP), defined as the first local
-minimizer of the quadratic</p><a href="../proc/cauchy.html" class="pull-right"><emph>Read more&hellip;</emph></a>
+  BFGS matrix B defined in terms of matrices WY, WS, WT, and
+  scalars head, col, and theta, this subroutine computes the
+  generalized Cauchy point (GCP), defined as the first local
+  minimizer of the quadratic</p><a href="../proc/cauchy.html" class="pull-right"><emph>Read more&hellip;</emph></a>
 
   <h4>Arguments</h4>
       <table class="table table-striped varlist">
@@ -2791,7 +2811,7 @@ variables leaving the free set.</p>
             <td><strong>Wn</strong>(2*m,2*m)</td>
             <td>
 <p>On exit the upper triangle of wn stores the LEL^T factorization
- of the 2<em>col x 2</em>col indefinite matrix</p><a href="../proc/formk.html#variable-wn" class="pull-right"><emph>Read more&hellip;</emph></a>
+ of the 2<em>col x 2</em>col indefinite matrix</p><a href="../proc/formk.html#variable-wn~2" class="pull-right"><emph>Read more&hellip;</emph></a>
             </td>
         </tr>
         <tr>
@@ -3132,7 +3152,7 @@ used to define the limited memory matrix.</p>
             <td>::</td>
             <td><strong>Index</strong>(n)</td>
             <td>
-<p>for i=nfree+1,...,n, index(i) are the indices of bound variables</p><a href="../proc/freev.html#variable-index" class="pull-right"><emph>Read more&hellip;</emph></a>
+<p>for i=nfree+1,...,n, index(i) are the indices of bound variables</p><a href="../proc/freev.html#variable-index~2" class="pull-right"><emph>Read more&hellip;</emph></a>
             </td>
         </tr>
         <tr>
@@ -3178,7 +3198,7 @@ used to define the limited memory matrix.</p>
             <td><strong>Indx2</strong>(n)</td>
             <td>
 <p>On exit with iter&gt;0, indx2 indicates which variables
-   have changed status since the previous iteration.</p><a href="../proc/freev.html#variable-indx2~2" class="pull-right"><emph>Read more&hellip;</emph></a>
+   have changed status since the previous iteration.</p><a href="../proc/freev.html#variable-indx2~3" class="pull-right"><emph>Read more&hellip;</emph></a>
             </td>
         </tr>
         <tr>
@@ -5166,7 +5186,7 @@ used to define the limited memory matrix.</p>
             <td><strong>Nbd</strong>(n)</td>
             <td>
 <p>represents the type of bounds imposed on the
-variables, and must be specified as follows:</p><a href="../proc/subsm.html#variable-nbd~2" class="pull-right"><emph>Read more&hellip;</emph></a>
+variables, and must be specified as follows:</p><a href="../proc/subsm.html#variable-nbd~3" class="pull-right"><emph>Read more&hellip;</emph></a>
             </td>
         </tr>
         <tr>
@@ -5369,7 +5389,7 @@ head is the location of the 1st s- (or y-) vector in S (or Y)</p>
             <td><strong>Wn</strong>(2*m,2*m)</td>
             <td>
 <p>The upper triangle of wn stores the LEL^T factorization
- of the indefinite matrix</p><a href="../proc/subsm.html#variable-wn~2" class="pull-right"><emph>Read more&hellip;</emph></a>
+ of the indefinite matrix</p><a href="../proc/subsm.html#variable-wn~3" class="pull-right"><emph>Read more&hellip;</emph></a>
             </td>
         </tr>
         <tr>
@@ -5440,7 +5460,7 @@ head is the location of the 1st s- (or y-) vector in S (or Y)</p>
             <td>::</td>
             <td><strong>f</strong></td>
             <td>
-<a href="../proc/dcsrch.html#variable-f~2" class="pull-right"><emph>Read more&hellip;</emph></a>
+<a href="../proc/dcsrch.html#variable-f~3" class="pull-right"><emph>Read more&hellip;</emph></a>
             </td>
         </tr>
         <tr>
@@ -5455,7 +5475,7 @@ head is the location of the 1st s- (or y-) vector in S (or Y)</p>
             <td>::</td>
             <td><strong>g</strong></td>
             <td>
-<a href="../proc/dcsrch.html#variable-g~2" class="pull-right"><emph>Read more&hellip;</emph></a>
+<a href="../proc/dcsrch.html#variable-g~3" class="pull-right"><emph>Read more&hellip;</emph></a>
             </td>
         </tr>
         <tr>
@@ -5564,7 +5584,7 @@ is less than <code>xtol</code>.</p>
             <td>::</td>
             <td><strong>Task</strong></td>
             <td>
-<p><code>task</code> is a character variable of length at least 60:</p><a href="../proc/dcsrch.html#variable-task~2" class="pull-right"><emph>Read more&hellip;</emph></a>
+<p><code>task</code> is a character variable of length at least 60:</p><a href="../proc/dcsrch.html#variable-task~3" class="pull-right"><emph>Read more&hellip;</emph></a>
             </td>
         </tr>
         <tr>
