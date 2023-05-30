@@ -92,7 +92,7 @@
           <li id="statements"><i class="fa fa-list-ol"></i>
             <a data-toggle="tooltip"
                data-placement="bottom" data-html="true"
-               title=" 2.6% of total for procedures.">51 statements</a>
+               title=" 2.8% of total for procedures.">55 statements</a>
           </li>
 
             <li id="source-file">
@@ -157,51 +157,16 @@
     
 
     <p>dtrsl solves systems of the form</p>
-<div class="codehilite"><pre><span></span><code>          t * x = b
-</code></pre></div>
-
-<p>or
-              trans(t) * x = b</p>
+<p><code>t * x = b</code></p>
+<p>or</p>
+<p><code>trans(t) * x = b</code></p>
 <p>where t is a triangular matrix of order n. here trans(t)
-denotes the transpose of the matrix t.</p>
-<p>on entry</p>
-<div class="codehilite"><pre><span></span><code><span class="nv">t</span>         <span class="nv">real</span><span class="ss">(</span><span class="nv">wp</span><span class="ss">)(</span><span class="nv">ldt</span>,<span class="nv">n</span><span class="ss">)</span>
-          <span class="nv">t</span> <span class="nv">contains</span> <span class="nv">the</span> <span class="nv">matrix</span> <span class="nv">of</span> <span class="nv">the</span> <span class="nv">system</span>. <span class="nv">the</span> <span class="nv">zero</span>
-          <span class="nv">elements</span> <span class="nv">of</span> <span class="nv">the</span> <span class="nv">matrix</span> <span class="nv">are</span> <span class="nv">not</span> <span class="nv">referenced</span>, <span class="nv">and</span>
-          <span class="nv">the</span> <span class="nv">corresponding</span> <span class="nv">elements</span> <span class="nv">of</span> <span class="nv">the</span> <span class="nv">array</span> <span class="nv">can</span> <span class="nv">be</span>
-          <span class="nv">used</span> <span class="nv">to</span> <span class="nv">store</span> <span class="nv">other</span> <span class="nv">information</span>.
-
-<span class="nv">ldt</span>       <span class="nv">integer</span>
-          <span class="nv">ldt</span> <span class="nv">is</span> <span class="nv">the</span> <span class="nv">leading</span> <span class="nv">dimension</span> <span class="nv">of</span> <span class="nv">the</span> <span class="nv">array</span> <span class="nv">t</span>.
-
-<span class="nv">n</span>         <span class="nv">integer</span>
-          <span class="nv">n</span> <span class="nv">is</span> <span class="nv">the</span> <span class="nv">order</span> <span class="nv">of</span> <span class="nv">the</span> <span class="nv">system</span>.
-
-<span class="nv">b</span>         <span class="nv">real</span><span class="ss">(</span><span class="nv">wp</span><span class="ss">)(</span><span class="nv">n</span><span class="ss">)</span>.
-          <span class="nv">b</span> <span class="nv">contains</span> <span class="nv">the</span> <span class="nv">right</span> <span class="nv">hand</span> <span class="nv">side</span> <span class="nv">of</span> <span class="nv">the</span> <span class="nv">system</span>.
-
-<span class="nv">job</span>       <span class="nv">integer</span>
-          <span class="nv">job</span> <span class="nv">specifies</span> <span class="nv">what</span> <span class="nv">kind</span> <span class="nv">of</span> <span class="nv">system</span> <span class="nv">is</span> <span class="nv">to</span> <span class="nv">be</span> <span class="nv">solved</span>.
-          <span class="k">if</span> <span class="nv">job</span> <span class="nv">is</span>
-
-               <span class="mi">00</span>   <span class="nv">solve</span> <span class="nv">t</span><span class="o">*</span><span class="nv">x</span><span class="o">=</span><span class="nv">b</span>, <span class="nv">t</span> <span class="nv">lower</span> <span class="nv">triangular</span>,
-               <span class="mi">01</span>   <span class="nv">solve</span> <span class="nv">t</span><span class="o">*</span><span class="nv">x</span><span class="o">=</span><span class="nv">b</span>, <span class="nv">t</span> <span class="nv">upper</span> <span class="nv">triangular</span>,
-               <span class="mi">10</span>   <span class="nv">solve</span> <span class="nv">trans</span><span class="ss">(</span><span class="nv">t</span><span class="ss">)</span><span class="o">*</span><span class="nv">x</span><span class="o">=</span><span class="nv">b</span>, <span class="nv">t</span> <span class="nv">lower</span> <span class="nv">triangular</span>,
-               <span class="mi">11</span>   <span class="nv">solve</span> <span class="nv">trans</span><span class="ss">(</span><span class="nv">t</span><span class="ss">)</span><span class="o">*</span><span class="nv">x</span><span class="o">=</span><span class="nv">b</span>, <span class="nv">t</span> <span class="nv">upper</span> <span class="nv">triangular</span>.
-</code></pre></div>
-
-<p>on return</p>
-<div class="codehilite"><pre><span></span><code><span class="nv">b</span>         <span class="nv">b</span> <span class="nv">contains</span> <span class="nv">the</span> <span class="nv">solution</span>, <span class="k">if</span> <span class="nv">info</span> <span class="o">==</span> <span class="mi">0</span>.
-          <span class="nv">otherwise</span> <span class="nv">b</span> <span class="nv">is</span> <span class="nv">unaltered</span>.
-
-<span class="nv">info</span>      <span class="nv">integer</span>
-          <span class="nv">info</span> <span class="nv">contains</span> <span class="nv">zero</span> <span class="k">if</span> <span class="nv">the</span> <span class="nv">system</span> <span class="nv">is</span> <span class="nv">nonsingular</span>.
-          <span class="nv">otherwise</span> <span class="nv">info</span> <span class="nv">contains</span> <span class="nv">the</span> <span class="nv">index</span> <span class="nv">of</span>
-          <span class="nv">the</span> <span class="nv">first</span> <span class="nv">zero</span> <span class="nv">diagonal</span> <span class="nv">element</span> <span class="nv">of</span> <span class="nv">t</span>.
-</code></pre></div>
-
-<p>linpack. this version dated 08/14/78 .
-g. w. stewart, university of maryland, argonne national lab.</p>
+  denotes the transpose of the matrix t.</p>
+<h3>History</h3>
+<ul>
+<li>linpack. this version dated 08/14/78 .
+    g. w. stewart, university of maryland, argonne national lab.</li>
+</ul>
 
 
     <h3>Arguments</h3>
@@ -217,92 +182,105 @@ g. w. stewart, university of maryland, argonne national lab.</p>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-t~5"></span>
-              real(kind=wp)
+              <span class="anchor" id="variable-t~4"></span>
+              real(kind=wp),
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>t</strong>(ldt,*)</td>
             <td>
-                
+                <p>t contains the matrix of the system. the zero
+elements of the matrix are not referenced, and
+the corresponding elements of the array can be
+used to store other information.</p>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" id="variable-ldt"></span>
-              integer
+              integer,
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>ldt</strong></td>
             <td>
-                
+                <p>the leading dimension of the array t.</p>
             </td>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-n~18"></span>
-              integer
+              <span class="anchor" id="variable-n~10"></span>
+              integer,
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>n</strong></td>
             <td>
-                
+                <p>the order of the system.</p>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" id="variable-b"></span>
-              real(kind=wp)
+              real(kind=wp),
             </td>
-<td></td>
+<td>intent(inout)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>b</strong>(*)</td>
             <td>
-                
+                <p>On entry: the right hand side of the system.
+On return: the solution, if info == 0. otherwise b is unaltered.</p>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" id="variable-job"></span>
-              integer
+              integer,
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>job</strong></td>
             <td>
-                
+                <p>job specifies what kind of system is to be solved.
+if job is:</p>
+<ul>
+<li><code>00</code>   solve <code>t*x=b</code>, t lower triangular,</li>
+<li><code>01</code>   solve <code>t*x=b</code>, t upper triangular,</li>
+<li><code>10</code>   solve <code>trans(t)*x=b</code>, t lower triangular,</li>
+<li><code>11</code>   solve <code>trans(t)*x=b</code>, t upper triangular.</li>
+</ul>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" id="variable-info~2"></span>
-              integer
+              integer,
             </td>
-<td></td>
+<td>intent(out)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>info</strong></td>
             <td>
-                
+                <p>info contains zero if the system is nonsingular.
+otherwise info contains the index of
+the first zero diagonal element of t.</p>
             </td>
         </tr>
     </tbody>
@@ -707,8 +685,25 @@ implementation in a submodule of an interface in a parent module.
     <h2><span class="anchor" id="src"></span>Source Code</h2>
     <div class="highlight"><pre><span></span><span class="k">subroutine </span><span class="n">dtrsl</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">ldt</span><span class="p">,</span><span class="n">n</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">job</span><span class="p">,</span><span class="n">info</span><span class="p">)</span><span class="w"></span>
 
-<span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">ldt</span><span class="p">,</span><span class="n">n</span><span class="p">,</span><span class="n">job</span><span class="p">,</span><span class="n">info</span><span class="w"></span>
-<span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">t</span><span class="p">(</span><span class="n">ldt</span><span class="p">,</span><span class="o">*</span><span class="p">),</span><span class="n">b</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"></span>
+<span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">ldt</span><span class="w"> </span><span class="c">!! the leading dimension of the array t.</span>
+<span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="c">!! the order of the system.</span>
+<span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">job</span><span class="w"> </span><span class="c">!! job specifies what kind of system is to be solved.</span>
+<span class="w">                          </span><span class="c">!! if job is:</span>
+<span class="w">                          </span><span class="c">!!</span>
+<span class="w">                          </span><span class="c">!!  * `00`   solve `t*x=b`, t lower triangular,</span>
+<span class="w">                          </span><span class="c">!!  * `01`   solve `t*x=b`, t upper triangular,</span>
+<span class="w">                          </span><span class="c">!!  * `10`   solve `trans(t)*x=b`, t lower triangular,</span>
+<span class="w">                          </span><span class="c">!!  * `11`   solve `trans(t)*x=b`, t upper triangular.</span>
+<span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">info</span><span class="w"> </span><span class="c">!! info contains zero if the system is nonsingular.</span>
+<span class="w">                            </span><span class="c">!! otherwise info contains the index of</span>
+<span class="w">                            </span><span class="c">!! the first zero diagonal element of t.</span>
+<span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">t</span><span class="p">(</span><span class="n">ldt</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="c">!! t contains the matrix of the system. the zero</span>
+<span class="w">                                </span><span class="c">!! elements of the matrix are not referenced, and</span>
+<span class="w">                                </span><span class="c">!! the corresponding elements of the array can be</span>
+<span class="w">                                </span><span class="c">!! used to store other information.</span>
+<span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">b</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="c">!! On entry: the right hand side of the system.</span>
+<span class="w">                               </span><span class="c">!! On return: the solution, if info == 0. otherwise b is unaltered.</span>
+
 <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">temp</span><span class="w"></span>
 <span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="k">case</span><span class="p">,</span><span class="n">j</span><span class="p">,</span><span class="n">jj</span><span class="w"></span>
 

@@ -92,7 +92,7 @@
           <li id="statements"><i class="fa fa-list-ol"></i>
             <a data-toggle="tooltip"
                data-placement="bottom" data-html="true"
-               title="87.4% of total for modules and submodules.">1746 statements</a>
+               title="87.1% of total for modules and submodules.">1738 statements</a>
           </li>
 
             <li id="source-file">
@@ -231,9 +231,9 @@
       <ul class="list-group">
           <li class="list-group-item">
             <ul class="list-inline">
+                <li><a href='../module/lbfgsb_kinds_module.html'>lbfgsb_kinds_module</a></li>
                 <li><a href='../module/lbfgsb_linpack_module.html'>lbfgsb_linpack_module</a></li>
                 <li><a href='../module/lbfgsb_blas_module.html'>lbfgsb_blas_module</a></li>
-                <li><a href='../module/lbfgsb_kinds_module.html'>lbfgsb_kinds_module</a></li>
             </ul>
           </li>
           <li class="list-group-item">
@@ -1450,7 +1450,7 @@ entering and leaving this subroutine.</p>
 </h3></div>
     <div class="panel-body">
           
-  <p>This subroutine initializes iwhere and projects the initial x to
+  <p>This subroutine initializes <code>iwhere</code> and projects the initial <code>x</code> to
   the feasible set if necessary.</p><a href="../proc/active.html" class="pull-right"><emph>Read more&hellip;</emph></a>
 
   <h4>Arguments</h4>
@@ -1644,106 +1644,109 @@ entering and leaving this subroutine.</p>
         <tr>
             <td>
               <span class="anchor" ></span>
-              integer
+              integer,
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>m</strong></td>
             <td>
-
+<p>the maximum number of variable metric corrections
+used to define the limited memory matrix.</p>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" ></span>
-              real(kind=wp)
+              real(kind=wp),
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>Sy</strong>(m,m)</td>
             <td>
-
+<p>specifies the matrix S'Y.</p>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" ></span>
-              real(kind=wp)
+              real(kind=wp),
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>Wt</strong>(m,m)</td>
             <td>
-
+<p>specifies the upper triangular matrix J' which is
+the Cholesky factor of (thetaS'S+LD^(-1)L').</p>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" ></span>
-              integer
+              integer,
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>Col</strong></td>
             <td>
-
+<p>specifies the number of s-vectors (or y-vectors)
+stored in the compact L-BFGS formula.</p>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" ></span>
-              real(kind=wp)
+              real(kind=wp),
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>v</strong>(2*Col)</td>
             <td>
-
+<p>specifies vector v.</p>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" ></span>
-              real(kind=wp)
+              real(kind=wp),
             </td>
-<td></td>
+<td>intent(out)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>p</strong>(2*Col)</td>
             <td>
-
+<p>the product Mv</p>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" ></span>
-              integer
+              integer,
             </td>
-<td></td>
+<td>intent(out)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>Info</strong></td>
             <td>
-
+<p>On exit:</p><a href="../proc/bmv.html#variable-info" class="pull-right"><emph>Read more&hellip;</emph></a>
             </td>
         </tr>
     </tbody>
@@ -2184,7 +2187,7 @@ in searching for the GCP.</p>
             <td><strong>Info</strong></td>
             <td>
 <p>On entry info is 0.
-On exit:</p><a href="../proc/cauchy.html#variable-info" class="pull-right"><emph>Read more&hellip;</emph></a>
+On exit:</p><a href="../proc/cauchy.html#variable-info~2" class="pull-right"><emph>Read more&hellip;</emph></a>
             </td>
         </tr>
         <tr>
@@ -2954,7 +2957,7 @@ used to define the limited memory matrix.</p>
             <td>::</td>
             <td><strong>Info</strong></td>
             <td>
-<p>On exit:</p><a href="../proc/formk.html#variable-info~2" class="pull-right"><emph>Read more&hellip;</emph></a>
+<p>On exit:</p><a href="../proc/formk.html#variable-info~3" class="pull-right"><emph>Read more&hellip;</emph></a>
             </td>
         </tr>
     </tbody>
@@ -4177,121 +4180,122 @@ permuted in accordance with t.</p>
         <tr>
             <td>
               <span class="anchor" ></span>
-              integer
+              integer,
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>n</strong></td>
             <td>
-
+<p>the dimension of the problem</p>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" ></span>
-              integer
+              integer,
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>m</strong></td>
             <td>
-
+<p>the maximum number of variable metric
+corrections allowed in the limited memory matrix.</p>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" ></span>
-              real(kind=wp)
+              real(kind=wp),
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>l</strong>(n)</td>
             <td>
-
+<p>the lower bound on <code>x</code>.</p>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" ></span>
-              real(kind=wp)
+              real(kind=wp),
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>u</strong>(n)</td>
             <td>
-
+<p>the upper bound on <code>x</code>.</p>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" ></span>
-              real(kind=wp)
+              real(kind=wp),
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>x</strong>(n)</td>
             <td>
-
+<p>initial solution point</p>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" ></span>
-              integer
+              integer,
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>Iprint</strong></td>
             <td>
-
+<p>Controls the frequency and type of output generated</p>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" ></span>
-              integer
+              integer,
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>Itfile</strong></td>
             <td>
-
+<p>iteration print file unit</p>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" ></span>
-              real(kind=wp)
+              real(kind=wp),
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>Epsmch</strong></td>
             <td>
-
+<p>machine precision</p>
             </td>
         </tr>
     </tbody>
@@ -4488,16 +4492,16 @@ permuted in accordance with t.</p>
         <tr>
             <td>
               <span class="anchor" ></span>
-              character(len=3)
+              character(len=3),
             </td>
-<td></td>
+<td>intent(out)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>Word</strong></td>
             <td>
-
+<p>records the status of subspace solutions.</p>
             </td>
         </tr>
         <tr>
@@ -4944,8 +4948,7 @@ permuted in accordance with t.</p>
 </h3></div>
     <div class="panel-body">
           
-  <p>This subroutine computes the infinity norm of the projected
-  gradient.</p><a href="../proc/projgr.html" class="pull-right"><emph>Read more&hellip;</emph></a>
+  <p>This subroutine computes the infinity norm of the projected gradient.</p><a href="../proc/projgr.html" class="pull-right"><emph>Read more&hellip;</emph></a>
 
   <h4>Arguments</h4>
       <table class="table table-striped varlist">
@@ -4970,15 +4973,15 @@ permuted in accordance with t.</p>
             <td>::</td>
             <td><strong>n</strong></td>
             <td>
-
+<p>the dimension of the problem (the number of variables).</p>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" ></span>
-              real(kind=wp)
+              real(kind=wp),
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
@@ -4991,9 +4994,9 @@ permuted in accordance with t.</p>
         <tr>
             <td>
               <span class="anchor" ></span>
-              real(kind=wp)
+              real(kind=wp),
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
@@ -5006,9 +5009,9 @@ permuted in accordance with t.</p>
         <tr>
             <td>
               <span class="anchor" ></span>
-              integer
+              integer,
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
@@ -5021,9 +5024,9 @@ permuted in accordance with t.</p>
         <tr>
             <td>
               <span class="anchor" ></span>
-              real(kind=wp)
+              real(kind=wp),
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
@@ -5036,9 +5039,9 @@ permuted in accordance with t.</p>
         <tr>
             <td>
               <span class="anchor" ></span>
-              real(kind=wp)
+              real(kind=wp),
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
@@ -5051,16 +5054,16 @@ permuted in accordance with t.</p>
         <tr>
             <td>
               <span class="anchor" ></span>
-              real(kind=wp)
+              real(kind=wp),
             </td>
-<td></td>
+<td>intent(out)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>Sbgnrm</strong></td>
             <td>
-
+<p>infinity norm of the projected gradient</p>
             </td>
         </tr>
     </tbody>
@@ -5426,7 +5429,7 @@ head is the location of the 1st s- (or y-) vector in S (or Y)</p>
             <td>::</td>
             <td><strong>Info</strong></td>
             <td>
-<p>On exit:</p><a href="../proc/subsm.html#variable-info~3" class="pull-right"><emph>Read more&hellip;</emph></a>
+<p>On exit:</p><a href="../proc/subsm.html#variable-info~4" class="pull-right"><emph>Read more&hellip;</emph></a>
             </td>
         </tr>
     </tbody>

@@ -92,7 +92,7 @@
           <li id="statements"><i class="fa fa-list-ol"></i>
             <a data-toggle="tooltip"
                data-placement="bottom" data-html="true"
-               title=" 2.5% of total for procedures.">48 statements</a>
+               title=" 2.4% of total for procedures.">47 statements</a>
           </li>
 
             <li id="source-file">
@@ -156,7 +156,7 @@
 </h2>
     
 
-    <p>This subroutine initializes iwhere and projects the initial x to
+    <p>This subroutine initializes <code>iwhere</code> and projects the initial <code>x</code> to
   the feasible set if necessary.</p>
 <h3>Credits</h3>
 <ul>
@@ -181,7 +181,7 @@
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-n~7"></span>
+              <span class="anchor" id="variable-n~11"></span>
               integer
             </td>
 <td></td>
@@ -196,7 +196,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-l~5"></span>
+              <span class="anchor" id="variable-l~6"></span>
               real(kind=wp)
             </td>
 <td></td>
@@ -211,7 +211,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-u~5"></span>
+              <span class="anchor" id="variable-u~6"></span>
               real(kind=wp)
             </td>
 <td></td>
@@ -241,7 +241,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-x~5"></span>
+              <span class="anchor" id="variable-x~6"></span>
               real(kind=wp)
             </td>
 <td></td>
@@ -276,7 +276,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-iprint~5"></span>
+              <span class="anchor" id="variable-iprint~6"></span>
               integer
             </td>
 <td></td>
@@ -576,9 +576,8 @@ implementation in a submodule of an interface in a parent module.
 <span class="w">         </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="p">.</span><span class="nb">not</span><span class="p">.</span><span class="n">Cnstnd</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="s1">&#39;This problem is unconstrained.&#39;</span><span class="w"></span>
 <span class="w">      </span><span class="k">endif</span>
 
-<span class="k">      if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">Iprint</span><span class="o">&gt;</span><span class="mi">0</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">99001</span><span class="p">)</span><span class="w"> </span><span class="n">nbdd</span><span class="w"></span>
-
-<span class="mi">99001</span><span class="w"> </span><span class="k">format</span><span class="w"> </span><span class="p">(</span><span class="o">/</span><span class="p">,</span><span class="s1">&#39;At X0 &#39;</span><span class="p">,</span><span class="n">i9</span><span class="p">,</span><span class="s1">&#39; variables are exactly at the bounds&#39;</span><span class="p">)</span><span class="w"></span>
+<span class="k">      if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">Iprint</span><span class="o">&gt;</span><span class="mi">0</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="s1">&#39;(/,a,i9,a)&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">&amp;</span><span class="w"></span>
+<span class="w">            </span><span class="s1">&#39;At X0 &#39;</span><span class="p">,</span><span class="w"> </span><span class="n">nbdd</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39; variables are exactly at the bounds&#39;</span><span class="w"></span>
 
 <span class="w">      </span><span class="k">end subroutine </span><span class="n">active</span><span class="w"></span>
 </pre></div>

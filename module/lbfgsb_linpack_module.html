@@ -93,7 +93,7 @@
           <li id="statements"><i class="fa fa-list-ol"></i>
             <a data-toggle="tooltip"
                data-placement="bottom" data-html="true"
-               title=" 4.2% of total for modules and submodules.">83 statements</a>
+               title=" 4.5% of total for modules and submodules.">89 statements</a>
           </li>
 
             <li id="source-file">
@@ -168,8 +168,8 @@
       <ul class="list-group">
           <li class="list-group-item">
             <ul class="list-inline">
-                <li><a href='../module/lbfgsb_blas_module.html'>lbfgsb_blas_module</a></li>
                 <li><a href='../module/lbfgsb_kinds_module.html'>lbfgsb_kinds_module</a></li>
+                <li><a href='../module/lbfgsb_blas_module.html'>lbfgsb_blas_module</a></li>
             </ul>
           </li>
           <li class="list-group-item">
@@ -483,8 +483,7 @@ modules which it uses.
 </h3></div>
     <div class="panel-body">
           
-  <p>dpofa factors a real(wp) symmetric positive definite
-matrix.</p><a href="../proc/dpofa.html" class="pull-right"><emph>Read more&hellip;</emph></a>
+  <p>dpofa factors a real symmetric positive definite matrix.</p><a href="../proc/dpofa.html" class="pull-right"><emph>Read more&hellip;</emph></a>
 
   <h4>Arguments</h4>
       <table class="table table-striped varlist">
@@ -500,61 +499,61 @@ matrix.</p><a href="../proc/dpofa.html" class="pull-right"><emph>Read more&helli
         <tr>
             <td>
               <span class="anchor" ></span>
-              real(kind=wp)
+              real(kind=wp),
             </td>
-<td></td>
+<td>intent(inout)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>a</strong>(lda,*)</td>
             <td>
-
+<p>Dimension <code>(lda, n)</code>:</p><a href="../proc/dpofa.html#variable-a" class="pull-right"><emph>Read more&hellip;</emph></a>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" ></span>
-              integer
+              integer,
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>lda</strong></td>
             <td>
-
+<p>the leading dimension of the array <code>a</code>.</p>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" ></span>
-              integer
+              integer,
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>n</strong></td>
             <td>
-
+<p>the order of the matrix a.</p>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" ></span>
-              integer
+              integer,
             </td>
-<td></td>
+<td>intent(out)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>info</strong></td>
             <td>
-
+<a href="../proc/dpofa.html#variable-info" class="pull-right"><emph>Read more&hellip;</emph></a>
             </td>
         </tr>
     </tbody>
@@ -585,91 +584,98 @@ matrix.</p><a href="../proc/dpofa.html" class="pull-right"><emph>Read more&helli
         <tr>
             <td>
               <span class="anchor" ></span>
-              real(kind=wp)
+              real(kind=wp),
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>t</strong>(ldt,*)</td>
             <td>
-
+<p>t contains the matrix of the system. the zero
+elements of the matrix are not referenced, and
+the corresponding elements of the array can be
+used to store other information.</p>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" ></span>
-              integer
+              integer,
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>ldt</strong></td>
             <td>
-
+<p>the leading dimension of the array t.</p>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" ></span>
-              integer
+              integer,
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>n</strong></td>
             <td>
-
+<p>the order of the system.</p>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" ></span>
-              real(kind=wp)
+              real(kind=wp),
             </td>
-<td></td>
+<td>intent(inout)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>b</strong>(*)</td>
             <td>
-
+<p>On entry: the right hand side of the system.
+On return: the solution, if info == 0. otherwise b is unaltered.</p>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" ></span>
-              integer
+              integer,
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>job</strong></td>
             <td>
-
+<p>job specifies what kind of system is to be solved.
+if job is:</p><a href="../proc/dtrsl.html#variable-job" class="pull-right"><emph>Read more&hellip;</emph></a>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" ></span>
-              integer
+              integer,
             </td>
-<td></td>
+<td>intent(out)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>info</strong></td>
             <td>
-
+<p>info contains zero if the system is nonsingular.
+otherwise info contains the index of
+the first zero diagonal element of t.</p>
             </td>
         </tr>
     </tbody>

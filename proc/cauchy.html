@@ -92,7 +92,7 @@
           <li id="statements"><i class="fa fa-list-ol"></i>
             <a data-toggle="tooltip"
                data-placement="bottom" data-html="true"
-               title="11.3% of total for procedures.">222 statements</a>
+               title="11.2% of total for procedures.">218 statements</a>
           </li>
 
             <li id="source-file">
@@ -388,7 +388,7 @@ or free (<code>iwhere= -1</code>) components of <code>x</code>.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-m~3"></span>
+              <span class="anchor" id="variable-m~4"></span>
               integer,
             </td>
 <td>intent(in)</td>
@@ -434,7 +434,7 @@ used to define the limited memory matrix.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-sy~2"></span>
+              <span class="anchor" id="variable-sy~3"></span>
               real(kind=wp),
             </td>
 <td>intent(in)</td>
@@ -449,7 +449,7 @@ used to define the limited memory matrix.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-wt~2"></span>
+              <span class="anchor" id="variable-wt~3"></span>
               real(kind=wp),
             </td>
 <td>intent(in)</td>
@@ -479,7 +479,7 @@ used to define the limited memory matrix.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-col"></span>
+              <span class="anchor" id="variable-col~2"></span>
               integer,
             </td>
 <td>intent(in)</td>
@@ -509,7 +509,7 @@ used to define the limited memory matrix.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-p"></span>
+              <span class="anchor" id="variable-p~2"></span>
               real(kind=wp)
             </td>
 <td></td>
@@ -555,7 +555,7 @@ row of <code>W</code> corresponding to a breakpoint.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-v"></span>
+              <span class="anchor" id="variable-v~2"></span>
               real(kind=wp)
             </td>
 <td></td>
@@ -626,7 +626,7 @@ summarize the iteration.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-info"></span>
+              <span class="anchor" id="variable-info~2"></span>
               integer,
             </td>
 <td>intent(inout)</td>
@@ -1154,8 +1154,8 @@ implementation in a submodule of an interface in a parent module.
 <span class="w">      </span><span class="n">bkmin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">zero</span><span class="w"></span>
 <span class="w">      </span><span class="n">col2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="o">*</span><span class="n">Col</span><span class="w"></span>
 <span class="w">      </span><span class="n">f1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">zero</span><span class="w"></span>
-<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">Iprint</span><span class="o">&gt;=</span><span class="mi">99</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">99001</span><span class="p">)</span><span class="w"></span>
-<span class="mi">99001</span><span class="w"> </span><span class="k">format</span><span class="w"> </span><span class="p">(</span><span class="o">/</span><span class="p">,</span><span class="s1">&#39;---------------- CAUCHY entered-------------------&#39;</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">Iprint</span><span class="o">&gt;=</span><span class="mi">99</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="s1">&#39;(/,a)&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">&amp;</span><span class="w"></span>
+<span class="w">            </span><span class="s1">&#39;---------------- CAUCHY entered-------------------&#39;</span><span class="w"></span>
 
 <span class="w">      </span><span class="c">! We set p to zero and build it up as we determine d.</span>
 
@@ -1306,10 +1306,8 @@ implementation in a submodule of an interface in a parent module.
 <span class="k">            </span><span class="n">dt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tj</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">tj0</span><span class="w"></span>
 
 <span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">dt</span><span class="o">/=</span><span class="n">zero</span><span class="w"> </span><span class="p">.</span><span class="nb">and</span><span class="p">.</span><span class="w"> </span><span class="n">Iprint</span><span class="o">&gt;=</span><span class="mi">100</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
-<span class="k">               write</span><span class="w"> </span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">99002</span><span class="p">)</span><span class="w"> </span><span class="n">Nseg</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">f1</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">f2</span><span class="w"></span>
-<span class="w">      </span><span class="mi">99002</span><span class="w">    </span><span class="k">format</span><span class="w"> </span><span class="p">(</span><span class="o">/</span><span class="p">,</span><span class="s1">&#39;Piece    &#39;</span><span class="p">,</span><span class="n">i3</span><span class="p">,</span><span class="s1">&#39; --f1, f2 at start point &#39;</span><span class="p">,</span><span class="mi">1</span><span class="n">p</span><span class="p">,</span><span class="mi">2</span><span class="p">(</span><span class="mi">1</span><span class="n">x</span><span class="p">,</span><span class="n">d11</span><span class="p">.</span><span class="mi">4</span><span class="p">))</span><span class="w"></span>
-<span class="w">               </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">99003</span><span class="p">)</span><span class="w"> </span><span class="n">dt</span><span class="w"></span>
-<span class="w">      </span><span class="mi">99003</span><span class="w">    </span><span class="k">format</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;Distance to the next break point =  &#39;</span><span class="p">,</span><span class="mi">1</span><span class="n">p</span><span class="p">,</span><span class="n">d11</span><span class="p">.</span><span class="mi">4</span><span class="p">)</span><span class="w"></span>
+<span class="k">               write</span><span class="w"> </span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="s1">&#39;(/,a,i3,a,1p,2(1x,d11.4))&#39;</span><span class="p">)</span><span class="w"> </span><span class="s1">&#39;Piece    &#39;</span><span class="p">,</span><span class="w"> </span><span class="n">Nseg</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39; --f1, f2 at start point &#39;</span><span class="p">,</span><span class="w"> </span><span class="n">f1</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">f2</span><span class="w"></span>
+<span class="w">               </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="s1">&#39;(a,1p,d11.4)&#39;</span><span class="p">)</span><span class="w"> </span><span class="s1">&#39;Distance to the next break point =  &#39;</span><span class="p">,</span><span class="w"> </span><span class="n">dt</span><span class="w"></span>
 <span class="w">               </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="s1">&#39;(A,1p,d11.4)&#39;</span><span class="p">)</span><span class="w"> </span><span class="s1">&#39;Distance to the stationary point =  &#39;</span><span class="p">,</span><span class="n">dtm</span><span class="w"></span>
 <span class="w">            </span><span class="k">endif</span><span class="w"></span>
 
@@ -1404,8 +1402,8 @@ implementation in a submodule of an interface in a parent module.
 <span class="k">      if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">Iprint</span><span class="o">&gt;=</span><span class="mi">99</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
 <span class="k">         write</span><span class="w"> </span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"></span>
 <span class="w">         </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="s1">&#39;GCP found in this segment&#39;</span><span class="w"></span>
-<span class="w">         </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">99004</span><span class="p">)</span><span class="w"> </span><span class="n">Nseg</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">f1</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">f2</span><span class="w"></span>
-<span class="mi">99004</span><span class="w">    </span><span class="k">format</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;Piece    &#39;</span><span class="p">,</span><span class="n">i3</span><span class="p">,</span><span class="s1">&#39; --f1, f2 at start point &#39;</span><span class="p">,</span><span class="mi">1</span><span class="n">p</span><span class="p">,</span><span class="mi">2</span><span class="p">(</span><span class="mi">1</span><span class="n">x</span><span class="p">,</span><span class="n">d11</span><span class="p">.</span><span class="mi">4</span><span class="p">))</span><span class="w"></span>
+<span class="w">         </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="s1">&#39;(a,i3,a,1p,2(1x,d11.4))&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">&amp;</span><span class="w"></span>
+<span class="w">                     </span><span class="s1">&#39;Piece    &#39;</span><span class="p">,</span><span class="w"> </span><span class="n">Nseg</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="s1">&#39; --f1, f2 at start point &#39;</span><span class="p">,</span><span class="w"> </span><span class="n">f1</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">f2</span><span class="w"></span>
 <span class="w">         </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="s1">&#39;(A,1p,d11.4)&#39;</span><span class="p">)</span><span class="w"> </span><span class="s1">&#39;Distance to the stationary point =  &#39;</span><span class="p">,</span><span class="n">dtm</span><span class="w"></span>
 <span class="w">      </span><span class="k">endif</span>
 <span class="k">      if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">dtm</span><span class="o">&lt;=</span><span class="n">zero</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">dtm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">zero</span><span class="w"></span>
