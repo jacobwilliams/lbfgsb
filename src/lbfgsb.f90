@@ -567,12 +567,10 @@
       call projgr(n,l,u,Nbd,x,g,sbgnrm)
 
       if ( Iprint>=1 ) then
-         write (6,99001) iter , f , sbgnrm
-99001    format (/,'At iterate',i5,4x,'f= ',1p,d12.5,4x,'|proj g|= ',1p,&
-                 d12.5)
-         write (itfile,99002) iter , nfgv , sbgnrm , f
-99002    format (2(1x,i4),5x,'-',5x,'-',3x,'-',5x,'-',5x,'-',8x,'-',3x, &
-                 1p,2(1x,d10.3))
+         write (6,'(/,a,i5,4x,a,1p,d12.5,4x,a,1p,d12.5)') &
+                  'At iterate', iter , 'f= ', f , '|proj g|= ', sbgnrm
+         write (itfile,'(2(1x,i4),5x,a,5x,a,3x,a,5x,a,5x,a,8x,a,3x,1p,2(1x,d10.3))') &
+                  iter , nfgv , '-', '-', '-', '-', '-', '-', sbgnrm , f
       endif
       if ( sbgnrm<=Pgtol ) then
          ! terminate the algorithm.
@@ -818,11 +816,11 @@
          goto 200
       endif
 
-!ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-!
-!     Update the L-BFGS matrix.
-!
-!ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+      !ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+      !
+      !     Update the L-BFGS matrix.
+      !
+      !ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 
       updatd = .true.
       iupdat = iupdat + 1
@@ -859,7 +857,7 @@
       ! [  D^(1/2)      O ] [ -D^(1/2)  D^(-1/2)*L' ]
       ! [ -L*D^(-1/2)   J ] [  0        J'          ]
 
-! -------------------- the end of the loop -----------------------------
+      ! -------------------- the end of the loop -----------------------------
 
       goto 200
 
