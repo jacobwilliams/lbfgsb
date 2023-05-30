@@ -89,15 +89,15 @@
 			   <tr><td><a href='../proc/active.html'>active</a></td><td><a href='../module/lbfgsb_module.html'>lbfgsb_module</a></td><td>Subroutine</td><td><p>This subroutine initializes <code>iwhere</code> and projects the initial <code>x</code> to
   the feasible set if necessary.</p><a href="../proc/active.html" class="pull-right"><emph>Read more&hellip;</emph></a></td></tr>
 			   <tr><td><a href='../proc/bmv.html'>bmv</a></td><td><a href='../module/lbfgsb_module.html'>lbfgsb_module</a></td><td>Subroutine</td><td><p>This subroutine computes the product of the 2m x 2m middle matrix
-  in the compact L-BFGS formula of B and a 2m vector v;
-  it returns the product in p.</p><a href="../proc/bmv.html" class="pull-right"><emph>Read more&hellip;</emph></a></td></tr>
-			   <tr><td><a href='../proc/cauchy.html'>cauchy</a></td><td><a href='../module/lbfgsb_module.html'>lbfgsb_module</a></td><td>Subroutine</td><td><p>For given x, l, u, g (with sbgnrm &gt; 0), and a limited memory
+  in the compact L-BFGS formula of B and a 2m vector <code>v</code>;
+  it returns the product in <code>p</code>.</p><a href="../proc/bmv.html" class="pull-right"><emph>Read more&hellip;</emph></a></td></tr>
+			   <tr><td><a href='../proc/cauchy.html'>cauchy</a></td><td><a href='../module/lbfgsb_module.html'>lbfgsb_module</a></td><td>Subroutine</td><td><p>For given <code>x</code>, <code>l</code>, <code>u</code>, <code>g</code> (with <code>sbgnrm &gt; 0</code>), and a limited memory
   BFGS matrix B defined in terms of matrices WY, WS, WT, and
   scalars head, col, and theta, this subroutine computes the
   generalized Cauchy point (GCP), defined as the first local
   minimizer of the quadratic</p><a href="../proc/cauchy.html" class="pull-right"><emph>Read more&hellip;</emph></a></td></tr>
-			   <tr><td><a href='../proc/cmprlb.html'>cmprlb</a></td><td><a href='../module/lbfgsb_module.html'>lbfgsb_module</a></td><td>Subroutine</td><td><p>This subroutine computes r=-Z'B(xcp-xk)-Z'g by using
-  wa(2m+1)=W'(xcp-x) from subroutine cauchy.</p><a href="../proc/cmprlb.html" class="pull-right"><emph>Read more&hellip;</emph></a></td></tr>
+			   <tr><td><a href='../proc/cmprlb.html'>cmprlb</a></td><td><a href='../module/lbfgsb_module.html'>lbfgsb_module</a></td><td>Subroutine</td><td><p>This subroutine computes <code>r=-Z'B(xcp-xk)-Z'g</code> by using
+  <code>wa(2m+1)=W'(xcp-x)</code> from subroutine <a href="../proc/cauchy.html">cauchy</a>.</p><a href="../proc/cmprlb.html" class="pull-right"><emph>Read more&hellip;</emph></a></td></tr>
 			   <tr><td><a href='../proc/daxpy.html'>daxpy</a></td><td><a href='../module/lbfgsb_blas_module.html'>lbfgsb_blas_module</a></td><td>Subroutine</td><td><p>constant times a vector plus a vector.
   uses unrolled loops for increments equal to one.</p><a href="../proc/daxpy.html" class="pull-right"><emph>Read more&hellip;</emph></a></td></tr>
 			   <tr><td><a href='../proc/dcopy.html'>dcopy</a></td><td><a href='../module/lbfgsb_blas_module.html'>lbfgsb_blas_module</a></td><td>Subroutine</td><td><p>copies a vector, x, to a vector, y.
@@ -114,7 +114,7 @@
   uses unrolled loops for increment equal to one.</p><a href="../proc/dscal.html" class="pull-right"><emph>Read more&hellip;</emph></a></td></tr>
 			   <tr><td><a href='../proc/dtrsl.html'>dtrsl</a></td><td><a href='../module/lbfgsb_linpack_module.html'>lbfgsb_linpack_module</a></td><td>Subroutine</td><td><p>dtrsl solves systems of the form</p><a href="../proc/dtrsl.html" class="pull-right"><emph>Read more&hellip;</emph></a></td></tr>
 			   <tr><td><a href='../proc/errclb.html'>errclb</a></td><td><a href='../module/lbfgsb_module.html'>lbfgsb_module</a></td><td>Subroutine</td><td><p>This subroutine checks the validity of the input data.</p><a href="../proc/errclb.html" class="pull-right"><emph>Read more&hellip;</emph></a></td></tr>
-			   <tr><td><a href='../proc/formk.html'>formk</a></td><td><a href='../module/lbfgsb_module.html'>lbfgsb_module</a></td><td>Subroutine</td><td><p>This subroutine forms the <code>LEL^T</code> factorization of the indefinite</p><a href="../proc/formk.html" class="pull-right"><emph>Read more&hellip;</emph></a></td></tr>
+			   <tr><td><a href='../proc/formk.html'>formk</a></td><td><a href='../module/lbfgsb_module.html'>lbfgsb_module</a></td><td>Subroutine</td><td><p>This subroutine forms the <code>LEL^T</code> factorization of the indefinite matrix:</p><a href="../proc/formk.html" class="pull-right"><emph>Read more&hellip;</emph></a></td></tr>
 			   <tr><td><a href='../proc/formt.html'>formt</a></td><td><a href='../module/lbfgsb_module.html'>lbfgsb_module</a></td><td>Subroutine</td><td><p>This subroutine forms the upper half of the pos. def. and symm.
   T = theta<em>SS + L</em>D^(-1)<em>L', stores T in the upper triangle
   of the array wt, and performs the Cholesky factorization of T

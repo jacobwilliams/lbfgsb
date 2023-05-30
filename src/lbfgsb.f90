@@ -548,12 +548,12 @@
                call dcopy(n,r,1,g,1)
                f = fold
             endif
-            goto 900
+            call finish()
+            return
          endif
       endif
 
       ! Compute f0 and g0.
-
       Task = 'FG_START'
       ! return to the driver to calculate f and g; reenter at 111.
       call save_locals()
@@ -563,7 +563,6 @@
       nfgv = 1
 
       ! Compute the infinity norm of the (-) projected gradient.
-
       call projgr(n,l,u,Nbd,x,g,sbgnrm)
 
       if ( Iprint>=1 ) then
@@ -575,12 +574,13 @@
       if ( sbgnrm<=Pgtol ) then
          ! terminate the algorithm.
          Task = 'CONVERGENCE: NORM_OF_PROJECTED_GRADIENT_<=_PGTOL'
-         goto 900
+         call finish()
+         return
       endif
 
-! ----------------- the beginning of the loop --------------------------
-
+      ! ----------------- the beginning of the loop --------------------------
  200  continue
+
       if ( Iprint>=99 ) write (6,'(//,A,i5)') 'ITERATION ', iter + 1
 
       iword = -1
@@ -590,117 +590,117 @@
          call dcopy(n,x,1,z,1)
          wrk = updatd
          nseg = 0
-         goto 300
-      endif
+      else
 
-      !ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-      !
-      !     Compute the Generalized Cauchy Point (GCP).
-      !
-      !ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+         !ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+         !
+         !     Compute the Generalized Cauchy Point (GCP).
+         !
+         !ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 
-      call cpu_time(cpu1)
-      call cauchy(n,x,l,u,Nbd,g,Indx2,Iwhere,t,d,z,m,Wy,Ws,Sy,Wt,theta, &
-                  col,head,Wa(1),Wa(2*m+1),Wa(4*m+1),Wa(6*m+1),nseg,    &
-                  Iprint,sbgnrm,info,epsmch)
-      if ( info/=0 ) then
-         ! singular triangular system detected; refresh the lbfgs memory.
-         if ( Iprint>=1 ) write (6,'(/,A,/,A)') &
-            ' Singular triangular system detected;',&
-            '   refresh the lbfgs memory and restart the iteration.'
-         info = 0
-         col = 0
-         head = 1
-         theta = one
-         iupdat = 0
-         updatd = .false.
+         call cpu_time(cpu1)
+         call cauchy(n,x,l,u,Nbd,g,Indx2,Iwhere,t,d,z,m,Wy,Ws,Sy,Wt,theta, &
+                     col,head,Wa(1),Wa(2*m+1),Wa(4*m+1),Wa(6*m+1),nseg,    &
+                     Iprint,sbgnrm,info,epsmch)
+         if ( info/=0 ) then
+            ! singular triangular system detected; refresh the lbfgs memory.
+            if ( Iprint>=1 ) write (6,'(/,A,/,A)') &
+               ' Singular triangular system detected;',&
+               '   refresh the lbfgs memory and restart the iteration.'
+            info = 0
+            col = 0
+            head = 1
+            theta = one
+            iupdat = 0
+            updatd = .false.
+            call cpu_time(cpu2)
+            cachyt = cachyt + cpu2 - cpu1
+            goto 200
+         endif
          call cpu_time(cpu2)
          cachyt = cachyt + cpu2 - cpu1
-         goto 200
-      endif
-      call cpu_time(cpu2)
-      cachyt = cachyt + cpu2 - cpu1
-      nintol = nintol + nseg
+         nintol = nintol + nseg
 
-      ! Count the entering and leaving variables for iter > 0;
-      ! find the index set of free and active variables at the GCP.
+         ! Count the entering and leaving variables for iter > 0;
+         ! find the index set of free and active variables at the GCP.
 
-      call freev(n,nfree,Index,nenter,ileave,Indx2,Iwhere,wrk,updatd,   &
-                 cnstnd,Iprint,iter)
-      nact = n - nfree
+         call freev(n,nfree,Index,nenter,ileave,Indx2,Iwhere,wrk,updatd, &
+                    cnstnd,Iprint,iter)
+         nact = n - nfree
 
- 300  continue
-
-      ! If there are no free variables or B=theta*I, then
-      ! skip the subspace minimization.
-
-      if ( nfree==0 .or. col==0 ) goto 500
-
-      !ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-      !
-      !     Subspace minimization.
-      !
-      !ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-
-      call cpu_time(cpu1)
-
-      !     Form  the LEL^T factorization of the indefinite
-      !       matrix    K = [-D -Y'ZZ'Y/theta     L_a'-R_z'  ]
-      !                     [L_a -R_z           theta*S'AA'S ]
-      !       where     E = [-I  0]
-      !                     [ 0  I]
-
-      if ( wrk ) call formk(n,nfree,Index,nenter,ileave,Indx2,iupdat,   &
-                            updatd,Wn,Snd,m,Ws,Wy,Sy,theta,col,head,    &
-                            info)
-      if ( info/=0 ) then
-         ! nonpositive definiteness in Cholesky factorization;
-         ! refresh the lbfgs memory and restart the iteration.
-         if ( Iprint>=1 ) write (6,'(/,a,/,a)') &
-            ' Nonpositive definiteness in Cholesky factorization in formk;',&
-            '   refresh the lbfgs memory and restart the iteration.'
-         info = 0
-         col = 0
-         head = 1
-         theta = one
-         iupdat = 0
-         updatd = .false.
-         call cpu_time(cpu2)
-         sbtime = sbtime + cpu2 - cpu1
-         goto 200
-      endif
-
-      ! compute r=-Z'B(xcp-xk)-Z'g (using wa(2m+1)=W'(xcp-x)
-      ! from 'cauchy').
-      call cmprlb(n,m,x,g,Ws,Wy,Sy,Wt,z,r,Wa,Index,theta,col,head,nfree,&
-                  cnstnd,info)
-      if ( info==0 ) then
-         !-jlm-jn   call the direct method.
-         call subsm(n,m,nfree,Index,l,u,Nbd,z,r,Xp,Ws,Wy,theta,x,g,col, &
-                    head,iword,Wa,Wn,Iprint,info)
       end if
 
-      if ( info/=0 ) then
-         ! singular triangular system detected;
-         ! refresh the lbfgs memory and restart the iteration.
-         if ( Iprint>=1 ) write (6,'(/,A,/,A)') &
-            ' Singular triangular system detected;',&
-            '   refresh the lbfgs memory and restart the iteration.'
-         info = 0
-         col = 0
-         head = 1
-         theta = one
-         iupdat = 0
-         updatd = .false.
+      if ( nfree==0 .or. col==0 ) then
+         ! If there are no free variables or B=theta*I, then
+         ! skip the subspace minimization.
+      else
+
+         !ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+         !
+         !     Subspace minimization.
+         !
+         !ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+
+         call cpu_time(cpu1)
+
+         !     Form  the LEL^T factorization of the indefinite
+         !       matrix    K = [-D -Y'ZZ'Y/theta     L_a'-R_z'  ]
+         !                     [L_a -R_z           theta*S'AA'S ]
+         !       where     E = [-I  0]
+         !                     [ 0  I]
+
+         if ( wrk ) call formk(n,nfree,Index,nenter,ileave,Indx2,iupdat, &
+                               updatd,Wn,Snd,m,Ws,Wy,Sy,theta,col,head,  &
+                               info)
+         if ( info/=0 ) then
+            ! nonpositive definiteness in Cholesky factorization;
+            ! refresh the lbfgs memory and restart the iteration.
+            if ( Iprint>=1 ) write (6,'(/,a,/,a)') &
+               ' Nonpositive definiteness in Cholesky factorization in formk;',&
+               '   refresh the lbfgs memory and restart the iteration.'
+            info = 0
+            col = 0
+            head = 1
+            theta = one
+            iupdat = 0
+            updatd = .false.
+            call cpu_time(cpu2)
+            sbtime = sbtime + cpu2 - cpu1
+            goto 200
+         endif
+
+         ! compute r=-Z'B(xcp-xk)-Z'g (using wa(2m+1)=W'(xcp-x)
+         ! from 'cauchy').
+         call cmprlb(n,m,x,g,Ws,Wy,Sy,Wt,z,r,Wa,Index,theta,col,head,nfree,&
+                     cnstnd,info)
+         if ( info==0 ) then
+            !-jlm-jn   call the direct method.
+            call subsm(n,m,nfree,Index,l,u,Nbd,z,r,Xp,Ws,Wy,theta,x,g,col, &
+                       head,iword,Wa,Wn,Iprint,info)
+         end if
+
+         if ( info/=0 ) then
+            ! singular triangular system detected;
+            ! refresh the lbfgs memory and restart the iteration.
+            if ( Iprint>=1 ) write (6,'(/,A,/,A)') &
+               ' Singular triangular system detected;',&
+               '   refresh the lbfgs memory and restart the iteration.'
+            info = 0
+            col = 0
+            head = 1
+            theta = one
+            iupdat = 0
+            updatd = .false.
+            call cpu_time(cpu2)
+            sbtime = sbtime + cpu2 - cpu1
+            goto 200
+         endif
+
          call cpu_time(cpu2)
          sbtime = sbtime + cpu2 - cpu1
-         goto 200
-      endif
 
-      call cpu_time(cpu2)
-      sbtime = sbtime + cpu2 - cpu1
+      end if
 
- 500  continue
       !ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       !
       !     Line search and optimality tests.
@@ -715,8 +715,8 @@
       call cpu_time(cpu1)
 
  600  continue
-      call lnsrlb(n,l,u,Nbd,x,f,fold,gd,gdold,g,d,r,t,z,stp,dnorm,dtd,  &
-                  xstep,stpmx,iter,ifun,iback,nfgv,info,Task,boxed,     &
+      call lnsrlb(n,l,u,Nbd,x,f,fold,gd,gdold,g,d,r,t,z,stp,dnorm,dtd, &
+                  xstep,stpmx,iter,ifun,iback,nfgv,info,Task,boxed,    &
                   cnstnd,Csave,Isave(22),Dsave(17))
       if ( info/=0 .or. iback>=20 ) then
          ! restore the previous iterate.
@@ -734,7 +734,8 @@
             endif
             Task = 'ABNORMAL_TERMINATION_IN_LNSRCH'
             iter = iter + 1
-            goto 900
+            call finish()
+            return
          else
             ! refresh the lbfgs memory and restart the iteration.
             if ( Iprint>=1 ) write (6,'(/,a,/,a)') &
@@ -763,11 +764,9 @@
          iter = iter + 1
 
          ! Compute the infinity norm of the projected (-)gradient.
-
          call projgr(n,l,u,Nbd,x,g,sbgnrm)
 
          ! Print iteration information.
-
          call prn2lb(n,x,f,g,Iprint,itfile,iter,nfgv,nact,sbgnrm,nseg,  &
                      word,iword,iback,stp,xstep)
          call save_locals()
@@ -775,12 +774,13 @@
       endif
 
  700  continue
-      ! Test for termination.
 
+      ! Test for termination.
       if ( sbgnrm<=Pgtol ) then
          ! terminate the algorithm.
          Task = 'CONVERGENCE: NORM_OF_PROJECTED_GRADIENT_<=_PGTOL'
-         goto 900
+         call finish()
+         return
       endif
 
       ddum = max(abs(fold),abs(f),one)
@@ -789,11 +789,11 @@
          Task = 'CONVERGENCE: REL_REDUCTION_OF_F_<=_FACTR*EPSMCH'
          if ( iback>=10 ) info = -5
          ! i.e., to issue a warning if iback>10 in the line search.
-         goto 900
+         call finish()
+         return
       endif
 
       ! Compute d=newx-oldx, r=newg-oldg, rr=y'y and dr=y's.
-
       do i = 1 , n
          r(i) = g(i) - r(i)
       enddo
@@ -826,7 +826,6 @@
       iupdat = iupdat + 1
 
       ! Update matrices WS and WY and form the middle matrix in B.
-
       call matupd(n,m,Ws,Wy,Sy,Ss,d,r,itail,iupdat,col,head,theta,rr,dr,&
                   stp,dtd)
 
@@ -834,7 +833,6 @@
       !    Store T in the upper triangular of the array wt;
       !    Cholesky factorize T to J*J' with
       !       J' stored in the upper triangular of wt.
-
       call formt(m,Wt,Sy,Ss,col,theta,info)
 
       if ( info/=0 ) then
@@ -858,19 +856,20 @@
       ! [ -L*D^(-1/2)   J ] [  0        J'          ]
 
       ! -------------------- the end of the loop -----------------------------
-
       goto 200
 
- 900  continue
-
-      call cpu_time(time2)
-      time = time2 - time1
-      call prn3lb(n,x,f,Task,Iprint,info,itfile,iter,nfgv,nintol,nskip, &
-                  nact,sbgnrm,time,nseg,word,iback,stp,xstep,k,cachyt,  &
-                  sbtime,lnscht)
-      call save_locals()
-
       contains
+
+         subroutine finish()
+
+            call cpu_time(time2)
+            time = time2 - time1
+            call prn3lb(n,x,f,Task,Iprint,info,itfile,iter,nfgv,nintol,nskip, &
+                        nact,sbgnrm,time,nseg,word,iback,stp,xstep,k,cachyt,  &
+                        sbtime,lnscht)
+            call save_locals()
+
+         end subroutine finish
 
          subroutine save_locals()
 
@@ -939,8 +938,8 @@
 
       logical :: Prjctd , Cnstnd , Boxed
       integer :: n , Iprint , Nbd(n)
-      integer,intent(out) :: Iwhere(n) !! * `iwhere(i)=-1` if x(i) has no bounds
-                                       !! * `iwhere(i)=3`  if l(i)=u(i)
+      integer,intent(out) :: Iwhere(n) !! * `iwhere(i)=-1` if `x(i)` has no bounds
+                                       !! * `iwhere(i)=3`  if `l(i)=u(i)`
                                        !! * `iwhere(i)=0`  otherwise.
                                        !!
                                        !! In [[cauchy]], `iwhere` is given finer gradations.
@@ -1009,8 +1008,8 @@
 !*******************************************************************************
 !>
 !  This subroutine computes the product of the 2m x 2m middle matrix
-!  in the compact L-BFGS formula of B and a 2m vector v;
-!  it returns the product in p.
+!  in the compact L-BFGS formula of B and a 2m vector `v`;
+!  it returns the product in `p`.
 !
 !### Credits
 !
@@ -1032,11 +1031,11 @@
                                   !!  * `info = 0` for normal return,
                                   !!  * `info /=0` for abnormal return when the system
                                   !!    to be solved by [[dtrsl]] is singular.
-      real(wp),intent(in) :: Sy(m,m) !! specifies the matrix S'Y.
-      real(wp),intent(in) :: Wt(m,m) !! specifies the upper triangular matrix J' which is
-                                     !! the Cholesky factor of (thetaS'S+LD^(-1)L').
-      real(wp),intent(in) :: v(2*Col) !! specifies vector v.
-      real(wp),intent(out) :: p(2*Col) !! the product Mv
+      real(wp),intent(in) :: Sy(m,m) !! specifies the matrix `S'Y`.
+      real(wp),intent(in) :: Wt(m,m) !! specifies the upper triangular matrix `J'` which is
+                                     !! the Cholesky factor of `(thetaS'S+LD^(-1)L')`.
+      real(wp),intent(in) :: v(2*Col) !! specifies vector `v`.
+      real(wp),intent(out) :: p(2*Col) !! the product `Mv`
 
       integer :: i , k , i2
       real(wp) :: sum
@@ -1091,7 +1090,7 @@
 
 !*******************************************************************************
 !>
-!  For given x, l, u, g (with sbgnrm > 0), and a limited memory
+!  For given `x`, `l`, `u`, `g` (with `sbgnrm > 0`), and a limited memory
 !  BFGS matrix B defined in terms of matrices WY, WS, WT, and
 !  scalars head, col, and theta, this subroutine computes the
 !  generalized Cauchy point (GCP), defined as the first local
@@ -1099,8 +1098,8 @@
 !
 !  `Q(x + s) = g's + 1/2 s'Bs`
 !
-!  along the projected gradient direction P(x-tg,l,u).
-!  The routine returns the GCP in xcp.
+!  along the projected gradient direction `P(x-tg,l,u)`.
+!  The routine returns the GCP in `xcp`.
 !
 !### References
 !
@@ -1186,10 +1185,10 @@
       real(wp) :: t(n) !! used to store the break points.
       real(wp) :: d(n) !! used to store the Cauchy direction `P(x-tg)-x`.
       real(wp),intent(out) :: Xcp(n) !! used to return the GCP on exit.
-      real(wp),intent(in) :: Wy(n,Col) !! stores information that defines the limited memory BFGS matrix: wy(n,m) stores Y, a set of y-vectors;
-      real(wp),intent(in) :: Ws(n,Col) !! stores information that defines the limited memory BFGS matrix: ws(n,m) stores S, a set of s-vectors;
-      real(wp),intent(in) :: Sy(m,m) !! stores information that defines the limited memory BFGS matrix: sy(m,m) stores S'Y;
-      real(wp),intent(in) :: Wt(m,m) !! stores information that defines the limited memory BFGS matrix: wt(m,m) stores the Cholesky factorization of (theta*S'S+LD^(-1)L').
+      real(wp),intent(in) :: Wy(n,Col) !! stores information that defines the limited memory BFGS matrix: `wy(n,m)` stores `Y`, a set of y-vectors;
+      real(wp),intent(in) :: Ws(n,Col) !! stores information that defines the limited memory BFGS matrix: `ws(n,m)` stores `S`, a set of s-vectors;
+      real(wp),intent(in) :: Sy(m,m) !! stores information that defines the limited memory BFGS matrix: `sy(m,m)` stores `S'Y`;
+      real(wp),intent(in) :: Wt(m,m) !! stores information that defines the limited memory BFGS matrix: `wt(m,m)` stores the Cholesky factorization of `(theta*S'S+LD^(-1)L')`.
       real(wp) :: p(2*m) !! working array used to store the vector `p = W^(T)d`.
       real(wp) :: c(2*m) !! working array used to store the vector `c = W^(T)(xcp-x)`.
       real(wp) :: Wbp(2*m) !! working array used to store the
@@ -1500,8 +1499,8 @@
 
 !*******************************************************************************
 !>
-!  This subroutine computes r=-Z'B(xcp-xk)-Z'g by using
-!  wa(2m+1)=W'(xcp-x) from subroutine cauchy.
+!  This subroutine computes `r=-Z'B(xcp-xk)-Z'g` by using
+!  `wa(2m+1)=W'(xcp-x)` from subroutine [[cauchy]].
 !
 !### Credits
 !
@@ -1611,25 +1610,26 @@
 
 !*******************************************************************************
 !>
-!  This subroutine forms the `LEL^T` factorization of the indefinite
-!
+!  This subroutine forms the `LEL^T` factorization of the indefinite matrix:
 !```
-!  matrix    K = [-D -Y'ZZ'Y/theta     L_a'-R_z'  ]
-!                [L_a -R_z           theta*S'AA'S ]
-!  where E = [-I  0]
-!            [ 0  I]
+!  K = [-D -Y'ZZ'Y/theta     L_a'-R_z'  ]
+!      [L_a -R_z           theta*S'AA'S ]
+!```
+!  where:
+!```
+!  E = [-I  0]
+!      [ 0  I]
 !```
 !
-!  The matrix K can be shown to be equal to the matrix M^[-1]N
+!  The matrix `K` can be shown to be equal to the matrix `M^[-1]N`
 !  occurring in section 5.1 of [1], as well as to the matrix
-!  Mbar^[-1] Nbar in section 5.3.
+!  `Mbar^[-1] Nbar` in section 5.3.
 !
 !### References
 !
 !  1. R. H. Byrd, P. Lu, J. Nocedal and C. Zhu, "A limited
 !     memory algorithm for bound constrained optimization",
 !     SIAM J. Scientific Computing 16 (1995), no. 5, pp. 1190--1208.
-!
 !  2. C. Zhu, R.H. Byrd, P. Lu, J. Nocedal, "L-BFGS-B: a
 !     limited memory FORTRAN code for solving bound constrained
 !     optimization problems", Tech. Report, NAM-11, EECS Department,
@@ -1660,30 +1660,30 @@
                                   !!  * `info = -1` when the 1st Cholesky factorization failed;
                                   !!  * `info = -2` when the 2st Cholesky factorization failed.
       integer,intent(in) :: Ind(n) !! specifies the indices of subspace variables.
-      integer,intent(in) :: Indx2(n) !! On entry indx2(1),...,indx2(nenter) are the variables entering
-                                     !! the free set, while indx2(ileave),...,indx2(n) are the
+      integer,intent(in) :: Indx2(n) !! On entry `indx2(1),...,indx2(nenter)` are the variables entering
+                                     !! the free set, while `indx2(ileave),...,indx2(n)` are the
                                      !! variables leaving the free set.
-      real(wp),intent(in) :: Ws(n,m) !! information defining the limited memory BFGS matrix: ws(n,m) stores S, a set of s-vectors
-      real(wp),intent(in) :: Wy(n,m) !! information defining the limited memory BFGS matrix: wy(n,m) stores Y, a set of y-vectors
-      real(wp),intent(in) :: Sy(m,m) !! information defining the limited memory BFGS matrix: sy(m,m) stores S'Y
-      real(wp),intent(in) :: Theta !! information defining the limited memory BFGS matrix: the scaling factor specifying B_0 = theta I
+      real(wp),intent(in) :: Ws(n,m) !! information defining the limited memory BFGS matrix: `ws(n,m)` stores `S`, a set of s-vectors
+      real(wp),intent(in) :: Wy(n,m) !! information defining the limited memory BFGS matrix: `wy(n,m)` stores `Y`, a set of y-vectors
+      real(wp),intent(in) :: Sy(m,m) !! information defining the limited memory BFGS matrix: `sy(m,m)` stores `S'Y`
+      real(wp),intent(in) :: Theta !! information defining the limited memory BFGS matrix: the scaling factor specifying `B_0 = theta I`
       integer,intent(in) :: Col !! information defining the limited memory BFGS matrix: the number of variable metric corrections stored
       integer,intent(in) :: Head !! information defining the limited memory BFGS matrix: the location of the 1st s- (or y-) vector in S (or Y)
-      real(wp) :: Wn(2*m,2*m) !! On exit the upper triangle of wn stores the LEL^T factorization
-                              !! of the 2*col x 2*col indefinite matrix
+      real(wp) :: Wn(2*m,2*m) !! On exit the upper triangle of `wn` stores the `LEL^T` factorization
+                              !! of the `2*col x 2*col` indefinite matrix
                               !!```
                               !!  [-D -Y'ZZ'Y/theta     L_a'-R_z'  ]
                               !!  [L_a -R_z           theta*S'AA'S ]
                               !!```
-      real(wp) :: Wn1(2*m,2*m) !! On entry wn1 stores the lower triangular part of
+      real(wp) :: Wn1(2*m,2*m) !! On entry `wn1` stores the lower triangular part of
                                !!```
                                !!  [Y' ZZ'Y   L_a'+R_z']
                                !!  [L_a+R_z   S'AA'S   ]
                                !!```
                                !! in the previous iteration.
                                !!
-                               !! On exit wn1 stores the corresponding updated matrices.
-                               !! The purpose of wn1 is just to store these inner products
+                               !! On exit `wn1` stores the corresponding updated matrices.
+                               !! The purpose of `wn1` is just to store these inner products
                                !! so they can be easily updated and inserted into wn.
       logical,intent(in) :: Updatd !! true if the L-BFGS matrix is updatd.
 
@@ -1691,11 +1691,11 @@
                  i , k , col2 , pbegin , pend , dbegin , dend , upcl
       real(wp) :: temp1 , temp2 , temp3 , temp4
 
-      !     Form the lower triangular part of
-      !               WN1 = [Y' ZZ'Y   L_a'+R_z']
-      !                     [L_a+R_z   S'AA'S   ]
-      !        where L_a is the strictly lower triangular part of S'AA'Y
-      !              R_z is the upper triangular part of S'ZZ'Y.
+      ! Form the lower triangular part of
+      !           WN1 = [Y' ZZ'Y   L_a'+R_z']
+      !                 [L_a+R_z   S'AA'S   ]
+      !    where L_a is the strictly lower triangular part of S'AA'Y
+      !          R_z is the upper triangular part of S'ZZ'Y.
 
       if ( Updatd ) then
          if ( Iupdat>m ) then

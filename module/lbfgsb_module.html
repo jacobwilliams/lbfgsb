@@ -92,7 +92,7 @@
           <li id="statements"><i class="fa fa-list-ol"></i>
             <a data-toggle="tooltip"
                data-placement="bottom" data-html="true"
-               title="87.1% of total for modules and submodules.">1736 statements</a>
+               title="87.1% of total for modules and submodules.">1742 statements</a>
           </li>
 
             <li id="source-file">
@@ -231,9 +231,9 @@
       <ul class="list-group">
           <li class="list-group-item">
             <ul class="list-inline">
+                <li><a href='../module/lbfgsb_linpack_module.html'>lbfgsb_linpack_module</a></li>
                 <li><a href='../module/lbfgsb_kinds_module.html'>lbfgsb_kinds_module</a></li>
                 <li><a href='../module/lbfgsb_blas_module.html'>lbfgsb_blas_module</a></li>
-                <li><a href='../module/lbfgsb_linpack_module.html'>lbfgsb_linpack_module</a></li>
             </ul>
           </li>
           <li class="list-group-item">
@@ -1627,8 +1627,8 @@ entering and leaving this subroutine.</p>
     <div class="panel-body">
           
   <p>This subroutine computes the product of the 2m x 2m middle matrix
-  in the compact L-BFGS formula of B and a 2m vector v;
-  it returns the product in p.</p><a href="../proc/bmv.html" class="pull-right"><emph>Read more&hellip;</emph></a>
+  in the compact L-BFGS formula of B and a 2m vector <code>v</code>;
+  it returns the product in <code>p</code>.</p><a href="../proc/bmv.html" class="pull-right"><emph>Read more&hellip;</emph></a>
 
   <h4>Arguments</h4>
       <table class="table table-striped varlist">
@@ -1669,7 +1669,7 @@ used to define the limited memory matrix.</p>
             <td>::</td>
             <td><strong>Sy</strong>(m,m)</td>
             <td>
-<p>specifies the matrix S'Y.</p>
+<p>specifies the matrix <code>S'Y</code>.</p>
             </td>
         </tr>
         <tr>
@@ -1684,8 +1684,8 @@ used to define the limited memory matrix.</p>
             <td>::</td>
             <td><strong>Wt</strong>(m,m)</td>
             <td>
-<p>specifies the upper triangular matrix J' which is
-the Cholesky factor of (thetaS'S+LD^(-1)L').</p>
+<p>specifies the upper triangular matrix <code>J'</code> which is
+the Cholesky factor of <code>(thetaS'S+LD^(-1)L')</code>.</p>
             </td>
         </tr>
         <tr>
@@ -1716,7 +1716,7 @@ stored in the compact L-BFGS formula.</p>
             <td>::</td>
             <td><strong>v</strong>(2*Col)</td>
             <td>
-<p>specifies vector v.</p>
+<p>specifies vector <code>v</code>.</p>
             </td>
         </tr>
         <tr>
@@ -1731,7 +1731,7 @@ stored in the compact L-BFGS formula.</p>
             <td>::</td>
             <td><strong>p</strong>(2*Col)</td>
             <td>
-<p>the product Mv</p>
+<p>the product <code>Mv</code></p>
             </td>
         </tr>
         <tr>
@@ -1761,7 +1761,7 @@ stored in the compact L-BFGS formula.</p>
 </h3></div>
     <div class="panel-body">
           
-  <p>For given x, l, u, g (with sbgnrm &gt; 0), and a limited memory
+  <p>For given <code>x</code>, <code>l</code>, <code>u</code>, <code>g</code> (with <code>sbgnrm &gt; 0</code>), and a limited memory
   BFGS matrix B defined in terms of matrices WY, WS, WT, and
   scalars head, col, and theta, this subroutine computes the
   generalized Cauchy point (GCP), defined as the first local
@@ -1974,7 +1974,7 @@ used to define the limited memory matrix.</p>
             <td>::</td>
             <td><strong>Wy</strong>(n,Col)</td>
             <td>
-<p>stores information that defines the limited memory BFGS matrix: wy(n,m) stores Y, a set of y-vectors;</p>
+<p>stores information that defines the limited memory BFGS matrix: <code>wy(n,m)</code> stores <code>Y</code>, a set of y-vectors;</p>
             </td>
         </tr>
         <tr>
@@ -1989,7 +1989,7 @@ used to define the limited memory matrix.</p>
             <td>::</td>
             <td><strong>Ws</strong>(n,Col)</td>
             <td>
-<p>stores information that defines the limited memory BFGS matrix: ws(n,m) stores S, a set of s-vectors;</p>
+<p>stores information that defines the limited memory BFGS matrix: <code>ws(n,m)</code> stores <code>S</code>, a set of s-vectors;</p>
             </td>
         </tr>
         <tr>
@@ -2004,7 +2004,7 @@ used to define the limited memory matrix.</p>
             <td>::</td>
             <td><strong>Sy</strong>(m,m)</td>
             <td>
-<p>stores information that defines the limited memory BFGS matrix: sy(m,m) stores S'Y;</p>
+<p>stores information that defines the limited memory BFGS matrix: <code>sy(m,m)</code> stores <code>S'Y</code>;</p>
             </td>
         </tr>
         <tr>
@@ -2019,7 +2019,7 @@ used to define the limited memory matrix.</p>
             <td>::</td>
             <td><strong>Wt</strong>(m,m)</td>
             <td>
-<p>stores information that defines the limited memory BFGS matrix: wt(m,m) stores the Cholesky factorization of (theta*S'S+LD^(-1)L').</p>
+<p>stores information that defines the limited memory BFGS matrix: <code>wt(m,m)</code> stores the Cholesky factorization of <code>(theta*S'S+LD^(-1)L')</code>.</p>
             </td>
         </tr>
         <tr>
@@ -2217,8 +2217,8 @@ On exit:</p><a href="../proc/cauchy.html#variable-info~2" class="pull-right"><em
 </h3></div>
     <div class="panel-body">
           
-  <p>This subroutine computes r=-Z'B(xcp-xk)-Z'g by using
-  wa(2m+1)=W'(xcp-x) from subroutine cauchy.</p><a href="../proc/cmprlb.html" class="pull-right"><emph>Read more&hellip;</emph></a>
+  <p>This subroutine computes <code>r=-Z'B(xcp-xk)-Z'g</code> by using
+  <code>wa(2m+1)=W'(xcp-x)</code> from subroutine <a href="../proc/cauchy.html">cauchy</a>.</p><a href="../proc/cmprlb.html" class="pull-right"><emph>Read more&hellip;</emph></a>
 
   <h4>Arguments</h4>
       <table class="table table-striped varlist">
@@ -2673,7 +2673,7 @@ On exit:</p><a href="../proc/cauchy.html#variable-info~2" class="pull-right"><em
 </h3></div>
     <div class="panel-body">
           
-  <p>This subroutine forms the <code>LEL^T</code> factorization of the indefinite</p><a href="../proc/formk.html" class="pull-right"><emph>Read more&hellip;</emph></a>
+  <p>This subroutine forms the <code>LEL^T</code> factorization of the indefinite matrix:</p><a href="../proc/formk.html" class="pull-right"><emph>Read more&hellip;</emph></a>
 
   <h4>Arguments</h4>
       <table class="table table-striped varlist">
@@ -2773,8 +2773,8 @@ On exit:</p><a href="../proc/cauchy.html#variable-info~2" class="pull-right"><em
             <td>::</td>
             <td><strong>Indx2</strong>(n)</td>
             <td>
-<p>On entry indx2(1),...,indx2(nenter) are the variables entering
-the free set, while indx2(ileave),...,indx2(n) are the
+<p>On entry <code>indx2(1),...,indx2(nenter)</code> are the variables entering
+the free set, while <code>indx2(ileave),...,indx2(n)</code> are the
 variables leaving the free set.</p>
             </td>
         </tr>
@@ -2820,8 +2820,8 @@ variables leaving the free set.</p>
             <td>::</td>
             <td><strong>Wn</strong>(2*m,2*m)</td>
             <td>
-<p>On exit the upper triangle of wn stores the LEL^T factorization
- of the 2<em>col x 2</em>col indefinite matrix</p><a href="../proc/formk.html#variable-wn~2" class="pull-right"><emph>Read more&hellip;</emph></a>
+<p>On exit the upper triangle of <code>wn</code> stores the <code>LEL^T</code> factorization
+ of the <code>2*col x 2*col</code> indefinite matrix</p><a href="../proc/formk.html#variable-wn~2" class="pull-right"><emph>Read more&hellip;</emph></a>
             </td>
         </tr>
         <tr>
@@ -2836,7 +2836,7 @@ variables leaving the free set.</p>
             <td>::</td>
             <td><strong>Wn1</strong>(2*m,2*m)</td>
             <td>
-<p>On entry wn1 stores the lower triangular part of</p><a href="../proc/formk.html#variable-wn1" class="pull-right"><emph>Read more&hellip;</emph></a>
+<p>On entry <code>wn1</code> stores the lower triangular part of</p><a href="../proc/formk.html#variable-wn1" class="pull-right"><emph>Read more&hellip;</emph></a>
             </td>
         </tr>
         <tr>
@@ -2867,7 +2867,7 @@ used to define the limited memory matrix.</p>
             <td>::</td>
             <td><strong>Ws</strong>(n,m)</td>
             <td>
-<p>information defining the limited memory BFGS matrix: ws(n,m) stores S, a set of s-vectors</p>
+<p>information defining the limited memory BFGS matrix: <code>ws(n,m)</code> stores <code>S</code>, a set of s-vectors</p>
             </td>
         </tr>
         <tr>
@@ -2882,7 +2882,7 @@ used to define the limited memory matrix.</p>
             <td>::</td>
             <td><strong>Wy</strong>(n,m)</td>
             <td>
-<p>information defining the limited memory BFGS matrix: wy(n,m) stores Y, a set of y-vectors</p>
+<p>information defining the limited memory BFGS matrix: <code>wy(n,m)</code> stores <code>Y</code>, a set of y-vectors</p>
             </td>
         </tr>
         <tr>
@@ -2897,7 +2897,7 @@ used to define the limited memory matrix.</p>
             <td>::</td>
             <td><strong>Sy</strong>(m,m)</td>
             <td>
-<p>information defining the limited memory BFGS matrix: sy(m,m) stores S'Y</p>
+<p>information defining the limited memory BFGS matrix: <code>sy(m,m)</code> stores <code>S'Y</code></p>
             </td>
         </tr>
         <tr>
@@ -2912,7 +2912,7 @@ used to define the limited memory matrix.</p>
             <td>::</td>
             <td><strong>Theta</strong></td>
             <td>
-<p>information defining the limited memory BFGS matrix: the scaling factor specifying B_0 = theta I</p>
+<p>information defining the limited memory BFGS matrix: the scaling factor specifying <code>B_0 = theta I</code></p>
             </td>
         </tr>
         <tr>

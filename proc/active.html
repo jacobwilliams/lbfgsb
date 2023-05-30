@@ -267,8 +267,8 @@
             <td><strong>Iwhere</strong>(n)</td>
             <td>
                 <ul>
-<li><code>iwhere(i)=-1</code> if x(i) has no bounds</li>
-<li><code>iwhere(i)=3</code>  if l(i)=u(i)</li>
+<li><code>iwhere(i)=-1</code> if <code>x(i)</code> has no bounds</li>
+<li><code>iwhere(i)=3</code>  if <code>l(i)=u(i)</code></li>
 <li><code>iwhere(i)=0</code>  otherwise.</li>
 </ul>
 <p>In <a href="../proc/cauchy.html">cauchy</a>, <code>iwhere</code> is given finer gradations.</p>
@@ -515,8 +515,8 @@ implementation in a submodule of an interface in a parent module.
 
 <span class="k">      </span><span class="kt">logical</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Prjctd</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">Cnstnd</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">Boxed</span><span class="w"></span>
 <span class="w">      </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">Iprint</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">Nbd</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"></span>
-<span class="w">      </span><span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Iwhere</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="c">!! * `iwhere(i)=-1` if x(i) has no bounds</span>
-<span class="w">                                       </span><span class="c">!! * `iwhere(i)=3`  if l(i)=u(i)</span>
+<span class="w">      </span><span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Iwhere</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="c">!! * `iwhere(i)=-1` if `x(i)` has no bounds</span>
+<span class="w">                                       </span><span class="c">!! * `iwhere(i)=3`  if `l(i)=u(i)`</span>
 <span class="w">                                       </span><span class="c">!! * `iwhere(i)=0`  otherwise.</span>
 <span class="w">                                       </span><span class="c">!!</span>
 <span class="w">                                       </span><span class="c">!! In [[cauchy]], `iwhere` is given finer gradations.</span>
