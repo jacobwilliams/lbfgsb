@@ -1,6 +1,9 @@
+![LBFGSB](media/logo.png)
+============
+
 This is a modern Fortran refactoring of the [Lbfgsb](http://users.iems.northwestern.edu/~nocedal/lbfgsb.html) limited memory code for solving bound constrained optimization problems [L-BFGS-B version 3.0, march, 2011].
 
-This is a work in progress.
+**This is a work in progress.**
 
 [![GitHub release](https://img.shields.io/github/release/jacobwilliams/lbfgsb.svg?style=plastic)](https://github.com/jacobwilliams/lbfgsb/releases/latest)
 [![Build Status](https://github.com/jacobwilliams/lbfgsb/actions/workflows/CI.yml/badge.svg)](https://github.com/jacobwilliams/lbfgsb/actions)
