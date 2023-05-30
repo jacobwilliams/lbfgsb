@@ -16,49 +16,32 @@ module lbfgsb_linpack_module
 
    public :: dpofa,dtrsl
 
-contains
+   contains
 !*******************************************************************************
 
 !*******************************************************************************
 !>
-!     dpofa factors a real(wp) symmetric positive definite
-!     matrix.
+!  dpofa factors a real symmetric positive definite matrix.
 !
-!     dpofa is usually called by dpoco, but it can be called
-!     directly with a saving in time if  rcond  is not needed.
-!     (time for dpoco) = (1 + 18/n)*(time for dpofa) .
-!
-!     on entry
-!
-!        a       real(wp)(lda, n)
-!                the symmetric matrix to be factored.  only the
-!                diagonal and upper triangle are used.
-!
-!        lda     integer
-!                the leading dimension of the array  a .
-!
-!        n       integer
-!                the order of the matrix  a .
-!
-!     on return
-!
-!        a       an upper triangular matrix  r  so that  a = trans(r)*r
-!                where  trans(r)  is the transpose.
-!                the strict lower triangle is unaltered.
-!                if  info /= 0 , the factorization is not complete.
-!
-!        info    integer
-!                = 0  for normal return.
-!                = k  signals an error condition.  the leading minor
-!                     of order  k  is not positive definite.
-!
-!     linpack.  this version dated 08/14/78 .
-!     cleve moler, university of new mexico, argonne national lab.
+!### History
+!  * linpack.  this version dated 08/14/78 .
+!    cleve moler, university of new mexico, argonne national lab.
 
    subroutine dpofa(a,lda,n,info)
 
-   integer :: lda,n,info
-   real(wp) :: a(lda,*)
+   integer,intent(in) :: lda !! the leading dimension of the array `a`.
+   integer,intent(in) :: n !! the order of the matrix a.
+   integer,intent(out) :: info !!  * `info = 0` for normal return.
+                               !!  * `info = k` signals an error condition.  the leading minor
+                               !!     of order `k` is not positive definite.
+   real(wp),intent(inout) :: a(lda,*) !! Dimension `(lda, n)`:
+                                      !!
+                                      !!  * On entry: the symmetric matrix to be factored.  only the
+                                      !!    diagonal and upper triangle are used.
+                                      !!  * On return: an upper triangular matrix `r` so that `a = trans(r)*r`
+                                      !!    where `trans(r)` is the transpose.
+                                      !!    the strict lower triangle is unaltered.
+                                      !!    if `info /= 0`, the factorization is not complete.
 
    real(wp) :: t
    real(wp) :: s
@@ -86,58 +69,42 @@ contains
 
 !*******************************************************************************
 !>
-!     dtrsl solves systems of the form
+!  dtrsl solves systems of the form
 !
-!                   t * x = b
-!     or
-!                   trans(t) * x = b
+!   `t * x = b`
 !
-!     where t is a triangular matrix of order n. here trans(t)
-!     denotes the transpose of the matrix t.
+!  or
 !
-!     on entry
+!   `trans(t) * x = b`
 !
-!         t         real(wp)(ldt,n)
-!                   t contains the matrix of the system. the zero
-!                   elements of the matrix are not referenced, and
-!                   the corresponding elements of the array can be
-!                   used to store other information.
+!  where t is a triangular matrix of order n. here trans(t)
+!  denotes the transpose of the matrix t.
 !
-!         ldt       integer
-!                   ldt is the leading dimension of the array t.
-!
-!         n         integer
-!                   n is the order of the system.
-!
-!         b         real(wp)(n).
-!                   b contains the right hand side of the system.
-!
-!         job       integer
-!                   job specifies what kind of system is to be solved.
-!                   if job is
-!
-!                        00   solve t*x=b, t lower triangular,
-!                        01   solve t*x=b, t upper triangular,
-!                        10   solve trans(t)*x=b, t lower triangular,
-!                        11   solve trans(t)*x=b, t upper triangular.
-!
-!     on return
-!
-!         b         b contains the solution, if info == 0.
-!                   otherwise b is unaltered.
-!
-!         info      integer
-!                   info contains zero if the system is nonsingular.
-!                   otherwise info contains the index of
-!                   the first zero diagonal element of t.
-!
-!     linpack. this version dated 08/14/78 .
-!     g. w. stewart, university of maryland, argonne national lab.
+!### History
+!  * linpack. this version dated 08/14/78 .
+!    g. w. stewart, university of maryland, argonne national lab.
 
 subroutine dtrsl(t,ldt,n,b,job,info)
 
-integer :: ldt,n,job,info
-real(wp) :: t(ldt,*),b(*)
+integer,intent(in) :: ldt !! the leading dimension of the array t.
+integer,intent(in) :: n !! the order of the system.
+integer,intent(in) :: job !! job specifies what kind of system is to be solved.
+                          !! if job is:
+                          !!
+                          !!  * `00`   solve `t*x=b`, t lower triangular,
+                          !!  * `01`   solve `t*x=b`, t upper triangular,
+                          !!  * `10`   solve `trans(t)*x=b`, t lower triangular,
+                          !!  * `11`   solve `trans(t)*x=b`, t upper triangular.
+integer,intent(out) :: info !! info contains zero if the system is nonsingular.
+                            !! otherwise info contains the index of
+                            !! the first zero diagonal element of t.
+real(wp),intent(in) :: t(ldt,*) !! t contains the matrix of the system. the zero
+                                !! elements of the matrix are not referenced, and
+                                !! the corresponding elements of the array can be
+                                !! used to store other information.
+real(wp),intent(inout) :: b(*) !! On entry: the right hand side of the system.
+                               !! On return: the solution, if info == 0. otherwise b is unaltered.
+
 real(wp) :: temp
 integer :: case,j,jj
 
