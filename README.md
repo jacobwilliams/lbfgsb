@@ -1,13 +1,43 @@
 ![LBFGSB](media/logo.png)
 ============
 
-This is a modern Fortran refactoring of the [Lbfgsb](http://users.iems.northwestern.edu/~nocedal/lbfgsb.html) limited memory code for solving bound constrained optimization problems [L-BFGS-B version 3.0, march, 2011].
+This is a modern Fortran refactoring of the [L-BFGS-B](http://users.iems.northwestern.edu/~nocedal/lbfgsb.html) limited memory code for solving bound constrained optimization problems [L-BFGS-B version 3.0, march, 2011].
 
 **This is a work in progress.**
 
 [![GitHub release](https://img.shields.io/github/release/jacobwilliams/lbfgsb.svg?style=plastic)](https://github.com/jacobwilliams/lbfgsb/releases/latest)
 [![Build Status](https://github.com/jacobwilliams/lbfgsb/actions/workflows/CI.yml/badge.svg)](https://github.com/jacobwilliams/lbfgsb/actions)
 [![codecov](https://codecov.io/gh/jacobwilliams/lbfgsb/branch/master/graph/badge.svg?token=BHtd51oUTE)](https://codecov.io/gh/jacobwilliams/lbfgsb)
+
+### Compiling
+
+The library can be compiled with recent versions the Intel Fortran Compiler and GFortran (and presumably any other Fortran compiler that supports modern standards).
+
+A `fmp.toml` file is provided for compiling `LBFGSB` with the [Fortran Package Manager](https://github.com/fortran-lang/fpm). For example, to build:
+
+```
+fpm build --profile release
+```
+
+By default, the library is built with double precision (`real64`) real values. Explicitly specifying the real kind can be done using the following processor flags:
+
+Preprocessor flag | Kind  | Number of bytes
+----------------- | ----- | ---------------
+`REAL32`  | `real(kind=real32)`  | 4
+`REAL64`  | `real(kind=real64)`  | 8
+`REAL128` | `real(kind=real128)` | 16
+
+For example, to build a single precision version of the library, use:
+
+```
+fpm build --profile release --flag "-DREAL32"
+```
+
+To run the unit tests:
+
+```
+fpm test --profile release
+```
 
 ### Documentation
 
