@@ -46,8 +46,8 @@
     integer,parameter, public :: lbfgsp_wp = wp
 
     ! constants:
-    real(wp),parameter :: zero = 0.0_wp
-    real(wp),parameter :: one  = 1.0_wp
+    real(wp),parameter :: zero  = 0.0_wp
+    real(wp),parameter :: one   = 1.0_wp
     real(wp),parameter :: two   = 2.0_wp
     real(wp),parameter :: three = 3.0_wp
 
@@ -410,13 +410,17 @@
 
       logical :: prjctd , cnstnd , boxed , updatd , wrk
       character(len=3) :: word
-      integer :: i , k , nintol , itfile , iback , nskip , head , col ,    &
-                 iter , itail , iupdat , nseg , nfgv , info , ifun ,       &
+      integer :: i , k , nintol , itfile , iback , nskip , head , col , &
+                 iter , itail , iupdat , nseg , nfgv , info , ifun , &
                  iword , nfree , nact , ileave , nenter
-      real(wp) :: theta , fold , dr , rr , tol , xstep ,    &
-                  sbgnrm , ddum , dnorm , dtd , epsmch , cpu1 ,    &
-                  cpu2 , cachyt , sbtime , lnscht , time1 , time2 ,&
+      real(wp) :: theta , fold , dr , rr , tol , xstep , &
+                  sbgnrm , ddum , dnorm , dtd , epsmch , cpu1 , &
+                  cpu2 , cachyt , sbtime , lnscht , time1 , time2 , &
                   gd , gdold , stp , stpmx , time
+
+      logical :: compute_infinity_norm_of_projected_gradient
+      logical :: prelims
+      logical :: linesearch
 
       if ( Task=='START' ) then
 
@@ -474,7 +478,6 @@
          if ( Iprint>=1 ) open (newunit=itfile,file='iterate.dat',status='unknown')
 
          ! Check the input arguments for errors.
-
          call errclb(n,m,Factr,l,u,Nbd,Task,info,k)
          if ( Task(1:5)=='ERROR' ) then
             call prn3lb(n,x,f,Task,Iprint,info,itfile,iter,nfgv,nintol, &
@@ -482,65 +485,73 @@
                         xstep,k,cachyt,sbtime,lnscht)
             return
          endif
-
          call prn1lb(n,m,l,u,x,Iprint,itfile,epsmch)
 
          ! Initialize iwhere & project x onto the feasible set.
-
          call active(n,l,u,Nbd,x,Iwhere,Iprint,prjctd,cnstnd,boxed)
 
          ! The end of the initialization.
+         call start()
+         return
 
-      else
-         ! restore local variables.
+      end if
 
-         prjctd = Lsave(1)
-         cnstnd = Lsave(2)
-         boxed = Lsave(3)
-         updatd = Lsave(4)
+      ! restore local variables.
 
-         nintol = Isave(1)
-         itfile = Isave(3)
-         iback = Isave(4)
-         nskip = Isave(5)
-         head = Isave(6)
-         col = Isave(7)
-         itail = Isave(8)
-         iter = Isave(9)
-         iupdat = Isave(10)
-         nseg = Isave(12)
-         nfgv = Isave(13)
-         info = Isave(14)
-         ifun = Isave(15)
-         iword = Isave(16)
-         nfree = Isave(17)
-         nact = Isave(18)
-         ileave = Isave(19)
-         nenter = Isave(20)
+      prjctd = Lsave(1)
+      cnstnd = Lsave(2)
+      boxed = Lsave(3)
+      updatd = Lsave(4)
 
-         theta = Dsave(1)
-         fold = Dsave(2)
-         tol = Dsave(3)
-         dnorm = Dsave(4)
-         epsmch = Dsave(5)
-         cpu1 = Dsave(6)
-         cachyt = Dsave(7)
-         sbtime = Dsave(8)
-         lnscht = Dsave(9)
-         time1 = Dsave(10)
-         gd = Dsave(11)
-         stpmx = Dsave(12)
-         sbgnrm = Dsave(13)
-         stp = Dsave(14)
-         gdold = Dsave(15)
-         dtd = Dsave(16)
+      nintol = Isave(1)
+      itfile = Isave(3)
+      iback = Isave(4)
+      nskip = Isave(5)
+      head = Isave(6)
+      col = Isave(7)
+      itail = Isave(8)
+      iter = Isave(9)
+      iupdat = Isave(10)
+      nseg = Isave(12)
+      nfgv = Isave(13)
+      info = Isave(14)
+      ifun = Isave(15)
+      iword = Isave(16)
+      nfree = Isave(17)
+      nact = Isave(18)
+      ileave = Isave(19)
+      nenter = Isave(20)
 
-         ! After returning from the driver go to the point where execution
-         ! is to resume.
+      theta = Dsave(1)
+      fold = Dsave(2)
+      tol = Dsave(3)
+      dnorm = Dsave(4)
+      epsmch = Dsave(5)
+      cpu1 = Dsave(6)
+      cachyt = Dsave(7)
+      sbtime = Dsave(8)
+      lnscht = Dsave(9)
+      time1 = Dsave(10)
+      gd = Dsave(11)
+      stpmx = Dsave(12)
+      sbgnrm = Dsave(13)
+      stp = Dsave(14)
+      gdold = Dsave(15)
+      dtd = Dsave(16)
 
-         if ( Task(1:5)=='FG_LN' ) goto 600
-         if ( Task(1:5)=='NEW_X' ) goto 700
-         if ( Task(1:5)=='FG_ST' ) goto 100
+      ! After returning from the driver go to the point
+      ! where execution is to resume.
+      compute_infinity_norm_of_projected_gradient = .true.
+      prelims = .true.
+      linesearch = .true.
+      if ( Task(1:5)=='FG_LN' ) then
+         compute_infinity_norm_of_projected_gradient = .false.
+         prelims = .false.
+      else if ( Task(1:5)=='NEW_X' ) then
+         compute_infinity_norm_of_projected_gradient = .false.
+         prelims = .false.
+         linesearch = .false.
+      else if ( Task(1:5)/='FG_ST' ) then
          if ( Task(1:4)=='STOP' ) then
             if ( Task(7:9)=='CPU' ) then
                ! restore the previous iterate.
@@ -549,114 +560,289 @@
                f = fold
             endif
             call finish()
-            return
+         else
+            call start()
          endif
-      endif
-
-      ! Compute f0 and g0.
-      Task = 'FG_START'
-      ! return to the driver to calculate f and g; reenter at 111.
-      call save_locals()
-      return
-
- 100  continue
-      nfgv = 1
-
-      ! Compute the infinity norm of the (-) projected gradient.
-      call projgr(n,l,u,Nbd,x,g,sbgnrm)
-
-      if ( Iprint>=1 ) then
-         write (6,'(/,a,i5,4x,a,1p,d12.5,4x,a,1p,d12.5)') &
-                  'At iterate', iter , 'f= ', f , '|proj g|= ', sbgnrm
-         write (itfile,'(2(1x,i4),5x,a,5x,a,3x,a,5x,a,5x,a,8x,a,3x,1p,2(1x,d10.3))') &
-                  iter , nfgv , '-', '-', '-', '-', '-', '-', sbgnrm , f
-      endif
-      if ( sbgnrm<=Pgtol ) then
-         ! terminate the algorithm.
-         Task = 'CONVERGENCE: NORM_OF_PROJECTED_GRADIENT_<=_PGTOL'
-         call finish()
          return
-      endif
-
-      ! ----------------- the beginning of the loop --------------------------
- 200  continue
-
-      if ( Iprint>=99 ) write (6,'(//,A,i5)') 'ITERATION ', iter + 1
-
-      iword = -1
-
-      if ( .not.cnstnd .and. col>0 ) then
-         ! skip the search for GCP.
-         call dcopy(n,x,1,z,1)
-         wrk = updatd
-         nseg = 0
-      else
-
-         !ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-         !
-         !     Compute the Generalized Cauchy Point (GCP).
-         !
-         !ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-
-         call cpu_time(cpu1)
-         call cauchy(n,x,l,u,Nbd,g,Indx2,Iwhere,t,d,z,m,Wy,Ws,Sy,Wt,theta, &
-                     col,head,Wa(1),Wa(2*m+1),Wa(4*m+1),Wa(6*m+1),nseg,    &
-                     Iprint,sbgnrm,info,epsmch)
-         if ( info/=0 ) then
-            ! singular triangular system detected; refresh the lbfgs memory.
-            if ( Iprint>=1 ) write (6,'(/,A,/,A)') &
-               ' Singular triangular system detected;',&
-               '   refresh the lbfgs memory and restart the iteration.'
-            info = 0
-            col = 0
-            head = 1
-            theta = one
-            iupdat = 0
-            updatd = .false.
-            call cpu_time(cpu2)
-            cachyt = cachyt + cpu2 - cpu1
-            goto 200
-         endif
-         call cpu_time(cpu2)
-         cachyt = cachyt + cpu2 - cpu1
-         nintol = nintol + nseg
-
-         ! Count the entering and leaving variables for iter > 0;
-         ! find the index set of free and active variables at the GCP.
-
-         call freev(n,nfree,Index,nenter,ileave,Indx2,Iwhere,wrk,updatd, &
-                    cnstnd,Iprint,iter)
-         nact = n - nfree
-
       end if
 
-      if ( nfree==0 .or. col==0 ) then
-         ! If there are no free variables or B=theta*I, then
-         ! skip the subspace minimization.
-      else
+      if (compute_infinity_norm_of_projected_gradient) then
+         ! Compute the infinity norm of the (-) projected gradient.
+         nfgv = 1
+         call projgr(n,l,u,Nbd,x,g,sbgnrm)
 
-         !ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-         !
-         !     Subspace minimization.
-         !
-         !ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+         if ( Iprint>=1 ) then
+            write (6,'(/,a,i5,4x,a,1p,d12.5,4x,a,1p,d12.5)') &
+                     'At iterate', iter , 'f= ', f , '|proj g|= ', sbgnrm
+            write (itfile,'(2(1x,i4),5x,a,5x,a,3x,a,5x,a,5x,a,8x,a,3x,1p,2(1x,d10.3))') &
+                     iter , nfgv , '-', '-', '-', '-', '-', '-', sbgnrm , f
+         endif
+         if ( sbgnrm<=Pgtol ) then
+            ! terminate the algorithm.
+            Task = 'CONVERGENCE: NORM_OF_PROJECTED_GRADIENT_<=_PGTOL'
+            call finish()
+            return
+         endif
+      end if
 
-         call cpu_time(cpu1)
+      ! ----------------- the beginning of the loop --------------------------
+      main_loop : do
 
-         !     Form  the LEL^T factorization of the indefinite
-         !       matrix    K = [-D -Y'ZZ'Y/theta     L_a'-R_z'  ]
-         !                     [L_a -R_z           theta*S'AA'S ]
-         !       where     E = [-I  0]
-         !                     [ 0  I]
+         if (prelims) then
 
-         if ( wrk ) call formk(n,nfree,Index,nenter,ileave,Indx2,iupdat, &
-                               updatd,Wn,Snd,m,Ws,Wy,Sy,theta,col,head,  &
-                               info)
+            if ( Iprint>=99 ) write (6,'(//,A,i5)') 'ITERATION ', iter + 1
+
+            iword = -1
+
+            if ( .not.cnstnd .and. col>0 ) then
+               ! skip the search for GCP.
+               call dcopy(n,x,1,z,1)
+               wrk = updatd
+               nseg = 0
+            else
+
+               ! Compute the Generalized Cauchy Point (GCP).
+
+               call cpu_time(cpu1)
+               call cauchy(n,x,l,u,Nbd,g,Indx2,Iwhere,t,d,z,m,Wy,Ws,Sy,Wt,theta, &
+                           col,head,Wa(1),Wa(2*m+1),Wa(4*m+1),Wa(6*m+1),nseg,    &
+                           Iprint,sbgnrm,info,epsmch)
+               if ( info/=0 ) then
+                  ! singular triangular system detected; refresh the lbfgs memory.
+                  if ( Iprint>=1 ) write (6,'(/,A,/,A)') &
+                     ' Singular triangular system detected;',&
+                     '   refresh the lbfgs memory and restart the iteration.'
+                  info = 0
+                  col = 0
+                  head = 1
+                  theta = one
+                  iupdat = 0
+                  updatd = .false.
+                  call cpu_time(cpu2)
+                  cachyt = cachyt + cpu2 - cpu1
+                  call continue_loop()
+                  cycle main_loop
+               endif
+               call cpu_time(cpu2)
+               cachyt = cachyt + cpu2 - cpu1
+               nintol = nintol + nseg
+
+               ! Count the entering and leaving variables for iter > 0;
+               ! find the index set of free and active variables at the GCP.
+               call freev(n,nfree,Index,nenter,ileave,Indx2,Iwhere,wrk,updatd, &
+                          cnstnd,Iprint,iter)
+               nact = n - nfree
+
+            end if
+
+            if ( nfree==0 .or. col==0 ) then
+               ! If there are no free variables or B=theta*I, then
+               ! skip the subspace minimization.
+            else
+
+               ! Subspace minimization.
+
+               call cpu_time(cpu1)
+
+               !     Form  the LEL^T factorization of the indefinite
+               !       matrix    K = [-D -Y'ZZ'Y/theta     L_a'-R_z'  ]
+               !                     [L_a -R_z           theta*S'AA'S ]
+               !       where     E = [-I  0]
+               !                     [ 0  I]
+
+               if ( wrk ) call formk(n,nfree,Index,nenter,ileave,Indx2,iupdat, &
+                                     updatd,Wn,Snd,m,Ws,Wy,Sy,theta,col,head,  &
+                                     info)
+               if ( info/=0 ) then
+                  ! nonpositive definiteness in Cholesky factorization;
+                  ! refresh the lbfgs memory and restart the iteration.
+                  if ( Iprint>=1 ) write (6,'(/,a,/,a)') &
+                     ' Nonpositive definiteness in Cholesky factorization in formk;',&
+                     '   refresh the lbfgs memory and restart the iteration.'
+                  info = 0
+                  col = 0
+                  head = 1
+                  theta = one
+                  iupdat = 0
+                  updatd = .false.
+                  call cpu_time(cpu2)
+                  sbtime = sbtime + cpu2 - cpu1
+                  call continue_loop()
+                  cycle main_loop
+               endif
+
+               ! compute r=-Z'B(xcp-xk)-Z'g (using wa(2m+1)=W'(xcp-x)
+               ! from 'cauchy').
+               call cmprlb(n,m,x,g,Ws,Wy,Sy,Wt,z,r,Wa,Index,theta,col,head,nfree,&
+                           cnstnd,info)
+               if ( info==0 ) then
+                  !-jlm-jn   call the direct method.
+                  call subsm(n,m,nfree,Index,l,u,Nbd,z,r,Xp,Ws,Wy,theta,x,g,col, &
+                             head,iword,Wa,Wn,Iprint,info)
+               end if
+
+               if ( info/=0 ) then
+                  ! singular triangular system detected;
+                  ! refresh the lbfgs memory and restart the iteration.
+                  if ( Iprint>=1 ) write (6,'(/,A,/,A)') &
+                     ' Singular triangular system detected;',&
+                     '   refresh the lbfgs memory and restart the iteration.'
+                  info = 0
+                  col = 0
+                  head = 1
+                  theta = one
+                  iupdat = 0
+                  updatd = .false.
+                  call cpu_time(cpu2)
+                  sbtime = sbtime + cpu2 - cpu1
+                  call continue_loop()
+                  cycle main_loop
+               endif
+
+               call cpu_time(cpu2)
+               sbtime = sbtime + cpu2 - cpu1
+
+            end if
+
+            ! Line search and optimality tests.
+
+            ! Generate the search direction d:=z-x.
+            do i = 1 , n
+               d(i) = z(i) - x(i)
+            enddo
+            call cpu_time(cpu1)
+
+         end if
+
+         ! ------------------------------------
+
+         if (linesearch) then
+
+            call lnsrlb(n,l,u,Nbd,x,f,fold,gd,gdold,g,d,r,t,z,stp,dnorm,dtd, &
+                        xstep,stpmx,iter,ifun,iback,nfgv,info,Task,boxed,    &
+                        cnstnd,Csave,Isave(22),Dsave(17))
+            if ( info/=0 .or. iback>=20 ) then
+               ! restore the previous iterate.
+               call dcopy(n,t,1,x,1)
+               call dcopy(n,r,1,g,1)
+               f = fold
+               if ( col==0 ) then
+                  ! abnormal termination.
+                  if ( info==0 ) then
+                     info = -9
+                     ! restore the actual number of f and g evaluations etc.
+                     nfgv = nfgv - 1
+                     ifun = ifun - 1
+                     iback = iback - 1
+                  endif
+                  Task = 'ABNORMAL_TERMINATION_IN_LNSRCH'
+                  iter = iter + 1
+                  call finish()
+                  return
+               else
+                  ! refresh the lbfgs memory and restart the iteration.
+                  if ( Iprint>=1 ) write (6,'(/,a,/,a)') &
+                                       ' Bad direction in the line search;',&
+                                       '   refresh the lbfgs memory and restart the iteration.'
+                  if ( info==0 ) nfgv = nfgv - 1
+                  info = 0
+                  col = 0
+                  head = 1
+                  theta = one
+                  iupdat = 0
+                  updatd = .false.
+                  Task = 'RESTART_FROM_LNSRCH'
+                  call cpu_time(cpu2)
+                  lnscht = lnscht + cpu2 - cpu1
+                  call continue_loop()
+                  cycle main_loop
+               endif
+            else if ( Task(1:5)=='FG_LN' ) then
+               ! return to the driver for calculating f and g; reenter at 666.
+               call save_locals()
+               return
+            else
+               ! calculate and print out the quantities related to the new X.
+               call cpu_time(cpu2)
+               lnscht = lnscht + cpu2 - cpu1
+               iter = iter + 1
+
+               ! Compute the infinity norm of the projected (-)gradient.
+               call projgr(n,l,u,Nbd,x,g,sbgnrm)
+
+               ! Print iteration information.
+               call prn2lb(n,x,f,g,Iprint,itfile,iter,nfgv,nact,sbgnrm,nseg,  &
+                           word,iword,iback,stp,xstep)
+               call save_locals()
+               return
+            endif
+
+         end if
+
+         ! ------------------------------------
+
+         ! Test for termination.
+         if ( sbgnrm<=Pgtol ) then
+            ! terminate the algorithm.
+            Task = 'CONVERGENCE: NORM_OF_PROJECTED_GRADIENT_<=_PGTOL'
+            call finish()
+            return
+         endif
+
+         ddum = max(abs(fold),abs(f),one)
+         if ( (fold-f)<=tol*ddum ) then
+            ! terminate the algorithm.
+            Task = 'CONVERGENCE: REL_REDUCTION_OF_F_<=_FACTR*EPSMCH'
+            if ( iback>=10 ) info = -5
+            ! i.e., to issue a warning if iback>10 in the line search.
+            call finish()
+            return
+         endif
+
+         ! Compute d=newx-oldx, r=newg-oldg, rr=y'y and dr=y's.
+         do i = 1 , n
+            r(i) = g(i) - r(i)
+         enddo
+         rr = ddot(n,r,1,r,1)
+         if ( stp==one ) then
+            dr = gd - gdold
+            ddum = -gdold
+         else
+            dr = (gd-gdold)*stp
+            call dscal(n,stp,d,1)
+            ddum = -gdold*stp
+         endif
+
+         if ( dr<=epsmch*ddum ) then
+            ! skip the L-BFGS update.
+            nskip = nskip + 1
+            updatd = .false.
+            if ( Iprint>=1 ) write (6,'(a,1p,e10.3,a,1p,e10.3,a)') &
+                           '  ys=', dr,'  -gs=' , ddum, ' BFGS update SKIPPED'
+            call continue_loop()
+            cycle main_loop
+         endif
+
+         ! Update the L-BFGS matrix.
+
+         updatd = .true.
+         iupdat = iupdat + 1
+
+         ! Update matrices WS and WY and form the middle matrix in B.
+         call matupd(n,m,Ws,Wy,Sy,Ss,d,r,itail,iupdat,col,head,theta,rr,dr,&
+                     stp,dtd)
+
+         ! Form the upper half of the pds T = theta*SS + L*D^(-1)*L';
+         !    Store T in the upper triangular of the array wt;
+         !    Cholesky factorize T to J*J' with
+         !       J' stored in the upper triangular of wt.
+         call formt(m,Wt,Sy,Ss,col,theta,info)
+
          if ( info/=0 ) then
             ! nonpositive definiteness in Cholesky factorization;
             ! refresh the lbfgs memory and restart the iteration.
             if ( Iprint>=1 ) write (6,'(/,a,/,a)') &
-               ' Nonpositive definiteness in Cholesky factorization in formk;',&
+               ' Nonpositive definiteness in Cholesky factorization in formt;',&
                '   refresh the lbfgs memory and restart the iteration.'
             info = 0
             col = 0
@@ -664,203 +850,37 @@
             theta = one
             iupdat = 0
             updatd = .false.
-            call cpu_time(cpu2)
-            sbtime = sbtime + cpu2 - cpu1
-            goto 200
          endif
 
-         ! compute r=-Z'B(xcp-xk)-Z'g (using wa(2m+1)=W'(xcp-x)
-         ! from 'cauchy').
-         call cmprlb(n,m,x,g,Ws,Wy,Sy,Wt,z,r,Wa,Index,theta,col,head,nfree,&
-                     cnstnd,info)
-         if ( info==0 ) then
-            !-jlm-jn   call the direct method.
-            call subsm(n,m,nfree,Index,l,u,Nbd,z,r,Xp,Ws,Wy,theta,x,g,col, &
-                       head,iword,Wa,Wn,Iprint,info)
-         end if
+         ! Now the inverse of the middle matrix in B is
 
-         if ( info/=0 ) then
-            ! singular triangular system detected;
-            ! refresh the lbfgs memory and restart the iteration.
-            if ( Iprint>=1 ) write (6,'(/,A,/,A)') &
-               ' Singular triangular system detected;',&
-               '   refresh the lbfgs memory and restart the iteration.'
-            info = 0
-            col = 0
-            head = 1
-            theta = one
-            iupdat = 0
-            updatd = .false.
-            call cpu_time(cpu2)
-            sbtime = sbtime + cpu2 - cpu1
-            goto 200
-         endif
+         ! [  D^(1/2)      O ] [ -D^(1/2)  D^(-1/2)*L' ]
+         ! [ -L*D^(-1/2)   J ] [  0        J'          ]
 
-         call cpu_time(cpu2)
-         sbtime = sbtime + cpu2 - cpu1
+         call continue_loop()
 
-      end if
-
-      !ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-      !
-      !     Line search and optimality tests.
-      !
-      !ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-
-      ! Generate the search direction d:=z-x.
-
-      do i = 1 , n
-         d(i) = z(i) - x(i)
-      enddo
-      call cpu_time(cpu1)
-
- 600  continue
-      call lnsrlb(n,l,u,Nbd,x,f,fold,gd,gdold,g,d,r,t,z,stp,dnorm,dtd, &
-                  xstep,stpmx,iter,ifun,iback,nfgv,info,Task,boxed,    &
-                  cnstnd,Csave,Isave(22),Dsave(17))
-      if ( info/=0 .or. iback>=20 ) then
-         ! restore the previous iterate.
-         call dcopy(n,t,1,x,1)
-         call dcopy(n,r,1,g,1)
-         f = fold
-         if ( col==0 ) then
-            ! abnormal termination.
-            if ( info==0 ) then
-               info = -9
-               ! restore the actual number of f and g evaluations etc.
-               nfgv = nfgv - 1
-               ifun = ifun - 1
-               iback = iback - 1
-            endif
-            Task = 'ABNORMAL_TERMINATION_IN_LNSRCH'
-            iter = iter + 1
-            call finish()
-            return
-         else
-            ! refresh the lbfgs memory and restart the iteration.
-            if ( Iprint>=1 ) write (6,'(/,a,/,a)') &
-                                 ' Bad direction in the line search;',&
-                                 '   refresh the lbfgs memory and restart the iteration.'
-            if ( info==0 ) nfgv = nfgv - 1
-            info = 0
-            col = 0
-            head = 1
-            theta = one
-            iupdat = 0
-            updatd = .false.
-            Task = 'RESTART_FROM_LNSRCH'
-            call cpu_time(cpu2)
-            lnscht = lnscht + cpu2 - cpu1
-            goto 200
-         endif
-      else if ( Task(1:5)=='FG_LN' ) then
-         ! return to the driver for calculating f and g; reenter at 666.
-         call save_locals()
-         return
-      else
-         ! calculate and print out the quantities related to the new X.
-         call cpu_time(cpu2)
-         lnscht = lnscht + cpu2 - cpu1
-         iter = iter + 1
-
-         ! Compute the infinity norm of the projected (-)gradient.
-         call projgr(n,l,u,Nbd,x,g,sbgnrm)
-
-         ! Print iteration information.
-         call prn2lb(n,x,f,g,Iprint,itfile,iter,nfgv,nact,sbgnrm,nseg,  &
-                     word,iword,iback,stp,xstep)
-         call save_locals()
-         return
-      endif
-
- 700  continue
-
-      ! Test for termination.
-      if ( sbgnrm<=Pgtol ) then
-         ! terminate the algorithm.
-         Task = 'CONVERGENCE: NORM_OF_PROJECTED_GRADIENT_<=_PGTOL'
-         call finish()
-         return
-      endif
-
-      ddum = max(abs(fold),abs(f),one)
-      if ( (fold-f)<=tol*ddum ) then
-         ! terminate the algorithm.
-         Task = 'CONVERGENCE: REL_REDUCTION_OF_F_<=_FACTR*EPSMCH'
-         if ( iback>=10 ) info = -5
-         ! i.e., to issue a warning if iback>10 in the line search.
-         call finish()
-         return
-      endif
-
-      ! Compute d=newx-oldx, r=newg-oldg, rr=y'y and dr=y's.
-      do i = 1 , n
-         r(i) = g(i) - r(i)
-      enddo
-      rr = ddot(n,r,1,r,1)
-      if ( stp==one ) then
-         dr = gd - gdold
-         ddum = -gdold
-      else
-         dr = (gd-gdold)*stp
-         call dscal(n,stp,d,1)
-         ddum = -gdold*stp
-      endif
-
-      if ( dr<=epsmch*ddum ) then
-         ! skip the L-BFGS update.
-         nskip = nskip + 1
-         updatd = .false.
-         if ( Iprint>=1 ) write (6,'(a,1p,e10.3,a,1p,e10.3,a)') &
-                          '  ys=', dr,'  -gs=' , ddum, ' BFGS update SKIPPED'
-         goto 200
-      endif
-
-      !ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-      !
-      !     Update the L-BFGS matrix.
-      !
-      !ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-
-      updatd = .true.
-      iupdat = iupdat + 1
-
-      ! Update matrices WS and WY and form the middle matrix in B.
-      call matupd(n,m,Ws,Wy,Sy,Ss,d,r,itail,iupdat,col,head,theta,rr,dr,&
-                  stp,dtd)
-
-      ! Form the upper half of the pds T = theta*SS + L*D^(-1)*L';
-      !    Store T in the upper triangular of the array wt;
-      !    Cholesky factorize T to J*J' with
-      !       J' stored in the upper triangular of wt.
-      call formt(m,Wt,Sy,Ss,col,theta,info)
-
-      if ( info/=0 ) then
-         ! nonpositive definiteness in Cholesky factorization;
-         ! refresh the lbfgs memory and restart the iteration.
-         if ( Iprint>=1 ) write (6,'(/,a,/,a)') &
-            ' Nonpositive definiteness in Cholesky factorization in formt;',&
-            '   refresh the lbfgs memory and restart the iteration.'
-         info = 0
-         col = 0
-         head = 1
-         theta = one
-         iupdat = 0
-         updatd = .false.
-         goto 200
-      endif
-
-      ! Now the inverse of the middle matrix in B is
-
-      ! [  D^(1/2)      O ] [ -D^(1/2)  D^(-1/2)*L' ]
-      ! [ -L*D^(-1/2)   J ] [  0        J'          ]
-
-      ! -------------------- the end of the loop -----------------------------
-      goto 200
+      end do main_loop
 
       contains
 
+         subroutine continue_loop()
+            !! prepare for next loop iteration
+
+            prelims = .true.
+            linesearch = .true.
+
+         end subroutine continue_loop
+
+         subroutine start()
+            !! return to the driver to calculate f and g
+
+            Task = 'FG_START'
+            call save_locals()
+
+         end subroutine start
+
          subroutine finish()
+            !! before returning
 
             call cpu_time(time2)
             time = time2 - time1
@@ -872,7 +892,6 @@
          end subroutine finish
 
          subroutine save_locals()
-
             !! Save local variables.
 
             Lsave(1) = prjctd
@@ -2885,15 +2904,15 @@
 !
 !```fortran
 !     task = 'START'
-!  10 continue
-!     call dcsrch( ... )
-!     if (task == 'FG') then
-!        Evaluate the function and the gradient at stp
-!        goto 10
-!     end if
+!     main : block
+!       call dcsrch( ... )
+!       if (task == 'FG') then
+!          ! Evaluate the function and the gradient at stp
+!          cycle main
+!       end if
 !```
 !
-!  NOTE: The user must not alter work arrays between calls.
+!  Note: The user must not alter work arrays between calls.
 !
 !### Credits
 !

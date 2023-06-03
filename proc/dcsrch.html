@@ -92,7 +92,7 @@
           <li id="statements"><i class="fa fa-list-ol"></i>
             <a data-toggle="tooltip"
                data-placement="bottom" data-html="true"
-               title=" 6.9% of total for procedures.">135 statements</a>
+               title=" 6.8% of total for procedures.">135 statements</a>
           </li>
 
             <li id="source-file">
@@ -177,15 +177,15 @@
   satisfies the sufficient decrease condition.</p>
 <p>A typical invocation of dcsrch has the following outline:</p>
 <div class="codehilite"><pre><span></span><code><span class="w">     </span><span class="n">task</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;START&#39;</span><span class="w"></span>
-<span class="w">  </span><span class="mi">10</span><span class="w"> </span><span class="k">continue</span>
-<span class="k">     call </span><span class="n">dcsrch</span><span class="p">(</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
-<span class="w">     </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">task</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s1">&#39;FG&#39;</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
-<span class="k">        </span><span class="n">Evaluate</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="k">function </span><span class="nb">and </span><span class="n">the</span><span class="w"> </span><span class="n">gradient</span><span class="w"> </span><span class="n">at</span><span class="w"> </span><span class="n">stp</span><span class="w"></span>
-<span class="w">        </span><span class="k">goto</span><span class="w"> </span><span class="mi">10</span><span class="w"></span>
-<span class="w">     </span><span class="k">end if</span><span class="w"></span>
+<span class="w">     </span><span class="n">main</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="k">block</span>
+<span class="k">       call </span><span class="n">dcsrch</span><span class="p">(</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">       </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">task</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s1">&#39;FG&#39;</span><span class="p">)</span><span class="w"> </span><span class="k">then</span><span class="w"></span>
+<span class="w">          </span><span class="c">! Evaluate the function and the gradient at stp</span>
+<span class="w">          </span><span class="k">cycle </span><span class="n">main</span><span class="w"></span>
+<span class="w">       </span><span class="k">end if</span><span class="w"></span>
 </code></pre></div>
 
-<p>NOTE: The user must not alter work arrays between calls.</p>
+<p>Note: The user must not alter work arrays between calls.</p>
 <h3>Credits</h3>
 <ul>
 <li>MINPACK-1 Project. June 1983.
