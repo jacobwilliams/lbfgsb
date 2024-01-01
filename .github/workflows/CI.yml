@@ -9,7 +9,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-20.04]
+        os: [ubuntu-latest]
         gcc_v: [10] # Version of GFortran we want to use.
         python-version: [3.9]
     env:
@@ -39,7 +39,7 @@ jobs:
       if: contains( matrix.os, 'ubuntu')
       run: |
         python -m pip install --upgrade pip
-        pip install ford
+        pip install ford numpy matplotlib
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
     - name: Install GFortran Linux
