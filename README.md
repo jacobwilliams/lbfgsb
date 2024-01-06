@@ -5,6 +5,7 @@ This is a modern Fortran refactoring of the [L-BFGS-B](http://users.iems.northwe
 
 **This is a work in progress.**
 
+[![Language](https://img.shields.io/badge/-Fortran-734f96?logo=fortran&logoColor=white)](https://github.com/topics/fortran)
 [![GitHub release](https://img.shields.io/github/release/jacobwilliams/lbfgsb.svg?style=plastic)](https://github.com/jacobwilliams/lbfgsb/releases/latest)
 [![Build Status](https://github.com/jacobwilliams/lbfgsb/actions/workflows/CI.yml/badge.svg)](https://github.com/jacobwilliams/lbfgsb/actions)
 [![codecov](https://codecov.io/gh/jacobwilliams/lbfgsb/branch/master/graph/badge.svg?token=BHtd51oUTE)](https://codecov.io/gh/jacobwilliams/lbfgsb)
