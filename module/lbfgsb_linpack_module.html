@@ -1,3 +1,5 @@
+<!-- -*- mode: jinja2 -*- -->
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -17,7 +19,8 @@
     <link href="../css/local.css" rel="stylesheet">
       <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
 
-    <script src="https://code.jquery.com/jquery-3.7.0.slim.min.js" integrity="sha256-tG5mcZUtJsZvyKAxYLVXrmjKBVLd6VpVccqz/r4ypFE=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="../js/svg-pan-zoom.min.js"></script>
   </head>
 
   <body>
@@ -147,8 +150,8 @@ These have been refactored into modern Fortran.</p>
         <ul class="list-group list-group-flush">
             <li class="list-group-item">
               <ul class="list-inline">
-                  <li class="list-inline-item"><a href='../module/lbfgsb_kinds_module.html'>lbfgsb_kinds_module</a></li>
-                  <li class="list-inline-item"><a href='../module/lbfgsb_blas_module.html'>lbfgsb_blas_module</a></li>
+                  <li class="list-inline-item"><a href='lbfgsb_blas_module.html'>lbfgsb_blas_module</a></li>
+                  <li class="list-inline-item"><a href='lbfgsb_kinds_module.html'>lbfgsb_kinds_module</a></li>
               </ul>
             </li>
             <li class="list-group-item">
@@ -172,7 +175,7 @@ These have been refactored into modern Fortran.</p>
 <!-- module~lbfgsb_blas_module -->
 <g id="module~~lbfgsb_linpack_module~~UsesGraph_node2" class="node">
 <title>module~lbfgsb_blas_module</title>
-<g id="a_module~~lbfgsb_linpack_module~~UsesGraph_node2"><a xlink:href=".././module/lbfgsb_blas_module.html" xlink:title="lbfgsb_blas_module">
+<g id="a_module~~lbfgsb_linpack_module~~UsesGraph_node2"><a xlink:href="../module/lbfgsb_blas_module.html" xlink:title="lbfgsb_blas_module">
 <polygon fill="#337ab7" stroke="#337ab7" points="408,-44 290,-44 290,-20 408,-20 408,-44"/>
 <text text-anchor="middle" x="349" y="-29.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lbfgsb_blas_module</text>
 </a>
@@ -187,7 +190,7 @@ These have been refactored into modern Fortran.</p>
 <!-- module~lbfgsb_kinds_module -->
 <g id="module~~lbfgsb_linpack_module~~UsesGraph_node3" class="node">
 <title>module~lbfgsb_kinds_module</title>
-<g id="a_module~~lbfgsb_linpack_module~~UsesGraph_node3"><a xlink:href=".././module/lbfgsb_kinds_module.html" xlink:title="lbfgsb_kinds_module">
+<g id="a_module~~lbfgsb_linpack_module~~UsesGraph_node3"><a xlink:href="../module/lbfgsb_kinds_module.html" xlink:title="lbfgsb_kinds_module">
 <polygon fill="#337ab7" stroke="#337ab7" points="254,-24 130,-24 130,0 254,0 254,-24"/>
 <text text-anchor="middle" x="192" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lbfgsb_kinds_module</text>
 </a>
@@ -219,17 +222,17 @@ These have been refactored into modern Fortran.</p>
 </g>
 </g>
 </svg>
-</div>        <div><a type="button" class="graph-help" data-toggle="modal" href="#UsesGraph-help-text">Help</a></div>
+</div>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#UsesGraph-help-text">Help</a>
+          </div>
           <div class="modal fade" id="UsesGraph-help-text" tabindex="-1" role="dialog">
             <div class="modal-dialog modal-lg" role="document">
               <div class="modal-content">
                 <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
                   <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-              <div class="modal-body">
+                <div class="modal-body">
 <p>Nodes of different colours represent the following: </p>
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
@@ -319,7 +322,7 @@ modules which it uses.
 <!-- module~lbfgsb_module -->
 <g id="module~~lbfgsb_linpack_module~~UsedByGraph_node2" class="node">
 <title>module~lbfgsb_module</title>
-<g id="a_module~~lbfgsb_linpack_module~~UsedByGraph_node2"><a xlink:href=".././module/lbfgsb_module.html" xlink:title="lbfgsb_module">
+<g id="a_module~~lbfgsb_linpack_module~~UsedByGraph_node2"><a xlink:href="../module/lbfgsb_module.html" xlink:title="lbfgsb_module">
 <polygon fill="#337ab7" stroke="#337ab7" points="261,-24 170,-24 170,0 261,0 261,-24"/>
 <text text-anchor="middle" x="215.5" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lbfgsb_module</text>
 </a>
@@ -333,17 +336,17 @@ modules which it uses.
 </g>
 </g>
 </svg>
-</div>        <div><a type="button" class="graph-help" data-toggle="modal" href="#UsedByGraph-help-text">Help</a></div>
+</div>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#UsedByGraph-help-text">Help</a>
+          </div>
           <div class="modal fade" id="UsedByGraph-help-text" tabindex="-1" role="dialog">
             <div class="modal-dialog modal-lg" role="document">
               <div class="modal-content">
                 <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
                   <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-              <div class="modal-body">
+                <div class="modal-body">
 <p>Nodes of different colours represent the following: </p>
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
@@ -420,7 +423,7 @@ modules which it uses.
         <section>
           <h2>Subroutines</h2>
               <div class="card">
-    <div class="card-header codesum"><span class="anchor" id="proc-dpofa"></span><h3>public  subroutine <a href='../proc/dpofa.html'>dpofa</a>(a, lda, n, info)  
+    <div class="card-header codesum"><span class="anchor" id="proc-dpofa"></span> <h3>public  subroutine <a href='../proc/dpofa.html'>dpofa</a>(a, lda, n, info)  
 </h3></div>
     <div class="card-body">
           
@@ -469,7 +472,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-n~9"></span>
+              <span class="anchor" id="variable-n"></span>
               integer,
             </td>
 <td>intent(in)</td>
@@ -505,7 +508,7 @@ modules which it uses.
   </div>
 
               <div class="card">
-    <div class="card-header codesum"><span class="anchor" id="proc-dtrsl"></span><h3>public  subroutine <a href='../proc/dtrsl.html'>dtrsl</a>(t, ldt, n, b, job, info)  
+    <div class="card-header codesum"><span class="anchor" id="proc-dtrsl"></span> <h3>public  subroutine <a href='../proc/dtrsl.html'>dtrsl</a>(t, ldt, n, b, job, info)  
 </h3></div>
     <div class="card-body">
           
@@ -524,7 +527,7 @@ modules which it uses.
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-t~4"></span>
+              <span class="anchor" id="variable-t~2"></span>
               real(kind=wp),
             </td>
 <td>intent(in)</td>
@@ -557,7 +560,7 @@ used to store other information.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-n~10"></span>
+              <span class="anchor" id="variable-n~2"></span>
               integer,
             </td>
 <td>intent(in)</td>

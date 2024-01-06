@@ -1,3 +1,5 @@
+<!-- -*- mode: jinja2 -*- -->
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -18,7 +20,8 @@
     <link href="../css/local.css" rel="stylesheet">
       <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
 
-    <script src="https://code.jquery.com/jquery-3.7.0.slim.min.js" integrity="sha256-tG5mcZUtJsZvyKAxYLVXrmjKBVLd6VpVccqz/r4ypFE=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="../js/svg-pan-zoom.min.js"></script>
   </head>
 
   <body>
@@ -62,10 +65,22 @@
 			 <table class="table table-striped">
 			 <thead><tr><th>File</th><th>Description</th></tr></thead>
 			 <tbody>
-			   <tr><td><a href='../sourcefile/lbfgsb.f90.html'>lbfgsb.f90</a></td><td></td></tr>
-			   <tr><td><a href='../sourcefile/lbfgsb_blas_module.f90.html'>lbfgsb_blas_module.F90</a></td><td></td></tr>
-			   <tr><td><a href='../sourcefile/lbfgsb_kinds_module.f90.html'>lbfgsb_kinds_module.F90</a></td><td></td></tr>
-			   <tr><td><a href='../sourcefile/lbfgsb_linpack_module.f90.html'>lbfgsb_linpack_module.f90</a></td><td></td></tr>
+			   <tr>
+                 <td><a href='../sourcefile/lbfgsb.f90.html'>lbfgsb.f90</a></td>
+                 <td></td>
+               </tr>
+			   <tr>
+                 <td><a href='../sourcefile/lbfgsb_blas_module.f90.html'>lbfgsb_blas_module.F90</a></td>
+                 <td></td>
+               </tr>
+			   <tr>
+                 <td><a href='../sourcefile/lbfgsb_kinds_module.f90.html'>lbfgsb_kinds_module.F90</a></td>
+                 <td></td>
+               </tr>
+			   <tr>
+                 <td><a href='../sourcefile/lbfgsb_linpack_module.f90.html'>lbfgsb_linpack_module.f90</a></td>
+                 <td></td>
+               </tr>
 			 </tbody></table>
 			 <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
@@ -81,7 +96,7 @@
 <!-- sourcefile~lbfgsb.f90 -->
 <g id="file~~graph~~FileGraph_node1" class="node">
 <title>sourcefile~lbfgsb.f90</title>
-<g id="a_file~~graph~~FileGraph_node1"><a xlink:href=".././sourcefile/lbfgsb.f90.html" xlink:title="lbfgsb.f90">
+<g id="a_file~~graph~~FileGraph_node1"><a xlink:href="../sourcefile/lbfgsb.f90.html" xlink:title="lbfgsb.f90">
 <polygon fill="#f0ad4e" stroke="#f0ad4e" points="65,-57.42 0,-57.42 0,-33.42 65,-33.42 65,-57.42"/>
 <text text-anchor="middle" x="32.5" y="-43.02" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lbfgsb.f90</text>
 </a>
@@ -90,7 +105,7 @@
 <!-- sourcefile~lbfgsb_blas_module.f90 -->
 <g id="file~~graph~~FileGraph_node2" class="node">
 <title>sourcefile~lbfgsb_blas_module.f90</title>
-<g id="a_file~~graph~~FileGraph_node2"><a xlink:href=".././sourcefile/lbfgsb_blas_module.f90.html" xlink:title="lbfgsb_blas_module.F90">
+<g id="a_file~~graph~~FileGraph_node2"><a xlink:href="../sourcefile/lbfgsb_blas_module.f90.html" xlink:title="lbfgsb_blas_module.F90">
 <polygon fill="#f0ad4e" stroke="#f0ad4e" points="431,-37.42 291,-37.42 291,-13.42 431,-13.42 431,-37.42"/>
 <text text-anchor="middle" x="361" y="-23.02" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lbfgsb_blas_module.F90</text>
 </a>
@@ -106,7 +121,7 @@
 <!-- sourcefile~lbfgsb_linpack_module.f90 -->
 <g id="file~~graph~~FileGraph_node4" class="node">
 <title>sourcefile~lbfgsb_linpack_module.f90</title>
-<g id="a_file~~graph~~FileGraph_node4"><a xlink:href=".././sourcefile/lbfgsb_linpack_module.f90.html" xlink:title="lbfgsb_linpack_module.f90">
+<g id="a_file~~graph~~FileGraph_node4"><a xlink:href="../sourcefile/lbfgsb_linpack_module.f90.html" xlink:title="lbfgsb_linpack_module.f90">
 <polygon fill="#f0ad4e" stroke="#f0ad4e" points="255,-37.42 101,-37.42 101,-13.42 255,-13.42 255,-37.42"/>
 <text text-anchor="middle" x="178" y="-23.02" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lbfgsb_linpack_module.f90</text>
 </a>
@@ -121,7 +136,7 @@
 <!-- sourcefile~lbfgsb_kinds_module.f90 -->
 <g id="file~~graph~~FileGraph_node3" class="node">
 <title>sourcefile~lbfgsb_kinds_module.f90</title>
-<g id="a_file~~graph~~FileGraph_node3"><a xlink:href=".././sourcefile/lbfgsb_kinds_module.f90.html" xlink:title="lbfgsb_kinds_module.F90">
+<g id="a_file~~graph~~FileGraph_node3"><a xlink:href="../sourcefile/lbfgsb_kinds_module.f90.html" xlink:title="lbfgsb_kinds_module.F90">
 <polygon fill="#f0ad4e" stroke="#f0ad4e" points="613,-37.42 467,-37.42 467,-13.42 613,-13.42 613,-37.42"/>
 <text text-anchor="middle" x="540" y="-23.02" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lbfgsb_kinds_module.F90</text>
 </a>
@@ -152,17 +167,17 @@
 </g>
 </g>
 </svg>
-</div>        <div><a type="button" class="graph-help" data-toggle="modal" href="#FileGraph-help-text">Help</a></div>
+</div>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#FileGraph-help-text">Help</a>
+          </div>
           <div class="modal fade" id="FileGraph-help-text" tabindex="-1" role="dialog">
             <div class="modal-dialog modal-lg" role="document">
               <div class="modal-content">
                 <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
                   <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-              <div class="modal-body">
+                <div class="modal-body">
 <p>Nodes of different colours represent the following: </p>
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"

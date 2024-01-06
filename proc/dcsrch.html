@@ -1,3 +1,5 @@
+<!-- -*- mode: jinja2 -*- -->
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -17,7 +19,8 @@
     <link href="../css/local.css" rel="stylesheet">
       <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
 
-    <script src="https://code.jquery.com/jquery-3.7.0.slim.min.js" integrity="sha256-tG5mcZUtJsZvyKAxYLVXrmjKBVLd6VpVccqz/r4ypFE=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="../js/svg-pan-zoom.min.js"></script>
   </head>
 
   <body>
@@ -191,7 +194,7 @@
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-f~3"></span>
+              <span class="anchor" id="variable-f~6"></span>
               real(kind=wp),
             </td>
 <td>intent(inout)</td>
@@ -211,7 +214,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-g~4"></span>
+              <span class="anchor" id="variable-g~8"></span>
               real(kind=wp),
             </td>
 <td>intent(inout)</td>
@@ -231,7 +234,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-stp"></span>
+              <span class="anchor" id="variable-stp~5"></span>
               real(kind=wp),
             </td>
 <td>intent(inout)</td>
@@ -332,7 +335,7 @@ is less than <code>xtol</code>.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-task~3"></span>
+              <span class="anchor" id="variable-task~6"></span>
               character(len=*),
             </td>
 <td>intent(inout)</td>
@@ -363,7 +366,7 @@ is less than <code>xtol</code>.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-isave~3"></span>
+              <span class="anchor" id="variable-isave~4"></span>
               integer
             </td>
 <td></td>
@@ -378,7 +381,7 @@ is less than <code>xtol</code>.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-dsave~3"></span>
+              <span class="anchor" id="variable-dsave~4"></span>
               real(kind=wp)
             </td>
 <td></td>
@@ -420,7 +423,7 @@ is less than <code>xtol</code>.</p>
 <!-- proc~dcstep -->
 <g id="proc~~dcsrch~~CallsGraph_node2" class="node">
 <title>proc~dcstep</title>
-<g id="a_proc~~dcsrch~~CallsGraph_node2"><a xlink:href=".././proc/dcstep.html" xlink:title="lbfgsb_module::dcstep">
+<g id="a_proc~~dcsrch~~CallsGraph_node2"><a xlink:href="../proc/dcstep.html" xlink:title="lbfgsb_module::dcstep">
 <polygon fill="#d9534f" stroke="#d9534f" points="302,-24 169,-24 169,0 302,0 302,-24"/>
 <text text-anchor="middle" x="235.5" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lbfgsb_module::dcstep</text>
 </a>
@@ -434,17 +437,17 @@ is less than <code>xtol</code>.</p>
 </g>
 </g>
 </svg>
-</div>        <div><a type="button" class="graph-help" data-toggle="modal" href="#CallsGraph-help-text">Help</a></div>
+</div>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#CallsGraph-help-text">Help</a>
+          </div>
           <div class="modal fade" id="CallsGraph-help-text" tabindex="-1" role="dialog">
             <div class="modal-dialog modal-lg" role="document">
               <div class="modal-content">
                 <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
                   <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-              <div class="modal-body">
+                <div class="modal-body">
 <p>Nodes of different colours represent the following: </p>
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
@@ -538,7 +541,7 @@ implementation in a submodule of an interface in a parent module.
 <!-- proc~lnsrlb -->
 <g id="proc~~dcsrch~~CalledByGraph_node2" class="node">
 <title>proc~lnsrlb</title>
-<g id="a_proc~~dcsrch~~CalledByGraph_node2"><a xlink:href=".././proc/lnsrlb.html" xlink:title="lbfgsb_module::lnsrlb">
+<g id="a_proc~~dcsrch~~CalledByGraph_node2"><a xlink:href="../proc/lnsrlb.html" xlink:title="lbfgsb_module::lnsrlb">
 <polygon fill="#d9534f" stroke="#d9534f" points="464,-24 337,-24 337,0 464,0 464,-24"/>
 <text text-anchor="middle" x="400.5" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lbfgsb_module::lnsrlb</text>
 </a>
@@ -553,7 +556,7 @@ implementation in a submodule of an interface in a parent module.
 <!-- proc~mainlb -->
 <g id="proc~~dcsrch~~CalledByGraph_node3" class="node">
 <title>proc~mainlb</title>
-<g id="a_proc~~dcsrch~~CalledByGraph_node3"><a xlink:href=".././proc/mainlb.html" xlink:title="lbfgsb_module::mainlb">
+<g id="a_proc~~dcsrch~~CalledByGraph_node3"><a xlink:href="../proc/mainlb.html" xlink:title="lbfgsb_module::mainlb">
 <polygon fill="#d9534f" stroke="#d9534f" points="301,-24 166,-24 166,0 301,0 301,-24"/>
 <text text-anchor="middle" x="233.5" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lbfgsb_module::mainlb</text>
 </a>
@@ -568,7 +571,7 @@ implementation in a submodule of an interface in a parent module.
 <!-- proc~setulb -->
 <g id="proc~~dcsrch~~CalledByGraph_node4" class="node">
 <title>proc~setulb</title>
-<g id="a_proc~~dcsrch~~CalledByGraph_node4"><a xlink:href=".././proc/setulb.html" xlink:title="lbfgsb_module::setulb">
+<g id="a_proc~~dcsrch~~CalledByGraph_node4"><a xlink:href="../proc/setulb.html" xlink:title="lbfgsb_module::setulb">
 <polygon fill="#d9534f" stroke="#d9534f" points="130,-24 0,-24 0,0 130,0 130,-24"/>
 <text text-anchor="middle" x="65" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lbfgsb_module::setulb</text>
 </a>
@@ -586,17 +589,17 @@ implementation in a submodule of an interface in a parent module.
                   var panprocdcsrchCalledByGraph = svgPanZoom('#procdcsrchCalledByGraph',
                     {zoomEnabled: true, controlIconsEnabled: true, fit: true, center: true,}
                   );
-                </script>        <div><a type="button" class="graph-help" data-toggle="modal" href="#CalledByGraph-help-text">Help</a></div>
+                </script>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#CalledByGraph-help-text">Help</a>
+          </div>
           <div class="modal fade" id="CalledByGraph-help-text" tabindex="-1" role="dialog">
             <div class="modal-dialog modal-lg" role="document">
               <div class="modal-content">
                 <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
                   <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-              <div class="modal-body">
+                <div class="modal-body">
 <p>Nodes of different colours represent the following: </p>
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"

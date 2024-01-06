@@ -1,3 +1,5 @@
+<!-- -*- mode: jinja2 -*- -->
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -17,7 +19,8 @@
     <link href="../css/local.css" rel="stylesheet">
       <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
 
-    <script src="https://code.jquery.com/jquery-3.7.0.slim.min.js" integrity="sha256-tG5mcZUtJsZvyKAxYLVXrmjKBVLd6VpVccqz/r4ypFE=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="../js/svg-pan-zoom.min.js"></script>
   </head>
 
   <body>
@@ -163,7 +166,7 @@
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-n~6"></span>
+              <span class="anchor" id="variable-n~18"></span>
               integer,
             </td>
 <td>intent(in)</td>
@@ -178,7 +181,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-m~6"></span>
+              <span class="anchor" id="variable-m~14"></span>
               integer,
             </td>
 <td>intent(in)</td>
@@ -194,7 +197,7 @@ corrections allowed in the limited memory matrix.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-l~4"></span>
+              <span class="anchor" id="variable-l~7"></span>
               real(kind=wp),
             </td>
 <td>intent(in)</td>
@@ -209,7 +212,7 @@ corrections allowed in the limited memory matrix.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-u~4"></span>
+              <span class="anchor" id="variable-u~7"></span>
               real(kind=wp),
             </td>
 <td>intent(in)</td>
@@ -224,7 +227,7 @@ corrections allowed in the limited memory matrix.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-x~4"></span>
+              <span class="anchor" id="variable-x~7"></span>
               real(kind=wp),
             </td>
 <td>intent(in)</td>
@@ -239,7 +242,7 @@ corrections allowed in the limited memory matrix.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-iprint~4"></span>
+              <span class="anchor" id="variable-iprint~6"></span>
               integer,
             </td>
 <td>intent(in)</td>
@@ -311,7 +314,7 @@ corrections allowed in the limited memory matrix.</p>
 <!-- proc~mainlb -->
 <g id="proc~~prn1lb~~CalledByGraph_node2" class="node">
 <title>proc~mainlb</title>
-<g id="a_proc~~prn1lb~~CalledByGraph_node2"><a xlink:href=".././proc/mainlb.html" xlink:title="lbfgsb_module::mainlb">
+<g id="a_proc~~prn1lb~~CalledByGraph_node2"><a xlink:href="../proc/mainlb.html" xlink:title="lbfgsb_module::mainlb">
 <polygon fill="#d9534f" stroke="#d9534f" points="301,-24 166,-24 166,0 301,0 301,-24"/>
 <text text-anchor="middle" x="233.5" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lbfgsb_module::mainlb</text>
 </a>
@@ -326,7 +329,7 @@ corrections allowed in the limited memory matrix.</p>
 <!-- proc~setulb -->
 <g id="proc~~prn1lb~~CalledByGraph_node3" class="node">
 <title>proc~setulb</title>
-<g id="a_proc~~prn1lb~~CalledByGraph_node3"><a xlink:href=".././proc/setulb.html" xlink:title="lbfgsb_module::setulb">
+<g id="a_proc~~prn1lb~~CalledByGraph_node3"><a xlink:href="../proc/setulb.html" xlink:title="lbfgsb_module::setulb">
 <polygon fill="#d9534f" stroke="#d9534f" points="130,-24 0,-24 0,0 130,0 130,-24"/>
 <text text-anchor="middle" x="65" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lbfgsb_module::setulb</text>
 </a>
@@ -340,17 +343,17 @@ corrections allowed in the limited memory matrix.</p>
 </g>
 </g>
 </svg>
-</div>        <div><a type="button" class="graph-help" data-toggle="modal" href="#CalledByGraph-help-text">Help</a></div>
+</div>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#CalledByGraph-help-text">Help</a>
+          </div>
           <div class="modal fade" id="CalledByGraph-help-text" tabindex="-1" role="dialog">
             <div class="modal-dialog modal-lg" role="document">
               <div class="modal-content">
                 <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
                   <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-              <div class="modal-body">
+                <div class="modal-body">
 <p>Nodes of different colours represent the following: </p>
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"

@@ -1,3 +1,5 @@
+<!-- -*- mode: jinja2 -*- -->
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -17,7 +19,8 @@
     <link href="../css/local.css" rel="stylesheet">
       <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
 
-    <script src="https://code.jquery.com/jquery-3.7.0.slim.min.js" integrity="sha256-tG5mcZUtJsZvyKAxYLVXrmjKBVLd6VpVccqz/r4ypFE=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="../js/svg-pan-zoom.min.js"></script>
   </head>
 
   <body>
@@ -189,17 +192,17 @@
 </g>
 </g>
 </svg>
-</div>        <div><a type="button" class="graph-help" data-toggle="modal" href="#UsesGraph-help-text">Help</a></div>
+</div>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#UsesGraph-help-text">Help</a>
+          </div>
           <div class="modal fade" id="UsesGraph-help-text" tabindex="-1" role="dialog">
             <div class="modal-dialog modal-lg" role="document">
               <div class="modal-content">
                 <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
                   <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-              <div class="modal-body">
+                <div class="modal-body">
 <p>Nodes of different colours represent the following: </p>
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
@@ -289,7 +292,7 @@ modules which it uses.
 <!-- module~lbfgsb_blas_module -->
 <g id="module~~lbfgsb_kinds_module~~UsedByGraph_node2" class="node">
 <title>module~lbfgsb_blas_module</title>
-<g id="a_module~~lbfgsb_kinds_module~~UsedByGraph_node2"><a xlink:href=".././module/lbfgsb_blas_module.html" xlink:title="lbfgsb_blas_module">
+<g id="a_module~~lbfgsb_kinds_module~~UsedByGraph_node2"><a xlink:href="../module/lbfgsb_blas_module.html" xlink:title="lbfgsb_blas_module">
 <polygon fill="#337ab7" stroke="#337ab7" points="278,-37.12 160,-37.12 160,-13.12 278,-13.12 278,-37.12"/>
 <text text-anchor="middle" x="219" y="-22.72" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lbfgsb_blas_module</text>
 </a>
@@ -304,7 +307,7 @@ modules which it uses.
 <!-- module~lbfgsb_linpack_module -->
 <g id="module~~lbfgsb_kinds_module~~UsedByGraph_node3" class="node">
 <title>module~lbfgsb_linpack_module</title>
-<g id="a_module~~lbfgsb_kinds_module~~UsedByGraph_node3"><a xlink:href=".././module/lbfgsb_linpack_module.html" xlink:title="lbfgsb_linpack_module">
+<g id="a_module~~lbfgsb_kinds_module~~UsedByGraph_node3"><a xlink:href="../module/lbfgsb_linpack_module.html" xlink:title="lbfgsb_linpack_module">
 <polygon fill="#337ab7" stroke="#337ab7" points="448,-37.12 314,-37.12 314,-13.12 448,-13.12 448,-37.12"/>
 <text text-anchor="middle" x="381" y="-22.72" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lbfgsb_linpack_module</text>
 </a>
@@ -325,7 +328,7 @@ modules which it uses.
 <!-- module~lbfgsb_module -->
 <g id="module~~lbfgsb_kinds_module~~UsedByGraph_node4" class="node">
 <title>module~lbfgsb_module</title>
-<g id="a_module~~lbfgsb_kinds_module~~UsedByGraph_node4"><a xlink:href=".././module/lbfgsb_module.html" xlink:title="lbfgsb_module">
+<g id="a_module~~lbfgsb_kinds_module~~UsedByGraph_node4"><a xlink:href="../module/lbfgsb_module.html" xlink:title="lbfgsb_module">
 <polygon fill="#337ab7" stroke="#337ab7" points="575,-57.12 484,-57.12 484,-33.12 575,-33.12 575,-57.12"/>
 <text text-anchor="middle" x="529.5" y="-42.72" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lbfgsb_module</text>
 </a>
@@ -352,17 +355,17 @@ modules which it uses.
 </g>
 </g>
 </svg>
-</div>        <div><a type="button" class="graph-help" data-toggle="modal" href="#UsedByGraph-help-text">Help</a></div>
+</div>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#UsedByGraph-help-text">Help</a>
+          </div>
           <div class="modal fade" id="UsedByGraph-help-text" tabindex="-1" role="dialog">
             <div class="modal-dialog modal-lg" role="document">
               <div class="modal-content">
                 <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
                   <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-              <div class="modal-body">
+                <div class="modal-body">
 <p>Nodes of different colours represent the following: </p>
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"

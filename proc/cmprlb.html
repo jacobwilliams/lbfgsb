@@ -1,3 +1,5 @@
+<!-- -*- mode: jinja2 -*- -->
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -17,7 +19,8 @@
     <link href="../css/local.css" rel="stylesheet">
       <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
 
-    <script src="https://code.jquery.com/jquery-3.7.0.slim.min.js" integrity="sha256-tG5mcZUtJsZvyKAxYLVXrmjKBVLd6VpVccqz/r4ypFE=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="../js/svg-pan-zoom.min.js"></script>
   </head>
 
   <body>
@@ -138,7 +141,7 @@
     
 
     <p>This subroutine computes <code>r=-Z'B(xcp-xk)-Z'g</code> by using
-  <code>wa(2m+1)=W'(xcp-x)</code> from subroutine <a href="../proc/cauchy.html">cauchy</a>.</p>
+  <code>wa(2m+1)=W'(xcp-x)</code> from subroutine <a href="cauchy.html">cauchy</a>.</p>
 <h3>Credits</h3>
 <ul>
 <li>NEOS, November 1994. (Latest revision June 1996.)
@@ -162,7 +165,7 @@
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-n~12"></span>
+              <span class="anchor" id="variable-n~11"></span>
               integer
             </td>
 <td></td>
@@ -177,7 +180,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-m~8"></span>
+              <span class="anchor" id="variable-m~9"></span>
               integer
             </td>
 <td></td>
@@ -192,7 +195,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-x~7"></span>
+              <span class="anchor" id="variable-x~5"></span>
               real(kind=wp)
             </td>
 <td></td>
@@ -207,7 +210,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-g~5"></span>
+              <span class="anchor" id="variable-g~4"></span>
               real(kind=wp)
             </td>
 <td></td>
@@ -222,7 +225,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-ws~5"></span>
+              <span class="anchor" id="variable-ws~3"></span>
               real(kind=wp)
             </td>
 <td></td>
@@ -237,7 +240,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-wy~5"></span>
+              <span class="anchor" id="variable-wy~3"></span>
               real(kind=wp)
             </td>
 <td></td>
@@ -252,7 +255,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-sy~5"></span>
+              <span class="anchor" id="variable-sy~4"></span>
               real(kind=wp)
             </td>
 <td></td>
@@ -327,7 +330,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-index~3"></span>
+              <span class="anchor" id="variable-index~2"></span>
               integer
             </td>
 <td></td>
@@ -342,7 +345,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-theta~4"></span>
+              <span class="anchor" id="variable-theta~2"></span>
               real(kind=wp)
             </td>
 <td></td>
@@ -357,7 +360,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-col~5"></span>
+              <span class="anchor" id="variable-col~3"></span>
               integer
             </td>
 <td></td>
@@ -372,7 +375,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-head~4"></span>
+              <span class="anchor" id="variable-head~2"></span>
               integer
             </td>
 <td></td>
@@ -402,7 +405,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-cnstnd~3"></span>
+              <span class="anchor" id="variable-cnstnd~2"></span>
               logical
             </td>
 <td></td>
@@ -417,7 +420,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-info~5"></span>
+              <span class="anchor" id="variable-info~3"></span>
               integer
             </td>
 <td></td>
@@ -459,7 +462,7 @@
 <!-- proc~bmv -->
 <g id="proc~~cmprlb~~CallsGraph_node2" class="node">
 <title>proc~bmv</title>
-<g id="a_proc~~cmprlb~~CallsGraph_node2"><a xlink:href=".././proc/bmv.html" xlink:title="lbfgsb_module::bmv">
+<g id="a_proc~~cmprlb~~CallsGraph_node2"><a xlink:href="../proc/bmv.html" xlink:title="lbfgsb_module::bmv">
 <polygon fill="#d9534f" stroke="#d9534f" points="293,-45 172,-45 172,-21 293,-21 293,-45"/>
 <text text-anchor="middle" x="232.5" y="-30.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lbfgsb_module::bmv</text>
 </a>
@@ -474,7 +477,7 @@
 <!-- proc~dtrsl -->
 <g id="proc~~cmprlb~~CallsGraph_node3" class="node">
 <title>proc~dtrsl</title>
-<g id="a_proc~~cmprlb~~CallsGraph_node3"><a xlink:href=".././proc/dtrsl.html" xlink:title="lbfgsb_linpack_module::dtrsl">
+<g id="a_proc~~cmprlb~~CallsGraph_node3"><a xlink:href="../proc/dtrsl.html" xlink:title="lbfgsb_linpack_module::dtrsl">
 <polygon fill="#d9534f" stroke="#d9534f" points="494,-45 329,-45 329,-21 494,-21 494,-45"/>
 <text text-anchor="middle" x="411.5" y="-30.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lbfgsb_linpack_module::dtrsl</text>
 </a>
@@ -489,7 +492,7 @@
 <!-- proc~daxpy -->
 <g id="proc~~cmprlb~~CallsGraph_node4" class="node">
 <title>proc~daxpy</title>
-<g id="a_proc~~cmprlb~~CallsGraph_node4"><a xlink:href=".././proc/daxpy.html" xlink:title="lbfgsb_blas_module::daxpy">
+<g id="a_proc~~cmprlb~~CallsGraph_node4"><a xlink:href="../proc/daxpy.html" xlink:title="lbfgsb_blas_module::daxpy">
 <polygon fill="#d9534f" stroke="#d9534f" points="687,-66 530,-66 530,-42 687,-42 687,-66"/>
 <text text-anchor="middle" x="608.5" y="-51.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lbfgsb_blas_module::daxpy</text>
 </a>
@@ -504,7 +507,7 @@
 <!-- proc~ddot -->
 <g id="proc~~cmprlb~~CallsGraph_node5" class="node">
 <title>proc~ddot</title>
-<g id="a_proc~~cmprlb~~CallsGraph_node5"><a xlink:href=".././proc/ddot.html" xlink:title="lbfgsb_blas_module::ddot">
+<g id="a_proc~~cmprlb~~CallsGraph_node5"><a xlink:href="../proc/ddot.html" xlink:title="lbfgsb_blas_module::ddot">
 <polygon fill="#d94e8f" stroke="#d94e8f" points="683,-24 534,-24 534,0 683,0 683,-24"/>
 <text text-anchor="middle" x="608.5" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lbfgsb_blas_module::ddot</text>
 </a>
@@ -522,17 +525,17 @@
                   var panproccmprlbCallsGraph = svgPanZoom('#proccmprlbCallsGraph',
                     {zoomEnabled: true, controlIconsEnabled: true, fit: true, center: true,}
                   );
-                </script>        <div><a type="button" class="graph-help" data-toggle="modal" href="#CallsGraph-help-text">Help</a></div>
+                </script>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#CallsGraph-help-text">Help</a>
+          </div>
           <div class="modal fade" id="CallsGraph-help-text" tabindex="-1" role="dialog">
             <div class="modal-dialog modal-lg" role="document">
               <div class="modal-content">
                 <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
                   <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-              <div class="modal-body">
+                <div class="modal-body">
 <p>Nodes of different colours represent the following: </p>
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
@@ -626,7 +629,7 @@ implementation in a submodule of an interface in a parent module.
 <!-- proc~mainlb -->
 <g id="proc~~cmprlb~~CalledByGraph_node2" class="node">
 <title>proc~mainlb</title>
-<g id="a_proc~~cmprlb~~CalledByGraph_node2"><a xlink:href=".././proc/mainlb.html" xlink:title="lbfgsb_module::mainlb">
+<g id="a_proc~~cmprlb~~CalledByGraph_node2"><a xlink:href="../proc/mainlb.html" xlink:title="lbfgsb_module::mainlb">
 <polygon fill="#d9534f" stroke="#d9534f" points="301,-24 166,-24 166,0 301,0 301,-24"/>
 <text text-anchor="middle" x="233.5" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lbfgsb_module::mainlb</text>
 </a>
@@ -641,7 +644,7 @@ implementation in a submodule of an interface in a parent module.
 <!-- proc~setulb -->
 <g id="proc~~cmprlb~~CalledByGraph_node3" class="node">
 <title>proc~setulb</title>
-<g id="a_proc~~cmprlb~~CalledByGraph_node3"><a xlink:href=".././proc/setulb.html" xlink:title="lbfgsb_module::setulb">
+<g id="a_proc~~cmprlb~~CalledByGraph_node3"><a xlink:href="../proc/setulb.html" xlink:title="lbfgsb_module::setulb">
 <polygon fill="#d9534f" stroke="#d9534f" points="130,-24 0,-24 0,0 130,0 130,-24"/>
 <text text-anchor="middle" x="65" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lbfgsb_module::setulb</text>
 </a>
@@ -655,17 +658,17 @@ implementation in a submodule of an interface in a parent module.
 </g>
 </g>
 </svg>
-</div>        <div><a type="button" class="graph-help" data-toggle="modal" href="#CalledByGraph-help-text">Help</a></div>
+</div>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#CalledByGraph-help-text">Help</a>
+          </div>
           <div class="modal fade" id="CalledByGraph-help-text" tabindex="-1" role="dialog">
             <div class="modal-dialog modal-lg" role="document">
               <div class="modal-content">
                 <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
                   <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-              <div class="modal-body">
+                <div class="modal-body">
 <p>Nodes of different colours represent the following: </p>
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"

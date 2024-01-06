@@ -1,3 +1,5 @@
+<!-- -*- mode: jinja2 -*- -->
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -17,7 +19,8 @@
     <link href="../css/local.css" rel="stylesheet">
       <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
 
-    <script src="https://code.jquery.com/jquery-3.7.0.slim.min.js" integrity="sha256-tG5mcZUtJsZvyKAxYLVXrmjKBVLd6VpVccqz/r4ypFE=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="../js/svg-pan-zoom.min.js"></script>
   </head>
 
   <body>
@@ -178,7 +181,7 @@
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-n~3"></span>
+              <span class="anchor" id="variable-n~10"></span>
               integer,
             </td>
 <td>intent(in)</td>
@@ -193,7 +196,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-x~3"></span>
+              <span class="anchor" id="variable-x~4"></span>
               real(kind=wp),
             </td>
 <td>intent(in)</td>
@@ -208,7 +211,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-l~3"></span>
+              <span class="anchor" id="variable-l~4"></span>
               real(kind=wp),
             </td>
 <td>intent(in)</td>
@@ -223,7 +226,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-u~3"></span>
+              <span class="anchor" id="variable-u~4"></span>
               real(kind=wp),
             </td>
 <td>intent(in)</td>
@@ -238,7 +241,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-nbd~3"></span>
+              <span class="anchor" id="variable-nbd~4"></span>
               integer,
             </td>
 <td>intent(in)</td>
@@ -324,7 +327,7 @@ or free (<code>iwhere= -1</code>) components of <code>x</code>.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-t~2"></span>
+              <span class="anchor" id="variable-t~4"></span>
               real(kind=wp)
             </td>
 <td></td>
@@ -369,7 +372,7 @@ or free (<code>iwhere= -1</code>) components of <code>x</code>.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-m~4"></span>
+              <span class="anchor" id="variable-m~8"></span>
               integer,
             </td>
 <td>intent(in)</td>
@@ -567,7 +570,7 @@ in searching for the GCP.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-iprint~3"></span>
+              <span class="anchor" id="variable-iprint~4"></span>
               integer,
             </td>
 <td>intent(in)</td>
@@ -622,7 +625,7 @@ On exit:</p>
 <ul>
 <li><code>info = 0</code>  for normal return,</li>
 <li><code>info /= 0</code> for abnormal return when the system
-    used in routine <a href="../proc/bmv.html">bmv</a> is singular.</li>
+    used in routine <a href="bmv.html">bmv</a> is singular.</li>
 </ul>
             </td>
         </tr>
@@ -670,7 +673,7 @@ On exit:</p>
 <!-- proc~bmv -->
 <g id="proc~~cauchy~~CallsGraph_node2" class="node">
 <title>proc~bmv</title>
-<g id="a_proc~~cauchy~~CallsGraph_node2"><a xlink:href=".././proc/bmv.html" xlink:title="lbfgsb_module::bmv">
+<g id="a_proc~~cauchy~~CallsGraph_node2"><a xlink:href="../proc/bmv.html" xlink:title="lbfgsb_module::bmv">
 <polygon fill="#d9534f" stroke="#d9534f" points="311,-188 190,-188 190,-164 311,-164 311,-188"/>
 <text text-anchor="middle" x="250.5" y="-173.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lbfgsb_module::bmv</text>
 </a>
@@ -685,7 +688,7 @@ On exit:</p>
 <!-- proc~daxpy -->
 <g id="proc~~cauchy~~CallsGraph_node3" class="node">
 <title>proc~daxpy</title>
-<g id="a_proc~~cauchy~~CallsGraph_node3"><a xlink:href=".././proc/daxpy.html" xlink:title="lbfgsb_blas_module::daxpy">
+<g id="a_proc~~cauchy~~CallsGraph_node3"><a xlink:href="../proc/daxpy.html" xlink:title="lbfgsb_blas_module::daxpy">
 <polygon fill="#d9534f" stroke="#d9534f" points="723,-208 566,-208 566,-184 723,-184 723,-208"/>
 <text text-anchor="middle" x="644.5" y="-193.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lbfgsb_blas_module::daxpy</text>
 </a>
@@ -700,7 +703,7 @@ On exit:</p>
 <!-- proc~dcopy -->
 <g id="proc~~cauchy~~CallsGraph_node4" class="node">
 <title>proc~dcopy</title>
-<g id="a_proc~~cauchy~~CallsGraph_node4"><a xlink:href=".././proc/dcopy.html" xlink:title="lbfgsb_blas_module::dcopy">
+<g id="a_proc~~cauchy~~CallsGraph_node4"><a xlink:href="../proc/dcopy.html" xlink:title="lbfgsb_blas_module::dcopy">
 <polygon fill="#d9534f" stroke="#d9534f" points="329,-146 172,-146 172,-122 329,-122 329,-146"/>
 <text text-anchor="middle" x="250.5" y="-131.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lbfgsb_blas_module::dcopy</text>
 </a>
@@ -715,7 +718,7 @@ On exit:</p>
 <!-- proc~ddot -->
 <g id="proc~~cauchy~~CallsGraph_node5" class="node">
 <title>proc~ddot</title>
-<g id="a_proc~~cauchy~~CallsGraph_node5"><a xlink:href=".././proc/ddot.html" xlink:title="lbfgsb_blas_module::ddot">
+<g id="a_proc~~cauchy~~CallsGraph_node5"><a xlink:href="../proc/ddot.html" xlink:title="lbfgsb_blas_module::ddot">
 <polygon fill="#d94e8f" stroke="#d94e8f" points="719,-146 570,-146 570,-122 719,-122 719,-146"/>
 <text text-anchor="middle" x="644.5" y="-131.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lbfgsb_blas_module::ddot</text>
 </a>
@@ -730,7 +733,7 @@ On exit:</p>
 <!-- proc~dscal -->
 <g id="proc~~cauchy~~CallsGraph_node6" class="node">
 <title>proc~dscal</title>
-<g id="a_proc~~cauchy~~CallsGraph_node6"><a xlink:href=".././proc/dscal.html" xlink:title="lbfgsb_blas_module::dscal">
+<g id="a_proc~~cauchy~~CallsGraph_node6"><a xlink:href="../proc/dscal.html" xlink:title="lbfgsb_blas_module::dscal">
 <polygon fill="#d9534f" stroke="#d9534f" points="327,-66 174,-66 174,-42 327,-42 327,-66"/>
 <text text-anchor="middle" x="250.5" y="-51.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lbfgsb_blas_module::dscal</text>
 </a>
@@ -745,7 +748,7 @@ On exit:</p>
 <!-- proc~hpsolb -->
 <g id="proc~~cauchy~~CallsGraph_node7" class="node">
 <title>proc~hpsolb</title>
-<g id="a_proc~~cauchy~~CallsGraph_node7"><a xlink:href=".././proc/hpsolb.html" xlink:title="lbfgsb_module::hpsolb">
+<g id="a_proc~~cauchy~~CallsGraph_node7"><a xlink:href="../proc/hpsolb.html" xlink:title="lbfgsb_module::hpsolb">
 <polygon fill="#d9534f" stroke="#d9534f" points="317,-24 184,-24 184,0 317,0 317,-24"/>
 <text text-anchor="middle" x="250.5" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lbfgsb_module::hpsolb</text>
 </a>
@@ -760,7 +763,7 @@ On exit:</p>
 <!-- proc~dtrsl -->
 <g id="proc~~cauchy~~CallsGraph_node8" class="node">
 <title>proc~dtrsl</title>
-<g id="a_proc~~cauchy~~CallsGraph_node8"><a xlink:href=".././proc/dtrsl.html" xlink:title="lbfgsb_linpack_module::dtrsl">
+<g id="a_proc~~cauchy~~CallsGraph_node8"><a xlink:href="../proc/dtrsl.html" xlink:title="lbfgsb_linpack_module::dtrsl">
 <polygon fill="#d9534f" stroke="#d9534f" points="530,-188 365,-188 365,-164 530,-164 530,-188"/>
 <text text-anchor="middle" x="447.5" y="-173.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lbfgsb_linpack_module::dtrsl</text>
 </a>
@@ -790,17 +793,17 @@ On exit:</p>
                   var panproccauchyCallsGraph = svgPanZoom('#proccauchyCallsGraph',
                     {zoomEnabled: true, controlIconsEnabled: true, fit: true, center: true,}
                   );
-                </script>        <div><a type="button" class="graph-help" data-toggle="modal" href="#CallsGraph-help-text">Help</a></div>
+                </script>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#CallsGraph-help-text">Help</a>
+          </div>
           <div class="modal fade" id="CallsGraph-help-text" tabindex="-1" role="dialog">
             <div class="modal-dialog modal-lg" role="document">
               <div class="modal-content">
                 <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
                   <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-              <div class="modal-body">
+                <div class="modal-body">
 <p>Nodes of different colours represent the following: </p>
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
@@ -894,7 +897,7 @@ implementation in a submodule of an interface in a parent module.
 <!-- proc~mainlb -->
 <g id="proc~~cauchy~~CalledByGraph_node2" class="node">
 <title>proc~mainlb</title>
-<g id="a_proc~~cauchy~~CalledByGraph_node2"><a xlink:href=".././proc/mainlb.html" xlink:title="lbfgsb_module::mainlb">
+<g id="a_proc~~cauchy~~CalledByGraph_node2"><a xlink:href="../proc/mainlb.html" xlink:title="lbfgsb_module::mainlb">
 <polygon fill="#d9534f" stroke="#d9534f" points="301,-24 166,-24 166,0 301,0 301,-24"/>
 <text text-anchor="middle" x="233.5" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lbfgsb_module::mainlb</text>
 </a>
@@ -909,7 +912,7 @@ implementation in a submodule of an interface in a parent module.
 <!-- proc~setulb -->
 <g id="proc~~cauchy~~CalledByGraph_node3" class="node">
 <title>proc~setulb</title>
-<g id="a_proc~~cauchy~~CalledByGraph_node3"><a xlink:href=".././proc/setulb.html" xlink:title="lbfgsb_module::setulb">
+<g id="a_proc~~cauchy~~CalledByGraph_node3"><a xlink:href="../proc/setulb.html" xlink:title="lbfgsb_module::setulb">
 <polygon fill="#d9534f" stroke="#d9534f" points="130,-24 0,-24 0,0 130,0 130,-24"/>
 <text text-anchor="middle" x="65" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lbfgsb_module::setulb</text>
 </a>
@@ -923,17 +926,17 @@ implementation in a submodule of an interface in a parent module.
 </g>
 </g>
 </svg>
-</div>        <div><a type="button" class="graph-help" data-toggle="modal" href="#CalledByGraph-help-text">Help</a></div>
+</div>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#CalledByGraph-help-text">Help</a>
+          </div>
           <div class="modal fade" id="CalledByGraph-help-text" tabindex="-1" role="dialog">
             <div class="modal-dialog modal-lg" role="document">
               <div class="modal-content">
                 <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
                   <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-              <div class="modal-body">
+                <div class="modal-body">
 <p>Nodes of different colours represent the following: </p>
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"

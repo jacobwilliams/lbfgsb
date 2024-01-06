@@ -1,3 +1,5 @@
+<!-- -*- mode: jinja2 -*- -->
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -17,7 +19,8 @@
     <link href="../css/local.css" rel="stylesheet">
       <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
 
-    <script src="https://code.jquery.com/jquery-3.7.0.slim.min.js" integrity="sha256-tG5mcZUtJsZvyKAxYLVXrmjKBVLd6VpVccqz/r4ypFE=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="../js/svg-pan-zoom.min.js"></script>
   </head>
 
   <body>
@@ -108,9 +111,9 @@
       <div id="vars-0" class="collapse">
         <div class="list-group list-group-flush">
             <a class="list-group-item" href="../module/lbfgsb_module.html#variable-lbfgsp_wp">lbfgsp_wp</a>
-            <a class="list-group-item" href="../module/lbfgsb_module.html#variable-zero">zero</a>
-            <a class="list-group-item" href="../module/lbfgsb_module.html#variable-one">one</a>
-            <a class="list-group-item" href="../module/lbfgsb_module.html#variable-two">two</a>
+            <a class="list-group-item" href="../module/lbfgsb_module.html#variable-zero~2">zero</a>
+            <a class="list-group-item" href="../module/lbfgsb_module.html#variable-one~2">one</a>
+            <a class="list-group-item" href="../module/lbfgsb_module.html#variable-two~2">two</a>
             <a class="list-group-item" href="../module/lbfgsb_module.html#variable-three">three</a>
         </div>
       </div>
@@ -209,9 +212,9 @@
         <ul class="list-group list-group-flush">
             <li class="list-group-item">
               <ul class="list-inline">
-                  <li class="list-inline-item"><a href='../module/lbfgsb_linpack_module.html'>lbfgsb_linpack_module</a></li>
-                  <li class="list-inline-item"><a href='../module/lbfgsb_kinds_module.html'>lbfgsb_kinds_module</a></li>
-                  <li class="list-inline-item"><a href='../module/lbfgsb_blas_module.html'>lbfgsb_blas_module</a></li>
+                  <li class="list-inline-item"><a href='lbfgsb_blas_module.html'>lbfgsb_blas_module</a></li>
+                  <li class="list-inline-item"><a href='lbfgsb_linpack_module.html'>lbfgsb_linpack_module</a></li>
+                  <li class="list-inline-item"><a href='lbfgsb_kinds_module.html'>lbfgsb_kinds_module</a></li>
               </ul>
             </li>
             <li class="list-group-item">
@@ -235,7 +238,7 @@
 <!-- module~lbfgsb_blas_module -->
 <g id="module~~lbfgsb_module~~UsesGraph_node2" class="node">
 <title>module~lbfgsb_blas_module</title>
-<g id="a_module~~lbfgsb_module~~UsesGraph_node2"><a xlink:href=".././module/lbfgsb_blas_module.html" xlink:title="lbfgsb_blas_module">
+<g id="a_module~~lbfgsb_module~~UsesGraph_node2"><a xlink:href="../module/lbfgsb_blas_module.html" xlink:title="lbfgsb_blas_module">
 <polygon fill="#337ab7" stroke="#337ab7" points="408,-37.12 290,-37.12 290,-13.12 408,-13.12 408,-37.12"/>
 <text text-anchor="middle" x="349" y="-22.72" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lbfgsb_blas_module</text>
 </a>
@@ -251,7 +254,7 @@
 <!-- module~lbfgsb_kinds_module -->
 <g id="module~~lbfgsb_module~~UsesGraph_node3" class="node">
 <title>module~lbfgsb_kinds_module</title>
-<g id="a_module~~lbfgsb_module~~UsesGraph_node3"><a xlink:href=".././module/lbfgsb_kinds_module.html" xlink:title="lbfgsb_kinds_module">
+<g id="a_module~~lbfgsb_module~~UsesGraph_node3"><a xlink:href="../module/lbfgsb_kinds_module.html" xlink:title="lbfgsb_kinds_module">
 <polygon fill="#337ab7" stroke="#337ab7" points="254,-37.12 130,-37.12 130,-13.12 254,-13.12 254,-37.12"/>
 <text text-anchor="middle" x="192" y="-22.72" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lbfgsb_kinds_module</text>
 </a>
@@ -266,7 +269,7 @@
 <!-- module~lbfgsb_linpack_module -->
 <g id="module~~lbfgsb_module~~UsesGraph_node4" class="node">
 <title>module~lbfgsb_linpack_module</title>
-<g id="a_module~~lbfgsb_module~~UsesGraph_node4"><a xlink:href=".././module/lbfgsb_linpack_module.html" xlink:title="lbfgsb_linpack_module">
+<g id="a_module~~lbfgsb_module~~UsesGraph_node4"><a xlink:href="../module/lbfgsb_linpack_module.html" xlink:title="lbfgsb_linpack_module">
 <polygon fill="#337ab7" stroke="#337ab7" points="578,-37.12 444,-37.12 444,-13.12 578,-13.12 578,-37.12"/>
 <text text-anchor="middle" x="511" y="-22.72" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lbfgsb_linpack_module</text>
 </a>
@@ -314,17 +317,17 @@
                   var panmodulelbfgsb_moduleUsesGraph = svgPanZoom('#modulelbfgsb_moduleUsesGraph',
                     {zoomEnabled: true, controlIconsEnabled: true, fit: true, center: true,}
                   );
-                </script>        <div><a type="button" class="graph-help" data-toggle="modal" href="#UsesGraph-help-text">Help</a></div>
+                </script>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#UsesGraph-help-text">Help</a>
+          </div>
           <div class="modal fade" id="UsesGraph-help-text" tabindex="-1" role="dialog">
             <div class="modal-dialog modal-lg" role="document">
               <div class="modal-content">
                 <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
                   <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-              <div class="modal-body">
+                <div class="modal-body">
 <p>Nodes of different colours represent the following: </p>
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
@@ -424,7 +427,7 @@ parameter
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-zero"></span>
+              <span class="anchor" id="variable-zero~2"></span>
               real(kind=wp),
             </td>
               <td>private,</td>
@@ -441,7 +444,7 @@ parameter
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-one"></span>
+              <span class="anchor" id="variable-one~2"></span>
               real(kind=wp),
             </td>
               <td>private,</td>
@@ -458,7 +461,7 @@ parameter
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-two"></span>
+              <span class="anchor" id="variable-two~2"></span>
               real(kind=wp),
             </td>
               <td>private,</td>
@@ -504,7 +507,7 @@ parameter
         <section>
           <h2>Subroutines</h2>
               <div class="card">
-    <div class="card-header codesum"><span class="anchor" id="proc-setulb"></span><h3>public  subroutine <a href='../proc/setulb.html'>setulb</a>(n, m, x, l, u, Nbd, f, g, Factr, Pgtol, Wa, Iwa, Task, Iprint, Csave, Lsave, Isave, Dsave)  
+    <div class="card-header codesum"><span class="anchor" id="proc-setulb"></span> <h3>public  subroutine <a href='../proc/setulb.html'>setulb</a>(n, m, x, l, u, Nbd, f, g, Factr, Pgtol, Wa, Iwa, Task, Iprint, Csave, Lsave, Isave, Dsave)  
 </h3></div>
     <div class="card-body">
           
@@ -523,7 +526,7 @@ parameter
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-n"></span>
+              <span class="anchor" id="variable-n~7"></span>
               integer,
             </td>
 <td>intent(in)</td>
@@ -538,7 +541,7 @@ parameter
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-m"></span>
+              <span class="anchor" id="variable-m~5"></span>
               integer,
             </td>
 <td>intent(in)</td>
@@ -638,7 +641,7 @@ variables, and must be specified as follows:</p><a href="../proc/setulb.html#var
             <td>
 <p>On first entry <code>f</code> is unspecified.
 On final exit <code>f</code> is the value of the function at x.
-If the <a href="../proc/setulb.html">setulb</a> returns
+If the <a href="setulb.html">setulb</a> returns
 with <code>task(1:2)= 'FG'</code>, then <code>f</code> must be set by the user to
 contain the value of the function at the point <code>x</code>.</p>
             </td>
@@ -657,7 +660,7 @@ contain the value of the function at the point <code>x</code>.</p>
             <td>
 <p>On first entry <code>g</code> is unspecified.
 On final exit <code>g</code> is the value of the gradient at <code>x</code>.
-If the <a href="../proc/setulb.html">setulb</a>
+If the <a href="setulb.html">setulb</a>
 returns with <code>task(1:2)= 'FG'</code>, then <code>g</code> must be set by the user to
 contain the components of the gradient at the point <code>x</code>.</p>
             </td>
@@ -826,7 +829,7 @@ On exit with 'task' = NEW_X, the following information is available:</p><a href=
   </div>
 
               <div class="card">
-    <div class="card-header codesum"><span class="anchor" id="proc-mainlb"></span><h3>private  subroutine <a href='../proc/mainlb.html'>mainlb</a>(n, m, x, l, u, Nbd, f, g, Factr, Pgtol, Ws, Wy, Sy, Ss, Wt, Wn, Snd, z, r, d, t, Xp, Wa, Index, Iwhere, Indx2, Task, Iprint, Csave, Lsave, Isave, Dsave)  
+    <div class="card-header codesum"><span class="anchor" id="proc-mainlb"></span> <h3>private  subroutine <a href='../proc/mainlb.html'>mainlb</a>(n, m, x, l, u, Nbd, f, g, Factr, Pgtol, Ws, Wy, Sy, Ss, Wt, Wn, Snd, z, r, d, t, Xp, Wa, Index, Iwhere, Indx2, Task, Iprint, Csave, Lsave, Isave, Dsave)  
 </h3></div>
     <div class="card-body">
           
@@ -846,7 +849,7 @@ On exit with 'task' = NEW_X, the following information is available:</p><a href=
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-n~2"></span>
+              <span class="anchor" id="variable-n~8"></span>
               integer,
             </td>
 <td>intent(in)</td>
@@ -861,7 +864,7 @@ On exit with 'task' = NEW_X, the following information is available:</p><a href=
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-m~2"></span>
+              <span class="anchor" id="variable-m~6"></span>
               integer,
             </td>
 <td>intent(in)</td>
@@ -1157,7 +1160,7 @@ used at different times to store the Cauchy point and the Newton point.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-t"></span>
+              <span class="anchor" id="variable-t~3"></span>
               real(kind=wp)
             </td>
 <td></td>
@@ -1214,7 +1217,7 @@ used to safeguard the projected Newton direction</p>
             <td><strong>Index</strong>(n)</td>
             <td>
 <p>working array.
-In subroutine <a href="../proc/freev.html">freev</a>, index is used to store the free and fixed
+In subroutine <a href="freev.html">freev</a>, index is used to store the free and fixed
 variables at the Generalized Cauchy Point (GCP).</p>
             </td>
         </tr>
@@ -1247,10 +1250,10 @@ the status of the vector x for GCP computation:</p><a href="../proc/mainlb.html#
             <td><strong>Indx2</strong>(n)</td>
             <td>
 <p>integer working array.
-Within subroutine <a href="../proc/cauchy.html">cauchy</a>, indx2 corresponds to the array iorder.
-In subroutine <a href="../proc/freev.html">freev</a>, a list of variables entering and leaving
+Within subroutine <a href="cauchy.html">cauchy</a>, indx2 corresponds to the array iorder.
+In subroutine <a href="freev.html">freev</a>, a list of variables entering and leaving
 the free set is stored in indx2, and it is passed on to
-subroutine <a href="../proc/formk.html">formk</a> with this information.</p>
+subroutine <a href="formk.html">formk</a> with this information.</p>
             </td>
         </tr>
         <tr>
@@ -1352,7 +1355,7 @@ entering and leaving this subroutine.</p>
   </div>
 
               <div class="card">
-    <div class="card-header codesum"><span class="anchor" id="proc-active"></span><h3>private  subroutine <a href='../proc/active.html'>active</a>(n, l, u, Nbd, x, Iwhere, Iprint, Prjctd, Cnstnd, Boxed)  
+    <div class="card-header codesum"><span class="anchor" id="proc-active"></span> <h3>private  subroutine <a href='../proc/active.html'>active</a>(n, l, u, Nbd, x, Iwhere, Iprint, Prjctd, Cnstnd, Boxed)  
 </h3></div>
     <div class="card-body">
           
@@ -1372,7 +1375,7 @@ entering and leaving this subroutine.</p>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-n~11"></span>
+              <span class="anchor" id="variable-n~9"></span>
               integer
             </td>
 <td></td>
@@ -1387,7 +1390,7 @@ entering and leaving this subroutine.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-l~6"></span>
+              <span class="anchor" id="variable-l~3"></span>
               real(kind=wp)
             </td>
 <td></td>
@@ -1402,7 +1405,7 @@ entering and leaving this subroutine.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-u~6"></span>
+              <span class="anchor" id="variable-u~3"></span>
               real(kind=wp)
             </td>
 <td></td>
@@ -1417,7 +1420,7 @@ entering and leaving this subroutine.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-nbd~5"></span>
+              <span class="anchor" id="variable-nbd~3"></span>
               integer
             </td>
 <td></td>
@@ -1432,7 +1435,7 @@ entering and leaving this subroutine.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-x~6"></span>
+              <span class="anchor" id="variable-x~3"></span>
               real(kind=wp)
             </td>
 <td></td>
@@ -1457,12 +1460,12 @@ entering and leaving this subroutine.</p>
             <td>::</td>
             <td><strong>Iwhere</strong>(n)</td>
             <td>
-<p>In <a href="../proc/cauchy.html">cauchy</a>, <code>iwhere</code> is given finer gradations.</p><a href="../proc/active.html#variable-iwhere~2" class="pull-right"><emph>Read more&hellip;</emph></a>
+<p>In <a href="cauchy.html">cauchy</a>, <code>iwhere</code> is given finer gradations.</p><a href="../proc/active.html#variable-iwhere~2" class="pull-right"><emph>Read more&hellip;</emph></a>
             </td>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-iprint~6"></span>
+              <span class="anchor" id="variable-iprint~3"></span>
               integer
             </td>
 <td></td>
@@ -1492,7 +1495,7 @@ entering and leaving this subroutine.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-cnstnd~2"></span>
+              <span class="anchor" id="variable-cnstnd"></span>
               logical
             </td>
 <td></td>
@@ -1528,7 +1531,7 @@ entering and leaving this subroutine.</p>
   </div>
 
               <div class="card">
-    <div class="card-header codesum"><span class="anchor" id="proc-bmv"></span><h3>private  subroutine <a href='../proc/bmv.html'>bmv</a>(m, Sy, Wt, Col, v, p, Info)  
+    <div class="card-header codesum"><span class="anchor" id="proc-bmv"></span> <h3>private  subroutine <a href='../proc/bmv.html'>bmv</a>(m, Sy, Wt, Col, v, p, Info)  
 </h3></div>
     <div class="card-body">
           
@@ -1549,7 +1552,7 @@ entering and leaving this subroutine.</p>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-m~3"></span>
+              <span class="anchor" id="variable-m~7"></span>
               integer,
             </td>
 <td>intent(in)</td>
@@ -1663,7 +1666,7 @@ stored in the compact L-BFGS formula.</p>
   </div>
 
               <div class="card">
-    <div class="card-header codesum"><span class="anchor" id="proc-cauchy"></span><h3>private  subroutine <a href='../proc/cauchy.html'>cauchy</a>(n, x, l, u, Nbd, g, Iorder, Iwhere, t, d, Xcp, m, Wy, Ws, Sy, Wt, Theta, Col, Head, p, c, Wbp, v, Nseg, Iprint, Sbgnrm, Info, Epsmch)  
+    <div class="card-header codesum"><span class="anchor" id="proc-cauchy"></span> <h3>private  subroutine <a href='../proc/cauchy.html'>cauchy</a>(n, x, l, u, Nbd, g, Iorder, Iwhere, t, d, Xcp, m, Wy, Ws, Sy, Wt, Theta, Col, Head, p, c, Wbp, v, Nseg, Iprint, Sbgnrm, Info, Epsmch)  
 </h3></div>
     <div class="card-body">
           
@@ -1686,7 +1689,7 @@ stored in the compact L-BFGS formula.</p>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-n~3"></span>
+              <span class="anchor" id="variable-n~10"></span>
               integer,
             </td>
 <td>intent(in)</td>
@@ -1701,7 +1704,7 @@ stored in the compact L-BFGS formula.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-x~3"></span>
+              <span class="anchor" id="variable-x~4"></span>
               real(kind=wp),
             </td>
 <td>intent(in)</td>
@@ -1716,7 +1719,7 @@ stored in the compact L-BFGS formula.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-l~3"></span>
+              <span class="anchor" id="variable-l~4"></span>
               real(kind=wp),
             </td>
 <td>intent(in)</td>
@@ -1731,7 +1734,7 @@ stored in the compact L-BFGS formula.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-u~3"></span>
+              <span class="anchor" id="variable-u~4"></span>
               real(kind=wp),
             </td>
 <td>intent(in)</td>
@@ -1746,7 +1749,7 @@ stored in the compact L-BFGS formula.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-nbd~3"></span>
+              <span class="anchor" id="variable-nbd~4"></span>
               integer,
             </td>
 <td>intent(in)</td>
@@ -1757,7 +1760,7 @@ stored in the compact L-BFGS formula.</p>
             <td><strong>Nbd</strong>(n)</td>
             <td>
 <p>On entry nbd represents the type of bounds imposed on the
-variables, and must be specified as follows:</p><a href="../proc/cauchy.html#variable-nbd~3" class="pull-right"><emph>Read more&hellip;</emph></a>
+variables, and must be specified as follows:</p><a href="../proc/cauchy.html#variable-nbd~4" class="pull-right"><emph>Read more&hellip;</emph></a>
             </td>
         </tr>
         <tr>
@@ -1809,7 +1812,7 @@ or free (<code>iwhere= -1</code>) components of <code>x</code>.</p><a href="../p
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-t~2"></span>
+              <span class="anchor" id="variable-t~4"></span>
               real(kind=wp)
             </td>
 <td></td>
@@ -1854,7 +1857,7 @@ or free (<code>iwhere= -1</code>) components of <code>x</code>.</p><a href="../p
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-m~4"></span>
+              <span class="anchor" id="variable-m~8"></span>
               integer,
             </td>
 <td>intent(in)</td>
@@ -2052,7 +2055,7 @@ in searching for the GCP.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-iprint~3"></span>
+              <span class="anchor" id="variable-iprint~4"></span>
               integer,
             </td>
 <td>intent(in)</td>
@@ -2062,7 +2065,7 @@ in searching for the GCP.</p>
             <td>::</td>
             <td><strong>Iprint</strong></td>
             <td>
-<p>controls the frequency and type of output generated:</p><a href="../proc/cauchy.html#variable-iprint~3" class="pull-right"><emph>Read more&hellip;</emph></a>
+<p>controls the frequency and type of output generated:</p><a href="../proc/cauchy.html#variable-iprint~4" class="pull-right"><emph>Read more&hellip;</emph></a>
             </td>
         </tr>
         <tr>
@@ -2119,12 +2122,12 @@ On exit:</p><a href="../proc/cauchy.html#variable-info~2" class="pull-right"><em
   </div>
 
               <div class="card">
-    <div class="card-header codesum"><span class="anchor" id="proc-cmprlb"></span><h3>private  subroutine <a href='../proc/cmprlb.html'>cmprlb</a>(n, m, x, g, Ws, Wy, Sy, Wt, z, r, Wa, Index, Theta, Col, Head, Nfree, Cnstnd, Info)  
+    <div class="card-header codesum"><span class="anchor" id="proc-cmprlb"></span> <h3>private  subroutine <a href='../proc/cmprlb.html'>cmprlb</a>(n, m, x, g, Ws, Wy, Sy, Wt, z, r, Wa, Index, Theta, Col, Head, Nfree, Cnstnd, Info)  
 </h3></div>
     <div class="card-body">
           
   <p>This subroutine computes <code>r=-Z'B(xcp-xk)-Z'g</code> by using
-  <code>wa(2m+1)=W'(xcp-x)</code> from subroutine <a href="../proc/cauchy.html">cauchy</a>.</p><a href="../proc/cmprlb.html" class="pull-right"><emph>Read more&hellip;</emph></a>
+  <code>wa(2m+1)=W'(xcp-x)</code> from subroutine <a href="cauchy.html">cauchy</a>.</p><a href="../proc/cmprlb.html" class="pull-right"><emph>Read more&hellip;</emph></a>
 
   <h4>Arguments</h4>
       <table class="table table-striped varlist">
@@ -2139,7 +2142,7 @@ On exit:</p><a href="../proc/cauchy.html#variable-info~2" class="pull-right"><em
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-n~12"></span>
+              <span class="anchor" id="variable-n~11"></span>
               integer
             </td>
 <td></td>
@@ -2154,7 +2157,7 @@ On exit:</p><a href="../proc/cauchy.html#variable-info~2" class="pull-right"><em
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-m~8"></span>
+              <span class="anchor" id="variable-m~9"></span>
               integer
             </td>
 <td></td>
@@ -2169,7 +2172,7 @@ On exit:</p><a href="../proc/cauchy.html#variable-info~2" class="pull-right"><em
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-x~7"></span>
+              <span class="anchor" id="variable-x~5"></span>
               real(kind=wp)
             </td>
 <td></td>
@@ -2184,7 +2187,7 @@ On exit:</p><a href="../proc/cauchy.html#variable-info~2" class="pull-right"><em
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-g~5"></span>
+              <span class="anchor" id="variable-g~4"></span>
               real(kind=wp)
             </td>
 <td></td>
@@ -2199,7 +2202,7 @@ On exit:</p><a href="../proc/cauchy.html#variable-info~2" class="pull-right"><em
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-ws~5"></span>
+              <span class="anchor" id="variable-ws~3"></span>
               real(kind=wp)
             </td>
 <td></td>
@@ -2214,7 +2217,7 @@ On exit:</p><a href="../proc/cauchy.html#variable-info~2" class="pull-right"><em
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-wy~5"></span>
+              <span class="anchor" id="variable-wy~3"></span>
               real(kind=wp)
             </td>
 <td></td>
@@ -2229,7 +2232,7 @@ On exit:</p><a href="../proc/cauchy.html#variable-info~2" class="pull-right"><em
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-sy~5"></span>
+              <span class="anchor" id="variable-sy~4"></span>
               real(kind=wp)
             </td>
 <td></td>
@@ -2304,7 +2307,7 @@ On exit:</p><a href="../proc/cauchy.html#variable-info~2" class="pull-right"><em
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-index~3"></span>
+              <span class="anchor" id="variable-index~2"></span>
               integer
             </td>
 <td></td>
@@ -2319,7 +2322,7 @@ On exit:</p><a href="../proc/cauchy.html#variable-info~2" class="pull-right"><em
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-theta~4"></span>
+              <span class="anchor" id="variable-theta~2"></span>
               real(kind=wp)
             </td>
 <td></td>
@@ -2334,7 +2337,7 @@ On exit:</p><a href="../proc/cauchy.html#variable-info~2" class="pull-right"><em
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-col~5"></span>
+              <span class="anchor" id="variable-col~3"></span>
               integer
             </td>
 <td></td>
@@ -2349,7 +2352,7 @@ On exit:</p><a href="../proc/cauchy.html#variable-info~2" class="pull-right"><em
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-head~4"></span>
+              <span class="anchor" id="variable-head~2"></span>
               integer
             </td>
 <td></td>
@@ -2379,7 +2382,7 @@ On exit:</p><a href="../proc/cauchy.html#variable-info~2" class="pull-right"><em
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-cnstnd~3"></span>
+              <span class="anchor" id="variable-cnstnd~2"></span>
               logical
             </td>
 <td></td>
@@ -2394,7 +2397,7 @@ On exit:</p><a href="../proc/cauchy.html#variable-info~2" class="pull-right"><em
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-info~5"></span>
+              <span class="anchor" id="variable-info~3"></span>
               integer
             </td>
 <td></td>
@@ -2415,7 +2418,7 @@ On exit:</p><a href="../proc/cauchy.html#variable-info~2" class="pull-right"><em
   </div>
 
               <div class="card">
-    <div class="card-header codesum"><span class="anchor" id="proc-errclb"></span><h3>private  subroutine <a href='../proc/errclb.html'>errclb</a>(n, m, Factr, l, u, Nbd, Task, Info, k)  
+    <div class="card-header codesum"><span class="anchor" id="proc-errclb"></span> <h3>private  subroutine <a href='../proc/errclb.html'>errclb</a>(n, m, Factr, l, u, Nbd, Task, Info, k)  
 </h3></div>
     <div class="card-body">
           
@@ -2434,7 +2437,7 @@ On exit:</p><a href="../proc/cauchy.html#variable-info~2" class="pull-right"><em
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-n~13"></span>
+              <span class="anchor" id="variable-n~12"></span>
               integer,
             </td>
 <td>intent(in)</td>
@@ -2449,7 +2452,7 @@ On exit:</p><a href="../proc/cauchy.html#variable-info~2" class="pull-right"><em
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-m~9"></span>
+              <span class="anchor" id="variable-m~10"></span>
               integer,
             </td>
 <td>intent(in)</td>
@@ -2479,7 +2482,7 @@ On exit:</p><a href="../proc/cauchy.html#variable-info~2" class="pull-right"><em
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-l~7"></span>
+              <span class="anchor" id="variable-l~5"></span>
               real(kind=wp),
             </td>
 <td>intent(in)</td>
@@ -2494,7 +2497,7 @@ On exit:</p><a href="../proc/cauchy.html#variable-info~2" class="pull-right"><em
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-u~7"></span>
+              <span class="anchor" id="variable-u~5"></span>
               real(kind=wp),
             </td>
 <td>intent(in)</td>
@@ -2509,7 +2512,7 @@ On exit:</p><a href="../proc/cauchy.html#variable-info~2" class="pull-right"><em
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-nbd~6"></span>
+              <span class="anchor" id="variable-nbd~5"></span>
               integer,
             </td>
 <td>intent(in)</td>
@@ -2524,7 +2527,7 @@ On exit:</p><a href="../proc/cauchy.html#variable-info~2" class="pull-right"><em
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-task~4"></span>
+              <span class="anchor" id="variable-task~3"></span>
               character(len=60)
             </td>
 <td></td>
@@ -2539,7 +2542,7 @@ On exit:</p><a href="../proc/cauchy.html#variable-info~2" class="pull-right"><em
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-info~6"></span>
+              <span class="anchor" id="variable-info~4"></span>
               integer,
             </td>
 <td>intent(inout)</td>
@@ -2554,7 +2557,7 @@ On exit:</p><a href="../proc/cauchy.html#variable-info~2" class="pull-right"><em
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-k"></span>
+              <span class="anchor" id="variable-k~5"></span>
               integer,
             </td>
 <td>intent(out)</td>
@@ -2575,7 +2578,7 @@ On exit:</p><a href="../proc/cauchy.html#variable-info~2" class="pull-right"><em
   </div>
 
               <div class="card">
-    <div class="card-header codesum"><span class="anchor" id="proc-formk"></span><h3>private  subroutine <a href='../proc/formk.html'>formk</a>(n, Nsub, Ind, Nenter, Ileave, Indx2, Iupdat, Updatd, Wn, Wn1, m, Ws, Wy, Sy, Theta, Col, Head, Info)  
+    <div class="card-header codesum"><span class="anchor" id="proc-formk"></span> <h3>private  subroutine <a href='../proc/formk.html'>formk</a>(n, Nsub, Ind, Nenter, Ileave, Indx2, Iupdat, Updatd, Wn, Wn1, m, Ws, Wy, Sy, Theta, Col, Head, Info)  
 </h3></div>
     <div class="card-body">
           
@@ -2594,7 +2597,7 @@ On exit:</p><a href="../proc/cauchy.html#variable-info~2" class="pull-right"><em
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-n~4"></span>
+              <span class="anchor" id="variable-n~13"></span>
               integer,
             </td>
 <td>intent(in)</td>
@@ -2747,7 +2750,7 @@ variables leaving the free set.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-m~5"></span>
+              <span class="anchor" id="variable-m~11"></span>
               integer,
             </td>
 <td>intent(in)</td>
@@ -2763,7 +2766,7 @@ used to define the limited memory matrix.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-ws~3"></span>
+              <span class="anchor" id="variable-ws~4"></span>
               real(kind=wp),
             </td>
 <td>intent(in)</td>
@@ -2778,7 +2781,7 @@ used to define the limited memory matrix.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-wy~3"></span>
+              <span class="anchor" id="variable-wy~4"></span>
               real(kind=wp),
             </td>
 <td>intent(in)</td>
@@ -2793,7 +2796,7 @@ used to define the limited memory matrix.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-sy~4"></span>
+              <span class="anchor" id="variable-sy~5"></span>
               real(kind=wp),
             </td>
 <td>intent(in)</td>
@@ -2808,7 +2811,7 @@ used to define the limited memory matrix.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-theta~2"></span>
+              <span class="anchor" id="variable-theta~3"></span>
               real(kind=wp),
             </td>
 <td>intent(in)</td>
@@ -2823,7 +2826,7 @@ used to define the limited memory matrix.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-col~3"></span>
+              <span class="anchor" id="variable-col~4"></span>
               integer,
             </td>
 <td>intent(in)</td>
@@ -2838,7 +2841,7 @@ used to define the limited memory matrix.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-head~2"></span>
+              <span class="anchor" id="variable-head~3"></span>
               integer,
             </td>
 <td>intent(in)</td>
@@ -2853,7 +2856,7 @@ used to define the limited memory matrix.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-info~3"></span>
+              <span class="anchor" id="variable-info~5"></span>
               integer,
             </td>
 <td>intent(out)</td>
@@ -2863,7 +2866,7 @@ used to define the limited memory matrix.</p>
             <td>::</td>
             <td><strong>Info</strong></td>
             <td>
-<p>On exit:</p><a href="../proc/formk.html#variable-info~3" class="pull-right"><emph>Read more&hellip;</emph></a>
+<p>On exit:</p><a href="../proc/formk.html#variable-info~5" class="pull-right"><emph>Read more&hellip;</emph></a>
             </td>
         </tr>
     </tbody>
@@ -2874,7 +2877,7 @@ used to define the limited memory matrix.</p>
   </div>
 
               <div class="card">
-    <div class="card-header codesum"><span class="anchor" id="proc-formt"></span><h3>private  subroutine <a href='../proc/formt.html'>formt</a>(m, Wt, Sy, Ss, Col, Theta, Info)  
+    <div class="card-header codesum"><span class="anchor" id="proc-formt"></span> <h3>private  subroutine <a href='../proc/formt.html'>formt</a>(m, Wt, Sy, Ss, Col, Theta, Info)  
 </h3></div>
     <div class="card-body">
           
@@ -2896,7 +2899,7 @@ used to define the limited memory matrix.</p>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-m~10"></span>
+              <span class="anchor" id="variable-m~12"></span>
               integer,
             </td>
 <td>intent(in)</td>
@@ -2956,7 +2959,7 @@ used to define the limited memory matrix.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-col~6"></span>
+              <span class="anchor" id="variable-col~5"></span>
               integer
             </td>
 <td></td>
@@ -2971,7 +2974,7 @@ used to define the limited memory matrix.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-theta~5"></span>
+              <span class="anchor" id="variable-theta~4"></span>
               real(kind=wp),
             </td>
 <td>intent(in)</td>
@@ -2986,7 +2989,7 @@ used to define the limited memory matrix.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-info~7"></span>
+              <span class="anchor" id="variable-info~6"></span>
               integer
             </td>
 <td></td>
@@ -3007,7 +3010,7 @@ used to define the limited memory matrix.</p>
   </div>
 
               <div class="card">
-    <div class="card-header codesum"><span class="anchor" id="proc-freev"></span><h3>private  subroutine <a href='../proc/freev.html'>freev</a>(n, Nfree, Index, Nenter, Ileave, Indx2, Iwhere, Wrk, Updatd, Cnstnd, Iprint, Iter)  
+    <div class="card-header codesum"><span class="anchor" id="proc-freev"></span> <h3>private  subroutine <a href='../proc/freev.html'>freev</a>(n, Nfree, Index, Nenter, Ileave, Indx2, Iwhere, Wrk, Updatd, Cnstnd, Iprint, Iter)  
 </h3></div>
     <div class="card-body">
           
@@ -3058,7 +3061,7 @@ used to define the limited memory matrix.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-index~2"></span>
+              <span class="anchor" id="variable-index~3"></span>
               integer,
             </td>
 <td>intent(inout)</td>
@@ -3068,7 +3071,7 @@ used to define the limited memory matrix.</p>
             <td>::</td>
             <td><strong>Index</strong>(n)</td>
             <td>
-<p>for i=nfree+1,...,n, index(i) are the indices of bound variables</p><a href="../proc/freev.html#variable-index~2" class="pull-right"><emph>Read more&hellip;</emph></a>
+<p>for i=nfree+1,...,n, index(i) are the indices of bound variables</p><a href="../proc/freev.html#variable-index~3" class="pull-right"><emph>Read more&hellip;</emph></a>
             </td>
         </tr>
         <tr>
@@ -3164,7 +3167,7 @@ used to define the limited memory matrix.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-cnstnd"></span>
+              <span class="anchor" id="variable-cnstnd~3"></span>
               logical,
             </td>
 <td>intent(in)</td>
@@ -3179,7 +3182,7 @@ used to define the limited memory matrix.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-iprint~7"></span>
+              <span class="anchor" id="variable-iprint~5"></span>
               integer,
             </td>
 <td>intent(in)</td>
@@ -3215,7 +3218,7 @@ used to define the limited memory matrix.</p>
   </div>
 
               <div class="card">
-    <div class="card-header codesum"><span class="anchor" id="proc-hpsolb"></span><h3>private  subroutine <a href='../proc/hpsolb.html'>hpsolb</a>(n, t, Iorder, Iheap)  
+    <div class="card-header codesum"><span class="anchor" id="proc-hpsolb"></span> <h3>private  subroutine <a href='../proc/hpsolb.html'>hpsolb</a>(n, t, Iorder, Iheap)  
 </h3></div>
     <div class="card-body">
           
@@ -3235,7 +3238,7 @@ used to define the limited memory matrix.</p>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-n~5"></span>
+              <span class="anchor" id="variable-n~15"></span>
               integer,
             </td>
 <td>intent(in)</td>
@@ -3250,7 +3253,7 @@ used to define the limited memory matrix.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-t~3"></span>
+              <span class="anchor" id="variable-t~5"></span>
               real(kind=wp),
             </td>
 <td>intent(inout)</td>
@@ -3306,7 +3309,7 @@ permuted in accordance with t.</p>
   </div>
 
               <div class="card">
-    <div class="card-header codesum"><span class="anchor" id="proc-lnsrlb"></span><h3>private  subroutine <a href='../proc/lnsrlb.html'>lnsrlb</a>(n, l, u, Nbd, x, f, Fold, Gd, Gdold, g, d, r, t, z, Stp, Dnorm, Dtd, Xstep, Stpmx, Iter, Ifun, Iback, Nfgv, Info, Task, Boxed, Cnstnd, Csave, Isave, Dsave)  
+    <div class="card-header codesum"><span class="anchor" id="proc-lnsrlb"></span> <h3>private  subroutine <a href='../proc/lnsrlb.html'>lnsrlb</a>(n, l, u, Nbd, x, f, Fold, Gd, Gdold, g, d, r, t, z, Stp, Dnorm, Dtd, Xstep, Stpmx, Iter, Ifun, Iback, Nfgv, Info, Task, Boxed, Cnstnd, Csave, Isave, Dsave)  
 </h3></div>
     <div class="card-body">
           
@@ -3327,7 +3330,7 @@ permuted in accordance with t.</p>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-n~15"></span>
+              <span class="anchor" id="variable-n~16"></span>
               integer
             </td>
 <td></td>
@@ -3342,7 +3345,7 @@ permuted in accordance with t.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-l~8"></span>
+              <span class="anchor" id="variable-l~6"></span>
               real(kind=wp)
             </td>
 <td></td>
@@ -3357,7 +3360,7 @@ permuted in accordance with t.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-u~8"></span>
+              <span class="anchor" id="variable-u~6"></span>
               real(kind=wp)
             </td>
 <td></td>
@@ -3372,7 +3375,7 @@ permuted in accordance with t.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-nbd~7"></span>
+              <span class="anchor" id="variable-nbd~6"></span>
               integer
             </td>
 <td></td>
@@ -3387,7 +3390,7 @@ permuted in accordance with t.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-x~8"></span>
+              <span class="anchor" id="variable-x~6"></span>
               real(kind=wp)
             </td>
 <td></td>
@@ -3402,7 +3405,7 @@ permuted in accordance with t.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-f~4"></span>
+              <span class="anchor" id="variable-f~3"></span>
               real(kind=wp)
             </td>
 <td></td>
@@ -3462,7 +3465,7 @@ permuted in accordance with t.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-g~6"></span>
+              <span class="anchor" id="variable-g~5"></span>
               real(kind=wp)
             </td>
 <td></td>
@@ -3477,7 +3480,7 @@ permuted in accordance with t.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-d~4"></span>
+              <span class="anchor" id="variable-d~3"></span>
               real(kind=wp)
             </td>
 <td></td>
@@ -3507,7 +3510,7 @@ permuted in accordance with t.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-t~5"></span>
+              <span class="anchor" id="variable-t~6"></span>
               real(kind=wp)
             </td>
 <td></td>
@@ -3537,7 +3540,7 @@ permuted in accordance with t.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-stp~3"></span>
+              <span class="anchor" id="variable-stp"></span>
               real(kind=wp)
             </td>
 <td></td>
@@ -3672,7 +3675,7 @@ permuted in accordance with t.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-info~8"></span>
+              <span class="anchor" id="variable-info~7"></span>
               integer
             </td>
 <td></td>
@@ -3687,7 +3690,7 @@ permuted in accordance with t.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-task~5"></span>
+              <span class="anchor" id="variable-task~4"></span>
               character(len=60)
             </td>
 <td></td>
@@ -3747,7 +3750,7 @@ permuted in accordance with t.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-isave~4"></span>
+              <span class="anchor" id="variable-isave~3"></span>
               integer
             </td>
 <td></td>
@@ -3762,7 +3765,7 @@ permuted in accordance with t.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-dsave~4"></span>
+              <span class="anchor" id="variable-dsave~3"></span>
               real(kind=wp)
             </td>
 <td></td>
@@ -3783,7 +3786,7 @@ permuted in accordance with t.</p>
   </div>
 
               <div class="card">
-    <div class="card-header codesum"><span class="anchor" id="proc-matupd"></span><h3>private  subroutine <a href='../proc/matupd.html'>matupd</a>(n, m, Ws, Wy, Sy, Ss, d, r, Itail, Iupdat, Col, Head, Theta, Rr, Dr, Stp, Dtd)  
+    <div class="card-header codesum"><span class="anchor" id="proc-matupd"></span> <h3>private  subroutine <a href='../proc/matupd.html'>matupd</a>(n, m, Ws, Wy, Sy, Ss, d, r, Itail, Iupdat, Col, Head, Theta, Rr, Dr, Stp, Dtd)  
 </h3></div>
     <div class="card-body">
           
@@ -3803,7 +3806,7 @@ permuted in accordance with t.</p>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-n~16"></span>
+              <span class="anchor" id="variable-n~17"></span>
               integer
             </td>
 <td></td>
@@ -3818,7 +3821,7 @@ permuted in accordance with t.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-m~11"></span>
+              <span class="anchor" id="variable-m~13"></span>
               integer
             </td>
 <td></td>
@@ -3833,7 +3836,7 @@ permuted in accordance with t.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-ws~6"></span>
+              <span class="anchor" id="variable-ws~5"></span>
               real(kind=wp)
             </td>
 <td></td>
@@ -3848,7 +3851,7 @@ permuted in accordance with t.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-wy~6"></span>
+              <span class="anchor" id="variable-wy~5"></span>
               real(kind=wp)
             </td>
 <td></td>
@@ -3893,7 +3896,7 @@ permuted in accordance with t.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-d~5"></span>
+              <span class="anchor" id="variable-d~4"></span>
               real(kind=wp)
             </td>
 <td></td>
@@ -3953,7 +3956,7 @@ permuted in accordance with t.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-col~7"></span>
+              <span class="anchor" id="variable-col~6"></span>
               integer
             </td>
 <td></td>
@@ -3968,7 +3971,7 @@ permuted in accordance with t.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-head~5"></span>
+              <span class="anchor" id="variable-head~4"></span>
               integer
             </td>
 <td></td>
@@ -3983,7 +3986,7 @@ permuted in accordance with t.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-theta~6"></span>
+              <span class="anchor" id="variable-theta~5"></span>
               real(kind=wp)
             </td>
 <td></td>
@@ -4028,7 +4031,7 @@ permuted in accordance with t.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-stp~4"></span>
+              <span class="anchor" id="variable-stp~2"></span>
               real(kind=wp)
             </td>
 <td></td>
@@ -4064,7 +4067,7 @@ permuted in accordance with t.</p>
   </div>
 
               <div class="card">
-    <div class="card-header codesum"><span class="anchor" id="proc-prn1lb"></span><h3>private  subroutine <a href='../proc/prn1lb.html'>prn1lb</a>(n, m, l, u, x, Iprint, Itfile, Epsmch)  
+    <div class="card-header codesum"><span class="anchor" id="proc-prn1lb"></span> <h3>private  subroutine <a href='../proc/prn1lb.html'>prn1lb</a>(n, m, l, u, x, Iprint, Itfile, Epsmch)  
 </h3></div>
     <div class="card-body">
           
@@ -4085,7 +4088,7 @@ permuted in accordance with t.</p>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-n~6"></span>
+              <span class="anchor" id="variable-n~18"></span>
               integer,
             </td>
 <td>intent(in)</td>
@@ -4100,7 +4103,7 @@ permuted in accordance with t.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-m~6"></span>
+              <span class="anchor" id="variable-m~14"></span>
               integer,
             </td>
 <td>intent(in)</td>
@@ -4116,7 +4119,7 @@ corrections allowed in the limited memory matrix.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-l~4"></span>
+              <span class="anchor" id="variable-l~7"></span>
               real(kind=wp),
             </td>
 <td>intent(in)</td>
@@ -4131,7 +4134,7 @@ corrections allowed in the limited memory matrix.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-u~4"></span>
+              <span class="anchor" id="variable-u~7"></span>
               real(kind=wp),
             </td>
 <td>intent(in)</td>
@@ -4146,7 +4149,7 @@ corrections allowed in the limited memory matrix.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-x~4"></span>
+              <span class="anchor" id="variable-x~7"></span>
               real(kind=wp),
             </td>
 <td>intent(in)</td>
@@ -4161,7 +4164,7 @@ corrections allowed in the limited memory matrix.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-iprint~4"></span>
+              <span class="anchor" id="variable-iprint~6"></span>
               integer,
             </td>
 <td>intent(in)</td>
@@ -4212,7 +4215,7 @@ corrections allowed in the limited memory matrix.</p>
   </div>
 
               <div class="card">
-    <div class="card-header codesum"><span class="anchor" id="proc-prn2lb"></span><h3>private  subroutine <a href='../proc/prn2lb.html'>prn2lb</a>(n, x, f, g, Iprint, Itfile, Iter, Nfgv, Nact, Sbgnrm, Nseg, Word, Iword, Iback, Stp, Xstep)  
+    <div class="card-header codesum"><span class="anchor" id="proc-prn2lb"></span> <h3>private  subroutine <a href='../proc/prn2lb.html'>prn2lb</a>(n, x, f, g, Iprint, Itfile, Iter, Nfgv, Nact, Sbgnrm, Nseg, Word, Iword, Iback, Stp, Xstep)  
 </h3></div>
     <div class="card-body">
           
@@ -4232,7 +4235,7 @@ corrections allowed in the limited memory matrix.</p>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-n~17"></span>
+              <span class="anchor" id="variable-n~19"></span>
               integer
             </td>
 <td></td>
@@ -4247,7 +4250,7 @@ corrections allowed in the limited memory matrix.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-x~9"></span>
+              <span class="anchor" id="variable-x~8"></span>
               real(kind=wp)
             </td>
 <td></td>
@@ -4262,7 +4265,7 @@ corrections allowed in the limited memory matrix.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-f~5"></span>
+              <span class="anchor" id="variable-f~4"></span>
               real(kind=wp)
             </td>
 <td></td>
@@ -4277,7 +4280,7 @@ corrections allowed in the limited memory matrix.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-g~7"></span>
+              <span class="anchor" id="variable-g~6"></span>
               real(kind=wp)
             </td>
 <td></td>
@@ -4292,7 +4295,7 @@ corrections allowed in the limited memory matrix.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-iprint~8"></span>
+              <span class="anchor" id="variable-iprint~7"></span>
               integer
             </td>
 <td></td>
@@ -4367,7 +4370,7 @@ corrections allowed in the limited memory matrix.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-sbgnrm~3"></span>
+              <span class="anchor" id="variable-sbgnrm~2"></span>
               real(kind=wp)
             </td>
 <td></td>
@@ -4412,7 +4415,7 @@ corrections allowed in the limited memory matrix.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-iword~2"></span>
+              <span class="anchor" id="variable-iword"></span>
               integer
             </td>
 <td></td>
@@ -4442,7 +4445,7 @@ corrections allowed in the limited memory matrix.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-stp~5"></span>
+              <span class="anchor" id="variable-stp~3"></span>
               real(kind=wp)
             </td>
 <td></td>
@@ -4478,7 +4481,7 @@ corrections allowed in the limited memory matrix.</p>
   </div>
 
               <div class="card">
-    <div class="card-header codesum"><span class="anchor" id="proc-prn3lb"></span><h3>private  subroutine <a href='../proc/prn3lb.html'>prn3lb</a>(n, x, f, Task, Iprint, Info, Itfile, Iter, Nfgv, Nintol, Nskip, Nact, Sbgnrm, Time, Nseg, Word, Iback, Stp, Xstep, k, Cachyt, Sbtime, Lnscht)  
+    <div class="card-header codesum"><span class="anchor" id="proc-prn3lb"></span> <h3>private  subroutine <a href='../proc/prn3lb.html'>prn3lb</a>(n, x, f, Task, Iprint, Info, Itfile, Iter, Nfgv, Nintol, Nskip, Nact, Sbgnrm, Time, Nseg, Word, Iback, Stp, Xstep, k, Cachyt, Sbtime, Lnscht)  
 </h3></div>
     <div class="card-body">
           
@@ -4499,7 +4502,7 @@ corrections allowed in the limited memory matrix.</p>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-n~18"></span>
+              <span class="anchor" id="variable-n~20"></span>
               integer
             </td>
 <td></td>
@@ -4514,7 +4517,7 @@ corrections allowed in the limited memory matrix.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-x~10"></span>
+              <span class="anchor" id="variable-x~9"></span>
               real(kind=wp)
             </td>
 <td></td>
@@ -4529,7 +4532,7 @@ corrections allowed in the limited memory matrix.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-f~6"></span>
+              <span class="anchor" id="variable-f~5"></span>
               real(kind=wp)
             </td>
 <td></td>
@@ -4544,7 +4547,7 @@ corrections allowed in the limited memory matrix.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-task~6"></span>
+              <span class="anchor" id="variable-task~5"></span>
               character(len=60)
             </td>
 <td></td>
@@ -4559,7 +4562,7 @@ corrections allowed in the limited memory matrix.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-iprint~9"></span>
+              <span class="anchor" id="variable-iprint~8"></span>
               integer
             </td>
 <td></td>
@@ -4574,7 +4577,7 @@ corrections allowed in the limited memory matrix.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-info~9"></span>
+              <span class="anchor" id="variable-info~8"></span>
               integer
             </td>
 <td></td>
@@ -4679,7 +4682,7 @@ corrections allowed in the limited memory matrix.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-sbgnrm~4"></span>
+              <span class="anchor" id="variable-sbgnrm~3"></span>
               real(kind=wp)
             </td>
 <td></td>
@@ -4754,7 +4757,7 @@ corrections allowed in the limited memory matrix.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-stp~6"></span>
+              <span class="anchor" id="variable-stp~4"></span>
               real(kind=wp)
             </td>
 <td></td>
@@ -4784,7 +4787,7 @@ corrections allowed in the limited memory matrix.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-k~2"></span>
+              <span class="anchor" id="variable-k~10"></span>
               integer
             </td>
 <td></td>
@@ -4850,7 +4853,7 @@ corrections allowed in the limited memory matrix.</p>
   </div>
 
               <div class="card">
-    <div class="card-header codesum"><span class="anchor" id="proc-projgr"></span><h3>private  subroutine <a href='../proc/projgr.html'>projgr</a>(n, l, u, Nbd, x, g, Sbgnrm)  
+    <div class="card-header codesum"><span class="anchor" id="proc-projgr"></span> <h3>private  subroutine <a href='../proc/projgr.html'>projgr</a>(n, l, u, Nbd, x, g, Sbgnrm)  
 </h3></div>
     <div class="card-body">
           
@@ -4869,7 +4872,7 @@ corrections allowed in the limited memory matrix.</p>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-n~7"></span>
+              <span class="anchor" id="variable-n~21"></span>
               integer,
             </td>
 <td>intent(in)</td>
@@ -4884,7 +4887,7 @@ corrections allowed in the limited memory matrix.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-l~9"></span>
+              <span class="anchor" id="variable-l~8"></span>
               real(kind=wp),
             </td>
 <td>intent(in)</td>
@@ -4899,7 +4902,7 @@ corrections allowed in the limited memory matrix.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-u~9"></span>
+              <span class="anchor" id="variable-u~8"></span>
               real(kind=wp),
             </td>
 <td>intent(in)</td>
@@ -4914,7 +4917,7 @@ corrections allowed in the limited memory matrix.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-nbd~8"></span>
+              <span class="anchor" id="variable-nbd~7"></span>
               integer,
             </td>
 <td>intent(in)</td>
@@ -4929,7 +4932,7 @@ corrections allowed in the limited memory matrix.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-x~11"></span>
+              <span class="anchor" id="variable-x~10"></span>
               real(kind=wp),
             </td>
 <td>intent(in)</td>
@@ -4944,7 +4947,7 @@ corrections allowed in the limited memory matrix.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-g~8"></span>
+              <span class="anchor" id="variable-g~7"></span>
               real(kind=wp),
             </td>
 <td>intent(in)</td>
@@ -4959,7 +4962,7 @@ corrections allowed in the limited memory matrix.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-sbgnrm~2"></span>
+              <span class="anchor" id="variable-sbgnrm~4"></span>
               real(kind=wp),
             </td>
 <td>intent(out)</td>
@@ -4980,7 +4983,7 @@ corrections allowed in the limited memory matrix.</p>
   </div>
 
               <div class="card">
-    <div class="card-header codesum"><span class="anchor" id="proc-subsm"></span><h3>private  subroutine <a href='../proc/subsm.html'>subsm</a>(n, m, Nsub, Ind, l, u, Nbd, x, d, Xp, Ws, Wy, Theta, Xx, Gg, Col, Head, Iword, Wv, Wn, Iprint, Info)  
+    <div class="card-header codesum"><span class="anchor" id="proc-subsm"></span> <h3>private  subroutine <a href='../proc/subsm.html'>subsm</a>(n, m, Nsub, Ind, l, u, Nbd, x, d, Xp, Ws, Wy, Theta, Xx, Gg, Col, Head, Iword, Wv, Wn, Iprint, Info)  
 </h3></div>
     <div class="card-body">
           
@@ -5000,7 +5003,7 @@ corrections allowed in the limited memory matrix.</p>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-n~8"></span>
+              <span class="anchor" id="variable-n~22"></span>
               integer,
             </td>
 <td>intent(in)</td>
@@ -5015,7 +5018,7 @@ corrections allowed in the limited memory matrix.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-m~7"></span>
+              <span class="anchor" id="variable-m~15"></span>
               integer,
             </td>
 <td>intent(in)</td>
@@ -5061,7 +5064,7 @@ used to define the limited memory matrix.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-l~5"></span>
+              <span class="anchor" id="variable-l~9"></span>
               real(kind=wp),
             </td>
 <td>intent(in)</td>
@@ -5076,7 +5079,7 @@ used to define the limited memory matrix.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-u~5"></span>
+              <span class="anchor" id="variable-u~9"></span>
               real(kind=wp),
             </td>
 <td>intent(in)</td>
@@ -5091,7 +5094,7 @@ used to define the limited memory matrix.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-nbd~4"></span>
+              <span class="anchor" id="variable-nbd~8"></span>
               integer,
             </td>
 <td>intent(in)</td>
@@ -5102,12 +5105,12 @@ used to define the limited memory matrix.</p>
             <td><strong>Nbd</strong>(n)</td>
             <td>
 <p>represents the type of bounds imposed on the
-variables, and must be specified as follows:</p><a href="../proc/subsm.html#variable-nbd~4" class="pull-right"><emph>Read more&hellip;</emph></a>
+variables, and must be specified as follows:</p><a href="../proc/subsm.html#variable-nbd~8" class="pull-right"><emph>Read more&hellip;</emph></a>
             </td>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-x~5"></span>
+              <span class="anchor" id="variable-x~11"></span>
               real(kind=wp),
             </td>
 <td>intent(inout)</td>
@@ -5124,7 +5127,7 @@ free variables.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-d~3"></span>
+              <span class="anchor" id="variable-d~5"></span>
               real(kind=wp),
             </td>
 <td>intent(inout)</td>
@@ -5155,7 +5158,7 @@ On exit d is the Newton direction of Q.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-ws~4"></span>
+              <span class="anchor" id="variable-ws~6"></span>
               real(kind=wp),
             </td>
 <td>intent(in)</td>
@@ -5171,7 +5174,7 @@ ws(n,m) stores S, a set of s-vectors</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-wy~4"></span>
+              <span class="anchor" id="variable-wy~6"></span>
               real(kind=wp),
             </td>
 <td>intent(in)</td>
@@ -5186,7 +5189,7 @@ ws(n,m) stores S, a set of s-vectors</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-theta~3"></span>
+              <span class="anchor" id="variable-theta~6"></span>
               real(kind=wp),
             </td>
 <td>intent(in)</td>
@@ -5232,7 +5235,7 @@ theta is the scaling factor specifying B_0 = theta I</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-col~4"></span>
+              <span class="anchor" id="variable-col~7"></span>
               integer,
             </td>
 <td>intent(in)</td>
@@ -5248,7 +5251,7 @@ col is the number of variable metric corrections stored</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-head~3"></span>
+              <span class="anchor" id="variable-head~5"></span>
               integer,
             </td>
 <td>intent(in)</td>
@@ -5264,7 +5267,7 @@ head is the location of the 1st s- (or y-) vector in S (or Y)</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-iword"></span>
+              <span class="anchor" id="variable-iword~2"></span>
               integer,
             </td>
 <td>intent(out)</td>
@@ -5274,7 +5277,7 @@ head is the location of the 1st s- (or y-) vector in S (or Y)</p>
             <td>::</td>
             <td><strong>Iword</strong></td>
             <td>
-<p>On exit iword specifies the status of the subspace solution:</p><a href="../proc/subsm.html#variable-iword" class="pull-right"><emph>Read more&hellip;</emph></a>
+<p>On exit iword specifies the status of the subspace solution:</p><a href="../proc/subsm.html#variable-iword~2" class="pull-right"><emph>Read more&hellip;</emph></a>
             </td>
         </tr>
         <tr>
@@ -5310,7 +5313,7 @@ head is the location of the 1st s- (or y-) vector in S (or Y)</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-iprint~5"></span>
+              <span class="anchor" id="variable-iprint~9"></span>
               integer,
             </td>
 <td>intent(in)</td>
@@ -5325,7 +5328,7 @@ head is the location of the 1st s- (or y-) vector in S (or Y)</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-info~4"></span>
+              <span class="anchor" id="variable-info~9"></span>
               integer,
             </td>
 <td>intent(out)</td>
@@ -5335,7 +5338,7 @@ head is the location of the 1st s- (or y-) vector in S (or Y)</p>
             <td>::</td>
             <td><strong>Info</strong></td>
             <td>
-<p>On exit:</p><a href="../proc/subsm.html#variable-info~4" class="pull-right"><emph>Read more&hellip;</emph></a>
+<p>On exit:</p><a href="../proc/subsm.html#variable-info~9" class="pull-right"><emph>Read more&hellip;</emph></a>
             </td>
         </tr>
     </tbody>
@@ -5346,7 +5349,7 @@ head is the location of the 1st s- (or y-) vector in S (or Y)</p>
   </div>
 
               <div class="card">
-    <div class="card-header codesum"><span class="anchor" id="proc-dcsrch"></span><h3>private  subroutine <a href='../proc/dcsrch.html'>dcsrch</a>(f, g, Stp, Ftol, Gtol, Xtol, Stpmin, Stpmax, Task, Isave, Dsave)  
+    <div class="card-header codesum"><span class="anchor" id="proc-dcsrch"></span> <h3>private  subroutine <a href='../proc/dcsrch.html'>dcsrch</a>(f, g, Stp, Ftol, Gtol, Xtol, Stpmin, Stpmax, Task, Isave, Dsave)  
 </h3></div>
     <div class="card-body">
           
@@ -5366,7 +5369,7 @@ head is the location of the 1st s- (or y-) vector in S (or Y)</p>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-f~3"></span>
+              <span class="anchor" id="variable-f~6"></span>
               real(kind=wp),
             </td>
 <td>intent(inout)</td>
@@ -5376,12 +5379,12 @@ head is the location of the 1st s- (or y-) vector in S (or Y)</p>
             <td>::</td>
             <td><strong>f</strong></td>
             <td>
-<a href="../proc/dcsrch.html#variable-f~3" class="pull-right"><emph>Read more&hellip;</emph></a>
+<a href="../proc/dcsrch.html#variable-f~6" class="pull-right"><emph>Read more&hellip;</emph></a>
             </td>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-g~4"></span>
+              <span class="anchor" id="variable-g~8"></span>
               real(kind=wp),
             </td>
 <td>intent(inout)</td>
@@ -5391,12 +5394,12 @@ head is the location of the 1st s- (or y-) vector in S (or Y)</p>
             <td>::</td>
             <td><strong>g</strong></td>
             <td>
-<a href="../proc/dcsrch.html#variable-g~4" class="pull-right"><emph>Read more&hellip;</emph></a>
+<a href="../proc/dcsrch.html#variable-g~8" class="pull-right"><emph>Read more&hellip;</emph></a>
             </td>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-stp"></span>
+              <span class="anchor" id="variable-stp~5"></span>
               real(kind=wp),
             </td>
 <td>intent(inout)</td>
@@ -5406,7 +5409,7 @@ head is the location of the 1st s- (or y-) vector in S (or Y)</p>
             <td>::</td>
             <td><strong>Stp</strong></td>
             <td>
-<a href="../proc/dcsrch.html#variable-stp" class="pull-right"><emph>Read more&hellip;</emph></a>
+<a href="../proc/dcsrch.html#variable-stp~5" class="pull-right"><emph>Read more&hellip;</emph></a>
             </td>
         </tr>
         <tr>
@@ -5490,7 +5493,7 @@ is less than <code>xtol</code>.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-task~3"></span>
+              <span class="anchor" id="variable-task~6"></span>
               character(len=*),
             </td>
 <td>intent(inout)</td>
@@ -5500,12 +5503,12 @@ is less than <code>xtol</code>.</p>
             <td>::</td>
             <td><strong>Task</strong></td>
             <td>
-<p><code>task</code> is a character variable of length at least 60:</p><a href="../proc/dcsrch.html#variable-task~3" class="pull-right"><emph>Read more&hellip;</emph></a>
+<p><code>task</code> is a character variable of length at least 60:</p><a href="../proc/dcsrch.html#variable-task~6" class="pull-right"><emph>Read more&hellip;</emph></a>
             </td>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-isave~3"></span>
+              <span class="anchor" id="variable-isave~4"></span>
               integer
             </td>
 <td></td>
@@ -5520,7 +5523,7 @@ is less than <code>xtol</code>.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-dsave~3"></span>
+              <span class="anchor" id="variable-dsave~4"></span>
               real(kind=wp)
             </td>
 <td></td>
@@ -5541,7 +5544,7 @@ is less than <code>xtol</code>.</p>
   </div>
 
               <div class="card">
-    <div class="card-header codesum"><span class="anchor" id="proc-dcstep"></span><h3>private  subroutine <a href='../proc/dcstep.html'>dcstep</a>(Stx, Fx, Dx, Sty, Fy, Dy, Stp, Fp, Dp, Brackt, Stpmin, Stpmax)  
+    <div class="card-header codesum"><span class="anchor" id="proc-dcstep"></span> <h3>private  subroutine <a href='../proc/dcstep.html'>dcstep</a>(Stx, Fx, Dx, Sty, Fy, Dy, Stp, Fp, Dp, Brackt, Stpmin, Stpmax)  
 </h3></div>
     <div class="card-body">
           
@@ -5662,7 +5665,7 @@ On exit <code>dy</code> is the derivative of the function at the exit <code>sty<
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-stp~2"></span>
+              <span class="anchor" id="variable-stp~6"></span>
               real(kind=wp),
             </td>
 <td>intent(inout)</td>

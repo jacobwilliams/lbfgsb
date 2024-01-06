@@ -1,3 +1,5 @@
+<!-- -*- mode: jinja2 -*- -->
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -17,7 +19,8 @@
     <link href="../css/local.css" rel="stylesheet">
       <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
 
-    <script src="https://code.jquery.com/jquery-3.7.0.slim.min.js" integrity="sha256-tG5mcZUtJsZvyKAxYLVXrmjKBVLd6VpVccqz/r4ypFE=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="../js/svg-pan-zoom.min.js"></script>
   </head>
 
   <body>
@@ -163,7 +166,7 @@
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-t~4"></span>
+              <span class="anchor" id="variable-t~2"></span>
               real(kind=wp),
             </td>
 <td>intent(in)</td>
@@ -196,7 +199,7 @@ used to store other information.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-n~10"></span>
+              <span class="anchor" id="variable-n~2"></span>
               integer,
             </td>
 <td>intent(in)</td>
@@ -293,7 +296,7 @@ the first zero diagonal element of t.</p>
 <!-- proc~daxpy -->
 <g id="proc~~dtrsl~~CallsGraph_node2" class="node">
 <title>proc~daxpy</title>
-<g id="a_proc~~dtrsl~~CallsGraph_node2"><a xlink:href=".././proc/daxpy.html" xlink:title="lbfgsb_blas_module::daxpy">
+<g id="a_proc~~dtrsl~~CallsGraph_node2"><a xlink:href="../proc/daxpy.html" xlink:title="lbfgsb_blas_module::daxpy">
 <polygon fill="#d9534f" stroke="#d9534f" points="358,-66 201,-66 201,-42 358,-42 358,-66"/>
 <text text-anchor="middle" x="279.5" y="-51.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lbfgsb_blas_module::daxpy</text>
 </a>
@@ -308,7 +311,7 @@ the first zero diagonal element of t.</p>
 <!-- proc~ddot -->
 <g id="proc~~dtrsl~~CallsGraph_node3" class="node">
 <title>proc~ddot</title>
-<g id="a_proc~~dtrsl~~CallsGraph_node3"><a xlink:href=".././proc/ddot.html" xlink:title="lbfgsb_blas_module::ddot">
+<g id="a_proc~~dtrsl~~CallsGraph_node3"><a xlink:href="../proc/ddot.html" xlink:title="lbfgsb_blas_module::ddot">
 <polygon fill="#d94e8f" stroke="#d94e8f" points="354,-24 205,-24 205,0 354,0 354,-24"/>
 <text text-anchor="middle" x="279.5" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lbfgsb_blas_module::ddot</text>
 </a>
@@ -322,17 +325,17 @@ the first zero diagonal element of t.</p>
 </g>
 </g>
 </svg>
-</div>        <div><a type="button" class="graph-help" data-toggle="modal" href="#CallsGraph-help-text">Help</a></div>
+</div>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#CallsGraph-help-text">Help</a>
+          </div>
           <div class="modal fade" id="CallsGraph-help-text" tabindex="-1" role="dialog">
             <div class="modal-dialog modal-lg" role="document">
               <div class="modal-content">
                 <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
                   <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-              <div class="modal-body">
+                <div class="modal-body">
 <p>Nodes of different colours represent the following: </p>
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
@@ -426,7 +429,7 @@ implementation in a submodule of an interface in a parent module.
 <!-- proc~bmv -->
 <g id="proc~~dtrsl~~CalledByGraph_node2" class="node">
 <title>proc~bmv</title>
-<g id="a_proc~~dtrsl~~CalledByGraph_node2"><a xlink:href=".././proc/bmv.html" xlink:title="lbfgsb_module::bmv">
+<g id="a_proc~~dtrsl~~CalledByGraph_node2"><a xlink:href="../proc/bmv.html" xlink:title="lbfgsb_module::bmv">
 <polygon fill="#d9534f" stroke="#d9534f" points="636,-63 515,-63 515,-39 636,-39 636,-63"/>
 <text text-anchor="middle" x="575.5" y="-48.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lbfgsb_module::bmv</text>
 </a>
@@ -441,7 +444,7 @@ implementation in a submodule of an interface in a parent module.
 <!-- proc~formk -->
 <g id="proc~~dtrsl~~CalledByGraph_node3" class="node">
 <title>proc~formk</title>
-<g id="a_proc~~dtrsl~~CalledByGraph_node3"><a xlink:href=".././proc/formk.html" xlink:title="lbfgsb_module::formk">
+<g id="a_proc~~dtrsl~~CalledByGraph_node3"><a xlink:href="../proc/formk.html" xlink:title="lbfgsb_module::formk">
 <polygon fill="#d9534f" stroke="#d9534f" points="640.5,-147 510.5,-147 510.5,-123 640.5,-123 640.5,-147"/>
 <text text-anchor="middle" x="575.5" y="-132.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lbfgsb_module::formk</text>
 </a>
@@ -456,7 +459,7 @@ implementation in a submodule of an interface in a parent module.
 <!-- proc~subsm -->
 <g id="proc~~dtrsl~~CalledByGraph_node4" class="node">
 <title>proc~subsm</title>
-<g id="a_proc~~dtrsl~~CalledByGraph_node4"><a xlink:href=".././proc/subsm.html" xlink:title="lbfgsb_module::subsm">
+<g id="a_proc~~dtrsl~~CalledByGraph_node4"><a xlink:href="../proc/subsm.html" xlink:title="lbfgsb_module::subsm">
 <polygon fill="#d9534f" stroke="#d9534f" points="642,-105 509,-105 509,-81 642,-81 642,-105"/>
 <text text-anchor="middle" x="575.5" y="-90.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lbfgsb_module::subsm</text>
 </a>
@@ -471,7 +474,7 @@ implementation in a submodule of an interface in a parent module.
 <!-- proc~cauchy -->
 <g id="proc~~dtrsl~~CalledByGraph_node5" class="node">
 <title>proc~cauchy</title>
-<g id="a_proc~~dtrsl~~CalledByGraph_node5"><a xlink:href=".././proc/cauchy.html" xlink:title="lbfgsb_module::cauchy">
+<g id="a_proc~~dtrsl~~CalledByGraph_node5"><a xlink:href="../proc/cauchy.html" xlink:title="lbfgsb_module::cauchy">
 <polygon fill="#d9534f" stroke="#d9534f" points="473,-66 337,-66 337,-42 473,-42 473,-66"/>
 <text text-anchor="middle" x="405" y="-51.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lbfgsb_module::cauchy</text>
 </a>
@@ -486,7 +489,7 @@ implementation in a submodule of an interface in a parent module.
 <!-- proc~cmprlb -->
 <g id="proc~~dtrsl~~CalledByGraph_node6" class="node">
 <title>proc~cmprlb</title>
-<g id="a_proc~~dtrsl~~CalledByGraph_node6"><a xlink:href=".././proc/cmprlb.html" xlink:title="lbfgsb_module::cmprlb">
+<g id="a_proc~~dtrsl~~CalledByGraph_node6"><a xlink:href="../proc/cmprlb.html" xlink:title="lbfgsb_module::cmprlb">
 <polygon fill="#d9534f" stroke="#d9534f" points="473,-24 337,-24 337,0 473,0 473,-24"/>
 <text text-anchor="middle" x="405" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lbfgsb_module::cmprlb</text>
 </a>
@@ -501,7 +504,7 @@ implementation in a submodule of an interface in a parent module.
 <!-- proc~mainlb -->
 <g id="proc~~dtrsl~~CalledByGraph_node7" class="node">
 <title>proc~mainlb</title>
-<g id="a_proc~~dtrsl~~CalledByGraph_node7"><a xlink:href=".././proc/mainlb.html" xlink:title="lbfgsb_module::mainlb">
+<g id="a_proc~~dtrsl~~CalledByGraph_node7"><a xlink:href="../proc/mainlb.html" xlink:title="lbfgsb_module::mainlb">
 <polygon fill="#d9534f" stroke="#d9534f" points="301,-86 166,-86 166,-62 301,-62 301,-86"/>
 <text text-anchor="middle" x="233.5" y="-71.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lbfgsb_module::mainlb</text>
 </a>
@@ -534,7 +537,7 @@ implementation in a submodule of an interface in a parent module.
 <!-- proc~setulb -->
 <g id="proc~~dtrsl~~CalledByGraph_node8" class="node">
 <title>proc~setulb</title>
-<g id="a_proc~~dtrsl~~CalledByGraph_node8"><a xlink:href=".././proc/setulb.html" xlink:title="lbfgsb_module::setulb">
+<g id="a_proc~~dtrsl~~CalledByGraph_node8"><a xlink:href="../proc/setulb.html" xlink:title="lbfgsb_module::setulb">
 <polygon fill="#d9534f" stroke="#d9534f" points="130,-86 0,-86 0,-62 130,-62 130,-86"/>
 <text text-anchor="middle" x="65" y="-71.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lbfgsb_module::setulb</text>
 </a>
@@ -552,17 +555,17 @@ implementation in a submodule of an interface in a parent module.
                   var panprocdtrslCalledByGraph = svgPanZoom('#procdtrslCalledByGraph',
                     {zoomEnabled: true, controlIconsEnabled: true, fit: true, center: true,}
                   );
-                </script>        <div><a type="button" class="graph-help" data-toggle="modal" href="#CalledByGraph-help-text">Help</a></div>
+                </script>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#CalledByGraph-help-text">Help</a>
+          </div>
           <div class="modal fade" id="CalledByGraph-help-text" tabindex="-1" role="dialog">
             <div class="modal-dialog modal-lg" role="document">
               <div class="modal-content">
                 <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
                   <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-              <div class="modal-body">
+                <div class="modal-body">
 <p>Nodes of different colours represent the following: </p>
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"

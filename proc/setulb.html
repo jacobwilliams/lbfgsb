@@ -1,3 +1,5 @@
+<!-- -*- mode: jinja2 -*- -->
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -17,7 +19,8 @@
     <link href="../css/local.css" rel="stylesheet">
       <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
 
-    <script src="https://code.jquery.com/jquery-3.7.0.slim.min.js" integrity="sha256-tG5mcZUtJsZvyKAxYLVXrmjKBVLd6VpVccqz/r4ypFE=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="../js/svg-pan-zoom.min.js"></script>
   </head>
 
   <body>
@@ -140,7 +143,7 @@
     <p>The main routine.</p>
 <p>This subroutine partitions the working arrays <code>wa</code> and <code>iwa</code>, and
   then uses the limited memory BFGS method to solve the bound
-  constrained optimization problem by calling <a href="../proc/mainlb.html">mainlb</a>.
+  constrained optimization problem by calling <a href="mainlb.html">mainlb</a>.
   (The direct method will be used in the subspace minimization.)</p>
 <h3>References</h3>
 <ol>
@@ -175,7 +178,7 @@
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-n"></span>
+              <span class="anchor" id="variable-n~7"></span>
               integer,
             </td>
 <td>intent(in)</td>
@@ -190,7 +193,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-m"></span>
+              <span class="anchor" id="variable-m~5"></span>
               integer,
             </td>
 <td>intent(in)</td>
@@ -296,7 +299,7 @@ variables, and must be specified as follows:</p>
             <td>
                 <p>On first entry <code>f</code> is unspecified.
 On final exit <code>f</code> is the value of the function at x.
-If the <a href="../proc/setulb.html">setulb</a> returns
+If the <a href="setulb.html">setulb</a> returns
 with <code>task(1:2)= 'FG'</code>, then <code>f</code> must be set by the user to
 contain the value of the function at the point <code>x</code>.</p>
             </td>
@@ -315,7 +318,7 @@ contain the value of the function at the point <code>x</code>.</p>
             <td>
                 <p>On first entry <code>g</code> is unspecified.
 On final exit <code>g</code> is the value of the gradient at <code>x</code>.
-If the <a href="../proc/setulb.html">setulb</a>
+If the <a href="setulb.html">setulb</a>
 returns with <code>task(1:2)= 'FG'</code>, then <code>g</code> must be set by the user to
 contain the components of the gradient at the point <code>x</code>.</p>
             </td>
@@ -604,7 +607,7 @@ On exit with 'task' = NEW_X, the following information is available:</p>
 <!-- proc~mainlb -->
 <g id="proc~~setulb~~CallsGraph_node2" class="node">
 <title>proc~mainlb</title>
-<g id="a_proc~~setulb~~CallsGraph_node2"><a xlink:href=".././proc/mainlb.html" xlink:title="lbfgsb_module::mainlb">
+<g id="a_proc~~setulb~~CallsGraph_node2"><a xlink:href="../proc/mainlb.html" xlink:title="lbfgsb_module::mainlb">
 <polygon fill="#d9534f" stroke="#d9534f" points="301,-358 166,-358 166,-334 301,-334 301,-358"/>
 <text text-anchor="middle" x="233.5" y="-343.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lbfgsb_module::mainlb</text>
 </a>
@@ -619,7 +622,7 @@ On exit with 'task' = NEW_X, the following information is available:</p>
 <!-- proc~active -->
 <g id="proc~~setulb~~CallsGraph_node3" class="node">
 <title>proc~active</title>
-<g id="a_proc~~setulb~~CallsGraph_node3"><a xlink:href=".././proc/active.html" xlink:title="lbfgsb_module::active">
+<g id="a_proc~~setulb~~CallsGraph_node3"><a xlink:href="../proc/active.html" xlink:title="lbfgsb_module::active">
 <polygon fill="#d9534f" stroke="#d9534f" points="471.5,-722 341.5,-722 341.5,-698 471.5,-698 471.5,-722"/>
 <text text-anchor="middle" x="406.5" y="-707.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lbfgsb_module::active</text>
 </a>
@@ -634,7 +637,7 @@ On exit with 'task' = NEW_X, the following information is available:</p>
 <!-- proc~cauchy -->
 <g id="proc~~setulb~~CallsGraph_node4" class="node">
 <title>proc~cauchy</title>
-<g id="a_proc~~setulb~~CallsGraph_node4"><a xlink:href=".././proc/cauchy.html" xlink:title="lbfgsb_module::cauchy">
+<g id="a_proc~~setulb~~CallsGraph_node4"><a xlink:href="../proc/cauchy.html" xlink:title="lbfgsb_module::cauchy">
 <polygon fill="#d9534f" stroke="#d9534f" points="474.5,-318 338.5,-318 338.5,-294 474.5,-294 474.5,-318"/>
 <text text-anchor="middle" x="406.5" y="-303.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lbfgsb_module::cauchy</text>
 </a>
@@ -649,7 +652,7 @@ On exit with 'task' = NEW_X, the following information is available:</p>
 <!-- proc~cmprlb -->
 <g id="proc~~setulb~~CallsGraph_node5" class="node">
 <title>proc~cmprlb</title>
-<g id="a_proc~~setulb~~CallsGraph_node5"><a xlink:href=".././proc/cmprlb.html" xlink:title="lbfgsb_module::cmprlb">
+<g id="a_proc~~setulb~~CallsGraph_node5"><a xlink:href="../proc/cmprlb.html" xlink:title="lbfgsb_module::cmprlb">
 <polygon fill="#d9534f" stroke="#d9534f" points="474.5,-276 338.5,-276 338.5,-252 474.5,-252 474.5,-276"/>
 <text text-anchor="middle" x="406.5" y="-261.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lbfgsb_module::cmprlb</text>
 </a>
@@ -664,7 +667,7 @@ On exit with 'task' = NEW_X, the following information is available:</p>
 <!-- proc~dcopy -->
 <g id="proc~~setulb~~CallsGraph_node6" class="node">
 <title>proc~dcopy</title>
-<g id="a_proc~~setulb~~CallsGraph_node6"><a xlink:href=".././proc/dcopy.html" xlink:title="lbfgsb_blas_module::dcopy">
+<g id="a_proc~~setulb~~CallsGraph_node6"><a xlink:href="../proc/dcopy.html" xlink:title="lbfgsb_blas_module::dcopy">
 <polygon fill="#d9534f" stroke="#d9534f" points="676.5,-482 519.5,-482 519.5,-458 676.5,-458 676.5,-482"/>
 <text text-anchor="middle" x="598" y="-467.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lbfgsb_blas_module::dcopy</text>
 </a>
@@ -679,7 +682,7 @@ On exit with 'task' = NEW_X, the following information is available:</p>
 <!-- proc~ddot -->
 <g id="proc~~setulb~~CallsGraph_node7" class="node">
 <title>proc~ddot</title>
-<g id="a_proc~~setulb~~CallsGraph_node7"><a xlink:href=".././proc/ddot.html" xlink:title="lbfgsb_blas_module::ddot">
+<g id="a_proc~~setulb~~CallsGraph_node7"><a xlink:href="../proc/ddot.html" xlink:title="lbfgsb_blas_module::ddot">
 <polygon fill="#d94e8f" stroke="#d94e8f" points="1074,-522 925,-522 925,-498 1074,-498 1074,-522"/>
 <text text-anchor="middle" x="999.5" y="-507.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lbfgsb_blas_module::ddot</text>
 </a>
@@ -694,7 +697,7 @@ On exit with 'task' = NEW_X, the following information is available:</p>
 <!-- proc~dscal -->
 <g id="proc~~setulb~~CallsGraph_node8" class="node">
 <title>proc~dscal</title>
-<g id="a_proc~~setulb~~CallsGraph_node8"><a xlink:href=".././proc/dscal.html" xlink:title="lbfgsb_blas_module::dscal">
+<g id="a_proc~~setulb~~CallsGraph_node8"><a xlink:href="../proc/dscal.html" xlink:title="lbfgsb_blas_module::dscal">
 <polygon fill="#d9534f" stroke="#d9534f" points="674.5,-326 521.5,-326 521.5,-302 674.5,-302 674.5,-326"/>
 <text text-anchor="middle" x="598" y="-311.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lbfgsb_blas_module::dscal</text>
 </a>
@@ -709,7 +712,7 @@ On exit with 'task' = NEW_X, the following information is available:</p>
 <!-- proc~errclb -->
 <g id="proc~~setulb~~CallsGraph_node9" class="node">
 <title>proc~errclb</title>
-<g id="a_proc~~setulb~~CallsGraph_node9"><a xlink:href=".././proc/errclb.html" xlink:title="lbfgsb_module::errclb">
+<g id="a_proc~~setulb~~CallsGraph_node9"><a xlink:href="../proc/errclb.html" xlink:title="lbfgsb_module::errclb">
 <polygon fill="#d9534f" stroke="#d9534f" points="471,-234 342,-234 342,-210 471,-210 471,-234"/>
 <text text-anchor="middle" x="406.5" y="-219.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lbfgsb_module::errclb</text>
 </a>
@@ -724,7 +727,7 @@ On exit with 'task' = NEW_X, the following information is available:</p>
 <!-- proc~formk -->
 <g id="proc~~setulb~~CallsGraph_node10" class="node">
 <title>proc~formk</title>
-<g id="a_proc~~setulb~~CallsGraph_node10"><a xlink:href=".././proc/formk.html" xlink:title="lbfgsb_module::formk">
+<g id="a_proc~~setulb~~CallsGraph_node10"><a xlink:href="../proc/formk.html" xlink:title="lbfgsb_module::formk">
 <polygon fill="#d9534f" stroke="#d9534f" points="471.5,-440 341.5,-440 341.5,-416 471.5,-416 471.5,-440"/>
 <text text-anchor="middle" x="406.5" y="-425.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lbfgsb_module::formk</text>
 </a>
@@ -739,7 +742,7 @@ On exit with 'task' = NEW_X, the following information is available:</p>
 <!-- proc~formt -->
 <g id="proc~~setulb~~CallsGraph_node11" class="node">
 <title>proc~formt</title>
-<g id="a_proc~~setulb~~CallsGraph_node11"><a xlink:href=".././proc/formt.html" xlink:title="lbfgsb_module::formt">
+<g id="a_proc~~setulb~~CallsGraph_node11"><a xlink:href="../proc/formt.html" xlink:title="lbfgsb_module::formt">
 <polygon fill="#d9534f" stroke="#d9534f" points="470,-562 343,-562 343,-538 470,-538 470,-562"/>
 <text text-anchor="middle" x="406.5" y="-547.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lbfgsb_module::formt</text>
 </a>
@@ -754,7 +757,7 @@ On exit with 'task' = NEW_X, the following information is available:</p>
 <!-- proc~freev -->
 <g id="proc~~setulb~~CallsGraph_node12" class="node">
 <title>proc~freev</title>
-<g id="a_proc~~setulb~~CallsGraph_node12"><a xlink:href=".././proc/freev.html" xlink:title="lbfgsb_module::freev">
+<g id="a_proc~~setulb~~CallsGraph_node12"><a xlink:href="../proc/freev.html" xlink:title="lbfgsb_module::freev">
 <polygon fill="#d9534f" stroke="#d9534f" points="469,-192 344,-192 344,-168 469,-168 469,-192"/>
 <text text-anchor="middle" x="406.5" y="-177.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lbfgsb_module::freev</text>
 </a>
@@ -769,7 +772,7 @@ On exit with 'task' = NEW_X, the following information is available:</p>
 <!-- proc~lnsrlb -->
 <g id="proc~~setulb~~CallsGraph_node13" class="node">
 <title>proc~lnsrlb</title>
-<g id="a_proc~~setulb~~CallsGraph_node13"><a xlink:href=".././proc/lnsrlb.html" xlink:title="lbfgsb_module::lnsrlb">
+<g id="a_proc~~setulb~~CallsGraph_node13"><a xlink:href="../proc/lnsrlb.html" xlink:title="lbfgsb_module::lnsrlb">
 <polygon fill="#d9534f" stroke="#d9534f" points="470,-604 343,-604 343,-580 470,-580 470,-604"/>
 <text text-anchor="middle" x="406.5" y="-589.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lbfgsb_module::lnsrlb</text>
 </a>
@@ -784,7 +787,7 @@ On exit with 'task' = NEW_X, the following information is available:</p>
 <!-- proc~matupd -->
 <g id="proc~~setulb~~CallsGraph_node14" class="node">
 <title>proc~matupd</title>
-<g id="a_proc~~setulb~~CallsGraph_node14"><a xlink:href=".././proc/matupd.html" xlink:title="lbfgsb_module::matupd">
+<g id="a_proc~~setulb~~CallsGraph_node14"><a xlink:href="../proc/matupd.html" xlink:title="lbfgsb_module::matupd">
 <polygon fill="#d9534f" stroke="#d9534f" points="476,-520 337,-520 337,-496 476,-496 476,-520"/>
 <text text-anchor="middle" x="406.5" y="-505.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lbfgsb_module::matupd</text>
 </a>
@@ -799,7 +802,7 @@ On exit with 'task' = NEW_X, the following information is available:</p>
 <!-- proc~prn1lb -->
 <g id="proc~~setulb~~CallsGraph_node15" class="node">
 <title>proc~prn1lb</title>
-<g id="a_proc~~setulb~~CallsGraph_node15"><a xlink:href=".././proc/prn1lb.html" xlink:title="lbfgsb_module::prn1lb">
+<g id="a_proc~~setulb~~CallsGraph_node15"><a xlink:href="../proc/prn1lb.html" xlink:title="lbfgsb_module::prn1lb">
 <polygon fill="#d9534f" stroke="#d9534f" points="473,-150 340,-150 340,-126 473,-126 473,-150"/>
 <text text-anchor="middle" x="406.5" y="-135.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lbfgsb_module::prn1lb</text>
 </a>
@@ -814,7 +817,7 @@ On exit with 'task' = NEW_X, the following information is available:</p>
 <!-- proc~prn2lb -->
 <g id="proc~~setulb~~CallsGraph_node16" class="node">
 <title>proc~prn2lb</title>
-<g id="a_proc~~setulb~~CallsGraph_node16"><a xlink:href=".././proc/prn2lb.html" xlink:title="lbfgsb_module::prn2lb">
+<g id="a_proc~~setulb~~CallsGraph_node16"><a xlink:href="../proc/prn2lb.html" xlink:title="lbfgsb_module::prn2lb">
 <polygon fill="#d9534f" stroke="#d9534f" points="473,-108 340,-108 340,-84 473,-84 473,-108"/>
 <text text-anchor="middle" x="406.5" y="-93.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lbfgsb_module::prn2lb</text>
 </a>
@@ -829,7 +832,7 @@ On exit with 'task' = NEW_X, the following information is available:</p>
 <!-- proc~prn3lb -->
 <g id="proc~~setulb~~CallsGraph_node17" class="node">
 <title>proc~prn3lb</title>
-<g id="a_proc~~setulb~~CallsGraph_node17"><a xlink:href=".././proc/prn3lb.html" xlink:title="lbfgsb_module::prn3lb">
+<g id="a_proc~~setulb~~CallsGraph_node17"><a xlink:href="../proc/prn3lb.html" xlink:title="lbfgsb_module::prn3lb">
 <polygon fill="#d9534f" stroke="#d9534f" points="473,-66 340,-66 340,-42 473,-42 473,-66"/>
 <text text-anchor="middle" x="406.5" y="-51.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lbfgsb_module::prn3lb</text>
 </a>
@@ -844,7 +847,7 @@ On exit with 'task' = NEW_X, the following information is available:</p>
 <!-- proc~projgr -->
 <g id="proc~~setulb~~CallsGraph_node18" class="node">
 <title>proc~projgr</title>
-<g id="a_proc~~setulb~~CallsGraph_node18"><a xlink:href=".././proc/projgr.html" xlink:title="lbfgsb_module::projgr">
+<g id="a_proc~~setulb~~CallsGraph_node18"><a xlink:href="../proc/projgr.html" xlink:title="lbfgsb_module::projgr">
 <polygon fill="#d9534f" stroke="#d9534f" points="471.5,-24 341.5,-24 341.5,0 471.5,0 471.5,-24"/>
 <text text-anchor="middle" x="406.5" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lbfgsb_module::projgr</text>
 </a>
@@ -859,7 +862,7 @@ On exit with 'task' = NEW_X, the following information is available:</p>
 <!-- proc~subsm -->
 <g id="proc~~setulb~~CallsGraph_node19" class="node">
 <title>proc~subsm</title>
-<g id="a_proc~~setulb~~CallsGraph_node19"><a xlink:href=".././proc/subsm.html" xlink:title="lbfgsb_module::subsm">
+<g id="a_proc~~setulb~~CallsGraph_node19"><a xlink:href="../proc/subsm.html" xlink:title="lbfgsb_module::subsm">
 <polygon fill="#d9534f" stroke="#d9534f" points="473,-398 340,-398 340,-374 473,-374 473,-398"/>
 <text text-anchor="middle" x="406.5" y="-383.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lbfgsb_module::subsm</text>
 </a>
@@ -892,7 +895,7 @@ On exit with 'task' = NEW_X, the following information is available:</p>
 <!-- proc~bmv -->
 <g id="proc~~setulb~~CallsGraph_node20" class="node">
 <title>proc~bmv</title>
-<g id="a_proc~~setulb~~CallsGraph_node20"><a xlink:href=".././proc/bmv.html" xlink:title="lbfgsb_module::bmv">
+<g id="a_proc~~setulb~~CallsGraph_node20"><a xlink:href="../proc/bmv.html" xlink:title="lbfgsb_module::bmv">
 <polygon fill="#d9534f" stroke="#d9534f" points="658.5,-166 537.5,-166 537.5,-142 658.5,-142 658.5,-166"/>
 <text text-anchor="middle" x="598" y="-151.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lbfgsb_module::bmv</text>
 </a>
@@ -907,7 +910,7 @@ On exit with 'task' = NEW_X, the following information is available:</p>
 <!-- proc~daxpy -->
 <g id="proc~~setulb~~CallsGraph_node21" class="node">
 <title>proc~daxpy</title>
-<g id="a_proc~~setulb~~CallsGraph_node21"><a xlink:href=".././proc/daxpy.html" xlink:title="lbfgsb_blas_module::daxpy">
+<g id="a_proc~~setulb~~CallsGraph_node21"><a xlink:href="../proc/daxpy.html" xlink:title="lbfgsb_blas_module::daxpy">
 <polygon fill="#d9534f" stroke="#d9534f" points="1078,-286 921,-286 921,-262 1078,-262 1078,-286"/>
 <text text-anchor="middle" x="999.5" y="-271.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lbfgsb_blas_module::daxpy</text>
 </a>
@@ -922,7 +925,7 @@ On exit with 'task' = NEW_X, the following information is available:</p>
 <!-- proc~hpsolb -->
 <g id="proc~~setulb~~CallsGraph_node25" class="node">
 <title>proc~hpsolb</title>
-<g id="a_proc~~setulb~~CallsGraph_node25"><a xlink:href=".././proc/hpsolb.html" xlink:title="lbfgsb_module::hpsolb">
+<g id="a_proc~~setulb~~CallsGraph_node25"><a xlink:href="../proc/hpsolb.html" xlink:title="lbfgsb_module::hpsolb">
 <polygon fill="#d9534f" stroke="#d9534f" points="664.5,-246 531.5,-246 531.5,-222 664.5,-222 664.5,-246"/>
 <text text-anchor="middle" x="598" y="-231.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lbfgsb_module::hpsolb</text>
 </a>
@@ -955,7 +958,7 @@ On exit with 'task' = NEW_X, the following information is available:</p>
 <!-- proc~dpofa -->
 <g id="proc~~setulb~~CallsGraph_node23" class="node">
 <title>proc~dpofa</title>
-<g id="a_proc~~setulb~~CallsGraph_node23"><a xlink:href=".././proc/dpofa.html" xlink:title="lbfgsb_linpack_module::dpofa">
+<g id="a_proc~~setulb~~CallsGraph_node23"><a xlink:href="../proc/dpofa.html" xlink:title="lbfgsb_linpack_module::dpofa">
 <polygon fill="#d9534f" stroke="#d9534f" points="684,-562 512,-562 512,-538 684,-538 684,-562"/>
 <text text-anchor="middle" x="598" y="-547.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lbfgsb_linpack_module::dpofa</text>
 </a>
@@ -970,7 +973,7 @@ On exit with 'task' = NEW_X, the following information is available:</p>
 <!-- proc~dtrsl -->
 <g id="proc~~setulb~~CallsGraph_node24" class="node">
 <title>proc~dtrsl</title>
-<g id="a_proc~~setulb~~CallsGraph_node24"><a xlink:href=".././proc/dtrsl.html" xlink:title="lbfgsb_linpack_module::dtrsl">
+<g id="a_proc~~setulb~~CallsGraph_node24"><a xlink:href="../proc/dtrsl.html" xlink:title="lbfgsb_linpack_module::dtrsl">
 <polygon fill="#d9534f" stroke="#d9534f" points="885,-366 720,-366 720,-342 885,-342 885,-366"/>
 <text text-anchor="middle" x="802.5" y="-351.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lbfgsb_linpack_module::dtrsl</text>
 </a>
@@ -1003,7 +1006,7 @@ On exit with 'task' = NEW_X, the following information is available:</p>
 <!-- proc~dcsrch -->
 <g id="proc~~setulb~~CallsGraph_node22" class="node">
 <title>proc~dcsrch</title>
-<g id="a_proc~~setulb~~CallsGraph_node22"><a xlink:href=".././proc/dcsrch.html" xlink:title="lbfgsb_module::dcsrch">
+<g id="a_proc~~setulb~~CallsGraph_node22"><a xlink:href="../proc/dcsrch.html" xlink:title="lbfgsb_module::dcsrch">
 <polygon fill="#d9534f" stroke="#d9534f" points="664.5,-604 531.5,-604 531.5,-580 664.5,-580 664.5,-604"/>
 <text text-anchor="middle" x="598" y="-589.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lbfgsb_module::dcsrch</text>
 </a>
@@ -1054,7 +1057,7 @@ On exit with 'task' = NEW_X, the following information is available:</p>
 <!-- proc~dcstep -->
 <g id="proc~~setulb~~CallsGraph_node26" class="node">
 <title>proc~dcstep</title>
-<g id="a_proc~~setulb~~CallsGraph_node26"><a xlink:href=".././proc/dcstep.html" xlink:title="lbfgsb_module::dcstep">
+<g id="a_proc~~setulb~~CallsGraph_node26"><a xlink:href="../proc/dcstep.html" xlink:title="lbfgsb_module::dcstep">
 <polygon fill="#d9534f" stroke="#d9534f" points="869,-604 736,-604 736,-580 869,-580 869,-604"/>
 <text text-anchor="middle" x="802.5" y="-589.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lbfgsb_module::dcstep</text>
 </a>
@@ -1090,17 +1093,17 @@ On exit with 'task' = NEW_X, the following information is available:</p>
                   var panprocsetulbCallsGraph = svgPanZoom('#procsetulbCallsGraph',
                     {zoomEnabled: true, controlIconsEnabled: true, fit: true, center: true,}
                   );
-                </script>        <div><a type="button" class="graph-help" data-toggle="modal" href="#CallsGraph-help-text">Help</a></div>
+                </script>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#CallsGraph-help-text">Help</a>
+          </div>
           <div class="modal fade" id="CallsGraph-help-text" tabindex="-1" role="dialog">
             <div class="modal-dialog modal-lg" role="document">
               <div class="modal-content">
                 <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
                   <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-              <div class="modal-body">
+                <div class="modal-body">
 <p>Nodes of different colours represent the following: </p>
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"

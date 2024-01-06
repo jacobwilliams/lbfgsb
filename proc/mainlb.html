@@ -1,3 +1,5 @@
+<!-- -*- mode: jinja2 -*- -->
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -17,7 +19,8 @@
     <link href="../css/local.css" rel="stylesheet">
       <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
 
-    <script src="https://code.jquery.com/jquery-3.7.0.slim.min.js" integrity="sha256-tG5mcZUtJsZvyKAxYLVXrmjKBVLd6VpVccqz/r4ypFE=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="../js/svg-pan-zoom.min.js"></script>
   </head>
 
   <body>
@@ -174,7 +177,7 @@
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-n~2"></span>
+              <span class="anchor" id="variable-n~8"></span>
               integer,
             </td>
 <td>intent(in)</td>
@@ -189,7 +192,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-m~2"></span>
+              <span class="anchor" id="variable-m~6"></span>
               integer,
             </td>
 <td>intent(in)</td>
@@ -507,7 +510,7 @@ used at different times to store the Cauchy point and the Newton point.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-t"></span>
+              <span class="anchor" id="variable-t~3"></span>
               real(kind=wp)
             </td>
 <td></td>
@@ -564,7 +567,7 @@ used to safeguard the projected Newton direction</p>
             <td><strong>Index</strong>(n)</td>
             <td>
                 <p>working array.
-In subroutine <a href="../proc/freev.html">freev</a>, index is used to store the free and fixed
+In subroutine <a href="freev.html">freev</a>, index is used to store the free and fixed
 variables at the Generalized Cauchy Point (GCP).</p>
             </td>
         </tr>
@@ -604,10 +607,10 @@ the status of the vector x for GCP computation:</p>
             <td><strong>Indx2</strong>(n)</td>
             <td>
                 <p>integer working array.
-Within subroutine <a href="../proc/cauchy.html">cauchy</a>, indx2 corresponds to the array iorder.
-In subroutine <a href="../proc/freev.html">freev</a>, a list of variables entering and leaving
+Within subroutine <a href="cauchy.html">cauchy</a>, indx2 corresponds to the array iorder.
+In subroutine <a href="freev.html">freev</a>, a list of variables entering and leaving
 the free set is stored in indx2, and it is passed on to
-subroutine <a href="../proc/formk.html">formk</a> with this information.</p>
+subroutine <a href="formk.html">formk</a> with this information.</p>
             </td>
         </tr>
         <tr>
@@ -740,7 +743,7 @@ summarize the iteration.</p>
 <!-- proc~active -->
 <g id="proc~~mainlb~~CallsGraph_node2" class="node">
 <title>proc~active</title>
-<g id="a_proc~~mainlb~~CallsGraph_node2"><a xlink:href=".././proc/active.html" xlink:title="lbfgsb_module::active">
+<g id="a_proc~~mainlb~~CallsGraph_node2"><a xlink:href="../proc/active.html" xlink:title="lbfgsb_module::active">
 <polygon fill="#d9534f" stroke="#d9534f" points="305.5,-722 175.5,-722 175.5,-698 305.5,-698 305.5,-722"/>
 <text text-anchor="middle" x="240.5" y="-707.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lbfgsb_module::active</text>
 </a>
@@ -755,7 +758,7 @@ summarize the iteration.</p>
 <!-- proc~cauchy -->
 <g id="proc~~mainlb~~CallsGraph_node3" class="node">
 <title>proc~cauchy</title>
-<g id="a_proc~~mainlb~~CallsGraph_node3"><a xlink:href=".././proc/cauchy.html" xlink:title="lbfgsb_module::cauchy">
+<g id="a_proc~~mainlb~~CallsGraph_node3"><a xlink:href="../proc/cauchy.html" xlink:title="lbfgsb_module::cauchy">
 <polygon fill="#d9534f" stroke="#d9534f" points="308.5,-318 172.5,-318 172.5,-294 308.5,-294 308.5,-318"/>
 <text text-anchor="middle" x="240.5" y="-303.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lbfgsb_module::cauchy</text>
 </a>
@@ -770,7 +773,7 @@ summarize the iteration.</p>
 <!-- proc~cmprlb -->
 <g id="proc~~mainlb~~CallsGraph_node4" class="node">
 <title>proc~cmprlb</title>
-<g id="a_proc~~mainlb~~CallsGraph_node4"><a xlink:href=".././proc/cmprlb.html" xlink:title="lbfgsb_module::cmprlb">
+<g id="a_proc~~mainlb~~CallsGraph_node4"><a xlink:href="../proc/cmprlb.html" xlink:title="lbfgsb_module::cmprlb">
 <polygon fill="#d9534f" stroke="#d9534f" points="308.5,-276 172.5,-276 172.5,-252 308.5,-252 308.5,-276"/>
 <text text-anchor="middle" x="240.5" y="-261.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lbfgsb_module::cmprlb</text>
 </a>
@@ -785,7 +788,7 @@ summarize the iteration.</p>
 <!-- proc~dcopy -->
 <g id="proc~~mainlb~~CallsGraph_node5" class="node">
 <title>proc~dcopy</title>
-<g id="a_proc~~mainlb~~CallsGraph_node5"><a xlink:href=".././proc/dcopy.html" xlink:title="lbfgsb_blas_module::dcopy">
+<g id="a_proc~~mainlb~~CallsGraph_node5"><a xlink:href="../proc/dcopy.html" xlink:title="lbfgsb_blas_module::dcopy">
 <polygon fill="#d9534f" stroke="#d9534f" points="510.5,-482 353.5,-482 353.5,-458 510.5,-458 510.5,-482"/>
 <text text-anchor="middle" x="432" y="-467.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lbfgsb_blas_module::dcopy</text>
 </a>
@@ -800,7 +803,7 @@ summarize the iteration.</p>
 <!-- proc~ddot -->
 <g id="proc~~mainlb~~CallsGraph_node6" class="node">
 <title>proc~ddot</title>
-<g id="a_proc~~mainlb~~CallsGraph_node6"><a xlink:href=".././proc/ddot.html" xlink:title="lbfgsb_blas_module::ddot">
+<g id="a_proc~~mainlb~~CallsGraph_node6"><a xlink:href="../proc/ddot.html" xlink:title="lbfgsb_blas_module::ddot">
 <polygon fill="#d94e8f" stroke="#d94e8f" points="908,-522 759,-522 759,-498 908,-498 908,-522"/>
 <text text-anchor="middle" x="833.5" y="-507.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lbfgsb_blas_module::ddot</text>
 </a>
@@ -815,7 +818,7 @@ summarize the iteration.</p>
 <!-- proc~dscal -->
 <g id="proc~~mainlb~~CallsGraph_node7" class="node">
 <title>proc~dscal</title>
-<g id="a_proc~~mainlb~~CallsGraph_node7"><a xlink:href=".././proc/dscal.html" xlink:title="lbfgsb_blas_module::dscal">
+<g id="a_proc~~mainlb~~CallsGraph_node7"><a xlink:href="../proc/dscal.html" xlink:title="lbfgsb_blas_module::dscal">
 <polygon fill="#d9534f" stroke="#d9534f" points="508.5,-326 355.5,-326 355.5,-302 508.5,-302 508.5,-326"/>
 <text text-anchor="middle" x="432" y="-311.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lbfgsb_blas_module::dscal</text>
 </a>
@@ -830,7 +833,7 @@ summarize the iteration.</p>
 <!-- proc~errclb -->
 <g id="proc~~mainlb~~CallsGraph_node8" class="node">
 <title>proc~errclb</title>
-<g id="a_proc~~mainlb~~CallsGraph_node8"><a xlink:href=".././proc/errclb.html" xlink:title="lbfgsb_module::errclb">
+<g id="a_proc~~mainlb~~CallsGraph_node8"><a xlink:href="../proc/errclb.html" xlink:title="lbfgsb_module::errclb">
 <polygon fill="#d9534f" stroke="#d9534f" points="305,-234 176,-234 176,-210 305,-210 305,-234"/>
 <text text-anchor="middle" x="240.5" y="-219.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lbfgsb_module::errclb</text>
 </a>
@@ -845,7 +848,7 @@ summarize the iteration.</p>
 <!-- proc~formk -->
 <g id="proc~~mainlb~~CallsGraph_node9" class="node">
 <title>proc~formk</title>
-<g id="a_proc~~mainlb~~CallsGraph_node9"><a xlink:href=".././proc/formk.html" xlink:title="lbfgsb_module::formk">
+<g id="a_proc~~mainlb~~CallsGraph_node9"><a xlink:href="../proc/formk.html" xlink:title="lbfgsb_module::formk">
 <polygon fill="#d9534f" stroke="#d9534f" points="305.5,-440 175.5,-440 175.5,-416 305.5,-416 305.5,-440"/>
 <text text-anchor="middle" x="240.5" y="-425.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lbfgsb_module::formk</text>
 </a>
@@ -860,7 +863,7 @@ summarize the iteration.</p>
 <!-- proc~formt -->
 <g id="proc~~mainlb~~CallsGraph_node10" class="node">
 <title>proc~formt</title>
-<g id="a_proc~~mainlb~~CallsGraph_node10"><a xlink:href=".././proc/formt.html" xlink:title="lbfgsb_module::formt">
+<g id="a_proc~~mainlb~~CallsGraph_node10"><a xlink:href="../proc/formt.html" xlink:title="lbfgsb_module::formt">
 <polygon fill="#d9534f" stroke="#d9534f" points="304,-562 177,-562 177,-538 304,-538 304,-562"/>
 <text text-anchor="middle" x="240.5" y="-547.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lbfgsb_module::formt</text>
 </a>
@@ -875,7 +878,7 @@ summarize the iteration.</p>
 <!-- proc~freev -->
 <g id="proc~~mainlb~~CallsGraph_node11" class="node">
 <title>proc~freev</title>
-<g id="a_proc~~mainlb~~CallsGraph_node11"><a xlink:href=".././proc/freev.html" xlink:title="lbfgsb_module::freev">
+<g id="a_proc~~mainlb~~CallsGraph_node11"><a xlink:href="../proc/freev.html" xlink:title="lbfgsb_module::freev">
 <polygon fill="#d9534f" stroke="#d9534f" points="303,-192 178,-192 178,-168 303,-168 303,-192"/>
 <text text-anchor="middle" x="240.5" y="-177.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lbfgsb_module::freev</text>
 </a>
@@ -890,7 +893,7 @@ summarize the iteration.</p>
 <!-- proc~lnsrlb -->
 <g id="proc~~mainlb~~CallsGraph_node12" class="node">
 <title>proc~lnsrlb</title>
-<g id="a_proc~~mainlb~~CallsGraph_node12"><a xlink:href=".././proc/lnsrlb.html" xlink:title="lbfgsb_module::lnsrlb">
+<g id="a_proc~~mainlb~~CallsGraph_node12"><a xlink:href="../proc/lnsrlb.html" xlink:title="lbfgsb_module::lnsrlb">
 <polygon fill="#d9534f" stroke="#d9534f" points="304,-604 177,-604 177,-580 304,-580 304,-604"/>
 <text text-anchor="middle" x="240.5" y="-589.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lbfgsb_module::lnsrlb</text>
 </a>
@@ -905,7 +908,7 @@ summarize the iteration.</p>
 <!-- proc~matupd -->
 <g id="proc~~mainlb~~CallsGraph_node13" class="node">
 <title>proc~matupd</title>
-<g id="a_proc~~mainlb~~CallsGraph_node13"><a xlink:href=".././proc/matupd.html" xlink:title="lbfgsb_module::matupd">
+<g id="a_proc~~mainlb~~CallsGraph_node13"><a xlink:href="../proc/matupd.html" xlink:title="lbfgsb_module::matupd">
 <polygon fill="#d9534f" stroke="#d9534f" points="310,-520 171,-520 171,-496 310,-496 310,-520"/>
 <text text-anchor="middle" x="240.5" y="-505.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lbfgsb_module::matupd</text>
 </a>
@@ -920,7 +923,7 @@ summarize the iteration.</p>
 <!-- proc~prn1lb -->
 <g id="proc~~mainlb~~CallsGraph_node14" class="node">
 <title>proc~prn1lb</title>
-<g id="a_proc~~mainlb~~CallsGraph_node14"><a xlink:href=".././proc/prn1lb.html" xlink:title="lbfgsb_module::prn1lb">
+<g id="a_proc~~mainlb~~CallsGraph_node14"><a xlink:href="../proc/prn1lb.html" xlink:title="lbfgsb_module::prn1lb">
 <polygon fill="#d9534f" stroke="#d9534f" points="307,-150 174,-150 174,-126 307,-126 307,-150"/>
 <text text-anchor="middle" x="240.5" y="-135.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lbfgsb_module::prn1lb</text>
 </a>
@@ -935,7 +938,7 @@ summarize the iteration.</p>
 <!-- proc~prn2lb -->
 <g id="proc~~mainlb~~CallsGraph_node15" class="node">
 <title>proc~prn2lb</title>
-<g id="a_proc~~mainlb~~CallsGraph_node15"><a xlink:href=".././proc/prn2lb.html" xlink:title="lbfgsb_module::prn2lb">
+<g id="a_proc~~mainlb~~CallsGraph_node15"><a xlink:href="../proc/prn2lb.html" xlink:title="lbfgsb_module::prn2lb">
 <polygon fill="#d9534f" stroke="#d9534f" points="307,-108 174,-108 174,-84 307,-84 307,-108"/>
 <text text-anchor="middle" x="240.5" y="-93.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lbfgsb_module::prn2lb</text>
 </a>
@@ -950,7 +953,7 @@ summarize the iteration.</p>
 <!-- proc~prn3lb -->
 <g id="proc~~mainlb~~CallsGraph_node16" class="node">
 <title>proc~prn3lb</title>
-<g id="a_proc~~mainlb~~CallsGraph_node16"><a xlink:href=".././proc/prn3lb.html" xlink:title="lbfgsb_module::prn3lb">
+<g id="a_proc~~mainlb~~CallsGraph_node16"><a xlink:href="../proc/prn3lb.html" xlink:title="lbfgsb_module::prn3lb">
 <polygon fill="#d9534f" stroke="#d9534f" points="307,-66 174,-66 174,-42 307,-42 307,-66"/>
 <text text-anchor="middle" x="240.5" y="-51.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lbfgsb_module::prn3lb</text>
 </a>
@@ -965,7 +968,7 @@ summarize the iteration.</p>
 <!-- proc~projgr -->
 <g id="proc~~mainlb~~CallsGraph_node17" class="node">
 <title>proc~projgr</title>
-<g id="a_proc~~mainlb~~CallsGraph_node17"><a xlink:href=".././proc/projgr.html" xlink:title="lbfgsb_module::projgr">
+<g id="a_proc~~mainlb~~CallsGraph_node17"><a xlink:href="../proc/projgr.html" xlink:title="lbfgsb_module::projgr">
 <polygon fill="#d9534f" stroke="#d9534f" points="305.5,-24 175.5,-24 175.5,0 305.5,0 305.5,-24"/>
 <text text-anchor="middle" x="240.5" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lbfgsb_module::projgr</text>
 </a>
@@ -980,7 +983,7 @@ summarize the iteration.</p>
 <!-- proc~subsm -->
 <g id="proc~~mainlb~~CallsGraph_node18" class="node">
 <title>proc~subsm</title>
-<g id="a_proc~~mainlb~~CallsGraph_node18"><a xlink:href=".././proc/subsm.html" xlink:title="lbfgsb_module::subsm">
+<g id="a_proc~~mainlb~~CallsGraph_node18"><a xlink:href="../proc/subsm.html" xlink:title="lbfgsb_module::subsm">
 <polygon fill="#d9534f" stroke="#d9534f" points="307,-398 174,-398 174,-374 307,-374 307,-398"/>
 <text text-anchor="middle" x="240.5" y="-383.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lbfgsb_module::subsm</text>
 </a>
@@ -1013,7 +1016,7 @@ summarize the iteration.</p>
 <!-- proc~bmv -->
 <g id="proc~~mainlb~~CallsGraph_node19" class="node">
 <title>proc~bmv</title>
-<g id="a_proc~~mainlb~~CallsGraph_node19"><a xlink:href=".././proc/bmv.html" xlink:title="lbfgsb_module::bmv">
+<g id="a_proc~~mainlb~~CallsGraph_node19"><a xlink:href="../proc/bmv.html" xlink:title="lbfgsb_module::bmv">
 <polygon fill="#d9534f" stroke="#d9534f" points="492.5,-166 371.5,-166 371.5,-142 492.5,-142 492.5,-166"/>
 <text text-anchor="middle" x="432" y="-151.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lbfgsb_module::bmv</text>
 </a>
@@ -1028,7 +1031,7 @@ summarize the iteration.</p>
 <!-- proc~daxpy -->
 <g id="proc~~mainlb~~CallsGraph_node20" class="node">
 <title>proc~daxpy</title>
-<g id="a_proc~~mainlb~~CallsGraph_node20"><a xlink:href=".././proc/daxpy.html" xlink:title="lbfgsb_blas_module::daxpy">
+<g id="a_proc~~mainlb~~CallsGraph_node20"><a xlink:href="../proc/daxpy.html" xlink:title="lbfgsb_blas_module::daxpy">
 <polygon fill="#d9534f" stroke="#d9534f" points="912,-286 755,-286 755,-262 912,-262 912,-286"/>
 <text text-anchor="middle" x="833.5" y="-271.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lbfgsb_blas_module::daxpy</text>
 </a>
@@ -1043,7 +1046,7 @@ summarize the iteration.</p>
 <!-- proc~hpsolb -->
 <g id="proc~~mainlb~~CallsGraph_node24" class="node">
 <title>proc~hpsolb</title>
-<g id="a_proc~~mainlb~~CallsGraph_node24"><a xlink:href=".././proc/hpsolb.html" xlink:title="lbfgsb_module::hpsolb">
+<g id="a_proc~~mainlb~~CallsGraph_node24"><a xlink:href="../proc/hpsolb.html" xlink:title="lbfgsb_module::hpsolb">
 <polygon fill="#d9534f" stroke="#d9534f" points="498.5,-246 365.5,-246 365.5,-222 498.5,-222 498.5,-246"/>
 <text text-anchor="middle" x="432" y="-231.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lbfgsb_module::hpsolb</text>
 </a>
@@ -1076,7 +1079,7 @@ summarize the iteration.</p>
 <!-- proc~dpofa -->
 <g id="proc~~mainlb~~CallsGraph_node22" class="node">
 <title>proc~dpofa</title>
-<g id="a_proc~~mainlb~~CallsGraph_node22"><a xlink:href=".././proc/dpofa.html" xlink:title="lbfgsb_linpack_module::dpofa">
+<g id="a_proc~~mainlb~~CallsGraph_node22"><a xlink:href="../proc/dpofa.html" xlink:title="lbfgsb_linpack_module::dpofa">
 <polygon fill="#d9534f" stroke="#d9534f" points="518,-562 346,-562 346,-538 518,-538 518,-562"/>
 <text text-anchor="middle" x="432" y="-547.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lbfgsb_linpack_module::dpofa</text>
 </a>
@@ -1091,7 +1094,7 @@ summarize the iteration.</p>
 <!-- proc~dtrsl -->
 <g id="proc~~mainlb~~CallsGraph_node23" class="node">
 <title>proc~dtrsl</title>
-<g id="a_proc~~mainlb~~CallsGraph_node23"><a xlink:href=".././proc/dtrsl.html" xlink:title="lbfgsb_linpack_module::dtrsl">
+<g id="a_proc~~mainlb~~CallsGraph_node23"><a xlink:href="../proc/dtrsl.html" xlink:title="lbfgsb_linpack_module::dtrsl">
 <polygon fill="#d9534f" stroke="#d9534f" points="719,-366 554,-366 554,-342 719,-342 719,-366"/>
 <text text-anchor="middle" x="636.5" y="-351.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lbfgsb_linpack_module::dtrsl</text>
 </a>
@@ -1124,7 +1127,7 @@ summarize the iteration.</p>
 <!-- proc~dcsrch -->
 <g id="proc~~mainlb~~CallsGraph_node21" class="node">
 <title>proc~dcsrch</title>
-<g id="a_proc~~mainlb~~CallsGraph_node21"><a xlink:href=".././proc/dcsrch.html" xlink:title="lbfgsb_module::dcsrch">
+<g id="a_proc~~mainlb~~CallsGraph_node21"><a xlink:href="../proc/dcsrch.html" xlink:title="lbfgsb_module::dcsrch">
 <polygon fill="#d9534f" stroke="#d9534f" points="498.5,-604 365.5,-604 365.5,-580 498.5,-580 498.5,-604"/>
 <text text-anchor="middle" x="432" y="-589.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lbfgsb_module::dcsrch</text>
 </a>
@@ -1175,7 +1178,7 @@ summarize the iteration.</p>
 <!-- proc~dcstep -->
 <g id="proc~~mainlb~~CallsGraph_node25" class="node">
 <title>proc~dcstep</title>
-<g id="a_proc~~mainlb~~CallsGraph_node25"><a xlink:href=".././proc/dcstep.html" xlink:title="lbfgsb_module::dcstep">
+<g id="a_proc~~mainlb~~CallsGraph_node25"><a xlink:href="../proc/dcstep.html" xlink:title="lbfgsb_module::dcstep">
 <polygon fill="#d9534f" stroke="#d9534f" points="703,-604 570,-604 570,-580 703,-580 703,-604"/>
 <text text-anchor="middle" x="636.5" y="-589.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lbfgsb_module::dcstep</text>
 </a>
@@ -1211,17 +1214,17 @@ summarize the iteration.</p>
                   var panprocmainlbCallsGraph = svgPanZoom('#procmainlbCallsGraph',
                     {zoomEnabled: true, controlIconsEnabled: true, fit: true, center: true,}
                   );
-                </script>        <div><a type="button" class="graph-help" data-toggle="modal" href="#CallsGraph-help-text">Help</a></div>
+                </script>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#CallsGraph-help-text">Help</a>
+          </div>
           <div class="modal fade" id="CallsGraph-help-text" tabindex="-1" role="dialog">
             <div class="modal-dialog modal-lg" role="document">
               <div class="modal-content">
                 <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
                   <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-              <div class="modal-body">
+                <div class="modal-body">
 <p>Nodes of different colours represent the following: </p>
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
@@ -1315,7 +1318,7 @@ implementation in a submodule of an interface in a parent module.
 <!-- proc~setulb -->
 <g id="proc~~mainlb~~CalledByGraph_node2" class="node">
 <title>proc~setulb</title>
-<g id="a_proc~~mainlb~~CalledByGraph_node2"><a xlink:href=".././proc/setulb.html" xlink:title="lbfgsb_module::setulb">
+<g id="a_proc~~mainlb~~CalledByGraph_node2"><a xlink:href="../proc/setulb.html" xlink:title="lbfgsb_module::setulb">
 <polygon fill="#d9534f" stroke="#d9534f" points="130,-24 0,-24 0,0 130,0 130,-24"/>
 <text text-anchor="middle" x="65" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lbfgsb_module::setulb</text>
 </a>
@@ -1329,17 +1332,17 @@ implementation in a submodule of an interface in a parent module.
 </g>
 </g>
 </svg>
-</div>        <div><a type="button" class="graph-help" data-toggle="modal" href="#CalledByGraph-help-text">Help</a></div>
+</div>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#CalledByGraph-help-text">Help</a>
+          </div>
           <div class="modal fade" id="CalledByGraph-help-text" tabindex="-1" role="dialog">
             <div class="modal-dialog modal-lg" role="document">
               <div class="modal-content">
                 <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
                   <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-              <div class="modal-body">
+                <div class="modal-body">
 <p>Nodes of different colours represent the following: </p>
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"

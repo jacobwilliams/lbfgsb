@@ -1,3 +1,5 @@
+<!-- -*- mode: jinja2 -*- -->
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -18,7 +20,8 @@
     <link href="../css/local.css" rel="stylesheet">
       <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
 
-    <script src="https://code.jquery.com/jquery-3.7.0.slim.min.js" integrity="sha256-tG5mcZUtJsZvyKAxYLVXrmjKBVLd6VpVccqz/r4ypFE=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="../js/svg-pan-zoom.min.js"></script>
   </head>
 
   <body>
@@ -62,12 +65,28 @@
 			 <table class="table">
 			 <thead><tr><th>Module</th><th>Source File</th><th>Description</th></tr></thead>
 			 <tbody>
-			   <tr class="active"><td><a href='../module/lbfgsb_blas_module.html'>lbfgsb_blas_module</a></td><td><a href='../sourcefile/lbfgsb_blas_module.f90.html'>lbfgsb_blas_module.F90</a></td><td><p>BLAS support routines for LBFGSB.
-These have been refactored into modern Fortran.</p></td></tr>
-<!--active-->			   <tr class=""><td><a href='../module/lbfgsb_kinds_module.html'>lbfgsb_kinds_module</a></td><td><a href='../sourcefile/lbfgsb_kinds_module.f90.html'>lbfgsb_kinds_module.F90</a></td><td><p>Numeric kind definitions.</p><a href="../module/lbfgsb_kinds_module.html" class="pull-right"><emph>Read more&hellip;</emph></a></td></tr>
-<!---->			   <tr class="active"><td><a href='../module/lbfgsb_linpack_module.html'>lbfgsb_linpack_module</a></td><td><a href='../sourcefile/lbfgsb_linpack_module.f90.html'>lbfgsb_linpack_module.f90</a></td><td><p>LINPACK support routines for LBFGSB.
-These have been refactored into modern Fortran.</p></td></tr>
-<!--active-->			   <tr class=""><td><a href='../module/lbfgsb_module.html'>lbfgsb_module</a></td><td><a href='../sourcefile/lbfgsb.f90.html'>lbfgsb.f90</a></td><td><p>This is a modernized version L-BFGS-B.</p><a href="../module/lbfgsb_module.html" class="pull-right"><emph>Read more&hellip;</emph></a></td></tr>
+			   <tr class="active">
+                 <td><a href='../module/lbfgsb_blas_module.html'>lbfgsb_blas_module</a></td>
+                 <td><a href='../sourcefile/lbfgsb_blas_module.f90.html'>lbfgsb_blas_module.F90</a></td>
+                 <td><p>BLAS support routines for LBFGSB.
+These have been refactored into modern Fortran.</p></td>
+               </tr>
+<!--active-->			   <tr class="">
+                 <td><a href='../module/lbfgsb_kinds_module.html'>lbfgsb_kinds_module</a></td>
+                 <td><a href='../sourcefile/lbfgsb_kinds_module.f90.html'>lbfgsb_kinds_module.F90</a></td>
+                 <td><p>Numeric kind definitions.</p><a href="../module/lbfgsb_kinds_module.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+<!---->			   <tr class="active">
+                 <td><a href='../module/lbfgsb_linpack_module.html'>lbfgsb_linpack_module</a></td>
+                 <td><a href='../sourcefile/lbfgsb_linpack_module.f90.html'>lbfgsb_linpack_module.f90</a></td>
+                 <td><p>LINPACK support routines for LBFGSB.
+These have been refactored into modern Fortran.</p></td>
+               </tr>
+<!--active-->			   <tr class="">
+                 <td><a href='../module/lbfgsb_module.html'>lbfgsb_module</a></td>
+                 <td><a href='../sourcefile/lbfgsb.f90.html'>lbfgsb.f90</a></td>
+                 <td><p>This is a modernized version L-BFGS-B.</p><a href="../module/lbfgsb_module.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
 <!---->			 </tbody></table>
              <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
@@ -83,7 +102,7 @@ These have been refactored into modern Fortran.</p></td></tr>
 <!-- module~lbfgsb_blas_module -->
 <g id="module~~graph~~ModuleGraph_node1" class="node">
 <title>module~lbfgsb_blas_module</title>
-<g id="a_module~~graph~~ModuleGraph_node1"><a xlink:href=".././module/lbfgsb_blas_module.html" xlink:title="lbfgsb_blas_module">
+<g id="a_module~~graph~~ModuleGraph_node1"><a xlink:href="../module/lbfgsb_blas_module.html" xlink:title="lbfgsb_blas_module">
 <polygon fill="#337ab7" stroke="#337ab7" points="408,-37.12 290,-37.12 290,-13.12 408,-13.12 408,-37.12"/>
 <text text-anchor="middle" x="349" y="-22.72" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lbfgsb_blas_module</text>
 </a>
@@ -92,7 +111,7 @@ These have been refactored into modern Fortran.</p></td></tr>
 <!-- module~lbfgsb_kinds_module -->
 <g id="module~~graph~~ModuleGraph_node2" class="node">
 <title>module~lbfgsb_kinds_module</title>
-<g id="a_module~~graph~~ModuleGraph_node2"><a xlink:href=".././module/lbfgsb_kinds_module.html" xlink:title="lbfgsb_kinds_module">
+<g id="a_module~~graph~~ModuleGraph_node2"><a xlink:href="../module/lbfgsb_kinds_module.html" xlink:title="lbfgsb_kinds_module">
 <polygon fill="#337ab7" stroke="#337ab7" points="254,-37.12 130,-37.12 130,-13.12 254,-13.12 254,-37.12"/>
 <text text-anchor="middle" x="192" y="-22.72" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lbfgsb_kinds_module</text>
 </a>
@@ -119,7 +138,7 @@ These have been refactored into modern Fortran.</p></td></tr>
 <!-- module~lbfgsb_linpack_module -->
 <g id="module~~graph~~ModuleGraph_node3" class="node">
 <title>module~lbfgsb_linpack_module</title>
-<g id="a_module~~graph~~ModuleGraph_node3"><a xlink:href=".././module/lbfgsb_linpack_module.html" xlink:title="lbfgsb_linpack_module">
+<g id="a_module~~graph~~ModuleGraph_node3"><a xlink:href="../module/lbfgsb_linpack_module.html" xlink:title="lbfgsb_linpack_module">
 <polygon fill="#337ab7" stroke="#337ab7" points="578,-37.12 444,-37.12 444,-13.12 578,-13.12 578,-37.12"/>
 <text text-anchor="middle" x="511" y="-22.72" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lbfgsb_linpack_module</text>
 </a>
@@ -140,7 +159,7 @@ These have been refactored into modern Fortran.</p></td></tr>
 <!-- module~lbfgsb_module -->
 <g id="module~~graph~~ModuleGraph_node4" class="node">
 <title>module~lbfgsb_module</title>
-<g id="a_module~~graph~~ModuleGraph_node4"><a xlink:href=".././module/lbfgsb_module.html" xlink:title="lbfgsb_module">
+<g id="a_module~~graph~~ModuleGraph_node4"><a xlink:href="../module/lbfgsb_module.html" xlink:title="lbfgsb_module">
 <polygon fill="#337ab7" stroke="#337ab7" points="705,-57.12 614,-57.12 614,-33.12 705,-33.12 705,-57.12"/>
 <text text-anchor="middle" x="659.5" y="-42.72" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lbfgsb_module</text>
 </a>
@@ -167,17 +186,17 @@ These have been refactored into modern Fortran.</p></td></tr>
 </g>
 </g>
 </svg>
-</div>        <div><a type="button" class="graph-help" data-toggle="modal" href="#ModuleGraph-help-text">Help</a></div>
+</div>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#ModuleGraph-help-text">Help</a>
+          </div>
           <div class="modal fade" id="ModuleGraph-help-text" tabindex="-1" role="dialog">
             <div class="modal-dialog modal-lg" role="document">
               <div class="modal-content">
                 <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
                   <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-              <div class="modal-body">
+                <div class="modal-body">
 <p>Nodes of different colours represent the following: </p>
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
