@@ -14,7 +14,7 @@ This is a modern Fortran refactoring of the [L-BFGS-B](http://users.iems.northwe
 
 The library can be compiled with recent versions the Intel Fortran Compiler and GFortran (and presumably any other Fortran compiler that supports modern standards).
 
-A `fmp.toml` file is provided for compiling `LBFGSB` with the [Fortran Package Manager](https://github.com/fortran-lang/fpm). For example, to build:
+A `fpm.toml` file is provided for compiling `LBFGSB` with the [Fortran Package Manager](https://github.com/fortran-lang/fpm). For example, to build:
 
 ```
 fpm build --profile release
