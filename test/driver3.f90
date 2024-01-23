@@ -45,6 +45,7 @@
       program driver3
 
       use lbfgsb_module, wp => lbfgsp_wp
+      use iso_fortran_env, only: output_unit
 
       ! This time-controlled driver shows that it is possible to terminate
       ! a run by elapsed CPU time, and yet be able to print all desired
@@ -120,9 +121,9 @@
 
       ! We now write the heading of the output.
 
-      write (6,16)
-  16  format(/,5x, 'Solving sample problem.',&
-             /,5x, ' (f = 0.0 at the optimal solution.)',/)
+      write (output_unit,'(/,5x, a,/,5x, a,/)') &
+               'Solving sample problem.',&
+               ' (f = 0.0 at the optimal solution.)'
 
       ! We start the iteration by initializing task.
 
@@ -165,19 +166,19 @@
 
             ! We print out the information contained in task.
 
-              write (6,*) task
+              write (output_unit,*) task
 
             ! We print the latest iterate contained in wa(j+1:j+n), where
 
               j = 3*n+2*m*n+11*m**2
-              write (6,*) 'Latest iterate X ='
-              write (6,'((1x,1p, 6(1x,d11.4)))') (wa(i),i = j+1,j+n)
+              write (output_unit,*) 'Latest iterate X ='
+              write (output_unit,'((1x,1p, 6(1x,d11.4)))') (wa(i),i = j+1,j+n)
 
             ! We print the function value f and the norm of the projected
             ! gradient |proj g| at the last iterate; they are stored in
             ! dsave(2) and dsave(13) respectively.
 
-              write (6,'(a,1p,d12.5,4x,a,1p,d12.5)') &
+              write (output_unit,'(a,1p,d12.5,4x,a,1p,d12.5)') &
               'At latest iterate   f =',dsave(2),'|proj g| =',dsave(13)
 
          else
@@ -232,16 +233,16 @@
             ! See the comments at the end of driver1 for a description
             ! of the variables isave and dsave.
 
-            write (6,'(2(a,i5,4x),a,1p,d12.5,4x,a,1p,d12.5)') 'Iterate' &
+            write (output_unit,'(2(a,i5,4x),a,1p,d12.5,4x,a,1p,d12.5)') 'Iterate' &
                    ,isave(30),'nfg =',isave(34),'f =',f,'|proj g| =',dsave(13)
 
             ! If the run is to be terminated, we print also the information
             ! contained in task as well as the final value of x.
 
             if (task(1:4) == 'STOP') then
-               write (6,*) task
-               write (6,*) 'Final X='
-               write (6,'((1x,1p, 6(1x,d11.4)))') (x(i),i = 1,n)
+               write (output_unit,*) task
+               write (output_unit,*) 'Final X='
+               write (output_unit,'((1x,1p, 6(1x,d11.4)))') (x(i),i = 1,n)
             endif
 
           endif

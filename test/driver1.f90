@@ -190,6 +190,7 @@
       program driver1
 
       use lbfgsb_module, wp => lbfgsp_wp
+      use iso_fortran_env, only: output_unit
 
 !     This simple driver demonstrates how to call the L-BFGS-B code to
 !       solve a sample problem (the extended Rosenbrock function
@@ -249,9 +250,9 @@
          x(i) = 3.0_wp
       end do
 
-      write (6,16)
-  16  format(/,5x, 'Solving sample problem.', &
-             /,5x, ' (f = 0.0 at the optimal solution.)',/)
+      write (output_unit,'(/,5x, a, /,5x, a,/)') &
+            'Solving sample problem.', &
+            ' (f = 0.0 at the optimal solution.)'
 
       ! We start the iteration by initializing task.
 
@@ -265,7 +266,8 @@
 
          call setulb ( n, m, x, l, u, nbd, f, g, factr, pgtol, &
                        wa, iwa, task, iprint,&
-                       csave, lsave, isave, dsave )
+                       csave, lsave, isave, dsave, &
+                       iteration_file = 'driver1_output.txt' )
 
          if (task(1:2) == 'FG') then
 

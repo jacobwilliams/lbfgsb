@@ -46,6 +46,7 @@
       program driver2
 
       use lbfgsb_module, wp => lbfgsp_wp
+      use iso_fortran_env, only: output_unit
 
 !     This driver shows how to replace the default stopping test
 !     by other termination criteria. It also illustrates how to
@@ -72,7 +73,7 @@
       real(wp)               :: dsave(29)
       integer,  allocatable  :: nbd(:), iwa(:)
       real(wp), allocatable  :: x(:), l(:), u(:), g(:), wa(:)
-!
+
       real(wp) :: t1, t2
       integer  :: i
 
@@ -111,10 +112,9 @@
 
       ! We now write the heading of the output.
 
-      write (6,16)
-  16  format(/,5x, 'Solving sample problem.', &
-             /,5x, ' (f = 0.0 at the optimal solution.)',/)
-
+      write (output_unit,'(/,5x, a, /,5x, a,/)') &
+               'Solving sample problem.', &
+               ' (f = 0.0 at the optimal solution.)'
 
       ! We start the iteration by initializing task.
 
@@ -191,16 +191,16 @@
             ! See the comments at the end of driver1 for a description
             ! of the variables isave and dsave.
 
-            write (6,'(2(a,i5,4x),a,1p,d12.5,4x,a,1p,d12.5)') 'Iterate' &
+            write (output_unit,'(2(a,i5,4x),a,1p,d12.5,4x,a,1p,d12.5)') 'Iterate' &
                , isave(30),'nfg =',isave(34),'f =',f,'|proj g| =',dsave(13)
 
             ! If the run is to be terminated, we print also the information
             ! contained in task as well as the final value of x.
 
             if (task(1:4) == 'STOP') then
-               write (6,*) task
-               write (6,*) 'Final X='
-               write (6,'((1x,1p, 6(1x,d11.4)))') (x(i),i = 1,n)
+               write (output_unit,*) task
+               write (output_unit,*) 'Final X='
+               write (output_unit,'((1x,1p, 6(1x,d11.4)))') (x(i),i = 1,n)
             end if
 
         end if

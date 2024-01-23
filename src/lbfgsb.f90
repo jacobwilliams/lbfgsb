@@ -32,12 +32,16 @@
 !  * J.L Morales  Departamento de Matematicas,
 !    Instituto Tecnologico Autonomo de Mexico
 !    Mexico D.F. Mexico.
+!
+!@todo make a high-level wrapper so the user doesn't have to call the
+!      reverse communication routine directly.
 
     module lbfgsb_module
 
     use lbfgsb_kinds_module, only: wp => lbfgsb_wp
     use lbfgsb_linpack_module
     use lbfgsb_blas_module
+    use iso_fortran_env, only: output_unit
 
     implicit none
 
@@ -55,9 +59,6 @@
 
     contains
 !*******************************************************************************
-
-    !TODO make a high-level wrapper so the user doesn't have to call the
-    !     reverse communication routine directly.
 
 !*******************************************************************************
 !>
@@ -85,7 +86,7 @@
 !    R.H. Byrd, P. Lu-Chen and J. Nocedal.
 
       subroutine setulb(n,m,x,l,u,Nbd,f,g,Factr,Pgtol,Wa,Iwa,Task, &
-                        Iprint,Csave,Lsave,Isave,Dsave)
+                        Iprint,Csave,Lsave,Isave,Dsave,iteration_file)
       implicit none
 
       integer,intent(in) :: n !! the dimension of the problem (the number of variables).
@@ -239,6 +240,8 @@
                             !!    the starting point of the line search;
                             !!  * dsave(16) = the square of the 2-norm of the line search
                             !!    direction vector.
+      character(len=*),intent(in),optional :: iteration_file !! The name of the iteration file if used (`Iprint>=1`).
+                                                             !! If not specified, then 'iterate.dat' is used.
 
     integer :: lws , lr , lz , lt , ld , lxp , lwa , lwy , lsy , lss , &
                lwt , lwn , lsnd
@@ -278,7 +281,7 @@
       call mainlb(n,m,x,l,u,Nbd,f,g,Factr,Pgtol,Wa(lws),Wa(lwy),Wa(lsy),&
                   Wa(lss),Wa(lwt),Wa(lwn),Wa(lsnd),Wa(lz),Wa(lr),Wa(ld),&
                   Wa(lt),Wa(lxp),Wa(lwa),Iwa(1),Iwa(n+1),Iwa(2*n+1),    &
-                  Task,Iprint,Csave,Lsave,Isave(22),Dsave)
+                  Task,Iprint,Csave,Lsave,Isave(22),Dsave,iteration_file)
 
       end subroutine setulb
 !*******************************************************************************
@@ -308,7 +311,7 @@
 
       subroutine mainlb(n,m,x,l,u,Nbd,f,g,Factr,Pgtol,Ws,Wy,Sy,Ss,Wt,Wn, &
                         Snd,z,r,d,t,Xp,Wa,Index,Iwhere,Indx2,Task, &
-                        Iprint,Csave,Lsave,Isave,Dsave)
+                        Iprint,Csave,Lsave,Isave,Dsave,iteration_file)
 
       implicit none
 
@@ -407,6 +410,8 @@
                                !!  N = [Y' ZZ'Y   L_a'+R_z']
                                !!      [L_a +R_z  S'AA'S   ]
                                !!```
+      character(len=*),intent(in),optional :: iteration_file !! The name of the iteration file if used (`Iprint>=1`).
+                                                             !! If not specified, then 'iterate.dat' is used.
 
       logical :: prjctd , cnstnd , boxed , updatd , wrk
       character(len=3) :: word
@@ -475,8 +480,13 @@
          info = 0
 
          ! open a summary file 'iterate.dat'
-         if ( Iprint>=1 ) open (newunit=itfile,file='iterate.dat',status='unknown')
-
+         if ( Iprint>=1 ) then
+            if (present(iteration_file)) then
+               open (newunit=itfile,file=trim(iteration_file),status='unknown')
+            else ! use default name if not specified
+               open (newunit=itfile,file='iterate.dat',status='unknown')
+            end if
+         end if
          ! Check the input arguments for errors.
          call errclb(n,m,Factr,l,u,Nbd,Task,info,k)
          if ( Task(1:5)=='ERROR' ) then
@@ -572,7 +582,7 @@
          call projgr(n,l,u,Nbd,x,g,sbgnrm)
 
          if ( Iprint>=1 ) then
-            write (6,'(/,a,i5,4x,a,1p,d12.5,4x,a,1p,d12.5)') &
+            write (output_unit,'(/,a,i5,4x,a,1p,d12.5,4x,a,1p,d12.5)') &
                      'At iterate', iter , 'f= ', f , '|proj g|= ', sbgnrm
             write (itfile,'(2(1x,i4),5x,a,5x,a,3x,a,5x,a,5x,a,8x,a,3x,1p,2(1x,d10.3))') &
                      iter , nfgv , '-', '-', '-', '-', '-', '-', sbgnrm , f
@@ -590,7 +600,7 @@
 
          if (prelims) then
 
-            if ( Iprint>=99 ) write (6,'(//,A,i5)') 'ITERATION ', iter + 1
+            if ( Iprint>=99 ) write (output_unit,'(//,A,i5)') 'ITERATION ', iter + 1
 
             iword = -1
 
@@ -609,7 +619,7 @@
                            Iprint,sbgnrm,info,epsmch)
                if ( info/=0 ) then
                   ! singular triangular system detected; refresh the lbfgs memory.
-                  if ( Iprint>=1 ) write (6,'(/,A,/,A)') &
+                  if ( Iprint>=1 ) write (output_unit,'(/,A,/,A)') &
                      ' Singular triangular system detected;',&
                      '   refresh the lbfgs memory and restart the iteration.'
                   info = 0
@@ -656,7 +666,7 @@
                if ( info/=0 ) then
                   ! nonpositive definiteness in Cholesky factorization;
                   ! refresh the lbfgs memory and restart the iteration.
-                  if ( Iprint>=1 ) write (6,'(/,a,/,a)') &
+                  if ( Iprint>=1 ) write (output_unit,'(/,a,/,a)') &
                      ' Nonpositive definiteness in Cholesky factorization in formk;',&
                      '   refresh the lbfgs memory and restart the iteration.'
                   info = 0
@@ -684,7 +694,7 @@
                if ( info/=0 ) then
                   ! singular triangular system detected;
                   ! refresh the lbfgs memory and restart the iteration.
-                  if ( Iprint>=1 ) write (6,'(/,A,/,A)') &
+                  if ( Iprint>=1 ) write (output_unit,'(/,A,/,A)') &
                      ' Singular triangular system detected;',&
                      '   refresh the lbfgs memory and restart the iteration.'
                   info = 0
@@ -741,7 +751,7 @@
                   return
                else
                   ! refresh the lbfgs memory and restart the iteration.
-                  if ( Iprint>=1 ) write (6,'(/,a,/,a)') &
+                  if ( Iprint>=1 ) write (output_unit,'(/,a,/,a)') &
                                        ' Bad direction in the line search;',&
                                        '   refresh the lbfgs memory and restart the iteration.'
                   if ( info==0 ) nfgv = nfgv - 1
@@ -817,7 +827,7 @@
             ! skip the L-BFGS update.
             nskip = nskip + 1
             updatd = .false.
-            if ( Iprint>=1 ) write (6,'(a,1p,e10.3,a,1p,e10.3,a)') &
+            if ( Iprint>=1 ) write (output_unit,'(a,1p,e10.3,a,1p,e10.3,a)') &
                            '  ys=', dr,'  -gs=' , ddum, ' BFGS update SKIPPED'
             call continue_loop()
             cycle main_loop
@@ -841,7 +851,7 @@
          if ( info/=0 ) then
             ! nonpositive definiteness in Cholesky factorization;
             ! refresh the lbfgs memory and restart the iteration.
-            if ( Iprint>=1 ) write (6,'(/,a,/,a)') &
+            if ( Iprint>=1 ) write (output_unit,'(/,a,/,a)') &
                ' Nonpositive definiteness in Cholesky factorization in formt;',&
                '   refresh the lbfgs memory and restart the iteration.'
             info = 0
@@ -955,14 +965,20 @@
       subroutine active(n,l,u,Nbd,x,Iwhere,Iprint,Prjctd,Cnstnd,Boxed)
       implicit none
 
-      logical :: Prjctd , Cnstnd , Boxed
-      integer :: n , Iprint , Nbd(n)
+      integer,intent(in) :: n !! the dimension of the problem (the number of variables).
+      real(wp),intent(in) :: l(n) !! the lower bound on `x`.
+      real(wp),intent(in) :: u(n) !! the upper bound on `x`.
+      integer,intent(in) :: Nbd(n)
+      real(wp),intent(inout) :: x(n)
       integer,intent(out) :: Iwhere(n) !! * `iwhere(i)=-1` if `x(i)` has no bounds
                                        !! * `iwhere(i)=3`  if `l(i)=u(i)`
                                        !! * `iwhere(i)=0`  otherwise.
                                        !!
                                        !! In [[cauchy]], `iwhere` is given finer gradations.
-      real(wp) :: x(n) , l(n) , u(n)
+      integer,intent(in) :: Iprint !! Controls the frequency and type of output generated
+      logical,intent(out) :: Prjctd
+      logical,intent(out) :: Cnstnd
+      logical,intent(out) :: Boxed
 
       integer nbdd , i
 
@@ -1013,12 +1029,12 @@
       enddo
 
       if ( Iprint>=0 ) then
-         if ( Prjctd ) write (6,*) &
+         if ( Prjctd ) write (output_unit,*) &
             'The initial X is infeasible.  Restart with its projection.'
-         if ( .not.Cnstnd ) write (6,*) 'This problem is unconstrained.'
+         if ( .not.Cnstnd ) write (output_unit,*) 'This problem is unconstrained.'
       endif
 
-      if ( Iprint>0 ) write (6,'(/,a,i9,a)') &
+      if ( Iprint>0 ) write (output_unit,'(/,a,i9,a)') &
             'At X0 ', nbdd, ' variables are exactly at the bounds'
 
       end subroutine active
@@ -1227,7 +1243,7 @@
       ! the derivative f1 and the vector p = W'd (for theta = 1).
 
       if ( Sbgnrm<=zero ) then
-         if ( Iprint>=0 ) write (6,*) 'Subgnorm = 0.  GCP = X.'
+         if ( Iprint>=0 ) write (output_unit,*) 'Subgnorm = 0.  GCP = X.'
          call dcopy(n,x,1,Xcp,1)
          return
       endif
@@ -1238,7 +1254,7 @@
       bkmin = zero
       col2 = 2*Col
       f1 = zero
-      if ( Iprint>=99 ) write (6,'(/,a)') &
+      if ( Iprint>=99 ) write (output_unit,'(/,a)') &
             '---------------- CAUCHY entered-------------------'
 
       ! We set p to zero and build it up as we determine d.
@@ -1326,7 +1342,7 @@
 
       if ( nbreak==0 .and. nfree==n+1 ) then
          ! is a zero vector, return with the initial xcp as GCP.
-         if ( Iprint>100 ) write (6,'(A,/,(4x,1p,6(1x,d11.4)))') 'Cauchy X =  ', (Xcp(i),i=1,n)
+         if ( Iprint>100 ) write (output_unit,'(A,/,(4x,1p,6(1x,d11.4)))') 'Cauchy X =  ', (Xcp(i),i=1,n)
          return
       endif
 
@@ -1348,7 +1364,7 @@
       dtm = -f1/f2
       tsum = zero
       Nseg = 1
-      if ( Iprint>=99 ) write (6,*) 'There are ' , nbreak , '  breakpoints '
+      if ( Iprint>=99 ) write (output_unit,*) 'There are ' , nbreak , '  breakpoints '
 
       ! If there are no breakpoints, locate the GCP and return.
       if ( nbreak/=0 ) then
@@ -1390,9 +1406,9 @@
             dt = tj - tj0
 
             if ( dt/=zero .and. Iprint>=100 ) then
-               write (6,'(/,a,i3,a,1p,2(1x,d11.4))') 'Piece    ', Nseg, ' --f1, f2 at start point ', f1 , f2
-               write (6,'(a,1p,d11.4)') 'Distance to the next break point =  ', dt
-               write (6,'(A,1p,d11.4)') 'Distance to the stationary point =  ',dtm
+               write (output_unit,'(/,a,i3,a,1p,2(1x,d11.4))') 'Piece    ', Nseg, ' --f1, f2 at start point ', f1 , f2
+               write (output_unit,'(a,1p,d11.4)') 'Distance to the next break point =  ', dt
+               write (output_unit,'(A,1p,d11.4)') 'Distance to the stationary point =  ',dtm
             endif
 
             ! If a minimizer is within this interval, locate the GCP and return.
@@ -1416,7 +1432,7 @@
                Xcp(ibp) = l(ibp)
                Iwhere(ibp) = 1
             endif
-            if ( Iprint>=100 ) write (6,*) 'Variable  ' , ibp , '  is fixed.'
+            if ( Iprint>=100 ) write (output_unit,*) 'Variable  ' , ibp , '  is fixed.'
             if ( nleft==0 .and. nbreak==n ) then
                ! all n variables are fixed,
                ! return with xcp as GCP.
@@ -1484,11 +1500,11 @@
       end if
 
       if ( Iprint>=99 ) then
-         write (6,*)
-         write (6,*) 'GCP found in this segment'
-         write (6,'(a,i3,a,1p,2(1x,d11.4))') &
+         write (output_unit,*)
+         write (output_unit,*) 'GCP found in this segment'
+         write (output_unit,'(a,i3,a,1p,2(1x,d11.4))') &
                      'Piece    ', Nseg , ' --f1, f2 at start point ', f1 , f2
-         write (6,'(A,1p,d11.4)') 'Distance to the stationary point =  ',dtm
+         write (output_unit,'(A,1p,d11.4)') 'Distance to the stationary point =  ',dtm
       endif
       if ( dtm<=zero ) dtm = zero
       tsum = tsum + dtm
@@ -1508,8 +1524,8 @@
          ! which will be used in computing r = Z'(B(x^c - x) + g).
 
          if ( Col>0 ) call daxpy(col2,dtm,p,1,c,1)
-         if ( Iprint>100 ) write (6,'(A,/,(4x,1p,6(1x,d11.4)))') 'Cauchy X =  ', (Xcp(i),i=1,n)
-         if ( Iprint>=99 ) write (6,'(/,A,/)') '---------------- exit CAUCHY----------------------'
+         if ( Iprint>100 ) write (output_unit,'(A,/,(4x,1p,6(1x,d11.4)))') 'Cauchy X =  ', (Xcp(i),i=1,n)
+         if ( Iprint>=99 ) write (output_unit,'(/,A,/)') '---------------- exit CAUCHY----------------------'
 
       end subroutine update
 
@@ -1592,8 +1608,8 @@
       integer,intent(out) :: k
       integer,intent(in) :: Nbd(n)
       real(wp),intent(in) :: Factr
-      real(wp),intent(in) :: l(n)
-      real(wp),intent(in) :: u(n)
+      real(wp),intent(in) :: l(n) !! the lower bound on `x`.
+      real(wp),intent(in) :: u(n) !! the upper bound on `x`.
 
       integer :: i
 
@@ -1969,7 +1985,7 @@
       integer,intent(inout) :: Nfree
       integer,intent(out) :: Nenter
       integer,intent(out) :: Ileave
-      integer,intent(in) :: Iprint
+      integer,intent(in) :: Iprint !! Controls the frequency and type of output generated
       integer,intent(in) :: Iter
       integer,intent(inout) :: Index(n) !! * for i=1,...,nfree, index(i) are the indices of free variables
                                         !! * for i=nfree+1,...,n, index(i) are the indices of bound variables
@@ -1998,13 +2014,13 @@
          do i = 1 , Nfree
             k = Index(i)
 
-            ! write(6,*) ' k  = index(i) ', k
-            ! write(6,*) ' index = ', i
+            ! write(output_unit,*) ' k  = index(i) ', k
+            ! write(output_unit,*) ' index = ', i
 
             if ( Iwhere(k)>0 ) then
                Ileave = Ileave - 1
                Indx2(Ileave) = k
-               if ( Iprint>=100 ) write (6,*) 'Variable ' , k , &
+               if ( Iprint>=100 ) write (output_unit,*) 'Variable ' , k , &
                    &' leaves the set of free variables'
             endif
          enddo
@@ -2013,11 +2029,11 @@
             if ( Iwhere(k)<=0 ) then
                Nenter = Nenter + 1
                Indx2(Nenter) = k
-               if ( Iprint>=100 ) write (6,*) 'Variable ' , k , &
+               if ( Iprint>=100 ) write (output_unit,*) 'Variable ' , k , &
                    &' enters the set of free variables'
             endif
          enddo
-         if ( Iprint>=99 ) write (6,*) n + 1 - Ileave , &
+         if ( Iprint>=99 ) write (output_unit,*) n + 1 - Ileave , &
                                    &' variables leave; ' , Nenter , &
                                    &' variables enter'
       endif
@@ -2036,7 +2052,7 @@
             Index(iact) = i
          endif
       enddo
-      if ( Iprint>=99 ) write (6,*) Nfree , &
+      if ( Iprint>=99 ) write (output_unit,*) Nfree , &
                                     ' variables are free at GCP ' , &
                                     Iter + 1
 
@@ -2231,7 +2247,7 @@
          if ( Gd>=zero ) then
             ! the directional derivative >=0.
             ! Line search is impossible.
-            write (6,*) ' ascent direction in projection gd = ' , Gd
+            write (output_unit,*) ' ascent direction in projection gd = ' , Gd
             Info = -4
             return
          endif
@@ -2361,11 +2377,11 @@
       integer :: i
 
       if ( Iprint>=0 ) then
-         write (6,'(a,/,/,a,/,/,a,1p,d10.3)') &
+         write (output_unit,'(a,/,/,a,/,/,a,1p,d10.3)') &
                   'RUNNING THE L-BFGS-B CODE',&
                   '           * * *',&
                   'Machine precision =',Epsmch
-         write (6,*) 'N = ' , n , '    M = ' , m
+         write (output_unit,*) 'N = ' , n , '    M = ' , m
          if ( Iprint>=1 ) then
             write (Itfile,'(a,/,/,a,/,a,/,a,/,a,/,a,/,a,/,a,/,a,/,a,/,a,/,a,/,/,a,/,/,a,1p,d10.3)') &
                   'RUNNING THE L-BFGS-B CODE',                                      &
@@ -2386,9 +2402,9 @@
             write (Itfile,'(/,3x,a,3x,a,2x,a,2x,a,2x,a,2x,a,2x,a,4x,a,5x,a,8x,a)') &
                'it','nf','nseg','nact','sub','itls','stepl','tstep','projg','f'
             if ( Iprint>100 ) then
-               write (6,'(/,a4,1p,6(1x,d11.4),/,(4x,1p,6(1x,d11.4)))') 'L =' , (l(i),i=1,n)
-               write (6,'(/,a4,1p,6(1x,d11.4),/,(4x,1p,6(1x,d11.4)))') 'X0 =', (x(i),i=1,n)
-               write (6,'(/,a4,1p,6(1x,d11.4),/,(4x,1p,6(1x,d11.4)))') 'U =' , (u(i),i=1,n)
+               write (output_unit,'(/,a4,1p,6(1x,d11.4),/,(4x,1p,6(1x,d11.4)))') 'L =' , (l(i),i=1,n)
+               write (output_unit,'(/,a4,1p,6(1x,d11.4),/,(4x,1p,6(1x,d11.4)))') 'X0 =', (x(i),i=1,n)
+               write (output_unit,'(/,a4,1p,6(1x,d11.4),/,(4x,1p,6(1x,d11.4)))') 'U =' , (u(i),i=1,n)
             endif
          endif
       endif
@@ -2427,16 +2443,16 @@
       end select
 
       if ( Iprint>=99 ) then
-         write (6,*) 'LINE SEARCH' , Iback , ' times; norm of step = ' , Xstep
-         write (6,'(/,a,i5,4x,a,1p,d12.5,4x,a,1p,d12.5)') &
+         write (output_unit,*) 'LINE SEARCH' , Iback , ' times; norm of step = ' , Xstep
+         write (output_unit,'(/,a,i5,4x,a,1p,d12.5,4x,a,1p,d12.5)') &
             'At iterate', Iter , 'f= ', f , '|proj g|= ', Sbgnrm
          if ( Iprint>100 ) then
-            write (6,'(/,a4,1p,6(1x,d11.4),/,(4x,1p,6(1x,d11.4)))') 'X =' , (x(i),i=1,n)
-            write (6,'(/,a4,1p,6(1x,d11.4),/,(4x,1p,6(1x,d11.4)))') 'G =' , (g(i),i=1,n)
+            write (output_unit,'(/,a4,1p,6(1x,d11.4),/,(4x,1p,6(1x,d11.4)))') 'X =' , (x(i),i=1,n)
+            write (output_unit,'(/,a4,1p,6(1x,d11.4),/,(4x,1p,6(1x,d11.4)))') 'G =' , (g(i),i=1,n)
          endif
       else if ( Iprint>0 ) then
          imod = mod(Iter,Iprint)
-         if ( imod==0 ) write (6,'(/,a,i5,4x,a,1p,d12.5,4x,a,1p,d12.5)') &
+         if ( imod==0 ) write (output_unit,'(/,a,i5,4x,a,1p,d12.5,4x,a,1p,d12.5)') &
             'At iterate', Iter , 'f= ', f , '|proj g|= ', Sbgnrm
       endif
       if ( Iprint>=1 ) write (Itfile,'(2(1x,i4),2(1x,i5),2x,a3,1x,i4,1p,2(2x,d7.1),1p,2(1x,d10.3))') &
@@ -2476,7 +2492,7 @@
       if ( Task(1:5)/='ERROR' ) then
 
          if ( Iprint>=0 ) then
-            write (6,'(/,a,/,/,a,/,a,/,a,a,/,a,/,a,a,/,a,/,a,/,/,a)')    &
+            write (output_unit,'(/,a,/,/,a,/,a,/,a,a,/,a,/,a,a,/,a,/,a,/,/,a)')    &
                   '           * * *',                                    &
                   'Tit   = total number of iterations',                  &
                   'Tnf   = total number of function evaluations',        &
@@ -2488,48 +2504,48 @@
                   'Projg = norm of the final projected gradient',        &
                   'F     = final function value',                        &
                   '           * * *'
-            write (6,'(/,3x,a,4x,a,5x,a,2x,a,2x,a,2x,a,5x,a,8x,a)') &
+            write (output_unit,'(/,3x,a,4x,a,5x,a,2x,a,2x,a,2x,a,5x,a,8x,a)') &
                   'N','Tit','Tnf','Tnint','Skip','Nact','Projg','F'
-            write (6,'(i5,2(1x,i6),(1x,i6),(2x,i4),(1x,i5),1p,2(2x,d10.3))') &
+            write (output_unit,'(i5,2(1x,i6),(1x,i6),(2x,i4),(1x,i5),1p,2(2x,d10.3))') &
                   n , Iter , Nfgv , Nintol , Nskip , Nact , Sbgnrm , f
             if ( Iprint>=100 ) then
-               write (6,'(/,a4,1p,6(1x,d11.4),/,(4x,1p,6(1x,d11.4)))') &
+               write (output_unit,'(/,a4,1p,6(1x,d11.4),/,(4x,1p,6(1x,d11.4)))') &
                   'X =' , (x(i),i=1,n)
             endif
-            if ( Iprint>=1 ) write (6,*) ' F =' , f
+            if ( Iprint>=1 ) write (output_unit,*) ' F =' , f
          endif
 
       end if
 
       if ( Iprint>=0 ) then
-         write (6,'(/,a60)') Task
+         write (output_unit,'(/,a60)') Task
          select case (Info)
-            case ( -1 ); write (6,'(/,a)') ' Matrix in 1st Cholesky factorization in formk is not Pos. Def.'
-            case ( -2 ); write (6,'(/,a)') ' Matrix in 2st Cholesky factorization in formk is not Pos. Def.'
-            case ( -3 ); write (6,'(/,a)') ' Matrix in the Cholesky factorization in formt is not Pos. Def.'
-            case ( -4 ); write (6,'(/,a,/,a,/,a,/,a)') &
+            case ( -1 ); write (output_unit,'(/,a)') ' Matrix in 1st Cholesky factorization in formk is not Pos. Def.'
+            case ( -2 ); write (output_unit,'(/,a)') ' Matrix in 2st Cholesky factorization in formk is not Pos. Def.'
+            case ( -3 ); write (output_unit,'(/,a)') ' Matrix in the Cholesky factorization in formt is not Pos. Def.'
+            case ( -4 ); write (output_unit,'(/,a,/,a,/,a,/,a)') &
                                     ' Derivative >= 0, backtracking line search impossible.',&
                                     '   Previous x, f and g restored.',&
                                     ' Possible causes: 1 error in function or gradient evaluation;',&
                                     '                  2 rounding errors dominate computation.'
-            case ( -5 ); write (6,'(/,a,/,a,/,a)') &
+            case ( -5 ); write (output_unit,'(/,a,/,a,/,a)') &
                                     ' Warning:  more than 10 function and gradient', &
                                     '   evaluations in the last line search.  Termination', &
                                     '   may possibly be caused by a bad search direction.'
-            case ( -6 ); write (6,*) ' Input nbd(' , k , ') is invalid.'
-            case ( -7 ); write (6,*) ' l(' , k , ') > u(' , k , ').  No feasible solution.'
-            case ( -8 ); write (6,'(/,a)') ' The triangular system is singular.'
-            case ( -9 ); write (6,'(/,a,/,a,/,a,/,a)') &
+            case ( -6 ); write (output_unit,*) ' Input nbd(' , k , ') is invalid.'
+            case ( -7 ); write (output_unit,*) ' l(' , k , ') > u(' , k , ').  No feasible solution.'
+            case ( -8 ); write (output_unit,'(/,a)') ' The triangular system is singular.'
+            case ( -9 ); write (output_unit,'(/,a,/,a,/,a,/,a)') &
                                     ' Line search cannot locate an adequate point after 20 function',&
                                     '  and gradient evaluations.  Previous x, f and g restored.',&
                                     ' Possible causes: 1 error in function or gradient evaluation;',&
                                     '                  2 rounding error dominate computation.'
          end select
-         if ( Iprint>=1 ) write (6,'(/,a,1p,e10.3,a,/a,1p,e10.3,a,/a,1p,e10.3,a)') &
+         if ( Iprint>=1 ) write (output_unit,'(/,a,1p,e10.3,a,/a,1p,e10.3,a,/a,1p,e10.3,a)') &
                                     ' Cauchy                time',Cachyt,' seconds.', &
                                     ' Subspace minimization time',Sbtime,' seconds.', &
                                     ' Line search           time',Lnscht,' seconds.'
-         write (6,'(/,a,1p,e10.3,a,/)') ' Total User time', Time,' seconds.'
+         write (output_unit,'(/,a,1p,e10.3,a,/)') ' Total User time', Time,' seconds.'
          if ( Iprint>=1 ) then
             if ( Info==-4 .or. Info==-9 ) then
                write (Itfile,'(2(1x,i4),2(1x,i5),2x,a3,1x,i4,1p,2(2x,d7.1),6x,a,10x,a)') &
@@ -2540,7 +2556,7 @@
             case ( -1 ); write (Itfile,'(/,a)') ' Matrix in 1st Cholesky factorization in formk is not Pos. Def.'
             case ( -2 ); write (Itfile,'(/,a)') ' Matrix in 2st Cholesky factorization in formk is not Pos. Def.'
             case ( -3 ); write (Itfile,'(/,a)') ' Matrix in the Cholesky factorization in formt is not Pos. Def.'
-            case ( -4 ); write (6,'(/,a,/,a,/,a,/,a)') &
+            case ( -4 ); write (output_unit,'(/,a,/,a,/,a,/,a)') &
                                     ' Derivative >= 0, backtracking line search impossible.',&
                                     '   Previous x, f and g restored.',&
                                     ' Possible causes: 1 error in function or gradient evaluation;',&
@@ -2583,8 +2599,8 @@
       integer,intent(in) :: Nbd(n)
       real(wp),intent(out) :: Sbgnrm !! infinity norm of the projected gradient
       real(wp),intent(in) :: x(n)
-      real(wp),intent(in) :: l(n)
-      real(wp),intent(in) :: u(n)
+      real(wp),intent(in) :: l(n) !! the lower bound on `x`.
+      real(wp),intent(in) :: u(n) !! the upper bound on `x`.
       real(wp),intent(in) :: g(n)
 
       integer :: i
@@ -2719,7 +2735,7 @@
       real(wp) :: dd_p
 
       if ( Nsub<=0 ) return
-      if ( Iprint>=99 ) write (6,'(/,A,/)') '----------------SUBSM entered-----------------'
+      if ( Iprint>=99 ) write (output_unit,'(/,A,/)') '----------------SUBSM entered-----------------'
 
       ! Compute wv = W'Zd.
 
@@ -2812,8 +2828,8 @@
          if ( dd_p<=zero ) exit main
 
          call dcopy(n,Xp,1,x,1)
-         if ( Iprint>=0 ) write (6,'(A)') ' Positive dir derivative in projection '
-         if ( Iprint>=0 ) write (6,'(A)') ' Using the backtracking step '
+         if ( Iprint>=0 ) write (output_unit,'(A)') ' Positive dir derivative in projection '
+         if ( Iprint>=0 ) write (output_unit,'(A)') ' Using the backtracking step '
 
          !-----------------------------------------------------------------
 
@@ -2864,7 +2880,7 @@
 
       end block main
 
-      if ( Iprint>=99 ) write (6,'(/,A,/)') '----------------exit SUBSM --------------------'
+      if ( Iprint>=99 ) write (output_unit,'(/,A,/)') '----------------exit SUBSM --------------------'
 
       end subroutine subsm
 !*******************************************************************************

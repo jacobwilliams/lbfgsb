@@ -36,3 +36,4 @@ build
 # Misc
 .DS_Store
 /iterate.dat
+/driver*_output.txt
