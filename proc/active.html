@@ -71,7 +71,7 @@
             <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
               <a data-bs-toggle="tooltip"
                  data-bs-placement="bottom" data-html="true"
-                 title=" 2.4% of total for procedures.">47 statements</a>
+                 title=" 2.6% of total for procedures.">53 statements</a>
             </li>
 
             <li class="list-inline-item" id="source-file">
@@ -165,55 +165,55 @@
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-n~3"></span>
-              integer
+              <span class="anchor" id="variable-n~9"></span>
+              integer,
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>n</strong></td>
             <td>
-                
+                <p>the dimension of the problem (the number of variables).</p>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" id="variable-l~3"></span>
-              real(kind=wp)
+              real(kind=wp),
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>l</strong>(n)</td>
             <td>
-                
+                <p>the lower bound on <code>x</code>.</p>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" id="variable-u~3"></span>
-              real(kind=wp)
+              real(kind=wp),
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>u</strong>(n)</td>
             <td>
-                
+                <p>the upper bound on <code>x</code>.</p>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" id="variable-nbd~3"></span>
-              integer
+              integer,
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
@@ -226,9 +226,9 @@
         <tr>
             <td>
               <span class="anchor" id="variable-x~3"></span>
-              real(kind=wp)
+              real(kind=wp),
             </td>
-<td></td>
+<td>intent(inout)</td>
               <td></td>            <td>
               
             </td>
@@ -255,30 +255,30 @@
 <li><code>iwhere(i)=3</code>  if <code>l(i)=u(i)</code></li>
 <li><code>iwhere(i)=0</code>  otherwise.</li>
 </ul>
-<p>In <a href="cauchy.html">cauchy</a>, <code>iwhere</code> is given finer gradations.</p>
+<p>In <a href="../proc/cauchy.html">cauchy</a>, <code>iwhere</code> is given finer gradations.</p>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" id="variable-iprint~3"></span>
-              integer
+              integer,
             </td>
-<td></td>
+<td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
             <td><strong>Iprint</strong></td>
             <td>
-                
+                <p>Controls the frequency and type of output generated</p>
             </td>
         </tr>
         <tr>
             <td>
               <span class="anchor" id="variable-prjctd"></span>
-              logical
+              logical,
             </td>
-<td></td>
+<td>intent(out)</td>
               <td></td>            <td>
               
             </td>
@@ -291,9 +291,9 @@
         <tr>
             <td>
               <span class="anchor" id="variable-cnstnd"></span>
-              logical
+              logical,
             </td>
-<td></td>
+<td>intent(out)</td>
               <td></td>            <td>
               
             </td>
@@ -306,9 +306,9 @@
         <tr>
             <td>
               <span class="anchor" id="variable-boxed"></span>
-              logical
+              logical,
             </td>
-<td></td>
+<td>intent(out)</td>
               <td></td>            <td>
               
             </td>
@@ -472,14 +472,20 @@ implementation in a submodule of an interface in a parent module.
     <div class="hl codehilite"><pre><span></span><span class="w">      </span><span class="k">subroutine </span><span class="n">active</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">l</span><span class="p">,</span><span class="n">u</span><span class="p">,</span><span class="n">Nbd</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">Iwhere</span><span class="p">,</span><span class="n">Iprint</span><span class="p">,</span><span class="n">Prjctd</span><span class="p">,</span><span class="n">Cnstnd</span><span class="p">,</span><span class="n">Boxed</span><span class="p">)</span>
 <span class="w">      </span><span class="k">implicit none</span>
 
-<span class="k">      </span><span class="kt">logical</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Prjctd</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">Cnstnd</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">Boxed</span>
-<span class="w">      </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">Iprint</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">Nbd</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+<span class="k">      </span><span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="c">!! the dimension of the problem (the number of variables).</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">l</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="c">!! the lower bound on `x`.</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">u</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="c">!! the upper bound on `x`.</span>
+<span class="w">      </span><span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Nbd</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">x</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
 <span class="w">      </span><span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Iwhere</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="c">!! * `iwhere(i)=-1` if `x(i)` has no bounds</span>
 <span class="w">                                       </span><span class="c">!! * `iwhere(i)=3`  if `l(i)=u(i)`</span>
 <span class="w">                                       </span><span class="c">!! * `iwhere(i)=0`  otherwise.</span>
 <span class="w">                                       </span><span class="c">!!</span>
 <span class="w">                                       </span><span class="c">!! In [[cauchy]], `iwhere` is given finer gradations.</span>
-<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">x</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">l</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">u</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+<span class="w">      </span><span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Iprint</span><span class="w"> </span><span class="c">!! Controls the frequency and type of output generated</span>
+<span class="w">      </span><span class="kt">logical</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Prjctd</span>
+<span class="w">      </span><span class="kt">logical</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Cnstnd</span>
+<span class="w">      </span><span class="kt">logical</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Boxed</span>
 
 <span class="w">      </span><span class="kt">integer </span><span class="n">nbdd</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">i</span>
 
@@ -530,12 +536,12 @@ implementation in a submodule of an interface in a parent module.
 <span class="k">      enddo</span>
 
 <span class="k">      if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">Iprint</span><span class="o">&gt;=</span><span class="mi">0</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
-<span class="k">         if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">Prjctd</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="k">         if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">Prjctd</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="n">output_unit</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="p">&amp;</span>
 <span class="w">            </span><span class="s1">&#39;The initial X is infeasible.  Restart with its projection.&#39;</span>
-<span class="w">         </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="p">.</span><span class="nb">not</span><span class="p">.</span><span class="n">Cnstnd</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="s1">&#39;This problem is unconstrained.&#39;</span>
+<span class="w">         </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="p">.</span><span class="nb">not</span><span class="p">.</span><span class="n">Cnstnd</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="n">output_unit</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="s1">&#39;This problem is unconstrained.&#39;</span>
 <span class="w">      </span><span class="k">endif</span>
 
-<span class="k">      if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">Iprint</span><span class="o">&gt;</span><span class="mi">0</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="s1">&#39;(/,a,i9,a)&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="k">      if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">Iprint</span><span class="o">&gt;</span><span class="mi">0</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="n">output_unit</span><span class="p">,</span><span class="s1">&#39;(/,a,i9,a)&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">&amp;</span>
 <span class="w">            </span><span class="s1">&#39;At X0 &#39;</span><span class="p">,</span><span class="w"> </span><span class="n">nbdd</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39; variables are exactly at the bounds&#39;</span>
 
 <span class="w">      </span><span class="k">end subroutine </span><span class="n">active</span>

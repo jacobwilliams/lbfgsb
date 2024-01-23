@@ -71,7 +71,7 @@
             <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
               <a data-bs-toggle="tooltip"
                  data-bs-placement="bottom" data-html="true"
-                 title=" 2.7% of total for procedures.">54 statements</a>
+                 title=" 2.8% of total for procedures.">55 statements</a>
             </li>
 
             <li class="list-inline-item" id="source-file">
@@ -136,14 +136,14 @@
     </div>
     
     <div class="col-md-9" id='text'>
-    <h2>public  subroutine setulb(n, m, x, l, u, Nbd, f, g, Factr, Pgtol, Wa, Iwa, Task, Iprint, Csave, Lsave, Isave, Dsave)  
+    <h2>public  subroutine setulb(n, m, x, l, u, Nbd, f, g, Factr, Pgtol, Wa, Iwa, Task, Iprint, Csave, Lsave, Isave, Dsave, iteration_file)  
 </h2>
     
 
     <p>The main routine.</p>
 <p>This subroutine partitions the working arrays <code>wa</code> and <code>iwa</code>, and
   then uses the limited memory BFGS method to solve the bound
-  constrained optimization problem by calling <a href="mainlb.html">mainlb</a>.
+  constrained optimization problem by calling <a href="../proc/mainlb.html">mainlb</a>.
   (The direct method will be used in the subspace minimization.)</p>
 <h3>References</h3>
 <ol>
@@ -178,7 +178,7 @@
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-n"></span>
+              <span class="anchor" id="variable-n~7"></span>
               integer,
             </td>
 <td>intent(in)</td>
@@ -193,7 +193,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-m"></span>
+              <span class="anchor" id="variable-m~5"></span>
               integer,
             </td>
 <td>intent(in)</td>
@@ -299,7 +299,7 @@ variables, and must be specified as follows:</p>
             <td>
                 <p>On first entry <code>f</code> is unspecified.
 On final exit <code>f</code> is the value of the function at x.
-If the <a href="setulb.html">setulb</a> returns
+If the <a href="../proc/setulb.html">setulb</a> returns
 with <code>task(1:2)= 'FG'</code>, then <code>f</code> must be set by the user to
 contain the value of the function at the point <code>x</code>.</p>
             </td>
@@ -318,7 +318,7 @@ contain the value of the function at the point <code>x</code>.</p>
             <td>
                 <p>On first entry <code>g</code> is unspecified.
 On final exit <code>g</code> is the value of the gradient at <code>x</code>.
-If the <a href="setulb.html">setulb</a>
+If the <a href="../proc/setulb.html">setulb</a>
 returns with <code>task(1:2)= 'FG'</code>, then <code>g</code> must be set by the user to
 contain the components of the gradient at the point <code>x</code>.</p>
             </td>
@@ -576,6 +576,22 @@ On exit with 'task' = NEW_X, the following information is available:</p>
 <li>dsave(16) = the square of the 2-norm of the line search
    direction vector.</li>
 </ul>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-iteration_file"></span>
+              character(len=*),
+            </td>
+<td>intent(in),</td>
+              <td>optional</td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>iteration_file</strong></td>
+            <td>
+                <p>The name of the iteration file if used (<code>Iprint&gt;=1</code>).
+If not specified, then 'iterate.dat' is used.</p>
             </td>
         </tr>
     </tbody>
@@ -1187,7 +1203,7 @@ implementation in a submodule of an interface in a parent module.
     <section>
     <h2><span class="anchor" id="src"></span>Source Code</h2>
     <div class="hl codehilite"><pre><span></span><span class="w">      </span><span class="k">subroutine </span><span class="n">setulb</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">l</span><span class="p">,</span><span class="n">u</span><span class="p">,</span><span class="n">Nbd</span><span class="p">,</span><span class="n">f</span><span class="p">,</span><span class="n">g</span><span class="p">,</span><span class="n">Factr</span><span class="p">,</span><span class="n">Pgtol</span><span class="p">,</span><span class="n">Wa</span><span class="p">,</span><span class="n">Iwa</span><span class="p">,</span><span class="n">Task</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
-<span class="w">                        </span><span class="n">Iprint</span><span class="p">,</span><span class="n">Csave</span><span class="p">,</span><span class="n">Lsave</span><span class="p">,</span><span class="n">Isave</span><span class="p">,</span><span class="n">Dsave</span><span class="p">)</span>
+<span class="w">                        </span><span class="n">Iprint</span><span class="p">,</span><span class="n">Csave</span><span class="p">,</span><span class="n">Lsave</span><span class="p">,</span><span class="n">Isave</span><span class="p">,</span><span class="n">Dsave</span><span class="p">,</span><span class="n">iteration_file</span><span class="p">)</span>
 <span class="w">      </span><span class="k">implicit none</span>
 
 <span class="k">      </span><span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="c">!! the dimension of the problem (the number of variables).</span>
@@ -1341,6 +1357,8 @@ implementation in a submodule of an interface in a parent module.
 <span class="w">                            </span><span class="c">!!    the starting point of the line search;</span>
 <span class="w">                            </span><span class="c">!!  * dsave(16) = the square of the 2-norm of the line search</span>
 <span class="w">                            </span><span class="c">!!    direction vector.</span>
+<span class="w">      </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">),</span><span class="k">optional</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">iteration_file</span><span class="w"> </span><span class="c">!! The name of the iteration file if used (`Iprint&gt;=1`).</span>
+<span class="w">                                                             </span><span class="c">!! If not specified, then &#39;iterate.dat&#39; is used.</span>
 
 <span class="w">    </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">lws</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">lr</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">lz</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">lt</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">ld</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">lxp</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">lwa</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">lwy</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">lsy</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">lss</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
 <span class="w">               </span><span class="n">lwt</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">lwn</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">lsnd</span>
@@ -1380,7 +1398,7 @@ implementation in a submodule of an interface in a parent module.
 <span class="w">      </span><span class="k">call </span><span class="n">mainlb</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">l</span><span class="p">,</span><span class="n">u</span><span class="p">,</span><span class="n">Nbd</span><span class="p">,</span><span class="n">f</span><span class="p">,</span><span class="n">g</span><span class="p">,</span><span class="n">Factr</span><span class="p">,</span><span class="n">Pgtol</span><span class="p">,</span><span class="n">Wa</span><span class="p">(</span><span class="n">lws</span><span class="p">),</span><span class="n">Wa</span><span class="p">(</span><span class="n">lwy</span><span class="p">),</span><span class="n">Wa</span><span class="p">(</span><span class="n">lsy</span><span class="p">),&amp;</span>
 <span class="w">                  </span><span class="n">Wa</span><span class="p">(</span><span class="n">lss</span><span class="p">),</span><span class="n">Wa</span><span class="p">(</span><span class="n">lwt</span><span class="p">),</span><span class="n">Wa</span><span class="p">(</span><span class="n">lwn</span><span class="p">),</span><span class="n">Wa</span><span class="p">(</span><span class="n">lsnd</span><span class="p">),</span><span class="n">Wa</span><span class="p">(</span><span class="n">lz</span><span class="p">),</span><span class="n">Wa</span><span class="p">(</span><span class="n">lr</span><span class="p">),</span><span class="n">Wa</span><span class="p">(</span><span class="n">ld</span><span class="p">),&amp;</span>
 <span class="w">                  </span><span class="n">Wa</span><span class="p">(</span><span class="n">lt</span><span class="p">),</span><span class="n">Wa</span><span class="p">(</span><span class="n">lxp</span><span class="p">),</span><span class="n">Wa</span><span class="p">(</span><span class="n">lwa</span><span class="p">),</span><span class="n">Iwa</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span><span class="n">Iwa</span><span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span><span class="n">Iwa</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span><span class="w">    </span><span class="p">&amp;</span>
-<span class="w">                  </span><span class="n">Task</span><span class="p">,</span><span class="n">Iprint</span><span class="p">,</span><span class="n">Csave</span><span class="p">,</span><span class="n">Lsave</span><span class="p">,</span><span class="n">Isave</span><span class="p">(</span><span class="mi">22</span><span class="p">),</span><span class="n">Dsave</span><span class="p">)</span>
+<span class="w">                  </span><span class="n">Task</span><span class="p">,</span><span class="n">Iprint</span><span class="p">,</span><span class="n">Csave</span><span class="p">,</span><span class="n">Lsave</span><span class="p">,</span><span class="n">Isave</span><span class="p">(</span><span class="mi">22</span><span class="p">),</span><span class="n">Dsave</span><span class="p">,</span><span class="n">iteration_file</span><span class="p">)</span>
 
 <span class="w">      </span><span class="k">end subroutine </span><span class="n">setulb</span>
 </pre></div>

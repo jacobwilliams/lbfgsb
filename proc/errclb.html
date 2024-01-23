@@ -164,7 +164,7 @@
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-n~6"></span>
+              <span class="anchor" id="variable-n~12"></span>
               integer,
             </td>
 <td>intent(in)</td>
@@ -179,7 +179,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-m~6"></span>
+              <span class="anchor" id="variable-m~10"></span>
               integer,
             </td>
 <td>intent(in)</td>
@@ -219,7 +219,7 @@
             <td>::</td>
             <td><strong>l</strong>(n)</td>
             <td>
-                
+                <p>the lower bound on <code>x</code>.</p>
             </td>
         </tr>
         <tr>
@@ -234,7 +234,7 @@
             <td>::</td>
             <td><strong>u</strong>(n)</td>
             <td>
-                
+                <p>the upper bound on <code>x</code>.</p>
             </td>
         </tr>
         <tr>
@@ -284,7 +284,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-k~4"></span>
+              <span class="anchor" id="variable-k~5"></span>
               integer,
             </td>
 <td>intent(out)</td>
@@ -458,8 +458,8 @@ implementation in a submodule of an interface in a parent module.
 <span class="w">      </span><span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">k</span>
 <span class="w">      </span><span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Nbd</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
 <span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Factr</span>
-<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">l</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
-<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">u</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">l</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="c">!! the lower bound on `x`.</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">u</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="c">!! the upper bound on `x`.</span>
 
 <span class="w">      </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">i</span>
 
