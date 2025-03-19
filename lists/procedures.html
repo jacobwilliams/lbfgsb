@@ -1,0 +1,884 @@
+<!-- -*- mode: jinja2 -*- -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="description" content="lbfgsb optimization library">
+    <meta name="author" content="Jacob Williams" >
+    <link rel="icon" href="../favicon.png">
+
+    <title>All Procedures &ndash; lbfgsb
+</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link href="../css/pygments.css" rel="stylesheet">
+    <link href="../css/font-awesome.min.css" rel="stylesheet">
+    <link href="../css/local.css" rel="stylesheet">
+      <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="../js/svg-pan-zoom.min.js"></script>
+  </head>
+
+  <body>
+
+    <!-- Fixed navbar -->
+    <div class="container-fluid mb-sm-4 mb-xl-2">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+          <a class="navbar-brand" href="../index.html">lbfgsb </a>
+          <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar"
+                  aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon">
+          </button>
+
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a class="nav-link" href="../lists/files.html">Source Files</a>
+                  </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/modules.html">Modules</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/procedures.html">Procedures</a>
+                </li>
+            </ul>
+              <div class="d-flex align-items-end flex-grow-1">
+                <form action="../search.html" role="search" class="ms-auto">
+                  <input type="text" class="form-control" aria-label="Search" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+                </form>
+              </div>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>
+    </div>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12" id='text'>
+			 <h1>Procedures</h1>
+			 <table class="table table-striped">
+			 <thead><tr><th>Procedure</th><th>Location</th><th>Procedure Type</th><th>Description</th></tr></thead>
+			 <tbody>
+			   <tr>
+                 <td><a href='../proc/active.html'>active</a></td>
+                 <td><a href='../module/lbfgsb_module.html'>lbfgsb_module</a></td>
+                 <td>Subroutine</td>
+                 <td><p>This subroutine initializes <code>iwhere</code> and projects the initial <code>x</code> to
+  the feasible set if necessary.</p><a href="../proc/active.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/bmv.html'>bmv</a></td>
+                 <td><a href='../module/lbfgsb_module.html'>lbfgsb_module</a></td>
+                 <td>Subroutine</td>
+                 <td><p>This subroutine computes the product of the 2m x 2m middle matrix
+  in the compact L-BFGS formula of B and a 2m vector <code>v</code>;
+  it returns the product in <code>p</code>.</p><a href="../proc/bmv.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/cauchy.html'>cauchy</a></td>
+                 <td><a href='../module/lbfgsb_module.html'>lbfgsb_module</a></td>
+                 <td>Subroutine</td>
+                 <td><p>For given <code>x</code>, <code>l</code>, <code>u</code>, <code>g</code> (with <code>sbgnrm &gt; 0</code>), and a limited memory
+  BFGS matrix B defined in terms of matrices WY, WS, WT, and
+  scalars head, col, and theta, this subroutine computes the
+  generalized Cauchy point (GCP), defined as the first local
+  minimizer of the quadratic</p><a href="../proc/cauchy.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/cmprlb.html'>cmprlb</a></td>
+                 <td><a href='../module/lbfgsb_module.html'>lbfgsb_module</a></td>
+                 <td>Subroutine</td>
+                 <td><p>This subroutine computes <code>r=-Z'B(xcp-xk)-Z'g</code> by using
+  <code>wa(2m+1)=W'(xcp-x)</code> from subroutine <a href="../proc/cauchy.html">cauchy</a>.</p><a href="../proc/cmprlb.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/daxpy.html'>daxpy</a></td>
+                 <td><a href='../module/lbfgsb_blas_module.html'>lbfgsb_blas_module</a></td>
+                 <td>Subroutine</td>
+                 <td><p>constant times a vector plus a vector.
+  uses unrolled loops for increments equal to one.</p><a href="../proc/daxpy.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/dcopy.html'>dcopy</a></td>
+                 <td><a href='../module/lbfgsb_blas_module.html'>lbfgsb_blas_module</a></td>
+                 <td>Subroutine</td>
+                 <td><p>copies a vector, x, to a vector, y.
+  uses unrolled loops for increments equal to one.</p><a href="../proc/dcopy.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/dcsrch.html'>dcsrch</a></td>
+                 <td><a href='../module/lbfgsb_module.html'>lbfgsb_module</a></td>
+                 <td>Subroutine</td>
+                 <td><p>This subroutine finds a step that satisfies a sufficient
+  decrease condition and a curvature condition.</p><a href="../proc/dcsrch.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/dcstep.html'>dcstep</a></td>
+                 <td><a href='../module/lbfgsb_module.html'>lbfgsb_module</a></td>
+                 <td>Subroutine</td>
+                 <td><p>This subroutine computes a safeguarded step for a search
+  procedure and updates an interval that contains a step that
+  satisfies a sufficient decrease and a curvature condition.</p><a href="../proc/dcstep.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/ddot.html'>ddot</a></td>
+                 <td><a href='../module/lbfgsb_blas_module.html'>lbfgsb_blas_module</a></td>
+                 <td>Function</td>
+                 <td><p>forms the dot product of two vectors.
+  uses unrolled loops for increments equal to one.</p><a href="../proc/ddot.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/dpofa.html'>dpofa</a></td>
+                 <td><a href='../module/lbfgsb_linpack_module.html'>lbfgsb_linpack_module</a></td>
+                 <td>Subroutine</td>
+                 <td><p>dpofa factors a real symmetric positive definite matrix.</p><a href="../proc/dpofa.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/dscal.html'>dscal</a></td>
+                 <td><a href='../module/lbfgsb_blas_module.html'>lbfgsb_blas_module</a></td>
+                 <td>Subroutine</td>
+                 <td><p>scales a vector by a constant.
+  uses unrolled loops for increment equal to one.</p><a href="../proc/dscal.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/dtrsl.html'>dtrsl</a></td>
+                 <td><a href='../module/lbfgsb_linpack_module.html'>lbfgsb_linpack_module</a></td>
+                 <td>Subroutine</td>
+                 <td><p>dtrsl solves systems of the form</p><a href="../proc/dtrsl.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/errclb.html'>errclb</a></td>
+                 <td><a href='../module/lbfgsb_module.html'>lbfgsb_module</a></td>
+                 <td>Subroutine</td>
+                 <td><p>This subroutine checks the validity of the input data.</p><a href="../proc/errclb.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/formk.html'>formk</a></td>
+                 <td><a href='../module/lbfgsb_module.html'>lbfgsb_module</a></td>
+                 <td>Subroutine</td>
+                 <td><p>This subroutine forms the <code>LEL^T</code> factorization of the indefinite matrix:</p><a href="../proc/formk.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/formt.html'>formt</a></td>
+                 <td><a href='../module/lbfgsb_module.html'>lbfgsb_module</a></td>
+                 <td>Subroutine</td>
+                 <td><p>This subroutine forms the upper half of the pos. def. and symm.
+  T = theta<em>SS + L</em>D^(-1)<em>L', stores T in the upper triangle
+  of the array wt, and performs the Cholesky factorization of T
+  to produce J</em>J', with J' stored in the upper triangle of wt.</p><a href="../proc/formt.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/freev.html'>freev</a></td>
+                 <td><a href='../module/lbfgsb_module.html'>lbfgsb_module</a></td>
+                 <td>Subroutine</td>
+                 <td><p>This subroutine counts the entering and leaving variables when
+  iter &gt; 0, and finds the index set of free and active variables
+  at the GCP.</p><a href="../proc/freev.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/hpsolb.html'>hpsolb</a></td>
+                 <td><a href='../module/lbfgsb_module.html'>lbfgsb_module</a></td>
+                 <td>Subroutine</td>
+                 <td><p>This subroutine sorts out the least element of t, and puts the
+  remaining elements of t in a heap.</p><a href="../proc/hpsolb.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/lnsrlb.html'>lnsrlb</a></td>
+                 <td><a href='../module/lbfgsb_module.html'>lbfgsb_module</a></td>
+                 <td>Subroutine</td>
+                 <td><p>This subroutine calls subroutine dcsrch from the Minpack2 library
+  to perform the line search.  Subroutine dscrch is safeguarded so
+  that all trial points lie within the feasible region.</p><a href="../proc/lnsrlb.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/mainlb.html'>mainlb</a></td>
+                 <td><a href='../module/lbfgsb_module.html'>lbfgsb_module</a></td>
+                 <td>Subroutine</td>
+                 <td><p>This subroutine solves bound constrained optimization problems by
+  using the compact formula of the limited memory BFGS updates.</p><a href="../proc/mainlb.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/matupd.html'>matupd</a></td>
+                 <td><a href='../module/lbfgsb_module.html'>lbfgsb_module</a></td>
+                 <td>Subroutine</td>
+                 <td><p>This subroutine updates matrices WS and WY, and forms the
+  middle matrix in B.</p><a href="../proc/matupd.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/prn1lb.html'>prn1lb</a></td>
+                 <td><a href='../module/lbfgsb_module.html'>lbfgsb_module</a></td>
+                 <td>Subroutine</td>
+                 <td><p>This subroutine prints the input data, initial point, upper and
+  lower bounds of each variable, machine precision, as well as
+  the headings of the output.</p><a href="../proc/prn1lb.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/prn2lb.html'>prn2lb</a></td>
+                 <td><a href='../module/lbfgsb_module.html'>lbfgsb_module</a></td>
+                 <td>Subroutine</td>
+                 <td><p>This subroutine prints out new information after a successful
+  line search.</p><a href="../proc/prn2lb.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/prn3lb.html'>prn3lb</a></td>
+                 <td><a href='../module/lbfgsb_module.html'>lbfgsb_module</a></td>
+                 <td>Subroutine</td>
+                 <td><p>This subroutine prints out information when either a built-in
+  convergence test is satisfied or when an error message is
+  generated.</p><a href="../proc/prn3lb.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/projgr.html'>projgr</a></td>
+                 <td><a href='../module/lbfgsb_module.html'>lbfgsb_module</a></td>
+                 <td>Subroutine</td>
+                 <td><p>This subroutine computes the infinity norm of the projected gradient.</p><a href="../proc/projgr.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/setulb.html'>setulb</a></td>
+                 <td><a href='../module/lbfgsb_module.html'>lbfgsb_module</a></td>
+                 <td>Subroutine</td>
+                 <td><p>The main routine.</p><a href="../proc/setulb.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/subsm.html'>subsm</a></td>
+                 <td><a href='../module/lbfgsb_module.html'>lbfgsb_module</a></td>
+                 <td>Subroutine</td>
+                 <td><p>This routine contains the major changes in the updated version.
+  The changes are described in the accompanying paper</p><a href="../proc/subsm.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+			 </tbody></table>
+             <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.43.0 (0)
+ -->
+<!-- Title: call~~graph~~CallGraph Pages: 1 -->
+<svg id="callgraphCallGraph" width="512pt" height="714pt"
+ viewBox="0.00 0.00 512.00 714.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="call~~graph~~CallGraph" class="graph" transform="scale(1 1) rotate(0) translate(4 710)">
+<title>call~~graph~~CallGraph</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-710 508,-710 508,4 -4,4"/>
+<!-- proc~active -->
+<g id="call~~graph~~CallGraph_node1" class="node">
+<title>proc~active</title>
+<g id="a_call~~graph~~CallGraph_node1"><a xlink:href="../proc/active.html" xlink:title="active">
+<polygon fill="#d9534f" stroke="#d9534f" points="234,-684 180,-684 180,-660 234,-660 234,-684"/>
+<text text-anchor="middle" x="207" y="-669.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">active</text>
+</a>
+</g>
+</g>
+<!-- proc~bmv -->
+<g id="call~~graph~~CallGraph_node2" class="node">
+<title>proc~bmv</title>
+<g id="a_call~~graph~~CallGraph_node2"><a xlink:href="../proc/bmv.html" xlink:title="bmv">
+<polygon fill="#d9534f" stroke="#d9534f" points="324,-706 270,-706 270,-682 324,-682 324,-706"/>
+<text text-anchor="middle" x="297" y="-691.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">bmv</text>
+</a>
+</g>
+</g>
+<!-- proc~dtrsl -->
+<g id="call~~graph~~CallGraph_node12" class="node">
+<title>proc~dtrsl</title>
+<g id="a_call~~graph~~CallGraph_node12"><a xlink:href="../proc/dtrsl.html" xlink:title="dtrsl">
+<polygon fill="#d9534f" stroke="#d9534f" points="414,-506 360,-506 360,-482 414,-482 414,-506"/>
+<text text-anchor="middle" x="387" y="-491.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">dtrsl</text>
+</a>
+</g>
+</g>
+<!-- proc~bmv&#45;&gt;proc~dtrsl -->
+<g id="call~~graph~~CallGraph_edge1" class="edge">
+<title>proc~bmv&#45;&gt;proc~dtrsl</title>
+<path fill="none" stroke="#000000" d="M303.38,-681.8C308.64,-669.87 316.87,-651.19 324,-635 342.63,-592.68 364.38,-543.2 376.53,-515.54"/>
+<polygon fill="#000000" stroke="#000000" points="379.88,-516.64 380.7,-506.07 373.47,-513.82 379.88,-516.64"/>
+</g>
+<!-- proc~cauchy -->
+<g id="call~~graph~~CallGraph_node3" class="node">
+<title>proc~cauchy</title>
+<g id="a_call~~graph~~CallGraph_node3"><a xlink:href="../proc/cauchy.html" xlink:title="cauchy">
+<polygon fill="#d9534f" stroke="#d9534f" points="234,-600 180,-600 180,-576 234,-576 234,-600"/>
+<text text-anchor="middle" x="207" y="-585.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">cauchy</text>
+</a>
+</g>
+</g>
+<!-- proc~cauchy&#45;&gt;proc~bmv -->
+<g id="call~~graph~~CallGraph_edge2" class="edge">
+<title>proc~cauchy&#45;&gt;proc~bmv</title>
+<path fill="none" stroke="#000000" d="M224.72,-600.08C227.99,-602.82 231.25,-605.86 234,-609 254.25,-632.1 251.01,-643.86 270,-668 271.66,-670.11 273.47,-672.22 275.35,-674.29"/>
+<polygon fill="#000000" stroke="#000000" points="273.2,-677.11 282.67,-681.87 278.24,-672.25 273.2,-677.11"/>
+</g>
+<!-- proc~daxpy -->
+<g id="call~~graph~~CallGraph_node5" class="node">
+<title>proc~daxpy</title>
+<g id="a_call~~graph~~CallGraph_node5"><a xlink:href="../proc/daxpy.html" xlink:title="daxpy">
+<polygon fill="#d9534f" stroke="#d9534f" points="504,-586 450,-586 450,-562 504,-562 504,-586"/>
+<text text-anchor="middle" x="477" y="-571.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">daxpy</text>
+</a>
+</g>
+</g>
+<!-- proc~cauchy&#45;&gt;proc~daxpy -->
+<g id="call~~graph~~CallGraph_edge3" class="edge">
+<title>proc~cauchy&#45;&gt;proc~daxpy</title>
+<path fill="none" stroke="#000000" d="M223.04,-600.2C239.6,-613.52 264.62,-633.19 270,-635 292.75,-642.65 300.44,-639.55 324,-635 367.58,-626.58 414.53,-605.75 444.54,-590.77"/>
+<polygon fill="#000000" stroke="#000000" points="446.33,-593.79 453.66,-586.14 443.16,-587.55 446.33,-593.79"/>
+</g>
+<!-- proc~dcopy -->
+<g id="call~~graph~~CallGraph_node6" class="node">
+<title>proc~dcopy</title>
+<g id="a_call~~graph~~CallGraph_node6"><a xlink:href="../proc/dcopy.html" xlink:title="dcopy">
+<polygon fill="#d9534f" stroke="#d9534f" points="324,-466 270,-466 270,-442 324,-442 324,-466"/>
+<text text-anchor="middle" x="297" y="-451.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">dcopy</text>
+</a>
+</g>
+</g>
+<!-- proc~cauchy&#45;&gt;proc~dcopy -->
+<g id="call~~graph~~CallGraph_edge4" class="edge">
+<title>proc~cauchy&#45;&gt;proc~dcopy</title>
+<path fill="none" stroke="#000000" d="M216.12,-575.63C231.18,-552.7 263.6,-503.34 282.17,-475.05"/>
+<polygon fill="#000000" stroke="#000000" points="285.33,-476.62 287.9,-466.34 279.48,-472.77 285.33,-476.62"/>
+</g>
+<!-- proc~ddot -->
+<g id="call~~graph~~CallGraph_node9" class="node">
+<title>proc~ddot</title>
+<g id="a_call~~graph~~CallGraph_node9"><a xlink:href="../proc/ddot.html" xlink:title="ddot">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="504,-350 450,-350 450,-326 504,-326 504,-350"/>
+<text text-anchor="middle" x="477" y="-335.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ddot</text>
+</a>
+</g>
+</g>
+<!-- proc~cauchy&#45;&gt;proc~ddot -->
+<g id="call~~graph~~CallGraph_edge5" class="edge">
+<title>proc~cauchy&#45;&gt;proc~ddot</title>
+<path fill="none" stroke="#000000" d="M234.35,-586.32C278.16,-582.07 365.91,-567.17 414,-515 455,-470.52 469.14,-397.38 473.82,-360.61"/>
+<polygon fill="#000000" stroke="#000000" points="477.32,-360.77 474.98,-350.43 470.37,-359.97 477.32,-360.77"/>
+</g>
+<!-- proc~dscal -->
+<g id="call~~graph~~CallGraph_node11" class="node">
+<title>proc~dscal</title>
+<g id="a_call~~graph~~CallGraph_node11"><a xlink:href="../proc/dscal.html" xlink:title="dscal">
+<polygon fill="#d9534f" stroke="#d9534f" points="324,-546 270,-546 270,-522 324,-522 324,-546"/>
+<text text-anchor="middle" x="297" y="-531.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">dscal</text>
+</a>
+</g>
+</g>
+<!-- proc~cauchy&#45;&gt;proc~dscal -->
+<g id="call~~graph~~CallGraph_edge6" class="edge">
+<title>proc~cauchy&#45;&gt;proc~dscal</title>
+<path fill="none" stroke="#000000" d="M227.97,-575.75C239.75,-568.52 254.85,-559.25 267.83,-551.28"/>
+<polygon fill="#000000" stroke="#000000" points="269.72,-554.23 276.41,-546.02 266.06,-548.27 269.72,-554.23"/>
+</g>
+<!-- proc~hpsolb -->
+<g id="call~~graph~~CallGraph_node17" class="node">
+<title>proc~hpsolb</title>
+<g id="a_call~~graph~~CallGraph_node17"><a xlink:href="../proc/hpsolb.html" xlink:title="hpsolb">
+<polygon fill="#d9534f" stroke="#d9534f" points="324,-626 270,-626 270,-602 324,-602 324,-626"/>
+<text text-anchor="middle" x="297" y="-611.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">hpsolb</text>
+</a>
+</g>
+</g>
+<!-- proc~cauchy&#45;&gt;proc~hpsolb -->
+<g id="call~~graph~~CallGraph_edge7" class="edge">
+<title>proc~cauchy&#45;&gt;proc~hpsolb</title>
+<path fill="none" stroke="#000000" d="M234.4,-595.8C242.48,-598.19 251.51,-600.85 260.1,-603.39"/>
+<polygon fill="#000000" stroke="#000000" points="259.34,-606.82 269.92,-606.29 261.32,-600.1 259.34,-606.82"/>
+</g>
+<!-- proc~cmprlb -->
+<g id="call~~graph~~CallGraph_node4" class="node">
+<title>proc~cmprlb</title>
+<g id="a_call~~graph~~CallGraph_node4"><a xlink:href="../proc/cmprlb.html" xlink:title="cmprlb">
+<polygon fill="#d9534f" stroke="#d9534f" points="234,-642 180,-642 180,-618 234,-618 234,-642"/>
+<text text-anchor="middle" x="207" y="-627.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">cmprlb</text>
+</a>
+</g>
+</g>
+<!-- proc~cmprlb&#45;&gt;proc~bmv -->
+<g id="call~~graph~~CallGraph_edge8" class="edge">
+<title>proc~cmprlb&#45;&gt;proc~bmv</title>
+<path fill="none" stroke="#000000" d="M224.55,-642.04C237.62,-651.54 256.07,-664.96 270.94,-675.78"/>
+<polygon fill="#000000" stroke="#000000" points="269.08,-678.75 279.22,-681.8 273.19,-673.09 269.08,-678.75"/>
+</g>
+<!-- proc~dcsrch -->
+<g id="call~~graph~~CallGraph_node7" class="node">
+<title>proc~dcsrch</title>
+<g id="a_call~~graph~~CallGraph_node7"><a xlink:href="../proc/dcsrch.html" xlink:title="dcsrch">
+<polygon fill="#d9534f" stroke="#d9534f" points="324,-310 270,-310 270,-286 324,-286 324,-310"/>
+<text text-anchor="middle" x="297" y="-295.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">dcsrch</text>
+</a>
+</g>
+</g>
+<!-- proc~dcstep -->
+<g id="call~~graph~~CallGraph_node8" class="node">
+<title>proc~dcstep</title>
+<g id="a_call~~graph~~CallGraph_node8"><a xlink:href="../proc/dcstep.html" xlink:title="dcstep">
+<polygon fill="#d9534f" stroke="#d9534f" points="414,-310 360,-310 360,-286 414,-286 414,-310"/>
+<text text-anchor="middle" x="387" y="-295.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">dcstep</text>
+</a>
+</g>
+</g>
+<!-- proc~dcsrch&#45;&gt;proc~dcstep -->
+<g id="call~~graph~~CallGraph_edge9" class="edge">
+<title>proc~dcsrch&#45;&gt;proc~dcstep</title>
+<path fill="none" stroke="#000000" d="M324.4,-298C332.39,-298 341.31,-298 349.82,-298"/>
+<polygon fill="#000000" stroke="#000000" points="349.92,-301.5 359.92,-298 349.92,-294.5 349.92,-301.5"/>
+</g>
+<!-- proc~dpofa -->
+<g id="call~~graph~~CallGraph_node10" class="node">
+<title>proc~dpofa</title>
+<g id="a_call~~graph~~CallGraph_node10"><a xlink:href="../proc/dpofa.html" xlink:title="dpofa">
+<polygon fill="#d9534f" stroke="#d9534f" points="324,-192 270,-192 270,-168 324,-168 324,-192"/>
+<text text-anchor="middle" x="297" y="-177.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">dpofa</text>
+</a>
+</g>
+</g>
+<!-- proc~dpofa&#45;&gt;proc~ddot -->
+<g id="call~~graph~~CallGraph_edge10" class="edge">
+<title>proc~dpofa&#45;&gt;proc~ddot</title>
+<path fill="none" stroke="#000000" d="M324.32,-179.53C349.85,-180.41 388.4,-185.47 414,-206 449,-234.08 465.26,-286.55 471.94,-316.18"/>
+<polygon fill="#000000" stroke="#000000" points="468.52,-316.9 473.99,-325.97 475.37,-315.47 468.52,-316.9"/>
+</g>
+<!-- proc~dtrsl&#45;&gt;proc~daxpy -->
+<g id="call~~graph~~CallGraph_edge11" class="edge">
+<title>proc~dtrsl&#45;&gt;proc~daxpy</title>
+<path fill="none" stroke="#000000" d="M401.37,-506.15C415.66,-519.15 438.53,-539.93 455.18,-555.08"/>
+<polygon fill="#000000" stroke="#000000" points="453.04,-557.86 462.8,-562 457.75,-552.68 453.04,-557.86"/>
+</g>
+<!-- proc~dtrsl&#45;&gt;proc~ddot -->
+<g id="call~~graph~~CallGraph_edge12" class="edge">
+<title>proc~dtrsl&#45;&gt;proc~ddot</title>
+<path fill="none" stroke="#000000" d="M394.91,-481.76C409.88,-455.22 445.48,-392.1 464.13,-359.04"/>
+<polygon fill="#000000" stroke="#000000" points="467.26,-360.61 469.13,-350.18 461.17,-357.17 467.26,-360.61"/>
+</g>
+<!-- proc~errclb -->
+<g id="call~~graph~~CallGraph_node13" class="node">
+<title>proc~errclb</title>
+<g id="a_call~~graph~~CallGraph_node13"><a xlink:href="../proc/errclb.html" xlink:title="errclb">
+<polygon fill="#d9534f" stroke="#d9534f" points="234,-440 180,-440 180,-416 234,-416 234,-440"/>
+<text text-anchor="middle" x="207" y="-425.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">errclb</text>
+</a>
+</g>
+</g>
+<!-- proc~formk -->
+<g id="call~~graph~~CallGraph_node14" class="node">
+<title>proc~formk</title>
+<g id="a_call~~graph~~CallGraph_node14"><a xlink:href="../proc/formk.html" xlink:title="formk">
+<polygon fill="#d9534f" stroke="#d9534f" points="234,-272 180,-272 180,-248 234,-248 234,-272"/>
+<text text-anchor="middle" x="207" y="-257.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">formk</text>
+</a>
+</g>
+</g>
+<!-- proc~formk&#45;&gt;proc~dcopy -->
+<g id="call~~graph~~CallGraph_edge13" class="edge">
+<title>proc~formk&#45;&gt;proc~dcopy</title>
+<path fill="none" stroke="#000000" d="M225.84,-272.09C228.87,-274.75 231.76,-277.76 234,-281 263.03,-322.96 252.39,-342.12 270,-390 275.24,-404.25 281.65,-420.05 286.8,-432.39"/>
+<polygon fill="#000000" stroke="#000000" points="283.67,-433.97 290.77,-441.83 290.12,-431.25 283.67,-433.97"/>
+</g>
+<!-- proc~formk&#45;&gt;proc~ddot -->
+<g id="call~~graph~~CallGraph_edge14" class="edge">
+<title>proc~formk&#45;&gt;proc~ddot</title>
+<path fill="none" stroke="#000000" d="M234.14,-256.68C274.69,-252.71 354.3,-249.64 414,-277 433.44,-285.91 450.34,-303.63 461.57,-317.68"/>
+<polygon fill="#000000" stroke="#000000" points="458.95,-320.02 467.8,-325.85 464.52,-315.78 458.95,-320.02"/>
+</g>
+<!-- proc~formk&#45;&gt;proc~dpofa -->
+<g id="call~~graph~~CallGraph_edge15" class="edge">
+<title>proc~formk&#45;&gt;proc~dpofa</title>
+<path fill="none" stroke="#000000" d="M221.37,-247.85C235.66,-234.85 258.53,-214.07 275.18,-198.92"/>
+<polygon fill="#000000" stroke="#000000" points="277.75,-201.32 282.8,-192 273.04,-196.14 277.75,-201.32"/>
+</g>
+<!-- proc~formk&#45;&gt;proc~dtrsl -->
+<g id="call~~graph~~CallGraph_edge16" class="edge">
+<title>proc~formk&#45;&gt;proc~dtrsl</title>
+<path fill="none" stroke="#000000" d="M224.27,-272.01C227.64,-274.8 231.06,-277.87 234,-281 293.99,-344.67 349.73,-433.07 373.68,-472.97"/>
+<polygon fill="#000000" stroke="#000000" points="370.69,-474.79 378.81,-481.6 376.7,-471.21 370.69,-474.79"/>
+</g>
+<!-- proc~formt -->
+<g id="call~~graph~~CallGraph_node15" class="node">
+<title>proc~formt</title>
+<g id="a_call~~graph~~CallGraph_node15"><a xlink:href="../proc/formt.html" xlink:title="formt">
+<polygon fill="#d9534f" stroke="#d9534f" points="234,-24 180,-24 180,0 234,0 234,-24"/>
+<text text-anchor="middle" x="207" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">formt</text>
+</a>
+</g>
+</g>
+<!-- proc~formt&#45;&gt;proc~dpofa -->
+<g id="call~~graph~~CallGraph_edge17" class="edge">
+<title>proc~formt&#45;&gt;proc~dpofa</title>
+<path fill="none" stroke="#000000" d="M225.36,-24.01C228.51,-26.71 231.56,-29.75 234,-33 263.52,-72.22 281.88,-127.59 290.39,-157.95"/>
+<polygon fill="#000000" stroke="#000000" points="287.1,-159.19 293.08,-167.93 293.85,-157.37 287.1,-159.19"/>
+</g>
+<!-- proc~freev -->
+<g id="call~~graph~~CallGraph_node16" class="node">
+<title>proc~freev</title>
+<g id="a_call~~graph~~CallGraph_node16"><a xlink:href="../proc/freev.html" xlink:title="freev">
+<polygon fill="#d9534f" stroke="#d9534f" points="234,-314 180,-314 180,-290 234,-290 234,-314"/>
+<text text-anchor="middle" x="207" y="-299.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">freev</text>
+</a>
+</g>
+</g>
+<!-- proc~lnsrlb -->
+<g id="call~~graph~~CallGraph_node18" class="node">
+<title>proc~lnsrlb</title>
+<g id="a_call~~graph~~CallGraph_node18"><a xlink:href="../proc/lnsrlb.html" xlink:title="lnsrlb">
+<polygon fill="#d9534f" stroke="#d9534f" points="234,-356 180,-356 180,-332 234,-332 234,-356"/>
+<text text-anchor="middle" x="207" y="-341.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lnsrlb</text>
+</a>
+</g>
+</g>
+<!-- proc~lnsrlb&#45;&gt;proc~dcopy -->
+<g id="call~~graph~~CallGraph_edge18" class="edge">
+<title>proc~lnsrlb&#45;&gt;proc~dcopy</title>
+<path fill="none" stroke="#000000" d="M224.57,-356.21C227.85,-358.94 231.15,-361.94 234,-365 253.87,-386.34 272.39,-414.42 283.92,-433.29"/>
+<polygon fill="#000000" stroke="#000000" points="280.99,-435.21 289.14,-441.98 286.99,-431.61 280.99,-435.21"/>
+</g>
+<!-- proc~lnsrlb&#45;&gt;proc~dcsrch -->
+<g id="call~~graph~~CallGraph_edge19" class="edge">
+<title>proc~lnsrlb&#45;&gt;proc~dcsrch</title>
+<path fill="none" stroke="#000000" d="M231.12,-331.91C241.13,-326.68 253,-320.48 263.85,-314.81"/>
+<polygon fill="#000000" stroke="#000000" points="265.79,-317.74 273.03,-310.01 262.55,-311.54 265.79,-317.74"/>
+</g>
+<!-- proc~lnsrlb&#45;&gt;proc~ddot -->
+<g id="call~~graph~~CallGraph_edge20" class="edge">
+<title>proc~lnsrlb&#45;&gt;proc~ddot</title>
+<path fill="none" stroke="#000000" d="M234.18,-343.41C282.22,-342.34 384.51,-340.05 439.39,-338.82"/>
+<polygon fill="#000000" stroke="#000000" points="439.79,-342.31 449.71,-338.59 439.63,-335.31 439.79,-342.31"/>
+</g>
+<!-- proc~mainlb -->
+<g id="call~~graph~~CallGraph_node19" class="node">
+<title>proc~mainlb</title>
+<g id="a_call~~graph~~CallGraph_node19"><a xlink:href="../proc/mainlb.html" xlink:title="mainlb">
+<polygon fill="#d9534f" stroke="#d9534f" points="144,-356 90,-356 90,-332 144,-332 144,-356"/>
+<text text-anchor="middle" x="117" y="-341.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">mainlb</text>
+</a>
+</g>
+</g>
+<!-- proc~mainlb&#45;&gt;proc~active -->
+<g id="call~~graph~~CallGraph_edge21" class="edge">
+<title>proc~mainlb&#45;&gt;proc~active</title>
+<path fill="none" stroke="#000000" d="M117.62,-356.18C116.8,-399.68 118.8,-550.12 180,-651 180.25,-651.41 180.51,-651.81 180.78,-652.21"/>
+<polygon fill="#000000" stroke="#000000" points="178.32,-654.72 187.58,-659.88 183.56,-650.07 178.32,-654.72"/>
+</g>
+<!-- proc~mainlb&#45;&gt;proc~cauchy -->
+<g id="call~~graph~~CallGraph_edge22" class="edge">
+<title>proc~mainlb&#45;&gt;proc~cauchy</title>
+<path fill="none" stroke="#000000" d="M119.29,-356.18C123.38,-390.66 138.34,-491.1 180,-562 181.3,-564.22 182.84,-566.38 184.5,-568.45"/>
+<polygon fill="#000000" stroke="#000000" points="181.99,-570.89 191.32,-575.89 187.15,-566.16 181.99,-570.89"/>
+</g>
+<!-- proc~mainlb&#45;&gt;proc~cmprlb -->
+<g id="call~~graph~~CallGraph_edge23" class="edge">
+<title>proc~mainlb&#45;&gt;proc~cmprlb</title>
+<path fill="none" stroke="#000000" d="M118.12,-356.14C119.03,-395.72 126.24,-523.36 180,-609 180.25,-609.41 180.52,-609.81 180.79,-610.2"/>
+<polygon fill="#000000" stroke="#000000" points="178.37,-612.74 187.66,-617.83 183.57,-608.05 178.37,-612.74"/>
+</g>
+<!-- proc~mainlb&#45;&gt;proc~dcopy -->
+<g id="call~~graph~~CallGraph_edge24" class="edge">
+<title>proc~mainlb&#45;&gt;proc~dcopy</title>
+<path fill="none" stroke="#000000" d="M121.05,-356.13C127.51,-378.98 144.96,-427.98 180,-449 203.64,-463.18 235.13,-463.64 259.33,-460.98"/>
+<polygon fill="#000000" stroke="#000000" points="260.09,-464.41 269.55,-459.64 259.18,-457.47 260.09,-464.41"/>
+</g>
+<!-- proc~mainlb&#45;&gt;proc~ddot -->
+<g id="call~~graph~~CallGraph_edge25" class="edge">
+<title>proc~mainlb&#45;&gt;proc~ddot</title>
+<path fill="none" stroke="#000000" d="M120.97,-331.73C127.3,-308.65 144.52,-259.26 180,-239 223.36,-214.25 312.6,-200.47 414,-257 438.1,-270.44 455.84,-297.53 466.02,-316.67"/>
+<polygon fill="#000000" stroke="#000000" points="463.02,-318.5 470.66,-325.85 469.27,-315.34 463.02,-318.5"/>
+</g>
+<!-- proc~mainlb&#45;&gt;proc~dscal -->
+<g id="call~~graph~~CallGraph_edge26" class="edge">
+<title>proc~mainlb&#45;&gt;proc~dscal</title>
+<path fill="none" stroke="#000000" d="M117.78,-356.11C117.91,-390.06 123.44,-486.42 180,-529 202.41,-545.87 234.72,-545.88 259.55,-542.37"/>
+<polygon fill="#000000" stroke="#000000" points="260.39,-545.78 269.69,-540.69 259.25,-538.87 260.39,-545.78"/>
+</g>
+<!-- proc~mainlb&#45;&gt;proc~errclb -->
+<g id="call~~graph~~CallGraph_edge27" class="edge">
+<title>proc~mainlb&#45;&gt;proc~errclb</title>
+<path fill="none" stroke="#000000" d="M129.04,-356.01C141.15,-369 161.35,-390.1 180,-407 180.82,-407.74 181.66,-408.49 182.51,-409.23"/>
+<polygon fill="#000000" stroke="#000000" points="180.46,-412.08 190.36,-415.85 184.97,-406.73 180.46,-412.08"/>
+</g>
+<!-- proc~mainlb&#45;&gt;proc~formk -->
+<g id="call~~graph~~CallGraph_edge28" class="edge">
+<title>proc~mainlb&#45;&gt;proc~formk</title>
+<path fill="none" stroke="#000000" d="M129.04,-331.99C141.15,-319 161.35,-297.9 180,-281 180.82,-280.26 181.66,-279.51 182.51,-278.77"/>
+<polygon fill="#000000" stroke="#000000" points="184.97,-281.27 190.36,-272.15 180.46,-275.92 184.97,-281.27"/>
+</g>
+<!-- proc~mainlb&#45;&gt;proc~formt -->
+<g id="call~~graph~~CallGraph_edge29" class="edge">
+<title>proc~mainlb&#45;&gt;proc~formt</title>
+<path fill="none" stroke="#000000" d="M117.58,-331.97C116.6,-288.31 118.02,-135.45 180,-33 180.25,-32.59 180.51,-32.19 180.78,-31.79"/>
+<polygon fill="#000000" stroke="#000000" points="183.56,-33.92 187.57,-24.12 178.32,-29.28 183.56,-33.92"/>
+</g>
+<!-- proc~mainlb&#45;&gt;proc~freev -->
+<g id="call~~graph~~CallGraph_edge30" class="edge">
+<title>proc~mainlb&#45;&gt;proc~freev</title>
+<path fill="none" stroke="#000000" d="M143.45,-331.85C152.21,-327.67 162.17,-322.92 171.52,-318.46"/>
+<polygon fill="#000000" stroke="#000000" points="173.09,-321.59 180.6,-314.12 170.07,-315.27 173.09,-321.59"/>
+</g>
+<!-- proc~mainlb&#45;&gt;proc~lnsrlb -->
+<g id="call~~graph~~CallGraph_edge31" class="edge">
+<title>proc~mainlb&#45;&gt;proc~lnsrlb</title>
+<path fill="none" stroke="#000000" d="M144.4,-344C152.39,-344 161.31,-344 169.82,-344"/>
+<polygon fill="#000000" stroke="#000000" points="169.92,-347.5 179.92,-344 169.92,-340.5 169.92,-347.5"/>
+</g>
+<!-- proc~matupd -->
+<g id="call~~graph~~CallGraph_node20" class="node">
+<title>proc~matupd</title>
+<g id="a_call~~graph~~CallGraph_node20"><a xlink:href="../proc/matupd.html" xlink:title="matupd">
+<polygon fill="#d9534f" stroke="#d9534f" points="234,-398 180,-398 180,-374 234,-374 234,-398"/>
+<text text-anchor="middle" x="207" y="-383.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">matupd</text>
+</a>
+</g>
+</g>
+<!-- proc~mainlb&#45;&gt;proc~matupd -->
+<g id="call~~graph~~CallGraph_edge32" class="edge">
+<title>proc~mainlb&#45;&gt;proc~matupd</title>
+<path fill="none" stroke="#000000" d="M143.45,-356.15C152.21,-360.33 162.17,-365.08 171.52,-369.54"/>
+<polygon fill="#000000" stroke="#000000" points="170.07,-372.73 180.6,-373.88 173.09,-366.41 170.07,-372.73"/>
+</g>
+<!-- proc~prn1lb -->
+<g id="call~~graph~~CallGraph_node21" class="node">
+<title>proc~prn1lb</title>
+<g id="a_call~~graph~~CallGraph_node21"><a xlink:href="../proc/prn1lb.html" xlink:title="prn1lb">
+<polygon fill="#d9534f" stroke="#d9534f" points="234,-192 180,-192 180,-168 234,-168 234,-192"/>
+<text text-anchor="middle" x="207" y="-177.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">prn1lb</text>
+</a>
+</g>
+</g>
+<!-- proc~mainlb&#45;&gt;proc~prn1lb -->
+<g id="call~~graph~~CallGraph_edge33" class="edge">
+<title>proc~mainlb&#45;&gt;proc~prn1lb</title>
+<path fill="none" stroke="#000000" d="M121.8,-331.8C129.96,-306.76 150.77,-248.38 180,-206 181.49,-203.84 183.17,-201.7 184.95,-199.64"/>
+<polygon fill="#000000" stroke="#000000" points="187.72,-201.8 192.04,-192.12 182.63,-197 187.72,-201.8"/>
+</g>
+<!-- proc~prn2lb -->
+<g id="call~~graph~~CallGraph_node22" class="node">
+<title>proc~prn2lb</title>
+<g id="a_call~~graph~~CallGraph_node22"><a xlink:href="../proc/prn2lb.html" xlink:title="prn2lb">
+<polygon fill="#d9534f" stroke="#d9534f" points="234,-150 180,-150 180,-126 234,-126 234,-150"/>
+<text text-anchor="middle" x="207" y="-135.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">prn2lb</text>
+</a>
+</g>
+</g>
+<!-- proc~mainlb&#45;&gt;proc~prn2lb -->
+<g id="call~~graph~~CallGraph_edge34" class="edge">
+<title>proc~mainlb&#45;&gt;proc~prn2lb</title>
+<path fill="none" stroke="#000000" d="M119.68,-331.69C124.45,-300.35 140.37,-216.02 180,-159 180.35,-158.49 180.72,-157.99 181.1,-157.5"/>
+<polygon fill="#000000" stroke="#000000" points="183.79,-159.75 188.17,-150.1 178.73,-154.91 183.79,-159.75"/>
+</g>
+<!-- proc~prn3lb -->
+<g id="call~~graph~~CallGraph_node23" class="node">
+<title>proc~prn3lb</title>
+<g id="a_call~~graph~~CallGraph_node23"><a xlink:href="../proc/prn3lb.html" xlink:title="prn3lb">
+<polygon fill="#d9534f" stroke="#d9534f" points="234,-108 180,-108 180,-84 234,-84 234,-108"/>
+<text text-anchor="middle" x="207" y="-93.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">prn3lb</text>
+</a>
+</g>
+</g>
+<!-- proc~mainlb&#45;&gt;proc~prn3lb -->
+<g id="call~~graph~~CallGraph_edge35" class="edge">
+<title>proc~mainlb&#45;&gt;proc~prn3lb</title>
+<path fill="none" stroke="#000000" d="M118.72,-331.86C121.35,-296.07 132.94,-188.98 180,-117 180.26,-116.6 180.53,-116.2 180.82,-115.81"/>
+<polygon fill="#000000" stroke="#000000" points="183.58,-117.97 187.76,-108.24 178.42,-113.24 183.58,-117.97"/>
+</g>
+<!-- proc~projgr -->
+<g id="call~~graph~~CallGraph_node24" class="node">
+<title>proc~projgr</title>
+<g id="a_call~~graph~~CallGraph_node24"><a xlink:href="../proc/projgr.html" xlink:title="projgr">
+<polygon fill="#d9534f" stroke="#d9534f" points="234,-66 180,-66 180,-42 234,-42 234,-66"/>
+<text text-anchor="middle" x="207" y="-51.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">projgr</text>
+</a>
+</g>
+</g>
+<!-- proc~mainlb&#45;&gt;proc~projgr -->
+<g id="call~~graph~~CallGraph_edge36" class="edge">
+<title>proc~mainlb&#45;&gt;proc~projgr</title>
+<path fill="none" stroke="#000000" d="M118.06,-331.96C118.8,-292.11 125.48,-162.16 180,-75 180.25,-74.59 180.52,-74.19 180.79,-73.8"/>
+<polygon fill="#000000" stroke="#000000" points="183.57,-75.94 187.65,-66.17 178.36,-71.26 183.57,-75.94"/>
+</g>
+<!-- proc~subsm -->
+<g id="call~~graph~~CallGraph_node26" class="node">
+<title>proc~subsm</title>
+<g id="a_call~~graph~~CallGraph_node26"><a xlink:href="../proc/subsm.html" xlink:title="subsm">
+<polygon fill="#d9534f" stroke="#d9534f" points="234,-520 180,-520 180,-496 234,-496 234,-520"/>
+<text text-anchor="middle" x="207" y="-505.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">subsm</text>
+</a>
+</g>
+</g>
+<!-- proc~mainlb&#45;&gt;proc~subsm -->
+<g id="call~~graph~~CallGraph_edge37" class="edge">
+<title>proc~mainlb&#45;&gt;proc~subsm</title>
+<path fill="none" stroke="#000000" d="M121.8,-356.2C129.96,-381.24 150.77,-439.62 180,-482 181.49,-484.16 183.17,-486.3 184.95,-488.36"/>
+<polygon fill="#000000" stroke="#000000" points="182.63,-491 192.04,-495.88 187.72,-486.2 182.63,-491"/>
+</g>
+<!-- proc~matupd&#45;&gt;proc~dcopy -->
+<g id="call~~graph~~CallGraph_edge38" class="edge">
+<title>proc~matupd&#45;&gt;proc~dcopy</title>
+<path fill="none" stroke="#000000" d="M223.73,-398.16C237.25,-408.6 256.93,-423.81 272.35,-435.72"/>
+<polygon fill="#000000" stroke="#000000" points="270.35,-438.6 280.4,-441.95 274.63,-433.06 270.35,-438.6"/>
+</g>
+<!-- proc~matupd&#45;&gt;proc~ddot -->
+<g id="call~~graph~~CallGraph_edge39" class="edge">
+<title>proc~matupd&#45;&gt;proc~ddot</title>
+<path fill="none" stroke="#000000" d="M234.16,-382.78C273.43,-377.75 349.84,-367.23 414,-354 422.53,-352.24 431.65,-350.06 440.19,-347.88"/>
+<polygon fill="#000000" stroke="#000000" points="441.1,-351.26 449.89,-345.35 439.33,-344.49 441.1,-351.26"/>
+</g>
+<!-- proc~setulb -->
+<g id="call~~graph~~CallGraph_node25" class="node">
+<title>proc~setulb</title>
+<g id="a_call~~graph~~CallGraph_node25"><a xlink:href="../proc/setulb.html" xlink:title="setulb">
+<polygon fill="#d9534f" stroke="#d9534f" points="54,-356 0,-356 0,-332 54,-332 54,-356"/>
+<text text-anchor="middle" x="27" y="-341.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">setulb</text>
+</a>
+</g>
+</g>
+<!-- proc~setulb&#45;&gt;proc~mainlb -->
+<g id="call~~graph~~CallGraph_edge40" class="edge">
+<title>proc~setulb&#45;&gt;proc~mainlb</title>
+<path fill="none" stroke="#000000" d="M54.4,-344C62.39,-344 71.31,-344 79.82,-344"/>
+<polygon fill="#000000" stroke="#000000" points="79.92,-347.5 89.92,-344 79.92,-340.5 79.92,-347.5"/>
+</g>
+<!-- proc~subsm&#45;&gt;proc~dcopy -->
+<g id="call~~graph~~CallGraph_edge41" class="edge">
+<title>proc~subsm&#45;&gt;proc~dcopy</title>
+<path fill="none" stroke="#000000" d="M227.97,-495.75C239.75,-488.52 254.85,-479.25 267.83,-471.28"/>
+<polygon fill="#000000" stroke="#000000" points="269.72,-474.23 276.41,-466.02 266.06,-468.27 269.72,-474.23"/>
+</g>
+<!-- proc~subsm&#45;&gt;proc~dscal -->
+<g id="call~~graph~~CallGraph_edge42" class="edge">
+<title>proc~subsm&#45;&gt;proc~dscal</title>
+<path fill="none" stroke="#000000" d="M234.4,-515.8C242.48,-518.19 251.51,-520.85 260.1,-523.39"/>
+<polygon fill="#000000" stroke="#000000" points="259.34,-526.82 269.92,-526.29 261.32,-520.1 259.34,-526.82"/>
+</g>
+<!-- proc~subsm&#45;&gt;proc~dtrsl -->
+<g id="call~~graph~~CallGraph_edge43" class="edge">
+<title>proc~subsm&#45;&gt;proc~dtrsl</title>
+<path fill="none" stroke="#000000" d="M234.26,-505.93C264.85,-503.53 315.55,-499.54 349.84,-496.84"/>
+<polygon fill="#000000" stroke="#000000" points="350.22,-500.32 359.92,-496.05 349.67,-493.35 350.22,-500.32"/>
+</g>
+</g>
+</svg>
+</div>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#CallGraph-help-text">Help</a>
+          </div>
+          <div class="modal fade" id="CallGraph-help-text" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+<p>Nodes of different colours represent the following: </p>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.43.0 (0)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="641pt" height="28pt"
+ viewBox="0.00 0.00 641.00 27.51" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(0.86 0.86) rotate(0) translate(4 28)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-28 741.5,-28 741.5,4 -4,4"/>
+<!-- Subroutine -->
+<g id="node1" class="node">
+<title>Subroutine</title>
+<polygon fill="#d9534f" stroke="#d9534f" points="70,-24 0,-24 0,0 70,0 70,-24"/>
+<text text-anchor="middle" x="35" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
+</g>
+<!-- Function -->
+<g id="node2" class="node">
+<title>Function</title>
+<polygon fill="#d94e8f" stroke="#d94e8f" points="146,-24 88,-24 88,0 146,0 146,-24"/>
+<text text-anchor="middle" x="117" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
+</g>
+<!-- Interface -->
+<g id="node3" class="node">
+<title>Interface</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="225.5,-24 164.5,-24 164.5,0 225.5,0 225.5,-24"/>
+<text text-anchor="middle" x="195" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Interface</text>
+</g>
+<!-- Type Bound Procedure -->
+<g id="node4" class="node">
+<title>Type Bound Procedure</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="374,-24 244,-24 244,0 374,0 374,-24"/>
+<text text-anchor="middle" x="309" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Type Bound Procedure</text>
+</g>
+<!-- Unknown Procedure Type -->
+<g id="node5" class="node">
+<title>Unknown Procedure Type</title>
+<polygon fill="#777777" stroke="#777777" points="537.5,-24 392.5,-24 392.5,0 537.5,0 537.5,-24"/>
+<text text-anchor="middle" x="465" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Unknown Procedure Type</text>
+</g>
+<!-- Program -->
+<g id="node6" class="node">
+<title>Program</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="614,-24 556,-24 556,0 614,0 614,-24"/>
+<text text-anchor="middle" x="585" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node7" class="node">
+<title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="737.5,-24 632.5,-24 632.5,0 737.5,0 737.5,-24"/>
+<text text-anchor="middle" x="685" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+<p>Solid arrows point from a procedure to one which it calls. Dashed 
+arrows point from an interface to procedures which implement that interface.
+This could include the module procedures in a generic interface or the
+implementation in a submodule of an interface in a parent module.
+</p>
+ </div>
+            </div>
+          </div>
+        </div>
+        </div>
+      </div>
+      <hr>
+    </div> <!-- /container -->
+    <footer>
+      <div class="container">
+        <div class="row justify-content-between">
+          <div class="col">
+            <p>
+              lbfgsb
+ was developed by Jacob Williams<br>              &copy; 2025 
+</p>
+          </div>
+          <div class="col">
+            <p class="text-end">
+              Documentation generated by
+              <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
+            </p>
+          </div>
+        </div>
+        <br>
+      </div> <!-- /container -->
+    </footer>
+
+    <!-- Bootstrap core JavaScript -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>    
+
+    <!-- MathJax JavaScript
+             ================================================== -->
+             <!-- Placed at the end of the document so the pages load faster -->
+        <script type="text/x-mathjax-config">
+          MathJax.Hub.Config({
+          TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } },
+          jax: ['input/TeX','input/MathML','output/HTML-CSS'],
+          extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']
+          });
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+          <script src="../tipuesearch/tipuesearch_content.js"></script>
+          <script src="../tipuesearch/tipuesearch_set.js"></script>
+          <script src="../tipuesearch/tipuesearch.js"></script>
+
+  </body>
+</html>

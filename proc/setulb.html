@@ -1,0 +1,1451 @@
+<!-- -*- mode: jinja2 -*- -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="description" content="lbfgsb optimization library">
+    <meta name="author" content="Jacob Williams" >
+    <link rel="icon" href="../favicon.png">
+
+    <title>setulb &ndash; lbfgsb</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link href="../css/pygments.css" rel="stylesheet">
+    <link href="../css/font-awesome.min.css" rel="stylesheet">
+    <link href="../css/local.css" rel="stylesheet">
+      <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="../js/svg-pan-zoom.min.js"></script>
+  </head>
+
+  <body>
+
+    <!-- Fixed navbar -->
+    <div class="container-fluid mb-sm-4 mb-xl-2">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+          <a class="navbar-brand" href="../index.html">lbfgsb </a>
+          <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar"
+                  aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon">
+          </button>
+
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a class="nav-link" href="../lists/files.html">Source Files</a>
+                  </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/modules.html">Modules</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/procedures.html">Procedures</a>
+                </li>
+            </ul>
+              <div class="d-flex align-items-end flex-grow-1">
+                <form action="../search.html" role="search" class="ms-auto">
+                  <input type="text" class="form-control" aria-label="Search" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+                </form>
+              </div>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>
+    </div>
+
+    <div class="container">
+  <div class="row">
+    <h1>setulb
+      <small>Subroutine</small>
+      
+    </h1>
+      <div class="container p-2 mb-4 bg-light border rounded-3">
+    <div class="row align-items-center justify-content-between" id="info-bar">
+      <div class="col">
+        <ul class="list-inline" style="margin-bottom:0px;display:inline">
+
+            <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
+              <a data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true"
+                 title=" 2.8% of total for procedures.">55 statements</a>
+            </li>
+
+            <li class="list-inline-item" id="source-file">
+              <i class="fa fa-code"></i>
+              <a href="../src/lbfgsb.f90"> Source File</a>
+            </li>
+        </ul>
+      </div>
+      <div class="col">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb justify-content-end mb-0">
+                <li class="breadcrumb-item"><a href='../sourcefile/lbfgsb.f90.html'>lbfgsb.f90</a></li>
+                <li class="breadcrumb-item"><a href='../module/lbfgsb_module.html'>lbfgsb_module</a></li>
+            <li class="breadcrumb-item active" aria-current="page">setulb</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+  </div>
+  <script>
+    $(function () {
+    $('[data-bs-toggle="tooltip"]').tooltip()
+    })
+  </script>
+
+  </div>
+  
+  <div class="row">
+    <div class="col-md-3 hidden-xs hidden-sm visible-md visible-lg">
+      <div id="sidebar">
+      <h3>Contents</h3>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+    <div class="card card-primary">
+      <div class="card-header text-left"><h3 class="card-title">Source Code</h3></div>
+      <div class="list-group">
+        <a class="list-group-item" href="../proc/setulb.html#src">setulb</a>
+      </div>
+    </div>
+
+
+  </div>
+
+    </div>
+    
+    <div class="col-md-9" id='text'>
+    <h2>public  subroutine setulb(n, m, x, l, u, Nbd, f, g, Factr, Pgtol, Wa, Iwa, Task, Iprint, Csave, Lsave, Isave, Dsave, iteration_file)  
+</h2>
+    
+
+    <p>The main routine.</p>
+<p>This subroutine partitions the working arrays <code>wa</code> and <code>iwa</code>, and
+  then uses the limited memory BFGS method to solve the bound
+  constrained optimization problem by calling <a href="../proc/mainlb.html">mainlb</a>.
+  (The direct method will be used in the subspace minimization.)</p>
+<h3>References</h3>
+<ol>
+<li>R. H. Byrd, P. Lu, J. Nocedal and C. Zhu, "A limited
+     memory algorithm for bound constrained optimization",
+     SIAM J. Scientific Computing 16 (1995), no. 5, pp. 1190--1208.</li>
+<li>C. Zhu, R.H. Byrd, P. Lu, J. Nocedal, "L-BFGS-B: a
+     limited memory FORTRAN code for solving bound constrained
+     optimization problems", Tech. Report, NAM-11, EECS Department,
+     Northwestern University, 1994.</li>
+</ol>
+<h3>History</h3>
+<ul>
+<li>NEOS, November 1994. (Latest revision June 1996.)
+    Optimization Technology Center.
+    Argonne National Laboratory and Northwestern University.
+    Written by Ciyou Zhu in collaboration with
+    R.H. Byrd, P. Lu-Chen and J. Nocedal.</li>
+</ul>
+
+
+    <h3>Arguments</h3>
+        <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-n~3"></span>
+              integer,
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>n</strong></td>
+            <td>
+                <p>the dimension of the problem (the number of variables).</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-m"></span>
+              integer,
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>m</strong></td>
+            <td>
+                <p>the maximum number of variable metric corrections
+used to define the limited memory matrix.
+Values of <code>m &lt; 3</code>  are
+not recommended, and large values of <code>m</code> can result in excessive
+computing time. The range  <code>3 &lt;= m &lt;= 20</code> is recommended.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-x"></span>
+              real(kind=wp),
+            </td>
+<td>intent(inout)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>x</strong>(n)</td>
+            <td>
+                <p>On initial entry
+it must be set by the user to the values of the initial
+estimate of the solution vector.  Upon successful exit, it
+contains the values of the variables at the best point
+found (usually an approximate solution).</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-l"></span>
+              real(kind=wp),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>l</strong>(n)</td>
+            <td>
+                <p>the lower bound on <code>x</code>. If
+the <code>i</code>-th variable has no lower bound,
+<code>l(i)</code> need not be defined.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-u"></span>
+              real(kind=wp),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>u</strong>(n)</td>
+            <td>
+                <p>the upper bound on <code>x</code>. If
+the <code>i</code>-th variable has no upper bound,
+<code>u(i)</code> need not be defined.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-nbd"></span>
+              integer,
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>Nbd</strong>(n)</td>
+            <td>
+                <p>nbd represents the type of bounds imposed on the
+variables, and must be specified as follows:</p>
+<ul>
+<li><code>nbd(i)=0</code> if <code>x(i)</code> is unbounded</li>
+<li><code>nbd(i)=1</code> if <code>x(i)</code> has only a lower bound</li>
+<li><code>nbd(i)=2</code> if <code>x(i)</code> has both lower and upper bounds</li>
+<li><code>nbd(i)=3</code> if <code>x(i)</code> has only an upper bound</li>
+</ul>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-f"></span>
+              real(kind=wp),
+            </td>
+<td>intent(inout)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>f</strong></td>
+            <td>
+                <p>On first entry <code>f</code> is unspecified.
+On final exit <code>f</code> is the value of the function at x.
+If the <a href="../proc/setulb.html">setulb</a> returns
+with <code>task(1:2)= 'FG'</code>, then <code>f</code> must be set by the user to
+contain the value of the function at the point <code>x</code>.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-g"></span>
+              real(kind=wp),
+            </td>
+<td>intent(inout)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>g</strong>(n)</td>
+            <td>
+                <p>On first entry <code>g</code> is unspecified.
+On final exit <code>g</code> is the value of the gradient at <code>x</code>.
+If the <a href="../proc/setulb.html">setulb</a>
+returns with <code>task(1:2)= 'FG'</code>, then <code>g</code> must be set by the user to
+contain the components of the gradient at the point <code>x</code>.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-factr"></span>
+              real(kind=wp),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>Factr</strong></td>
+            <td>
+                <p>A tolerance in the termination test for the algorithm.
+The iteration will stop when:</p>
+<p><code>(f^k - f^{k+1})/max{|f^k|,|f^{k+1}|,1} &lt;= factr*epsmch</code></p>
+<p>where <code>epsmch</code> is the machine precision.
+Typical values for <code>factr</code> on a computer
+with 15 digits of accuracy in real(wp) are:</p>
+<ul>
+<li><code>factr=1.0e+12</code> for low accuracy</li>
+<li><code>factr=1.0e+7</code>  for moderate accuracy</li>
+<li><code>factr=1.0e+1</code>  for extremely high accuracy</li>
+</ul>
+<p>The user can suppress this termination test by setting <code>factr=0</code>.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-pgtol"></span>
+              real(kind=wp),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>Pgtol</strong></td>
+            <td>
+                <p>The iteration will stop when:</p>
+<p><code>max{|proj g_i | i = 1, ..., n} &lt;= pgtol</code></p>
+<p>where <code>pg_i</code> is the <code>i</code>th component of the projected gradient.
+The user can suppress this termination test by setting <code>pgtol=0</code>.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-wa"></span>
+              real(kind=wp)
+            </td>
+<td></td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>Wa</strong>(2*m*n+5*n+11*m*m+8*m)</td>
+            <td>
+                <p>working array of length <code>(2mmax + 5)nmax + 11mmax^2 + 8mmax</code>.
+This array must not be altered by the user.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-iwa"></span>
+              integer
+            </td>
+<td></td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>Iwa</strong>(3*n)</td>
+            <td>
+                <p>an integer working array of length <code>3nmax</code>.
+This array must not be altered by the user.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-task"></span>
+              character(len=60),
+            </td>
+<td>intent(inout)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>Task</strong></td>
+            <td>
+                <p>Indicates the current job when entering and quitting this subroutine:</p>
+<ul>
+<li>On first entry, it must be set to 'START'.</li>
+<li>On a return with task(1:2)='FG', the user must evaluate the
+   function f and gradient g at the returned value of x.</li>
+<li>On a return with task(1:5)='NEW_X', an iteration of the
+   algorithm has concluded, and f and g contain f(x) and g(x)
+   respectively.  The user can decide whether to continue or stop
+   the iteration.</li>
+<li>When task(1:4)='CONV', the termination test in L-BFGS-B has been
+   satisfied;</li>
+<li>When task(1:4)='ABNO', the routine has terminated abnormally
+   without being able to satisfy the termination conditions,
+   x contains the best approximation found,
+   f and g contain f(x) and g(x) respectively;</li>
+<li>When task(1:5)='ERROR', the routine has detected an error in the
+   input parameters;</li>
+</ul>
+<p>On exit with task = 'CONV', 'ABNO' or 'ERROR', the variable task
+ contains additional information that the user can print.</p>
+<p>This array should not be altered unless the user wants to
+stop the run for some reason.  See driver2 or driver3
+for a detailed explanation on how to stop the run
+by assigning task(1:4)='STOP' in the driver.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-iprint"></span>
+              integer,
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>Iprint</strong></td>
+            <td>
+                <p>Controls the frequency and type of output generated:</p>
+<ul>
+<li><code>iprint&lt;0</code> no output is generated</li>
+<li><code>iprint=0</code> print only one line at the last iteration</li>
+<li><code>0&lt;iprint&lt;99</code> print also <code>f</code> and <code>|proj g|</code> every <code>iprint</code> iterations</li>
+<li><code>iprint=99</code> print details of every iteration except <code>n</code>-vectors</li>
+<li><code>iprint=100</code> print also the changes of active set and final <code>x</code></li>
+<li><code>iprint&gt;100</code> print details of every iteration including <code>x</code> and <code>g</code></li>
+</ul>
+<p>When <code>iprint &gt; 0</code>, the file <code>iterate.dat</code> will be created to
+summarize the iteration.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-csave"></span>
+              character(len=60)
+            </td>
+<td></td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>Csave</strong></td>
+            <td>
+                <p>working string</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-lsave"></span>
+              logical
+            </td>
+<td></td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>Lsave</strong>(4)</td>
+            <td>
+                <p>A logical working array of dimension 4.
+On exit with <code>task = 'NEW_X'</code>, the following information is available:</p>
+<ul>
+<li>If <code>lsave(1) = .true.</code> then the initial <code>x</code> did not satisfy the bounds
+   and <code>x</code> has been replaced by its projection in the feasible set</li>
+<li>If <code>lsave(2) = .true.</code> then the problem is constrained</li>
+<li>If <code>lsave(3) = .true.</code> then each variable has upper and lower bounds</li>
+</ul>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-isave"></span>
+              integer
+            </td>
+<td></td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>Isave</strong>(44)</td>
+            <td>
+                <p>An integer working array of dimension 44.
+On exit with 'task' = NEW_X, the following information is available:</p>
+<ul>
+<li>isave(22) = the total number of intervals explored in the
+   search of Cauchy points;</li>
+<li>isave(26) = the total number of skipped BFGS updates before
+   the current iteration;</li>
+<li>isave(30) = the number of current iteration;</li>
+<li>isave(31) = the total number of BFGS updates prior the current
+   iteration;</li>
+<li>isave(33) = the number of intervals explored in the search of
+   Cauchy point in the current iteration;</li>
+<li>isave(34) = the total number of function and gradient
+   evaluations;</li>
+<li>isave(36) = the number of function value or gradient
+   evaluations in the current iteration;</li>
+<li>if isave(37) = 0  then the subspace argmin is within the box;</li>
+<li>if isave(37) = 1  then the subspace argmin is beyond the box;</li>
+<li>isave(38) = the number of free variables in the current
+   iteration;</li>
+<li>isave(39) = the number of active constraints in the current
+   iteration;</li>
+<li>n + 1 - isave(40) = the number of variables leaving the set of
+   active constraints in the current iteration;</li>
+<li>isave(41) = the number of variables entering the set of active
+   constraints in the current iteration.</li>
+</ul>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-dsave"></span>
+              real(kind=wp)
+            </td>
+<td></td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>Dsave</strong>(29)</td>
+            <td>
+                <p>A real(wp) working array of dimension 29.
+On exit with 'task' = NEW_X, the following information is available:</p>
+<ul>
+<li>dsave(1) = current 'theta' in the BFGS matrix;</li>
+<li>dsave(2) = f(x) in the previous iteration;</li>
+<li>dsave(3) = factr*epsmch;</li>
+<li>dsave(4) = 2-norm of the line search direction vector;</li>
+<li>dsave(5) = the machine precision epsmch generated by the code;</li>
+<li>dsave(7) = the accumulated time spent on searching for
+   Cauchy points;</li>
+<li>dsave(8) = the accumulated time spent on
+   subspace minimization;</li>
+<li>dsave(9) = the accumulated time spent on line search;</li>
+<li>dsave(11) = the slope of the line search function at
+   the current point of line search;</li>
+<li>dsave(12) = the maximum relative step length imposed in
+   line search;</li>
+<li>dsave(13) = the infinity norm of the projected gradient;</li>
+<li>dsave(14) = the relative step length in the line search;</li>
+<li>dsave(15) = the slope of the line search function at
+   the starting point of the line search;</li>
+<li>dsave(16) = the square of the 2-norm of the line search
+   direction vector.</li>
+</ul>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-iteration_file"></span>
+              character(len=*),
+            </td>
+<td>intent(in),</td>
+              <td>optional</td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>iteration_file</strong></td>
+            <td>
+                <p>The name of the iteration file if used (<code>Iprint&gt;=1</code>).
+If not specified, then 'iterate.dat' is used.</p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+    <br>
+    <div class="card">
+      <div class="card-header">
+  <h3 class="card-title">Calls</h3>
+      </div>
+      <div class="card-body">
+  <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.43.0 (0)
+ -->
+<!-- Title: proc~~setulb~~CallsGraph Pages: 1 -->
+<svg id="procsetulbCallsGraph" width="512pt" height="730pt"
+ viewBox="0.00 0.00 512.00 730.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="proc~~setulb~~CallsGraph" class="graph" transform="scale(1 1) rotate(0) translate(4 726)">
+<title>proc~~setulb~~CallsGraph</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-726 508,-726 508,4 -4,4"/>
+<!-- proc~setulb -->
+<g id="proc~~setulb~~CallsGraph_node1" class="node">
+<title>proc~setulb</title>
+<polygon fill="none" stroke="black" points="54,-358 0,-358 0,-334 54,-334 54,-358"/>
+<text text-anchor="middle" x="27" y="-343.6" font-family="Helvetica,sans-Serif" font-size="10.50">setulb</text>
+</g>
+<!-- proc~mainlb -->
+<g id="proc~~setulb~~CallsGraph_node2" class="node">
+<title>proc~mainlb</title>
+<g id="a_proc~~setulb~~CallsGraph_node2"><a xlink:href="../proc/mainlb.html" xlink:title="mainlb">
+<polygon fill="#d9534f" stroke="#d9534f" points="144,-358 90,-358 90,-334 144,-334 144,-358"/>
+<text text-anchor="middle" x="117" y="-343.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">mainlb</text>
+</a>
+</g>
+</g>
+<!-- proc~setulb&#45;&gt;proc~mainlb -->
+<g id="proc~~setulb~~CallsGraph_edge1" class="edge">
+<title>proc~setulb&#45;&gt;proc~mainlb</title>
+<path fill="none" stroke="#000000" d="M54.4,-346C62.39,-346 71.31,-346 79.82,-346"/>
+<polygon fill="#000000" stroke="#000000" points="79.92,-349.5 89.92,-346 79.92,-342.5 79.92,-349.5"/>
+</g>
+<!-- proc~active -->
+<g id="proc~~setulb~~CallsGraph_node3" class="node">
+<title>proc~active</title>
+<g id="a_proc~~setulb~~CallsGraph_node3"><a xlink:href="../proc/active.html" xlink:title="active">
+<polygon fill="#d9534f" stroke="#d9534f" points="234,-722 180,-722 180,-698 234,-698 234,-722"/>
+<text text-anchor="middle" x="207" y="-707.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">active</text>
+</a>
+</g>
+</g>
+<!-- proc~mainlb&#45;&gt;proc~active -->
+<g id="proc~~setulb~~CallsGraph_edge2" class="edge">
+<title>proc~mainlb&#45;&gt;proc~active</title>
+<path fill="none" stroke="#000000" d="M117.7,-358.2C117.08,-403.96 119.41,-568.58 180,-684 181.08,-686.07 182.39,-688.07 183.83,-689.99"/>
+<polygon fill="#000000" stroke="#000000" points="181.5,-692.64 190.75,-697.8 186.73,-687.99 181.5,-692.64"/>
+</g>
+<!-- proc~cauchy -->
+<g id="proc~~setulb~~CallsGraph_node4" class="node">
+<title>proc~cauchy</title>
+<g id="a_proc~~setulb~~CallsGraph_node4"><a xlink:href="../proc/cauchy.html" xlink:title="cauchy">
+<polygon fill="#d9534f" stroke="#d9534f" points="234,-318 180,-318 180,-294 234,-294 234,-318"/>
+<text text-anchor="middle" x="207" y="-303.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">cauchy</text>
+</a>
+</g>
+</g>
+<!-- proc~mainlb&#45;&gt;proc~cauchy -->
+<g id="proc~~setulb~~CallsGraph_edge3" class="edge">
+<title>proc~mainlb&#45;&gt;proc~cauchy</title>
+<path fill="none" stroke="#000000" d="M144.4,-334C152.66,-330.25 161.9,-326.05 170.66,-322.06"/>
+<polygon fill="#000000" stroke="#000000" points="172.26,-325.18 179.92,-317.86 169.37,-318.81 172.26,-325.18"/>
+</g>
+<!-- proc~cmprlb -->
+<g id="proc~~setulb~~CallsGraph_node5" class="node">
+<title>proc~cmprlb</title>
+<g id="a_proc~~setulb~~CallsGraph_node5"><a xlink:href="../proc/cmprlb.html" xlink:title="cmprlb">
+<polygon fill="#d9534f" stroke="#d9534f" points="234,-276 180,-276 180,-252 234,-252 234,-276"/>
+<text text-anchor="middle" x="207" y="-261.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">cmprlb</text>
+</a>
+</g>
+</g>
+<!-- proc~mainlb&#45;&gt;proc~cmprlb -->
+<g id="proc~~setulb~~CallsGraph_edge4" class="edge">
+<title>proc~mainlb&#45;&gt;proc~cmprlb</title>
+<path fill="none" stroke="#000000" d="M129.55,-333.95C141.77,-321.39 161.74,-301.28 180,-285 180.82,-284.27 181.67,-283.53 182.52,-282.78"/>
+<polygon fill="#000000" stroke="#000000" points="184.97,-285.3 190.39,-276.19 180.48,-279.93 184.97,-285.3"/>
+</g>
+<!-- proc~dcopy -->
+<g id="proc~~setulb~~CallsGraph_node6" class="node">
+<title>proc~dcopy</title>
+<g id="a_proc~~setulb~~CallsGraph_node6"><a xlink:href="../proc/dcopy.html" xlink:title="dcopy">
+<polygon fill="#d9534f" stroke="#d9534f" points="324,-482 270,-482 270,-458 324,-458 324,-482"/>
+<text text-anchor="middle" x="297" y="-467.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">dcopy</text>
+</a>
+</g>
+</g>
+<!-- proc~mainlb&#45;&gt;proc~dcopy -->
+<g id="proc~~setulb~~CallsGraph_edge5" class="edge">
+<title>proc~mainlb&#45;&gt;proc~dcopy</title>
+<path fill="none" stroke="#000000" d="M121.62,-358.17C128.83,-380.17 147.19,-426.36 180,-449 203.18,-465 234.97,-469.86 259.4,-470.94"/>
+<polygon fill="#000000" stroke="#000000" points="259.63,-474.45 269.72,-471.2 259.81,-467.45 259.63,-474.45"/>
+</g>
+<!-- proc~ddot -->
+<g id="proc~~setulb~~CallsGraph_node7" class="node">
+<title>proc~ddot</title>
+<g id="a_proc~~setulb~~CallsGraph_node7"><a xlink:href="../proc/ddot.html" xlink:title="ddot">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="504,-522 450,-522 450,-498 504,-498 504,-522"/>
+<text text-anchor="middle" x="477" y="-507.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ddot</text>
+</a>
+</g>
+</g>
+<!-- proc~mainlb&#45;&gt;proc~ddot -->
+<g id="proc~~setulb~~CallsGraph_edge6" class="edge">
+<title>proc~mainlb&#45;&gt;proc~ddot</title>
+<path fill="none" stroke="#000000" d="M119.15,-358.15C123.86,-405.34 143.2,-575.77 180,-613 253.41,-687.26 325.48,-689.39 414,-634 449.82,-611.58 465.67,-561.59 472.09,-532.39"/>
+<polygon fill="#000000" stroke="#000000" points="475.58,-532.81 474.12,-522.32 468.72,-531.43 475.58,-532.81"/>
+</g>
+<!-- proc~dscal -->
+<g id="proc~~setulb~~CallsGraph_node8" class="node">
+<title>proc~dscal</title>
+<g id="a_proc~~setulb~~CallsGraph_node8"><a xlink:href="../proc/dscal.html" xlink:title="dscal">
+<polygon fill="#d9534f" stroke="#d9534f" points="324,-326 270,-326 270,-302 324,-302 324,-326"/>
+<text text-anchor="middle" x="297" y="-311.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">dscal</text>
+</a>
+</g>
+</g>
+<!-- proc~mainlb&#45;&gt;proc~dscal -->
+<g id="proc~~setulb~~CallsGraph_edge7" class="edge">
+<title>proc~mainlb&#45;&gt;proc~dscal</title>
+<path fill="none" stroke="#000000" d="M144.32,-342.03C167.87,-338.4 203.31,-332.73 234,-327 242.38,-325.44 251.36,-323.63 259.82,-321.87"/>
+<polygon fill="#000000" stroke="#000000" points="260.74,-325.25 269.81,-319.76 259.3,-318.4 260.74,-325.25"/>
+</g>
+<!-- proc~errclb -->
+<g id="proc~~setulb~~CallsGraph_node9" class="node">
+<title>proc~errclb</title>
+<g id="a_proc~~setulb~~CallsGraph_node9"><a xlink:href="../proc/errclb.html" xlink:title="errclb">
+<polygon fill="#d9534f" stroke="#d9534f" points="234,-234 180,-234 180,-210 234,-210 234,-234"/>
+<text text-anchor="middle" x="207" y="-219.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">errclb</text>
+</a>
+</g>
+</g>
+<!-- proc~mainlb&#45;&gt;proc~errclb -->
+<g id="proc~~setulb~~CallsGraph_edge8" class="edge">
+<title>proc~mainlb&#45;&gt;proc~errclb</title>
+<path fill="none" stroke="#000000" d="M123.5,-334C133.1,-313.82 154.36,-272.43 180,-243 180.6,-242.31 181.23,-241.63 181.87,-240.95"/>
+<polygon fill="#000000" stroke="#000000" points="184.33,-243.44 189.27,-234.07 179.56,-238.32 184.33,-243.44"/>
+</g>
+<!-- proc~formk -->
+<g id="proc~~setulb~~CallsGraph_node10" class="node">
+<title>proc~formk</title>
+<g id="a_proc~~setulb~~CallsGraph_node10"><a xlink:href="../proc/formk.html" xlink:title="formk">
+<polygon fill="#d9534f" stroke="#d9534f" points="234,-440 180,-440 180,-416 234,-416 234,-440"/>
+<text text-anchor="middle" x="207" y="-425.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">formk</text>
+</a>
+</g>
+</g>
+<!-- proc~mainlb&#45;&gt;proc~formk -->
+<g id="proc~~setulb~~CallsGraph_edge9" class="edge">
+<title>proc~mainlb&#45;&gt;proc~formk</title>
+<path fill="none" stroke="#000000" d="M129.55,-358.05C141.77,-370.61 161.74,-390.72 180,-407 180.82,-407.73 181.67,-408.47 182.52,-409.22"/>
+<polygon fill="#000000" stroke="#000000" points="180.48,-412.07 190.39,-415.81 184.97,-406.7 180.48,-412.07"/>
+</g>
+<!-- proc~formt -->
+<g id="proc~~setulb~~CallsGraph_node11" class="node">
+<title>proc~formt</title>
+<g id="a_proc~~setulb~~CallsGraph_node11"><a xlink:href="../proc/formt.html" xlink:title="formt">
+<polygon fill="#d9534f" stroke="#d9534f" points="234,-562 180,-562 180,-538 234,-538 234,-562"/>
+<text text-anchor="middle" x="207" y="-547.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">formt</text>
+</a>
+</g>
+</g>
+<!-- proc~mainlb&#45;&gt;proc~formt -->
+<g id="proc~~setulb~~CallsGraph_edge10" class="edge">
+<title>proc~mainlb&#45;&gt;proc~formt</title>
+<path fill="none" stroke="#000000" d="M119.72,-358.18C124.57,-389.18 140.66,-472.6 180,-529 180.35,-529.51 180.72,-530.01 181.1,-530.5"/>
+<polygon fill="#000000" stroke="#000000" points="178.74,-533.09 188.18,-537.89 183.79,-528.25 178.74,-533.09"/>
+</g>
+<!-- proc~freev -->
+<g id="proc~~setulb~~CallsGraph_node12" class="node">
+<title>proc~freev</title>
+<g id="a_proc~~setulb~~CallsGraph_node12"><a xlink:href="../proc/freev.html" xlink:title="freev">
+<polygon fill="#d9534f" stroke="#d9534f" points="234,-192 180,-192 180,-168 234,-168 234,-192"/>
+<text text-anchor="middle" x="207" y="-177.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">freev</text>
+</a>
+</g>
+</g>
+<!-- proc~mainlb&#45;&gt;proc~freev -->
+<g id="proc~~setulb~~CallsGraph_edge11" class="edge">
+<title>proc~mainlb&#45;&gt;proc~freev</title>
+<path fill="none" stroke="#000000" d="M121.07,-333.7C128.09,-307.33 147.29,-244.23 180,-201 180.46,-200.39 180.94,-199.79 181.44,-199.2"/>
+<polygon fill="#000000" stroke="#000000" points="184.03,-201.56 188.65,-192.02 179.09,-196.6 184.03,-201.56"/>
+</g>
+<!-- proc~lnsrlb -->
+<g id="proc~~setulb~~CallsGraph_node13" class="node">
+<title>proc~lnsrlb</title>
+<g id="a_proc~~setulb~~CallsGraph_node13"><a xlink:href="../proc/lnsrlb.html" xlink:title="lnsrlb">
+<polygon fill="#d9534f" stroke="#d9534f" points="234,-604 180,-604 180,-580 234,-580 234,-604"/>
+<text text-anchor="middle" x="207" y="-589.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lnsrlb</text>
+</a>
+</g>
+</g>
+<!-- proc~mainlb&#45;&gt;proc~lnsrlb -->
+<g id="proc~~setulb~~CallsGraph_edge12" class="edge">
+<title>proc~mainlb&#45;&gt;proc~lnsrlb</title>
+<path fill="none" stroke="#000000" d="M118.75,-358.04C121.46,-393.51 133.25,-499.66 180,-571 180.34,-571.52 180.69,-572.02 181.06,-572.53"/>
+<polygon fill="#000000" stroke="#000000" points="178.65,-575.07 188.03,-580 183.77,-570.3 178.65,-575.07"/>
+</g>
+<!-- proc~matupd -->
+<g id="proc~~setulb~~CallsGraph_node14" class="node">
+<title>proc~matupd</title>
+<g id="a_proc~~setulb~~CallsGraph_node14"><a xlink:href="../proc/matupd.html" xlink:title="matupd">
+<polygon fill="#d9534f" stroke="#d9534f" points="234,-520 180,-520 180,-496 234,-496 234,-520"/>
+<text text-anchor="middle" x="207" y="-505.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">matupd</text>
+</a>
+</g>
+</g>
+<!-- proc~mainlb&#45;&gt;proc~matupd -->
+<g id="proc~~setulb~~CallsGraph_edge13" class="edge">
+<title>proc~mainlb&#45;&gt;proc~matupd</title>
+<path fill="none" stroke="#000000" d="M121.84,-358.02C130.07,-382.69 151.01,-440.21 180,-482 181.5,-484.16 183.18,-486.29 184.96,-488.36"/>
+<polygon fill="#000000" stroke="#000000" points="182.64,-491 192.05,-495.86 187.73,-486.19 182.64,-491"/>
+</g>
+<!-- proc~prn1lb -->
+<g id="proc~~setulb~~CallsGraph_node15" class="node">
+<title>proc~prn1lb</title>
+<g id="a_proc~~setulb~~CallsGraph_node15"><a xlink:href="../proc/prn1lb.html" xlink:title="prn1lb">
+<polygon fill="#d9534f" stroke="#d9534f" points="234,-150 180,-150 180,-126 234,-126 234,-150"/>
+<text text-anchor="middle" x="207" y="-135.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">prn1lb</text>
+</a>
+</g>
+</g>
+<!-- proc~mainlb&#45;&gt;proc~prn1lb -->
+<g id="proc~~setulb~~CallsGraph_edge14" class="edge">
+<title>proc~mainlb&#45;&gt;proc~prn1lb</title>
+<path fill="none" stroke="#000000" d="M119.65,-333.55C124.34,-301.88 140.08,-216.64 180,-159 180.35,-158.49 180.72,-157.99 181.1,-157.5"/>
+<polygon fill="#000000" stroke="#000000" points="183.79,-159.74 188.16,-150.09 178.73,-154.91 183.79,-159.74"/>
+</g>
+<!-- proc~prn2lb -->
+<g id="proc~~setulb~~CallsGraph_node16" class="node">
+<title>proc~prn2lb</title>
+<g id="a_proc~~setulb~~CallsGraph_node16"><a xlink:href="../proc/prn2lb.html" xlink:title="prn2lb">
+<polygon fill="#d9534f" stroke="#d9534f" points="234,-108 180,-108 180,-84 234,-84 234,-108"/>
+<text text-anchor="middle" x="207" y="-93.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">prn2lb</text>
+</a>
+</g>
+</g>
+<!-- proc~mainlb&#45;&gt;proc~prn2lb -->
+<g id="proc~~setulb~~CallsGraph_edge15" class="edge">
+<title>proc~mainlb&#45;&gt;proc~prn2lb</title>
+<path fill="none" stroke="#000000" d="M118.69,-333.75C121.24,-297.65 132.64,-189.62 180,-117 180.26,-116.6 180.53,-116.2 180.81,-115.81"/>
+<polygon fill="#000000" stroke="#000000" points="183.58,-117.97 187.75,-108.23 178.42,-113.24 183.58,-117.97"/>
+</g>
+<!-- proc~prn3lb -->
+<g id="proc~~setulb~~CallsGraph_node17" class="node">
+<title>proc~prn3lb</title>
+<g id="a_proc~~setulb~~CallsGraph_node17"><a xlink:href="../proc/prn3lb.html" xlink:title="prn3lb">
+<polygon fill="#d9534f" stroke="#d9534f" points="234,-66 180,-66 180,-42 234,-42 234,-66"/>
+<text text-anchor="middle" x="207" y="-51.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">prn3lb</text>
+</a>
+</g>
+</g>
+<!-- proc~mainlb&#45;&gt;proc~prn3lb -->
+<g id="proc~~setulb~~CallsGraph_edge16" class="edge">
+<title>proc~mainlb&#45;&gt;proc~prn3lb</title>
+<path fill="none" stroke="#000000" d="M118.04,-333.87C118.7,-293.73 125.17,-162.82 180,-75 180.25,-74.59 180.52,-74.19 180.79,-73.8"/>
+<polygon fill="#000000" stroke="#000000" points="183.57,-75.94 187.65,-66.16 178.36,-71.27 183.57,-75.94"/>
+</g>
+<!-- proc~projgr -->
+<g id="proc~~setulb~~CallsGraph_node18" class="node">
+<title>proc~projgr</title>
+<g id="a_proc~~setulb~~CallsGraph_node18"><a xlink:href="../proc/projgr.html" xlink:title="projgr">
+<polygon fill="#d9534f" stroke="#d9534f" points="234,-24 180,-24 180,0 234,0 234,-24"/>
+<text text-anchor="middle" x="207" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">projgr</text>
+</a>
+</g>
+</g>
+<!-- proc~mainlb&#45;&gt;proc~projgr -->
+<g id="proc~~setulb~~CallsGraph_edge17" class="edge">
+<title>proc~mainlb&#45;&gt;proc~projgr</title>
+<path fill="none" stroke="#000000" d="M117.56,-333.89C116.51,-289.95 117.7,-136.13 180,-33 180.25,-32.59 180.51,-32.19 180.77,-31.78"/>
+<polygon fill="#000000" stroke="#000000" points="183.56,-33.92 187.57,-24.12 178.32,-29.28 183.56,-33.92"/>
+</g>
+<!-- proc~subsm -->
+<g id="proc~~setulb~~CallsGraph_node19" class="node">
+<title>proc~subsm</title>
+<g id="a_proc~~setulb~~CallsGraph_node19"><a xlink:href="../proc/subsm.html" xlink:title="subsm">
+<polygon fill="#d9534f" stroke="#d9534f" points="234,-398 180,-398 180,-374 234,-374 234,-398"/>
+<text text-anchor="middle" x="207" y="-383.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">subsm</text>
+</a>
+</g>
+</g>
+<!-- proc~mainlb&#45;&gt;proc~subsm -->
+<g id="proc~~setulb~~CallsGraph_edge18" class="edge">
+<title>proc~mainlb&#45;&gt;proc~subsm</title>
+<path fill="none" stroke="#000000" d="M144.4,-358C152.66,-361.75 161.9,-365.95 170.66,-369.94"/>
+<polygon fill="#000000" stroke="#000000" points="169.37,-373.19 179.92,-374.14 172.26,-366.82 169.37,-373.19"/>
+</g>
+<!-- proc~cauchy&#45;&gt;proc~dcopy -->
+<g id="proc~~setulb~~CallsGraph_edge21" class="edge">
+<title>proc~cauchy&#45;&gt;proc~dcopy</title>
+<path fill="none" stroke="#000000" d="M214.47,-318.06C229.35,-345.78 266.13,-414.33 284.77,-449.08"/>
+<polygon fill="#000000" stroke="#000000" points="281.71,-450.77 289.52,-457.92 287.88,-447.46 281.71,-450.77"/>
+</g>
+<!-- proc~cauchy&#45;&gt;proc~ddot -->
+<g id="proc~~setulb~~CallsGraph_edge22" class="edge">
+<title>proc~cauchy&#45;&gt;proc~ddot</title>
+<path fill="none" stroke="#000000" d="M234.06,-299.29C245.07,-296.78 258.08,-294.24 270,-293 336.07,-286.15 368.98,-284.16 414,-333 455,-377.48 469.14,-450.62 473.82,-487.39"/>
+<polygon fill="#000000" stroke="#000000" points="470.37,-488.03 474.98,-497.57 477.32,-487.23 470.37,-488.03"/>
+</g>
+<!-- proc~cauchy&#45;&gt;proc~dscal -->
+<g id="proc~~setulb~~CallsGraph_edge23" class="edge">
+<title>proc~cauchy&#45;&gt;proc~dscal</title>
+<path fill="none" stroke="#000000" d="M234.4,-308.4C242.39,-309.13 251.31,-309.94 259.82,-310.71"/>
+<polygon fill="#000000" stroke="#000000" points="259.64,-314.21 269.92,-311.63 260.28,-307.24 259.64,-314.21"/>
+</g>
+<!-- proc~bmv -->
+<g id="proc~~setulb~~CallsGraph_node20" class="node">
+<title>proc~bmv</title>
+<g id="a_proc~~setulb~~CallsGraph_node20"><a xlink:href="../proc/bmv.html" xlink:title="bmv">
+<polygon fill="#d9534f" stroke="#d9534f" points="324,-166 270,-166 270,-142 324,-142 324,-166"/>
+<text text-anchor="middle" x="297" y="-151.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">bmv</text>
+</a>
+</g>
+</g>
+<!-- proc~cauchy&#45;&gt;proc~bmv -->
+<g id="proc~~setulb~~CallsGraph_edge19" class="edge">
+<title>proc~cauchy&#45;&gt;proc~bmv</title>
+<path fill="none" stroke="#000000" d="M225.81,-293.89C228.84,-291.23 231.74,-288.23 234,-285 262.3,-244.59 243.88,-221.85 270,-180 271.36,-177.82 272.94,-175.68 274.62,-173.63"/>
+<polygon fill="#000000" stroke="#000000" points="277.27,-175.92 281.49,-166.21 272.13,-171.17 277.27,-175.92"/>
+</g>
+<!-- proc~daxpy -->
+<g id="proc~~setulb~~CallsGraph_node21" class="node">
+<title>proc~daxpy</title>
+<g id="a_proc~~setulb~~CallsGraph_node21"><a xlink:href="../proc/daxpy.html" xlink:title="daxpy">
+<polygon fill="#d9534f" stroke="#d9534f" points="504,-286 450,-286 450,-262 504,-262 504,-286"/>
+<text text-anchor="middle" x="477" y="-271.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">daxpy</text>
+</a>
+</g>
+</g>
+<!-- proc~cauchy&#45;&gt;proc~daxpy -->
+<g id="proc~~setulb~~CallsGraph_edge20" class="edge">
+<title>proc~cauchy&#45;&gt;proc~daxpy</title>
+<path fill="none" stroke="#000000" d="M225.2,-293.86C228.36,-291.17 231.45,-288.16 234,-285 256.43,-257.12 239.57,-231.81 270,-213 329.86,-176.01 413.37,-226.66 453.16,-255.88"/>
+<polygon fill="#000000" stroke="#000000" points="451.09,-258.7 461.19,-261.92 455.3,-253.11 451.09,-258.7"/>
+</g>
+<!-- proc~hpsolb -->
+<g id="proc~~setulb~~CallsGraph_node25" class="node">
+<title>proc~hpsolb</title>
+<g id="a_proc~~setulb~~CallsGraph_node25"><a xlink:href="../proc/hpsolb.html" xlink:title="hpsolb">
+<polygon fill="#d9534f" stroke="#d9534f" points="324,-246 270,-246 270,-222 324,-222 324,-246"/>
+<text text-anchor="middle" x="297" y="-231.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">hpsolb</text>
+</a>
+</g>
+</g>
+<!-- proc~cauchy&#45;&gt;proc~hpsolb -->
+<g id="proc~~setulb~~CallsGraph_edge24" class="edge">
+<title>proc~cauchy&#45;&gt;proc~hpsolb</title>
+<path fill="none" stroke="#000000" d="M223.14,-293.81C226.71,-290.93 230.49,-287.86 234,-285 247.04,-274.37 261.57,-262.43 273.28,-252.77"/>
+<polygon fill="#000000" stroke="#000000" points="275.76,-255.26 281.25,-246.2 271.31,-249.86 275.76,-255.26"/>
+</g>
+<!-- proc~cmprlb&#45;&gt;proc~bmv -->
+<g id="proc~~setulb~~CallsGraph_edge25" class="edge">
+<title>proc~cmprlb&#45;&gt;proc~bmv</title>
+<path fill="none" stroke="#000000" d="M224.79,-251.98C228.05,-249.23 231.29,-246.18 234,-243 254.9,-218.44 250.43,-205.63 270,-180 271.63,-177.87 273.42,-175.74 275.28,-173.66"/>
+<polygon fill="#000000" stroke="#000000" points="278.18,-175.7 282.59,-166.07 273.13,-170.85 278.18,-175.7"/>
+</g>
+<!-- proc~formk&#45;&gt;proc~dcopy -->
+<g id="proc~~setulb~~CallsGraph_edge26" class="edge">
+<title>proc~formk&#45;&gt;proc~dcopy</title>
+<path fill="none" stroke="#000000" d="M233.45,-440.15C242.21,-444.33 252.17,-449.08 261.52,-453.54"/>
+<polygon fill="#000000" stroke="#000000" points="260.07,-456.73 270.6,-457.88 263.09,-450.41 260.07,-456.73"/>
+</g>
+<!-- proc~formk&#45;&gt;proc~ddot -->
+<g id="proc~~setulb~~CallsGraph_edge27" class="edge">
+<title>proc~formk&#45;&gt;proc~ddot</title>
+<path fill="none" stroke="#000000" d="M234.15,-431.19C257.89,-434.45 293.71,-440.28 324,-449 365.3,-460.89 410.81,-480 441.17,-493.67"/>
+<polygon fill="#000000" stroke="#000000" points="439.92,-496.94 450.47,-497.9 442.82,-490.57 439.92,-496.94"/>
+</g>
+<!-- proc~dpofa -->
+<g id="proc~~setulb~~CallsGraph_node23" class="node">
+<title>proc~dpofa</title>
+<g id="a_proc~~setulb~~CallsGraph_node23"><a xlink:href="../proc/dpofa.html" xlink:title="dpofa">
+<polygon fill="#d9534f" stroke="#d9534f" points="324,-562 270,-562 270,-538 324,-538 324,-562"/>
+<text text-anchor="middle" x="297" y="-547.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">dpofa</text>
+</a>
+</g>
+</g>
+<!-- proc~formk&#45;&gt;proc~dpofa -->
+<g id="proc~~setulb~~CallsGraph_edge28" class="edge">
+<title>proc~formk&#45;&gt;proc~dpofa</title>
+<path fill="none" stroke="#000000" d="M216.76,-440.14C231.85,-461.06 262.89,-504.1 281.33,-529.66"/>
+<polygon fill="#000000" stroke="#000000" points="278.59,-531.84 287.28,-537.91 284.26,-527.75 278.59,-531.84"/>
+</g>
+<!-- proc~dtrsl -->
+<g id="proc~~setulb~~CallsGraph_node24" class="node">
+<title>proc~dtrsl</title>
+<g id="a_proc~~setulb~~CallsGraph_node24"><a xlink:href="../proc/dtrsl.html" xlink:title="dtrsl">
+<polygon fill="#d9534f" stroke="#d9534f" points="414,-366 360,-366 360,-342 414,-342 414,-366"/>
+<text text-anchor="middle" x="387" y="-351.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">dtrsl</text>
+</a>
+</g>
+</g>
+<!-- proc~formk&#45;&gt;proc~dtrsl -->
+<g id="proc~~setulb~~CallsGraph_edge29" class="edge">
+<title>proc~formk&#45;&gt;proc~dtrsl</title>
+<path fill="none" stroke="#000000" d="M234.26,-417.08C264.98,-404.31 315.99,-383.11 350.29,-368.85"/>
+<polygon fill="#000000" stroke="#000000" points="352.03,-371.91 359.92,-364.84 349.34,-365.45 352.03,-371.91"/>
+</g>
+<!-- proc~formt&#45;&gt;proc~dpofa -->
+<g id="proc~~setulb~~CallsGraph_edge30" class="edge">
+<title>proc~formt&#45;&gt;proc~dpofa</title>
+<path fill="none" stroke="#000000" d="M234.4,-550C242.39,-550 251.31,-550 259.82,-550"/>
+<polygon fill="#000000" stroke="#000000" points="259.92,-553.5 269.92,-550 259.92,-546.5 259.92,-553.5"/>
+</g>
+<!-- proc~lnsrlb&#45;&gt;proc~dcopy -->
+<g id="proc~~setulb~~CallsGraph_edge31" class="edge">
+<title>proc~lnsrlb&#45;&gt;proc~dcopy</title>
+<path fill="none" stroke="#000000" d="M224.71,-579.91C227.98,-577.17 231.24,-574.14 234,-571 255.81,-546.18 274.65,-512.76 285.67,-491.3"/>
+<polygon fill="#000000" stroke="#000000" points="288.94,-492.58 290.29,-482.08 282.68,-489.44 288.94,-492.58"/>
+</g>
+<!-- proc~lnsrlb&#45;&gt;proc~ddot -->
+<g id="proc~~setulb~~CallsGraph_edge33" class="edge">
+<title>proc~lnsrlb&#45;&gt;proc~ddot</title>
+<path fill="none" stroke="#000000" d="M234.05,-603.77C275.19,-620.46 356.42,-645.55 414,-613 444.68,-595.66 461.87,-556.37 470.01,-531.64"/>
+<polygon fill="#000000" stroke="#000000" points="473.36,-532.63 472.95,-522.04 466.67,-530.57 473.36,-532.63"/>
+</g>
+<!-- proc~dcsrch -->
+<g id="proc~~setulb~~CallsGraph_node22" class="node">
+<title>proc~dcsrch</title>
+<g id="a_proc~~setulb~~CallsGraph_node22"><a xlink:href="../proc/dcsrch.html" xlink:title="dcsrch">
+<polygon fill="#d9534f" stroke="#d9534f" points="324,-604 270,-604 270,-580 324,-580 324,-604"/>
+<text text-anchor="middle" x="297" y="-589.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">dcsrch</text>
+</a>
+</g>
+</g>
+<!-- proc~lnsrlb&#45;&gt;proc~dcsrch -->
+<g id="proc~~setulb~~CallsGraph_edge32" class="edge">
+<title>proc~lnsrlb&#45;&gt;proc~dcsrch</title>
+<path fill="none" stroke="#000000" d="M234.4,-592C242.39,-592 251.31,-592 259.82,-592"/>
+<polygon fill="#000000" stroke="#000000" points="259.92,-595.5 269.92,-592 259.92,-588.5 259.92,-595.5"/>
+</g>
+<!-- proc~matupd&#45;&gt;proc~dcopy -->
+<g id="proc~~setulb~~CallsGraph_edge34" class="edge">
+<title>proc~matupd&#45;&gt;proc~dcopy</title>
+<path fill="none" stroke="#000000" d="M234.4,-496.6C242.66,-493.03 251.9,-489.04 260.66,-485.26"/>
+<polygon fill="#000000" stroke="#000000" points="262.13,-488.44 269.92,-481.26 259.35,-482.01 262.13,-488.44"/>
+</g>
+<!-- proc~matupd&#45;&gt;proc~ddot -->
+<g id="proc~~setulb~~CallsGraph_edge35" class="edge">
+<title>proc~matupd&#45;&gt;proc~ddot</title>
+<path fill="none" stroke="#000000" d="M234.18,-508.2C282.22,-508.55 384.51,-509.32 439.39,-509.73"/>
+<polygon fill="#000000" stroke="#000000" points="439.68,-513.23 449.71,-509.8 439.74,-506.23 439.68,-513.23"/>
+</g>
+<!-- proc~subsm&#45;&gt;proc~dcopy -->
+<g id="proc~~setulb~~CallsGraph_edge36" class="edge">
+<title>proc~subsm&#45;&gt;proc~dcopy</title>
+<path fill="none" stroke="#000000" d="M223.64,-398.15C227.11,-400.98 230.73,-404.04 234,-407 249.44,-421 265.95,-437.87 278.04,-450.64"/>
+<polygon fill="#000000" stroke="#000000" points="275.56,-453.1 284.96,-457.99 280.66,-448.3 275.56,-453.1"/>
+</g>
+<!-- proc~subsm&#45;&gt;proc~dscal -->
+<g id="proc~~setulb~~CallsGraph_edge37" class="edge">
+<title>proc~subsm&#45;&gt;proc~dscal</title>
+<path fill="none" stroke="#000000" d="M222.93,-373.79C236.79,-362.44 257.62,-345.4 273.5,-332.41"/>
+<polygon fill="#000000" stroke="#000000" points="275.77,-335.07 281.29,-326.03 271.34,-329.66 275.77,-335.07"/>
+</g>
+<!-- proc~subsm&#45;&gt;proc~dtrsl -->
+<g id="proc~~setulb~~CallsGraph_edge38" class="edge">
+<title>proc~subsm&#45;&gt;proc~dtrsl</title>
+<path fill="none" stroke="#000000" d="M234.26,-381.28C264.85,-375.78 315.55,-366.67 349.84,-360.5"/>
+<polygon fill="#000000" stroke="#000000" points="350.69,-363.9 359.92,-358.69 349.46,-357.01 350.69,-363.9"/>
+</g>
+<!-- proc~bmv&#45;&gt;proc~dtrsl -->
+<g id="proc~~setulb~~CallsGraph_edge39" class="edge">
+<title>proc~bmv&#45;&gt;proc~dtrsl</title>
+<path fill="none" stroke="#000000" d="M303.38,-166.2C308.64,-178.13 316.87,-196.81 324,-213 342.63,-255.32 364.38,-304.8 376.53,-332.46"/>
+<polygon fill="#000000" stroke="#000000" points="373.47,-334.18 380.7,-341.93 379.88,-331.36 373.47,-334.18"/>
+</g>
+<!-- proc~dcstep -->
+<g id="proc~~setulb~~CallsGraph_node26" class="node">
+<title>proc~dcstep</title>
+<g id="a_proc~~setulb~~CallsGraph_node26"><a xlink:href="../proc/dcstep.html" xlink:title="dcstep">
+<polygon fill="#d9534f" stroke="#d9534f" points="414,-604 360,-604 360,-580 414,-580 414,-604"/>
+<text text-anchor="middle" x="387" y="-589.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">dcstep</text>
+</a>
+</g>
+</g>
+<!-- proc~dcsrch&#45;&gt;proc~dcstep -->
+<g id="proc~~setulb~~CallsGraph_edge40" class="edge">
+<title>proc~dcsrch&#45;&gt;proc~dcstep</title>
+<path fill="none" stroke="#000000" d="M324.4,-592C332.39,-592 341.31,-592 349.82,-592"/>
+<polygon fill="#000000" stroke="#000000" points="349.92,-595.5 359.92,-592 349.92,-588.5 349.92,-595.5"/>
+</g>
+<!-- proc~dpofa&#45;&gt;proc~ddot -->
+<g id="proc~~setulb~~CallsGraph_edge41" class="edge">
+<title>proc~dpofa&#45;&gt;proc~ddot</title>
+<path fill="none" stroke="#000000" d="M324.26,-544.13C347.78,-538.86 383.19,-530.93 414,-524 422.34,-522.12 431.32,-520.1 439.77,-518.19"/>
+<polygon fill="#000000" stroke="#000000" points="440.77,-521.55 449.76,-515.94 439.23,-514.72 440.77,-521.55"/>
+</g>
+<!-- proc~dtrsl&#45;&gt;proc~ddot -->
+<g id="proc~~setulb~~CallsGraph_edge43" class="edge">
+<title>proc~dtrsl&#45;&gt;proc~ddot</title>
+<path fill="none" stroke="#000000" d="M394.91,-366.24C409.88,-392.78 445.48,-455.9 464.13,-488.96"/>
+<polygon fill="#000000" stroke="#000000" points="461.17,-490.83 469.13,-497.82 467.26,-487.39 461.17,-490.83"/>
+</g>
+<!-- proc~dtrsl&#45;&gt;proc~daxpy -->
+<g id="proc~~setulb~~CallsGraph_edge42" class="edge">
+<title>proc~dtrsl&#45;&gt;proc~daxpy</title>
+<path fill="none" stroke="#000000" d="M401.37,-341.85C415.66,-328.85 438.53,-308.07 455.18,-292.92"/>
+<polygon fill="#000000" stroke="#000000" points="457.75,-295.32 462.8,-286 453.04,-290.14 457.75,-295.32"/>
+</g>
+</g>
+</svg>
+</div>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#CallsGraph-help-text">Help</a>
+          </div>
+          <div class="modal fade" id="CallsGraph-help-text" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+<p>Nodes of different colours represent the following: </p>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.43.0 (0)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="641pt" height="28pt"
+ viewBox="0.00 0.00 641.00 27.51" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(0.86 0.86) rotate(0) translate(4 28)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-28 741.5,-28 741.5,4 -4,4"/>
+<!-- Subroutine -->
+<g id="node1" class="node">
+<title>Subroutine</title>
+<polygon fill="#d9534f" stroke="#d9534f" points="70,-24 0,-24 0,0 70,0 70,-24"/>
+<text text-anchor="middle" x="35" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
+</g>
+<!-- Function -->
+<g id="node2" class="node">
+<title>Function</title>
+<polygon fill="#d94e8f" stroke="#d94e8f" points="146,-24 88,-24 88,0 146,0 146,-24"/>
+<text text-anchor="middle" x="117" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
+</g>
+<!-- Interface -->
+<g id="node3" class="node">
+<title>Interface</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="225.5,-24 164.5,-24 164.5,0 225.5,0 225.5,-24"/>
+<text text-anchor="middle" x="195" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Interface</text>
+</g>
+<!-- Type Bound Procedure -->
+<g id="node4" class="node">
+<title>Type Bound Procedure</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="374,-24 244,-24 244,0 374,0 374,-24"/>
+<text text-anchor="middle" x="309" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Type Bound Procedure</text>
+</g>
+<!-- Unknown Procedure Type -->
+<g id="node5" class="node">
+<title>Unknown Procedure Type</title>
+<polygon fill="#777777" stroke="#777777" points="537.5,-24 392.5,-24 392.5,0 537.5,0 537.5,-24"/>
+<text text-anchor="middle" x="465" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Unknown Procedure Type</text>
+</g>
+<!-- Program -->
+<g id="node6" class="node">
+<title>Program</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="614,-24 556,-24 556,0 614,0 614,-24"/>
+<text text-anchor="middle" x="585" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node7" class="node">
+<title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="737.5,-24 632.5,-24 632.5,0 737.5,0 737.5,-24"/>
+<text text-anchor="middle" x="685" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+<p>Solid arrows point from a procedure to one which it calls. Dashed 
+arrows point from an interface to procedures which implement that interface.
+This could include the module procedures in a generic interface or the
+implementation in a submodule of an interface in a parent module.
+</p>
+ </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+
+
+    
+    
+
+    
+    
+
+
+
+    
+    <section>
+    <h2><span class="anchor" id="src"></span>Source Code</h2>
+    <div class="hl codehilite"><pre><span></span><span class="w">      </span><span class="k">subroutine </span><span class="n">setulb</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">l</span><span class="p">,</span><span class="n">u</span><span class="p">,</span><span class="n">Nbd</span><span class="p">,</span><span class="n">f</span><span class="p">,</span><span class="n">g</span><span class="p">,</span><span class="n">Factr</span><span class="p">,</span><span class="n">Pgtol</span><span class="p">,</span><span class="n">Wa</span><span class="p">,</span><span class="n">Iwa</span><span class="p">,</span><span class="n">Task</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">                        </span><span class="n">Iprint</span><span class="p">,</span><span class="n">Csave</span><span class="p">,</span><span class="n">Lsave</span><span class="p">,</span><span class="n">Isave</span><span class="p">,</span><span class="n">Dsave</span><span class="p">,</span><span class="n">iteration_file</span><span class="p">)</span>
+<span class="w">      </span><span class="k">implicit none</span>
+
+<span class="k">      </span><span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="c">!! the dimension of the problem (the number of variables).</span>
+<span class="w">      </span><span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">m</span><span class="w"> </span><span class="c">!! the maximum number of variable metric corrections</span>
+<span class="w">                              </span><span class="c">!! used to define the limited memory matrix.</span>
+<span class="w">                              </span><span class="c">!! Values of `m &lt; 3`  are</span>
+<span class="w">                              </span><span class="c">!! not recommended, and large values of `m` can result in excessive</span>
+<span class="w">                              </span><span class="c">!! computing time. The range  `3 &lt;= m &lt;= 20` is recommended.</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">x</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="c">!! On initial entry</span>
+<span class="w">                                     </span><span class="c">!! it must be set by the user to the values of the initial</span>
+<span class="w">                                     </span><span class="c">!! estimate of the solution vector.  Upon successful exit, it</span>
+<span class="w">                                     </span><span class="c">!! contains the values of the variables at the best point</span>
+<span class="w">                                     </span><span class="c">!! found (usually an approximate solution).</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">l</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="c">!! the lower bound on `x`. If</span>
+<span class="w">                                  </span><span class="c">!! the `i`-th variable has no lower bound,</span>
+<span class="w">                                  </span><span class="c">!! `l(i)` need not be defined.</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">u</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="c">!! the upper bound on `x`. If</span>
+<span class="w">                                  </span><span class="c">!! the `i`-th variable has no upper bound,</span>
+<span class="w">                                  </span><span class="c">!! `u(i)` need not be defined.</span>
+<span class="w">      </span><span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Nbd</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="c">!! nbd represents the type of bounds imposed on the</span>
+<span class="w">                                   </span><span class="c">!! variables, and must be specified as follows:</span>
+<span class="w">                                   </span><span class="c">!!</span>
+<span class="w">                                   </span><span class="c">!!  * `nbd(i)=0` if `x(i)` is unbounded</span>
+<span class="w">                                   </span><span class="c">!!  * `nbd(i)=1` if `x(i)` has only a lower bound</span>
+<span class="w">                                   </span><span class="c">!!  * `nbd(i)=2` if `x(i)` has both lower and upper bounds</span>
+<span class="w">                                   </span><span class="c">!!  * `nbd(i)=3` if `x(i)` has only an upper bound</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">f</span><span class="w"> </span><span class="c">!! On first entry `f` is unspecified.</span>
+<span class="w">                                  </span><span class="c">!! On final exit `f` is the value of the function at x.</span>
+<span class="w">                                  </span><span class="c">!! If the [[setulb]] returns</span>
+<span class="w">                                  </span><span class="c">!! with `task(1:2)= &#39;FG&#39;`, then `f` must be set by the user to</span>
+<span class="w">                                  </span><span class="c">!! contain the value of the function at the point `x`.</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">g</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="c">!! On first entry `g` is unspecified.</span>
+<span class="w">                                     </span><span class="c">!! On final exit `g` is the value of the gradient at `x`.</span>
+<span class="w">                                     </span><span class="c">!! If the [[setulb]]</span>
+<span class="w">                                     </span><span class="c">!! returns with `task(1:2)= &#39;FG&#39;`, then `g` must be set by the user to</span>
+<span class="w">                                     </span><span class="c">!! contain the components of the gradient at the point `x`.</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Factr</span><span class="w"> </span><span class="c">!! A tolerance in the termination test for the algorithm.</span>
+<span class="w">                                   </span><span class="c">!! The iteration will stop when:</span>
+<span class="w">                                   </span><span class="c">!!</span>
+<span class="w">                                   </span><span class="c">!! `(f^k - f^{k+1})/max{|f^k|,|f^{k+1}|,1} &lt;= factr*epsmch`</span>
+<span class="w">                                   </span><span class="c">!!</span>
+<span class="w">                                   </span><span class="c">!! where `epsmch` is the machine precision.</span>
+<span class="w">                                   </span><span class="c">!! Typical values for `factr` on a computer</span>
+<span class="w">                                   </span><span class="c">!! with 15 digits of accuracy in real(wp) are:</span>
+<span class="w">                                   </span><span class="c">!!</span>
+<span class="w">                                   </span><span class="c">!!  * `factr=1.0e+12` for low accuracy</span>
+<span class="w">                                   </span><span class="c">!!  * `factr=1.0e+7`  for moderate accuracy</span>
+<span class="w">                                   </span><span class="c">!!  * `factr=1.0e+1`  for extremely high accuracy</span>
+<span class="w">                                   </span><span class="c">!!</span>
+<span class="w">                                   </span><span class="c">!! The user can suppress this termination test by setting `factr=0`.</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Pgtol</span><span class="w"> </span><span class="c">!! The iteration will stop when:</span>
+<span class="w">                                   </span><span class="c">!!</span>
+<span class="w">                                   </span><span class="c">!! `max{|proj g_i | i = 1, ..., n} &lt;= pgtol`</span>
+<span class="w">                                   </span><span class="c">!!</span>
+<span class="w">                                   </span><span class="c">!! where `pg_i` is the `i`th component of the projected gradient.</span>
+<span class="w">                                   </span><span class="c">!! The user can suppress this termination test by setting `pgtol=0`.</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Wa</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">m</span><span class="o">*</span><span class="n">n</span><span class="o">+</span><span class="mi">5</span><span class="o">*</span><span class="n">n</span><span class="o">+</span><span class="mi">11</span><span class="o">*</span><span class="n">m</span><span class="o">*</span><span class="n">m</span><span class="o">+</span><span class="mi">8</span><span class="o">*</span><span class="n">m</span><span class="p">)</span><span class="w"> </span><span class="c">!! working array of length `(2mmax + 5)nmax + 11mmax^2 + 8mmax`.</span>
+<span class="w">                                           </span><span class="c">!! This array must not be altered by the user.</span>
+<span class="w">      </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Iwa</span><span class="p">(</span><span class="mi">3</span><span class="o">*</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="c">!! an integer working array of length `3nmax`.</span>
+<span class="w">                          </span><span class="c">!! This array must not be altered by the user.</span>
+<span class="w">      </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="mi">60</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Task</span><span class="w"> </span><span class="c">!! Indicates the current job when entering and quitting this subroutine:</span>
+<span class="w">                                              </span><span class="c">!!</span>
+<span class="w">                                              </span><span class="c">!!  * On first entry, it must be set to &#39;START&#39;.</span>
+<span class="w">                                              </span><span class="c">!!  * On a return with task(1:2)=&#39;FG&#39;, the user must evaluate the</span>
+<span class="w">                                              </span><span class="c">!!    function f and gradient g at the returned value of x.</span>
+<span class="w">                                              </span><span class="c">!!  * On a return with task(1:5)=&#39;NEW_X&#39;, an iteration of the</span>
+<span class="w">                                              </span><span class="c">!!    algorithm has concluded, and f and g contain f(x) and g(x)</span>
+<span class="w">                                              </span><span class="c">!!    respectively.  The user can decide whether to continue or stop</span>
+<span class="w">                                              </span><span class="c">!!    the iteration.</span>
+<span class="w">                                              </span><span class="c">!!  * When task(1:4)=&#39;CONV&#39;, the termination test in L-BFGS-B has been</span>
+<span class="w">                                              </span><span class="c">!!    satisfied;</span>
+<span class="w">                                              </span><span class="c">!!  * When task(1:4)=&#39;ABNO&#39;, the routine has terminated abnormally</span>
+<span class="w">                                              </span><span class="c">!!    without being able to satisfy the termination conditions,</span>
+<span class="w">                                              </span><span class="c">!!    x contains the best approximation found,</span>
+<span class="w">                                              </span><span class="c">!!    f and g contain f(x) and g(x) respectively;</span>
+<span class="w">                                              </span><span class="c">!!  * When task(1:5)=&#39;ERROR&#39;, the routine has detected an error in the</span>
+<span class="w">                                              </span><span class="c">!!    input parameters;</span>
+<span class="w">                                              </span><span class="c">!!</span>
+<span class="w">                                              </span><span class="c">!!  On exit with task = &#39;CONV&#39;, &#39;ABNO&#39; or &#39;ERROR&#39;, the variable task</span>
+<span class="w">                                              </span><span class="c">!!  contains additional information that the user can print.</span>
+<span class="w">                                              </span><span class="c">!!</span>
+<span class="w">                                              </span><span class="c">!! This array should not be altered unless the user wants to</span>
+<span class="w">                                              </span><span class="c">!! stop the run for some reason.  See driver2 or driver3</span>
+<span class="w">                                              </span><span class="c">!! for a detailed explanation on how to stop the run</span>
+<span class="w">                                              </span><span class="c">!! by assigning task(1:4)=&#39;STOP&#39; in the driver.</span>
+<span class="w">      </span><span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Iprint</span><span class="w"> </span><span class="c">!! Controls the frequency and type of output generated:</span>
+<span class="w">                                   </span><span class="c">!!</span>
+<span class="w">                                   </span><span class="c">!!  * `iprint&lt;0   ` no output is generated</span>
+<span class="w">                                   </span><span class="c">!!  * `iprint=0   ` print only one line at the last iteration</span>
+<span class="w">                                   </span><span class="c">!!  * `0&lt;iprint&lt;99` print also `f` and `|proj g|` every `iprint` iterations</span>
+<span class="w">                                   </span><span class="c">!!  * `iprint=99  ` print details of every iteration except `n`-vectors</span>
+<span class="w">                                   </span><span class="c">!!  * `iprint=100 ` print also the changes of active set and final `x`</span>
+<span class="w">                                   </span><span class="c">!!  * `iprint&gt;100 ` print details of every iteration including `x` and `g`</span>
+<span class="w">                                   </span><span class="c">!!</span>
+<span class="w">                                   </span><span class="c">!! When `iprint &gt; 0`, the file `iterate.dat` will be created to</span>
+<span class="w">                                   </span><span class="c">!! summarize the iteration.</span>
+<span class="w">      </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="mi">60</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Csave</span><span class="w"> </span><span class="c">!! working string</span>
+<span class="w">      </span><span class="kt">logical</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Lsave</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="w"> </span><span class="c">!! A logical working array of dimension 4.</span>
+<span class="w">                          </span><span class="c">!! On exit with `task = &#39;NEW_X&#39;`, the following information is available:</span>
+<span class="w">                          </span><span class="c">!!</span>
+<span class="w">                          </span><span class="c">!!  * If `lsave(1) = .true.` then the initial `x` did not satisfy the bounds</span>
+<span class="w">                          </span><span class="c">!!    and `x` has been replaced by its projection in the feasible set</span>
+<span class="w">                          </span><span class="c">!!  * If `lsave(2) = .true.` then the problem is constrained</span>
+<span class="w">                          </span><span class="c">!!  * If `lsave(3) = .true.` then each variable has upper and lower bounds</span>
+<span class="w">      </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Isave</span><span class="p">(</span><span class="mi">44</span><span class="p">)</span><span class="w"> </span><span class="c">!! An integer working array of dimension 44.</span>
+<span class="w">                           </span><span class="c">!! On exit with &#39;task&#39; = NEW_X, the following information is available:</span>
+<span class="w">                           </span><span class="c">!!</span>
+<span class="w">                           </span><span class="c">!!  * isave(22) = the total number of intervals explored in the</span>
+<span class="w">                           </span><span class="c">!!    search of Cauchy points;</span>
+<span class="w">                           </span><span class="c">!!  * isave(26) = the total number of skipped BFGS updates before</span>
+<span class="w">                           </span><span class="c">!!    the current iteration;</span>
+<span class="w">                           </span><span class="c">!!  * isave(30) = the number of current iteration;</span>
+<span class="w">                           </span><span class="c">!!  * isave(31) = the total number of BFGS updates prior the current</span>
+<span class="w">                           </span><span class="c">!!    iteration;</span>
+<span class="w">                           </span><span class="c">!!  * isave(33) = the number of intervals explored in the search of</span>
+<span class="w">                           </span><span class="c">!!    Cauchy point in the current iteration;</span>
+<span class="w">                           </span><span class="c">!!  * isave(34) = the total number of function and gradient</span>
+<span class="w">                           </span><span class="c">!!    evaluations;</span>
+<span class="w">                           </span><span class="c">!!  * isave(36) = the number of function value or gradient</span>
+<span class="w">                           </span><span class="c">!!    evaluations in the current iteration;</span>
+<span class="w">                           </span><span class="c">!!  * if isave(37) = 0  then the subspace argmin is within the box;</span>
+<span class="w">                           </span><span class="c">!!  * if isave(37) = 1  then the subspace argmin is beyond the box;</span>
+<span class="w">                           </span><span class="c">!!  * isave(38) = the number of free variables in the current</span>
+<span class="w">                           </span><span class="c">!!    iteration;</span>
+<span class="w">                           </span><span class="c">!!  * isave(39) = the number of active constraints in the current</span>
+<span class="w">                           </span><span class="c">!!    iteration;</span>
+<span class="w">                           </span><span class="c">!!  * n + 1 - isave(40) = the number of variables leaving the set of</span>
+<span class="w">                           </span><span class="c">!!    active constraints in the current iteration;</span>
+<span class="w">                           </span><span class="c">!!  * isave(41) = the number of variables entering the set of active</span>
+<span class="w">                           </span><span class="c">!!    constraints in the current iteration.</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Dsave</span><span class="p">(</span><span class="mi">29</span><span class="p">)</span><span class="w"> </span><span class="c">!! A real(wp) working array of dimension 29.</span>
+<span class="w">                            </span><span class="c">!! On exit with &#39;task&#39; = NEW_X, the following information is available:</span>
+<span class="w">                            </span><span class="c">!!</span>
+<span class="w">                            </span><span class="c">!!  * dsave(1) = current &#39;theta&#39; in the BFGS matrix;</span>
+<span class="w">                            </span><span class="c">!!  * dsave(2) = f(x) in the previous iteration;</span>
+<span class="w">                            </span><span class="c">!!  * dsave(3) = factr*epsmch;</span>
+<span class="w">                            </span><span class="c">!!  * dsave(4) = 2-norm of the line search direction vector;</span>
+<span class="w">                            </span><span class="c">!!  * dsave(5) = the machine precision epsmch generated by the code;</span>
+<span class="w">                            </span><span class="c">!!  * dsave(7) = the accumulated time spent on searching for</span>
+<span class="w">                            </span><span class="c">!!    Cauchy points;</span>
+<span class="w">                            </span><span class="c">!!  * dsave(8) = the accumulated time spent on</span>
+<span class="w">                            </span><span class="c">!!    subspace minimization;</span>
+<span class="w">                            </span><span class="c">!!  * dsave(9) = the accumulated time spent on line search;</span>
+<span class="w">                            </span><span class="c">!!  * dsave(11) = the slope of the line search function at</span>
+<span class="w">                            </span><span class="c">!!    the current point of line search;</span>
+<span class="w">                            </span><span class="c">!!  * dsave(12) = the maximum relative step length imposed in</span>
+<span class="w">                            </span><span class="c">!!    line search;</span>
+<span class="w">                            </span><span class="c">!!  * dsave(13) = the infinity norm of the projected gradient;</span>
+<span class="w">                            </span><span class="c">!!  * dsave(14) = the relative step length in the line search;</span>
+<span class="w">                            </span><span class="c">!!  * dsave(15) = the slope of the line search function at</span>
+<span class="w">                            </span><span class="c">!!    the starting point of the line search;</span>
+<span class="w">                            </span><span class="c">!!  * dsave(16) = the square of the 2-norm of the line search</span>
+<span class="w">                            </span><span class="c">!!    direction vector.</span>
+<span class="w">      </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">),</span><span class="k">optional</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">iteration_file</span><span class="w"> </span><span class="c">!! The name of the iteration file if used (`Iprint&gt;=1`).</span>
+<span class="w">                                                             </span><span class="c">!! If not specified, then &#39;iterate.dat&#39; is used.</span>
+
+<span class="w">    </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">lws</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">lr</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">lz</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">lt</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">ld</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">lxp</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">lwa</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">lwy</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">lsy</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">lss</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">               </span><span class="n">lwt</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">lwn</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">lsnd</span>
+
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">Task</span><span class="o">==</span><span class="s1">&#39;START&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">         </span><span class="n">Isave</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">m</span><span class="o">*</span><span class="n">n</span>
+<span class="w">         </span><span class="n">Isave</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">m</span><span class="o">**</span><span class="mi">2</span>
+<span class="w">         </span><span class="n">Isave</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="o">*</span><span class="n">m</span><span class="o">**</span><span class="mi">2</span>
+<span class="w">         </span><span class="n">Isave</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w">                       </span><span class="c">! ws      m*n</span>
+<span class="w">         </span><span class="n">Isave</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Isave</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">Isave</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w">     </span><span class="c">! wy      m*n</span>
+<span class="w">         </span><span class="n">Isave</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Isave</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">Isave</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w">     </span><span class="c">! wsy     m**2</span>
+<span class="w">         </span><span class="n">Isave</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Isave</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">Isave</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="w">     </span><span class="c">! wss     m**2</span>
+<span class="w">         </span><span class="n">Isave</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Isave</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">Isave</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="w">     </span><span class="c">! wt      m**2</span>
+<span class="w">         </span><span class="n">Isave</span><span class="p">(</span><span class="mi">9</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Isave</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">Isave</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="w">     </span><span class="c">! wn      4*m**2</span>
+<span class="w">         </span><span class="n">Isave</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Isave</span><span class="p">(</span><span class="mi">9</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">Isave</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="w">    </span><span class="c">! wsnd    4*m**2</span>
+<span class="w">         </span><span class="n">Isave</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Isave</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">Isave</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="w">   </span><span class="c">! wz      n</span>
+<span class="w">         </span><span class="n">Isave</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Isave</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">n</span><span class="w">          </span><span class="c">! wr      n</span>
+<span class="w">         </span><span class="n">Isave</span><span class="p">(</span><span class="mi">13</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Isave</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">n</span><span class="w">          </span><span class="c">! wd      n</span>
+<span class="w">         </span><span class="n">Isave</span><span class="p">(</span><span class="mi">14</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Isave</span><span class="p">(</span><span class="mi">13</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">n</span><span class="w">          </span><span class="c">! wt      n</span>
+<span class="w">         </span><span class="n">Isave</span><span class="p">(</span><span class="mi">15</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Isave</span><span class="p">(</span><span class="mi">14</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">n</span><span class="w">          </span><span class="c">! wxp     n</span>
+<span class="w">         </span><span class="n">Isave</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Isave</span><span class="p">(</span><span class="mi">15</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">n</span><span class="w">          </span><span class="c">! wa      8*m</span>
+<span class="w">      </span><span class="k">endif</span>
+<span class="k">      </span><span class="n">lws</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Isave</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+<span class="w">      </span><span class="n">lwy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Isave</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="w">      </span><span class="n">lsy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Isave</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
+<span class="w">      </span><span class="n">lss</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Isave</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span>
+<span class="w">      </span><span class="n">lwt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Isave</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
+<span class="w">      </span><span class="n">lwn</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Isave</span><span class="p">(</span><span class="mi">9</span><span class="p">)</span>
+<span class="w">      </span><span class="n">lsnd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Isave</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="w">      </span><span class="n">lz</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Isave</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span>
+<span class="w">      </span><span class="n">lr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Isave</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span>
+<span class="w">      </span><span class="n">ld</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Isave</span><span class="p">(</span><span class="mi">13</span><span class="p">)</span>
+<span class="w">      </span><span class="n">lt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Isave</span><span class="p">(</span><span class="mi">14</span><span class="p">)</span>
+<span class="w">      </span><span class="n">lxp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Isave</span><span class="p">(</span><span class="mi">15</span><span class="p">)</span>
+<span class="w">      </span><span class="n">lwa</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Isave</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span>
+
+<span class="w">      </span><span class="k">call </span><span class="n">mainlb</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">l</span><span class="p">,</span><span class="n">u</span><span class="p">,</span><span class="n">Nbd</span><span class="p">,</span><span class="n">f</span><span class="p">,</span><span class="n">g</span><span class="p">,</span><span class="n">Factr</span><span class="p">,</span><span class="n">Pgtol</span><span class="p">,</span><span class="n">Wa</span><span class="p">(</span><span class="n">lws</span><span class="p">),</span><span class="n">Wa</span><span class="p">(</span><span class="n">lwy</span><span class="p">),</span><span class="n">Wa</span><span class="p">(</span><span class="n">lsy</span><span class="p">),&amp;</span>
+<span class="w">                  </span><span class="n">Wa</span><span class="p">(</span><span class="n">lss</span><span class="p">),</span><span class="n">Wa</span><span class="p">(</span><span class="n">lwt</span><span class="p">),</span><span class="n">Wa</span><span class="p">(</span><span class="n">lwn</span><span class="p">),</span><span class="n">Wa</span><span class="p">(</span><span class="n">lsnd</span><span class="p">),</span><span class="n">Wa</span><span class="p">(</span><span class="n">lz</span><span class="p">),</span><span class="n">Wa</span><span class="p">(</span><span class="n">lr</span><span class="p">),</span><span class="n">Wa</span><span class="p">(</span><span class="n">ld</span><span class="p">),&amp;</span>
+<span class="w">                  </span><span class="n">Wa</span><span class="p">(</span><span class="n">lt</span><span class="p">),</span><span class="n">Wa</span><span class="p">(</span><span class="n">lxp</span><span class="p">),</span><span class="n">Wa</span><span class="p">(</span><span class="n">lwa</span><span class="p">),</span><span class="n">Iwa</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span><span class="n">Iwa</span><span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span><span class="n">Iwa</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span><span class="w">    </span><span class="p">&amp;</span>
+<span class="w">                  </span><span class="n">Task</span><span class="p">,</span><span class="n">Iprint</span><span class="p">,</span><span class="n">Csave</span><span class="p">,</span><span class="n">Lsave</span><span class="p">,</span><span class="n">Isave</span><span class="p">(</span><span class="mi">22</span><span class="p">),</span><span class="n">Dsave</span><span class="p">,</span><span class="n">iteration_file</span><span class="p">)</span>
+
+<span class="w">      </span><span class="k">end subroutine </span><span class="n">setulb</span>
+</pre></div>
+
+    </section>
+    <br>
+    
+    </div>
+  </div>
+
+      <hr>
+    </div> <!-- /container -->
+    <footer>
+      <div class="container">
+        <div class="row justify-content-between">
+          <div class="col">
+            <p>
+              lbfgsb
+ was developed by Jacob Williams<br>              &copy; 2025 
+</p>
+          </div>
+          <div class="col">
+            <p class="text-end">
+              Documentation generated by
+              <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
+            </p>
+          </div>
+        </div>
+        <br>
+      </div> <!-- /container -->
+    </footer>
+
+    <!-- Bootstrap core JavaScript -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>    
+
+    <!-- MathJax JavaScript
+             ================================================== -->
+             <!-- Placed at the end of the document so the pages load faster -->
+        <script type="text/x-mathjax-config">
+          MathJax.Hub.Config({
+          TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } },
+          jax: ['input/TeX','input/MathML','output/HTML-CSS'],
+          extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']
+          });
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+          <script src="../tipuesearch/tipuesearch_content.js"></script>
+          <script src="../tipuesearch/tipuesearch_set.js"></script>
+          <script src="../tipuesearch/tipuesearch.js"></script>
+
+  </body>
+</html>

@@ -1,0 +1,989 @@
+<!-- -*- mode: jinja2 -*- -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="description" content="lbfgsb optimization library">
+    <meta name="author" content="Jacob Williams" >
+    <link rel="icon" href="../favicon.png">
+
+    <title>dcsrch &ndash; lbfgsb</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link href="../css/pygments.css" rel="stylesheet">
+    <link href="../css/font-awesome.min.css" rel="stylesheet">
+    <link href="../css/local.css" rel="stylesheet">
+      <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="../js/svg-pan-zoom.min.js"></script>
+  </head>
+
+  <body>
+
+    <!-- Fixed navbar -->
+    <div class="container-fluid mb-sm-4 mb-xl-2">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+          <a class="navbar-brand" href="../index.html">lbfgsb </a>
+          <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar"
+                  aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon">
+          </button>
+
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a class="nav-link" href="../lists/files.html">Source Files</a>
+                  </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/modules.html">Modules</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/procedures.html">Procedures</a>
+                </li>
+            </ul>
+              <div class="d-flex align-items-end flex-grow-1">
+                <form action="../search.html" role="search" class="ms-auto">
+                  <input type="text" class="form-control" aria-label="Search" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+                </form>
+              </div>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>
+    </div>
+
+    <div class="container">
+  <div class="row">
+    <h1>dcsrch
+      <small>Subroutine</small>
+      
+    </h1>
+      <div class="container p-2 mb-4 bg-light border rounded-3">
+    <div class="row align-items-center justify-content-between" id="info-bar">
+      <div class="col">
+        <ul class="list-inline" style="margin-bottom:0px;display:inline">
+
+            <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
+              <a data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true"
+                 title=" 6.8% of total for procedures.">135 statements</a>
+            </li>
+
+            <li class="list-inline-item" id="source-file">
+              <i class="fa fa-code"></i>
+              <a href="../src/lbfgsb.f90"> Source File</a>
+            </li>
+        </ul>
+      </div>
+      <div class="col">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb justify-content-end mb-0">
+                <li class="breadcrumb-item"><a href='../sourcefile/lbfgsb.f90.html'>lbfgsb.f90</a></li>
+                <li class="breadcrumb-item"><a href='../module/lbfgsb_module.html'>lbfgsb_module</a></li>
+            <li class="breadcrumb-item active" aria-current="page">dcsrch</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+  </div>
+  <script>
+    $(function () {
+    $('[data-bs-toggle="tooltip"]').tooltip()
+    })
+  </script>
+
+  </div>
+  
+  <div class="row">
+    <div class="col-md-3 hidden-xs hidden-sm visible-md visible-lg">
+      <div id="sidebar">
+      <h3>Contents</h3>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+    <div class="card card-primary">
+      <div class="card-header text-left"><h3 class="card-title">Source Code</h3></div>
+      <div class="list-group">
+        <a class="list-group-item" href="../proc/dcsrch.html#src">dcsrch</a>
+      </div>
+    </div>
+
+
+  </div>
+
+    </div>
+    
+    <div class="col-md-9" id='text'>
+    <h2>private  subroutine dcsrch(f, g, Stp, Ftol, Gtol, Xtol, Stpmin, Stpmax, Task, Isave, Dsave)  
+</h2>
+    
+
+    <p>This subroutine finds a step that satisfies a sufficient
+  decrease condition and a curvature condition.</p>
+<p>Each call of the subroutine updates an interval with
+  endpoints stx and sty. The interval is initially chosen
+  so that it contains a minimizer of the modified function</p>
+<p><code>psi(stp) = f(stp) - f(0) - ftol*stp*f'(0)</code>.</p>
+<p>If psi(stp) &lt;= 0 and f'(stp) &gt;= 0 for some step, then the
+  interval is chosen so that it contains a minimizer of f.</p>
+<p>The algorithm is designed to find a step that satisfies
+  the sufficient decrease condition</p>
+<p><code>f(stp) &lt;= f(0) + ftol*stp*f'(0)</code>,</p>
+<p>and the curvature condition</p>
+<p><code>abs(f'(stp)) &lt;= gtol*abs(f'(0))</code>.</p>
+<p>If ftol is less than gtol and if, for example, the function
+  is bounded below, then there is always a step which satisfies
+  both conditions.</p>
+<p>If no step can be found that satisfies both conditions, then
+  the algorithm stops with a warning. In this case stp only
+  satisfies the sufficient decrease condition.</p>
+<p>A typical invocation of dcsrch has the following outline:</p>
+<div class="codehilite"><pre><span></span><code><span class="w">     </span><span class="n">task</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;START&#39;</span>
+<span class="w">     </span><span class="n">main</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="k">block</span>
+<span class="k">       call </span><span class="n">dcsrch</span><span class="p">(</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="p">)</span>
+<span class="w">       </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">task</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s1">&#39;FG&#39;</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="w">          </span><span class="c">! Evaluate the function and the gradient at stp</span>
+<span class="w">          </span><span class="k">cycle </span><span class="n">main</span>
+<span class="w">       </span><span class="k">end if</span>
+</code></pre></div>
+
+<p>Note: The user must not alter work arrays between calls.</p>
+<h3>Credits</h3>
+<ul>
+<li>MINPACK-1 Project. June 1983.
+    Argonne National Laboratory.
+    Jorge J. More' and David J. Thuente.</li>
+<li>MINPACK-2 Project. October 1993.
+    Argonne National Laboratory and University of Minnesota.
+    Brett M. Averick, Richard G. Carter, and Jorge J. More'.</li>
+</ul>
+
+
+    <h3>Arguments</h3>
+        <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-f~6"></span>
+              real(kind=wp),
+            </td>
+<td>intent(inout)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>f</strong></td>
+            <td>
+                <ul>
+<li>On initial entry <code>f</code> is the value of the function at 0.
+  On subsequent entries <code>f</code> is the value of the
+  function at <code>stp</code>.</li>
+<li>On exit <code>f</code> is the value of the function at <code>stp</code>.</li>
+</ul>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-g~8"></span>
+              real(kind=wp),
+            </td>
+<td>intent(inout)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>g</strong></td>
+            <td>
+                <ul>
+<li>On initial entry <code>g</code> is the derivative of the function at 0.
+  On subsequent entries <code>g</code> is the derivative of the
+  function at <code>stp</code>.</li>
+<li>On exit <code>g</code> is the derivative of the function at <code>stp</code>.</li>
+</ul>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-stp~5"></span>
+              real(kind=wp),
+            </td>
+<td>intent(inout)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>Stp</strong></td>
+            <td>
+                <ul>
+<li>On entry <code>stp</code> is the current estimate of a satisfactory
+  step. On initial entry, a positive initial estimate
+  must be provided.</li>
+<li>On exit <code>stp</code> is the current estimate of a satisfactory step
+  if <code>task = 'FG'</code>. If <code>task = 'CONV'</code> then <code>stp</code> satisfies
+  the sufficient decrease and curvature condition.</li>
+</ul>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-ftol"></span>
+              real(kind=wp),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>Ftol</strong></td>
+            <td>
+                <p><code>ftol</code> specifies a nonnegative tolerance for the
+sufficient decrease condition.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-gtol"></span>
+              real(kind=wp),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>Gtol</strong></td>
+            <td>
+                <p><code>gtol</code> specifies a nonnegative tolerance for the curvature condition.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-xtol"></span>
+              real(kind=wp),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>Xtol</strong></td>
+            <td>
+                <p><code>xtol</code> specifies a nonnegative relative tolerance
+for an acceptable step. The subroutine exits with a
+warning if the relative difference between <code>sty</code> and <code>stx</code>
+is less than <code>xtol</code>.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-stpmin"></span>
+              real(kind=wp),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>Stpmin</strong></td>
+            <td>
+                <p>a nonnegative lower bound for the step.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-stpmax"></span>
+              real(kind=wp),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>Stpmax</strong></td>
+            <td>
+                <p>a nonnegative upper bound for the step.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-task~6"></span>
+              character(len=*),
+            </td>
+<td>intent(inout)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>Task</strong></td>
+            <td>
+                <p><code>task</code> is a character variable of length at least 60:</p>
+<ul>
+<li>On initial entry <code>task</code> must be set to 'START'.</li>
+<li>On exit <code>task</code> indicates the required action:<ul>
+<li>If <code>task(1:2) = 'FG'</code> then evaluate the function and
+  derivative at stp and call dcsrch again.</li>
+<li>If <code>task(1:4) = 'CONV'</code> then the search is successful.</li>
+<li>If <code>task(1:4) = 'WARN'</code> then the subroutine is not able
+  to satisfy the convergence conditions. The exit value of
+  <code>stp</code> contains the best point found during the search.</li>
+<li>If <code>task(1:5) = 'ERROR'</code> then there is an error in the
+  input arguments.</li>
+</ul>
+</li>
+<li>On exit with convergence, a warning or an error, the
+   variable task contains additional information.</li>
+</ul>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-isave~4"></span>
+              integer
+            </td>
+<td></td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>Isave</strong>(2)</td>
+            <td>
+                <p>integer work array</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-dsave~4"></span>
+              real(kind=wp)
+            </td>
+<td></td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>Dsave</strong>(13)</td>
+            <td>
+                <p>real work array</p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+    <br>
+    <div class="card">
+      <div class="card-header">
+  <h3 class="card-title">Calls</h3>
+      </div>
+      <div class="card-body">
+  <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.43.0 (0)
+ -->
+<!-- Title: proc~~dcsrch~~CallsGraph Pages: 1 -->
+<svg id="procdcsrchCallsGraph" width="152pt" height="32pt"
+ viewBox="0.00 0.00 152.00 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="proc~~dcsrch~~CallsGraph" class="graph" transform="scale(1 1) rotate(0) translate(4 28)">
+<title>proc~~dcsrch~~CallsGraph</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-28 148,-28 148,4 -4,4"/>
+<!-- proc~dcsrch -->
+<g id="proc~~dcsrch~~CallsGraph_node1" class="node">
+<title>proc~dcsrch</title>
+<polygon fill="none" stroke="black" points="54,-24 0,-24 0,0 54,0 54,-24"/>
+<text text-anchor="middle" x="27" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">dcsrch</text>
+</g>
+<!-- proc~dcstep -->
+<g id="proc~~dcsrch~~CallsGraph_node2" class="node">
+<title>proc~dcstep</title>
+<g id="a_proc~~dcsrch~~CallsGraph_node2"><a xlink:href="../proc/dcstep.html" xlink:title="dcstep">
+<polygon fill="#d9534f" stroke="#d9534f" points="144,-24 90,-24 90,0 144,0 144,-24"/>
+<text text-anchor="middle" x="117" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">dcstep</text>
+</a>
+</g>
+</g>
+<!-- proc~dcsrch&#45;&gt;proc~dcstep -->
+<g id="proc~~dcsrch~~CallsGraph_edge1" class="edge">
+<title>proc~dcsrch&#45;&gt;proc~dcstep</title>
+<path fill="none" stroke="#000000" d="M54.4,-12C62.39,-12 71.31,-12 79.82,-12"/>
+<polygon fill="#000000" stroke="#000000" points="79.92,-15.5 89.92,-12 79.92,-8.5 79.92,-15.5"/>
+</g>
+</g>
+</svg>
+</div>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#CallsGraph-help-text">Help</a>
+          </div>
+          <div class="modal fade" id="CallsGraph-help-text" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+<p>Nodes of different colours represent the following: </p>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.43.0 (0)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="641pt" height="28pt"
+ viewBox="0.00 0.00 641.00 27.51" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(0.86 0.86) rotate(0) translate(4 28)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-28 741.5,-28 741.5,4 -4,4"/>
+<!-- Subroutine -->
+<g id="node1" class="node">
+<title>Subroutine</title>
+<polygon fill="#d9534f" stroke="#d9534f" points="70,-24 0,-24 0,0 70,0 70,-24"/>
+<text text-anchor="middle" x="35" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
+</g>
+<!-- Function -->
+<g id="node2" class="node">
+<title>Function</title>
+<polygon fill="#d94e8f" stroke="#d94e8f" points="146,-24 88,-24 88,0 146,0 146,-24"/>
+<text text-anchor="middle" x="117" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
+</g>
+<!-- Interface -->
+<g id="node3" class="node">
+<title>Interface</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="225.5,-24 164.5,-24 164.5,0 225.5,0 225.5,-24"/>
+<text text-anchor="middle" x="195" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Interface</text>
+</g>
+<!-- Type Bound Procedure -->
+<g id="node4" class="node">
+<title>Type Bound Procedure</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="374,-24 244,-24 244,0 374,0 374,-24"/>
+<text text-anchor="middle" x="309" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Type Bound Procedure</text>
+</g>
+<!-- Unknown Procedure Type -->
+<g id="node5" class="node">
+<title>Unknown Procedure Type</title>
+<polygon fill="#777777" stroke="#777777" points="537.5,-24 392.5,-24 392.5,0 537.5,0 537.5,-24"/>
+<text text-anchor="middle" x="465" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Unknown Procedure Type</text>
+</g>
+<!-- Program -->
+<g id="node6" class="node">
+<title>Program</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="614,-24 556,-24 556,0 614,0 614,-24"/>
+<text text-anchor="middle" x="585" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node7" class="node">
+<title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="737.5,-24 632.5,-24 632.5,0 737.5,0 737.5,-24"/>
+<text text-anchor="middle" x="685" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+<p>Solid arrows point from a procedure to one which it calls. Dashed 
+arrows point from an interface to procedures which implement that interface.
+This could include the module procedures in a generic interface or the
+implementation in a submodule of an interface in a parent module.
+</p>
+ </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header">
+  <h3 class="card-title">Called by</h3>
+      </div>
+      <div class="card-body">
+  <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.43.0 (0)
+ -->
+<!-- Title: proc~~dcsrch~~CalledByGraph Pages: 1 -->
+<svg id="procdcsrchCalledByGraph" width="332pt" height="32pt"
+ viewBox="0.00 0.00 332.00 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="proc~~dcsrch~~CalledByGraph" class="graph" transform="scale(1 1) rotate(0) translate(4 28)">
+<title>proc~~dcsrch~~CalledByGraph</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-28 328,-28 328,4 -4,4"/>
+<!-- proc~dcsrch -->
+<g id="proc~~dcsrch~~CalledByGraph_node1" class="node">
+<title>proc~dcsrch</title>
+<polygon fill="none" stroke="black" points="324,-24 270,-24 270,0 324,0 324,-24"/>
+<text text-anchor="middle" x="297" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">dcsrch</text>
+</g>
+<!-- proc~lnsrlb -->
+<g id="proc~~dcsrch~~CalledByGraph_node2" class="node">
+<title>proc~lnsrlb</title>
+<g id="a_proc~~dcsrch~~CalledByGraph_node2"><a xlink:href="../proc/lnsrlb.html" xlink:title="lnsrlb">
+<polygon fill="#d9534f" stroke="#d9534f" points="234,-24 180,-24 180,0 234,0 234,-24"/>
+<text text-anchor="middle" x="207" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lnsrlb</text>
+</a>
+</g>
+</g>
+<!-- proc~lnsrlb&#45;&gt;proc~dcsrch -->
+<g id="proc~~dcsrch~~CalledByGraph_edge1" class="edge">
+<title>proc~lnsrlb&#45;&gt;proc~dcsrch</title>
+<path fill="none" stroke="#000000" d="M234.4,-12C242.39,-12 251.31,-12 259.82,-12"/>
+<polygon fill="#000000" stroke="#000000" points="259.92,-15.5 269.92,-12 259.92,-8.5 259.92,-15.5"/>
+</g>
+<!-- proc~mainlb -->
+<g id="proc~~dcsrch~~CalledByGraph_node3" class="node">
+<title>proc~mainlb</title>
+<g id="a_proc~~dcsrch~~CalledByGraph_node3"><a xlink:href="../proc/mainlb.html" xlink:title="mainlb">
+<polygon fill="#d9534f" stroke="#d9534f" points="144,-24 90,-24 90,0 144,0 144,-24"/>
+<text text-anchor="middle" x="117" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">mainlb</text>
+</a>
+</g>
+</g>
+<!-- proc~mainlb&#45;&gt;proc~lnsrlb -->
+<g id="proc~~dcsrch~~CalledByGraph_edge2" class="edge">
+<title>proc~mainlb&#45;&gt;proc~lnsrlb</title>
+<path fill="none" stroke="#000000" d="M144.4,-12C152.39,-12 161.31,-12 169.82,-12"/>
+<polygon fill="#000000" stroke="#000000" points="169.92,-15.5 179.92,-12 169.92,-8.5 169.92,-15.5"/>
+</g>
+<!-- proc~setulb -->
+<g id="proc~~dcsrch~~CalledByGraph_node4" class="node">
+<title>proc~setulb</title>
+<g id="a_proc~~dcsrch~~CalledByGraph_node4"><a xlink:href="../proc/setulb.html" xlink:title="setulb">
+<polygon fill="#d9534f" stroke="#d9534f" points="54,-24 0,-24 0,0 54,0 54,-24"/>
+<text text-anchor="middle" x="27" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">setulb</text>
+</a>
+</g>
+</g>
+<!-- proc~setulb&#45;&gt;proc~mainlb -->
+<g id="proc~~dcsrch~~CalledByGraph_edge3" class="edge">
+<title>proc~setulb&#45;&gt;proc~mainlb</title>
+<path fill="none" stroke="#000000" d="M54.4,-12C62.39,-12 71.31,-12 79.82,-12"/>
+<polygon fill="#000000" stroke="#000000" points="79.92,-15.5 89.92,-12 79.92,-8.5 79.92,-15.5"/>
+</g>
+</g>
+</svg>
+</div>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#CalledByGraph-help-text">Help</a>
+          </div>
+          <div class="modal fade" id="CalledByGraph-help-text" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+<p>Nodes of different colours represent the following: </p>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.43.0 (0)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="641pt" height="28pt"
+ viewBox="0.00 0.00 641.00 27.51" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(0.86 0.86) rotate(0) translate(4 28)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-28 741.5,-28 741.5,4 -4,4"/>
+<!-- Subroutine -->
+<g id="node1" class="node">
+<title>Subroutine</title>
+<polygon fill="#d9534f" stroke="#d9534f" points="70,-24 0,-24 0,0 70,0 70,-24"/>
+<text text-anchor="middle" x="35" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
+</g>
+<!-- Function -->
+<g id="node2" class="node">
+<title>Function</title>
+<polygon fill="#d94e8f" stroke="#d94e8f" points="146,-24 88,-24 88,0 146,0 146,-24"/>
+<text text-anchor="middle" x="117" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
+</g>
+<!-- Interface -->
+<g id="node3" class="node">
+<title>Interface</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="225.5,-24 164.5,-24 164.5,0 225.5,0 225.5,-24"/>
+<text text-anchor="middle" x="195" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Interface</text>
+</g>
+<!-- Type Bound Procedure -->
+<g id="node4" class="node">
+<title>Type Bound Procedure</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="374,-24 244,-24 244,0 374,0 374,-24"/>
+<text text-anchor="middle" x="309" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Type Bound Procedure</text>
+</g>
+<!-- Unknown Procedure Type -->
+<g id="node5" class="node">
+<title>Unknown Procedure Type</title>
+<polygon fill="#777777" stroke="#777777" points="537.5,-24 392.5,-24 392.5,0 537.5,0 537.5,-24"/>
+<text text-anchor="middle" x="465" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Unknown Procedure Type</text>
+</g>
+<!-- Program -->
+<g id="node6" class="node">
+<title>Program</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="614,-24 556,-24 556,0 614,0 614,-24"/>
+<text text-anchor="middle" x="585" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node7" class="node">
+<title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="737.5,-24 632.5,-24 632.5,0 737.5,0 737.5,-24"/>
+<text text-anchor="middle" x="685" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+<p>Solid arrows point from a procedure to one which it calls. Dashed 
+arrows point from an interface to procedures which implement that interface.
+This could include the module procedures in a generic interface or the
+implementation in a submodule of an interface in a parent module.
+</p>
+ </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+
+
+    
+    
+
+    
+    
+
+
+
+    
+    <section>
+    <h2><span class="anchor" id="src"></span>Source Code</h2>
+    <div class="hl codehilite"><pre><span></span><span class="w">      </span><span class="k">subroutine </span><span class="n">dcsrch</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="n">g</span><span class="p">,</span><span class="n">Stp</span><span class="p">,</span><span class="n">Ftol</span><span class="p">,</span><span class="n">Gtol</span><span class="p">,</span><span class="n">Xtol</span><span class="p">,</span><span class="n">Stpmin</span><span class="p">,</span><span class="n">Stpmax</span><span class="p">,</span><span class="n">Task</span><span class="p">,</span><span class="n">Isave</span><span class="p">,</span><span class="n">Dsave</span><span class="p">)</span>
+
+<span class="w">      </span><span class="k">implicit none</span>
+
+<span class="k">      </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Task</span><span class="w"> </span><span class="c">!! `task` is a character variable of length at least 60:</span>
+<span class="w">                                             </span><span class="c">!!</span>
+<span class="w">                                             </span><span class="c">!!  * On initial entry `task` must be set to &#39;START&#39;.</span>
+<span class="w">                                             </span><span class="c">!!  * On exit `task` indicates the required action:</span>
+<span class="w">                                             </span><span class="c">!!     * If `task(1:2) = &#39;FG&#39;` then evaluate the function and</span>
+<span class="w">                                             </span><span class="c">!!       derivative at stp and call dcsrch again.</span>
+<span class="w">                                             </span><span class="c">!!     * If `task(1:4) = &#39;CONV&#39;` then the search is successful.</span>
+<span class="w">                                             </span><span class="c">!!     * If `task(1:4) = &#39;WARN&#39;` then the subroutine is not able</span>
+<span class="w">                                             </span><span class="c">!!       to satisfy the convergence conditions. The exit value of</span>
+<span class="w">                                             </span><span class="c">!!       `stp` contains the best point found during the search.</span>
+<span class="w">                                             </span><span class="c">!!     * If `task(1:5) = &#39;ERROR&#39;` then there is an error in the</span>
+<span class="w">                                             </span><span class="c">!!       input arguments.</span>
+<span class="w">                                             </span><span class="c">!!  * On exit with convergence, a warning or an error, the</span>
+<span class="w">                                             </span><span class="c">!!    variable task contains additional information.</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">f</span><span class="w"> </span><span class="c">!! * On initial entry `f` is the value of the function at 0.</span>
+<span class="w">                                  </span><span class="c">!!   On subsequent entries `f` is the value of the</span>
+<span class="w">                                  </span><span class="c">!!   function at `stp`.</span>
+<span class="w">                                  </span><span class="c">!! * On exit `f` is the value of the function at `stp`.</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">g</span><span class="w"> </span><span class="c">!! * On initial entry `g` is the derivative of the function at 0.</span>
+<span class="w">                                  </span><span class="c">!!   On subsequent entries `g` is the derivative of the</span>
+<span class="w">                                  </span><span class="c">!!   function at `stp`.</span>
+<span class="w">                                  </span><span class="c">!! * On exit `g` is the derivative of the function at `stp`.</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Stp</span><span class="w"> </span><span class="c">!! * On entry `stp` is the current estimate of a satisfactory</span>
+<span class="w">                                    </span><span class="c">!!   step. On initial entry, a positive initial estimate</span>
+<span class="w">                                    </span><span class="c">!!   must be provided.</span>
+<span class="w">                                    </span><span class="c">!! * On exit `stp` is the current estimate of a satisfactory step</span>
+<span class="w">                                    </span><span class="c">!!   if `task = &#39;FG&#39;`. If `task = &#39;CONV&#39;` then `stp` satisfies</span>
+<span class="w">                                    </span><span class="c">!!   the sufficient decrease and curvature condition.</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Ftol</span><span class="w"> </span><span class="c">!! `ftol` specifies a nonnegative tolerance for the</span>
+<span class="w">                                  </span><span class="c">!! sufficient decrease condition.</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Gtol</span><span class="w"> </span><span class="c">!! `gtol` specifies a nonnegative tolerance for the curvature condition.</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Xtol</span><span class="w"> </span><span class="c">!! `xtol` specifies a nonnegative relative tolerance</span>
+<span class="w">                                  </span><span class="c">!! for an acceptable step. The subroutine exits with a</span>
+<span class="w">                                  </span><span class="c">!! warning if the relative difference between `sty` and `stx`</span>
+<span class="w">                                  </span><span class="c">!! is less than `xtol`.</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Stpmin</span><span class="w"> </span><span class="c">!! a nonnegative lower bound for the step.</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Stpmax</span><span class="w"> </span><span class="c">!! a nonnegative upper bound for the step.</span>
+<span class="w">      </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Isave</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="c">!! integer work array</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Dsave</span><span class="p">(</span><span class="mi">13</span><span class="p">)</span><span class="w"> </span><span class="c">!! real work array</span>
+
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="w"> </span><span class="k">parameter</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">p5</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="mf">0.5_wp</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="w"> </span><span class="k">parameter</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">p66</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="mf">0.66_wp</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="w"> </span><span class="k">parameter</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">xtrapl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.1_wp</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="w"> </span><span class="k">parameter</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">xtrapu</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">4.0_wp</span>
+
+<span class="w">      </span><span class="kt">logical</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">brackt</span>
+<span class="w">      </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">stage</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">finit</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">ftest</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">fm</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">fx</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">fxm</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">fy</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">fym</span><span class="w"> </span><span class="p">,</span><span class="w">       </span><span class="p">&amp;</span>
+<span class="w">                  </span><span class="n">ginit</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">gtest</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">gm</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">gx</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">gxm</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">gy</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">gym</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">stx</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">                  </span><span class="n">sty</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">stmin</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">stmax</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">width</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">width1</span>
+
+<span class="w">      </span><span class="c">! Initialization block.</span>
+
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">Task</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="mi">5</span><span class="p">)</span><span class="o">==</span><span class="s1">&#39;START&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+
+<span class="w">         </span><span class="c">! Check the input arguments for errors.</span>
+
+<span class="w">         </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">Stp</span><span class="o">&lt;</span><span class="n">Stpmin</span><span class="w"> </span><span class="p">)</span><span class="w">    </span><span class="n">Task</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;ERROR: STP &lt; STPMIN&#39;</span>
+<span class="w">         </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">Stp</span><span class="o">&gt;</span><span class="n">Stpmax</span><span class="w"> </span><span class="p">)</span><span class="w">    </span><span class="n">Task</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;ERROR: STP &gt; STPMAX&#39;</span>
+<span class="w">         </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">g</span><span class="o">&gt;=</span><span class="n">zero</span><span class="w"> </span><span class="p">)</span><span class="w">       </span><span class="n">Task</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;ERROR: INITIAL G &gt;= ZERO&#39;</span>
+<span class="w">         </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">Ftol</span><span class="o">&lt;</span><span class="n">zero</span><span class="w"> </span><span class="p">)</span><span class="w">     </span><span class="n">Task</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;ERROR: FTOL &lt; ZERO&#39;</span>
+<span class="w">         </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">Gtol</span><span class="o">&lt;</span><span class="n">zero</span><span class="w"> </span><span class="p">)</span><span class="w">     </span><span class="n">Task</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;ERROR: GTOL &lt; ZERO&#39;</span>
+<span class="w">         </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">Xtol</span><span class="o">&lt;</span><span class="n">zero</span><span class="w"> </span><span class="p">)</span><span class="w">     </span><span class="n">Task</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;ERROR: XTOL &lt; ZERO&#39;</span>
+<span class="w">         </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">Stpmin</span><span class="o">&lt;</span><span class="n">zero</span><span class="w"> </span><span class="p">)</span><span class="w">   </span><span class="n">Task</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;ERROR: STPMIN &lt; ZERO&#39;</span>
+<span class="w">         </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">Stpmax</span><span class="o">&lt;</span><span class="n">Stpmin</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">Task</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;ERROR: STPMAX &lt; STPMIN&#39;</span>
+
+<span class="w">         </span><span class="c">! Exit if there are errors on input.</span>
+
+<span class="w">         </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">Task</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="mi">5</span><span class="p">)</span><span class="o">==</span><span class="s1">&#39;ERROR&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">return</span>
+
+<span class="w">         </span><span class="c">! Initialize local variables.</span>
+
+<span class="w">         </span><span class="n">brackt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">false</span><span class="p">.</span>
+<span class="w">         </span><span class="n">stage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">         </span><span class="n">finit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">f</span>
+<span class="w">         </span><span class="n">ginit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">g</span>
+<span class="w">         </span><span class="n">gtest</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Ftol</span><span class="o">*</span><span class="n">ginit</span>
+<span class="w">         </span><span class="n">width</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Stpmax</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">Stpmin</span>
+<span class="w">         </span><span class="n">width1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">width</span><span class="o">/</span><span class="n">p5</span>
+
+<span class="w">         </span><span class="c">! The variables stx, fx, gx contain the values of the step,</span>
+<span class="w">         </span><span class="c">! function, and derivative at the best step.</span>
+<span class="w">         </span><span class="c">! The variables sty, fy, gy contain the value of the step,</span>
+<span class="w">         </span><span class="c">! function, and derivative at sty.</span>
+<span class="w">         </span><span class="c">! The variables stp, f, g contain the values of the step,</span>
+<span class="w">         </span><span class="c">! function, and derivative at stp.</span>
+
+<span class="w">         </span><span class="n">stx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">zero</span>
+<span class="w">         </span><span class="n">fx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">finit</span>
+<span class="w">         </span><span class="n">gx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ginit</span>
+<span class="w">         </span><span class="n">sty</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">zero</span>
+<span class="w">         </span><span class="n">fy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">finit</span>
+<span class="w">         </span><span class="n">gy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ginit</span>
+<span class="w">         </span><span class="n">stmin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">zero</span>
+<span class="w">         </span><span class="n">stmax</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Stp</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">xtrapu</span><span class="o">*</span><span class="n">Stp</span>
+<span class="w">         </span><span class="n">Task</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;FG&#39;</span>
+
+<span class="w">         </span><span class="k">call </span><span class="n">save_locals</span><span class="p">()</span>
+<span class="w">         </span><span class="k">return</span>
+
+<span class="k">      else</span>
+
+<span class="w">         </span><span class="c">! Restore local variables.</span>
+
+<span class="w">         </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">Isave</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">==</span><span class="mi">1</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">            </span><span class="n">brackt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">true</span><span class="p">.</span>
+<span class="w">         </span><span class="k">else</span>
+<span class="k">            </span><span class="n">brackt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">false</span><span class="p">.</span>
+<span class="w">         </span><span class="k">endif</span>
+<span class="k">         </span><span class="n">stage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Isave</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="w">         </span><span class="n">ginit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Dsave</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="w">         </span><span class="n">gtest</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Dsave</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="w">         </span><span class="n">gx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Dsave</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="w">         </span><span class="n">gy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Dsave</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+<span class="w">         </span><span class="n">finit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Dsave</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="w">         </span><span class="n">fx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Dsave</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
+<span class="w">         </span><span class="n">fy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Dsave</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span>
+<span class="w">         </span><span class="n">stx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Dsave</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
+<span class="w">         </span><span class="n">sty</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Dsave</span><span class="p">(</span><span class="mi">9</span><span class="p">)</span>
+<span class="w">         </span><span class="n">stmin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Dsave</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="w">         </span><span class="n">stmax</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Dsave</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span>
+<span class="w">         </span><span class="n">width</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Dsave</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span>
+<span class="w">         </span><span class="n">width1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Dsave</span><span class="p">(</span><span class="mi">13</span><span class="p">)</span>
+
+<span class="w">      </span><span class="k">endif</span>
+
+<span class="w">      </span><span class="c">! If psi(stp) &lt;= 0 and f&#39;(stp) &gt;= 0 for some step, then the</span>
+<span class="w">      </span><span class="c">! algorithm enters the second stage.</span>
+
+<span class="w">      </span><span class="n">ftest</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">finit</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">Stp</span><span class="o">*</span><span class="n">gtest</span>
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">stage</span><span class="o">==</span><span class="mi">1</span><span class="w"> </span><span class="p">.</span><span class="nb">and</span><span class="p">.</span><span class="w"> </span><span class="n">f</span><span class="o">&lt;=</span><span class="n">ftest</span><span class="w"> </span><span class="p">.</span><span class="nb">and</span><span class="p">.</span><span class="w"> </span><span class="n">g</span><span class="o">&gt;=</span><span class="n">zero</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">stage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span>
+
+<span class="w">      </span><span class="c">! Test for warnings.</span>
+
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">brackt</span><span class="w"> </span><span class="p">.</span><span class="nb">and</span><span class="p">.</span><span class="w"> </span><span class="p">(</span><span class="n">Stp</span><span class="o">&lt;=</span><span class="n">stmin</span><span class="w"> </span><span class="p">.</span><span class="nb">or</span><span class="p">.</span><span class="w"> </span><span class="n">Stp</span><span class="o">&gt;=</span><span class="n">stmax</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w">           </span><span class="p">&amp;</span>
+<span class="w">           </span><span class="n">Task</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;WARNING: ROUNDING ERRORS PREVENT PROGRESS&#39;</span>
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">brackt</span><span class="w"> </span><span class="p">.</span><span class="nb">and</span><span class="p">.</span><span class="w"> </span><span class="n">stmax</span><span class="o">-</span><span class="n">stmin</span><span class="o">&lt;=</span><span class="n">Xtol</span><span class="o">*</span><span class="n">stmax</span><span class="w"> </span><span class="p">)</span><span class="w">                </span><span class="p">&amp;</span>
+<span class="w">           </span><span class="n">Task</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;WARNING: XTOL TEST SATISFIED&#39;</span>
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">Stp</span><span class="o">==</span><span class="n">Stpmax</span><span class="w"> </span><span class="p">.</span><span class="nb">and</span><span class="p">.</span><span class="w"> </span><span class="n">f</span><span class="o">&lt;=</span><span class="n">ftest</span><span class="w"> </span><span class="p">.</span><span class="nb">and</span><span class="p">.</span><span class="w"> </span><span class="n">g</span><span class="o">&lt;=</span><span class="n">gtest</span><span class="w"> </span><span class="p">)</span><span class="w">           </span><span class="p">&amp;</span>
+<span class="w">           </span><span class="n">Task</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;WARNING: STP = STPMAX&#39;</span>
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">Stp</span><span class="o">==</span><span class="n">Stpmin</span><span class="w"> </span><span class="p">.</span><span class="nb">and</span><span class="p">.</span><span class="w"> </span><span class="p">(</span><span class="n">f</span><span class="o">&gt;</span><span class="n">ftest</span><span class="w"> </span><span class="p">.</span><span class="nb">or</span><span class="p">.</span><span class="w"> </span><span class="n">g</span><span class="o">&gt;=</span><span class="n">gtest</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w">           </span><span class="p">&amp;</span>
+<span class="w">           </span><span class="n">Task</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;WARNING: STP = STPMIN&#39;</span>
+
+<span class="w">      </span><span class="c">! Test for convergence.</span>
+
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">f</span><span class="o">&lt;=</span><span class="n">ftest</span><span class="w"> </span><span class="p">.</span><span class="nb">and</span><span class="p">.</span><span class="w"> </span><span class="nb">abs</span><span class="p">(</span><span class="n">g</span><span class="p">)</span><span class="o">&lt;=</span><span class="n">Gtol</span><span class="o">*</span><span class="p">(</span><span class="o">-</span><span class="n">ginit</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">Task</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;CONVERGENCE&#39;</span>
+
+<span class="w">      </span><span class="c">! Test for termination.</span>
+
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">Task</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="mi">4</span><span class="p">)</span><span class="o">==</span><span class="s1">&#39;WARN&#39;</span><span class="w"> </span><span class="p">.</span><span class="nb">or</span><span class="p">.</span><span class="w"> </span><span class="n">Task</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="mi">4</span><span class="p">)</span><span class="o">==</span><span class="s1">&#39;CONV&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">         call </span><span class="n">save_locals</span><span class="p">()</span>
+<span class="w">         </span><span class="k">return</span>
+<span class="k">      end if</span>
+
+<span class="w">      </span><span class="c">! A modified function is used to predict the step during the</span>
+<span class="w">      </span><span class="c">! first stage if a lower function value has been obtained but</span>
+<span class="w">      </span><span class="c">! the decrease is not sufficient.</span>
+
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">stage</span><span class="o">==</span><span class="mi">1</span><span class="w"> </span><span class="p">.</span><span class="nb">and</span><span class="p">.</span><span class="w"> </span><span class="n">f</span><span class="o">&lt;=</span><span class="n">fx</span><span class="w"> </span><span class="p">.</span><span class="nb">and</span><span class="p">.</span><span class="w"> </span><span class="n">f</span><span class="o">&gt;</span><span class="n">ftest</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+
+<span class="w">         </span><span class="c">! Define the modified function and derivative values.</span>
+
+<span class="w">         </span><span class="n">fm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">f</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">Stp</span><span class="o">*</span><span class="n">gtest</span>
+<span class="w">         </span><span class="n">fxm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fx</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">stx</span><span class="o">*</span><span class="n">gtest</span>
+<span class="w">         </span><span class="n">fym</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fy</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">sty</span><span class="o">*</span><span class="n">gtest</span>
+<span class="w">         </span><span class="n">gm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">g</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">gtest</span>
+<span class="w">         </span><span class="n">gxm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">gx</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">gtest</span>
+<span class="w">         </span><span class="n">gym</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">gy</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">gtest</span>
+
+<span class="w">         </span><span class="c">! Call dcstep to update stx, sty, and to compute the new step.</span>
+
+<span class="w">         </span><span class="k">call </span><span class="n">dcstep</span><span class="p">(</span><span class="n">stx</span><span class="p">,</span><span class="n">fxm</span><span class="p">,</span><span class="n">gxm</span><span class="p">,</span><span class="n">sty</span><span class="p">,</span><span class="n">fym</span><span class="p">,</span><span class="n">gym</span><span class="p">,</span><span class="n">Stp</span><span class="p">,</span><span class="n">fm</span><span class="p">,</span><span class="n">gm</span><span class="p">,</span><span class="n">brackt</span><span class="p">,</span><span class="n">stmin</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">                     </span><span class="n">stmax</span><span class="p">)</span>
+
+<span class="w">         </span><span class="c">! Reset the function and derivative values for f.</span>
+
+<span class="w">         </span><span class="n">fx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fxm</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">stx</span><span class="o">*</span><span class="n">gtest</span>
+<span class="w">         </span><span class="n">fy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fym</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">sty</span><span class="o">*</span><span class="n">gtest</span>
+<span class="w">         </span><span class="n">gx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">gxm</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">gtest</span>
+<span class="w">         </span><span class="n">gy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">gym</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">gtest</span>
+
+<span class="w">      </span><span class="k">else</span>
+
+<span class="w">         </span><span class="c">! Call dcstep to update stx, sty, and to compute the new step.</span>
+
+<span class="w">         </span><span class="k">call </span><span class="n">dcstep</span><span class="p">(</span><span class="n">stx</span><span class="p">,</span><span class="n">fx</span><span class="p">,</span><span class="n">gx</span><span class="p">,</span><span class="n">sty</span><span class="p">,</span><span class="n">fy</span><span class="p">,</span><span class="n">gy</span><span class="p">,</span><span class="n">Stp</span><span class="p">,</span><span class="n">f</span><span class="p">,</span><span class="n">g</span><span class="p">,</span><span class="n">brackt</span><span class="p">,</span><span class="n">stmin</span><span class="p">,</span><span class="n">stmax</span><span class="p">)</span>
+
+<span class="w">      </span><span class="k">endif</span>
+
+<span class="w">      </span><span class="c">! Decide if a bisection step is needed.</span>
+
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">brackt</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">         if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">abs</span><span class="p">(</span><span class="n">sty</span><span class="o">-</span><span class="n">stx</span><span class="p">)</span><span class="o">&gt;=</span><span class="n">p66</span><span class="o">*</span><span class="n">width1</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">Stp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">stx</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">p5</span><span class="o">*</span><span class="p">(</span><span class="n">sty</span><span class="o">-</span><span class="n">stx</span><span class="p">)</span>
+<span class="w">         </span><span class="n">width1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">width</span>
+<span class="w">         </span><span class="n">width</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">abs</span><span class="p">(</span><span class="n">sty</span><span class="o">-</span><span class="n">stx</span><span class="p">)</span>
+<span class="w">      </span><span class="k">endif</span>
+
+<span class="w">      </span><span class="c">! Set the minimum and maximum steps allowed for stp.</span>
+
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">brackt</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">         </span><span class="n">stmin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">min</span><span class="p">(</span><span class="n">stx</span><span class="p">,</span><span class="n">sty</span><span class="p">)</span>
+<span class="w">         </span><span class="n">stmax</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">max</span><span class="p">(</span><span class="n">stx</span><span class="p">,</span><span class="n">sty</span><span class="p">)</span>
+<span class="w">      </span><span class="k">else</span>
+<span class="k">         </span><span class="n">stmin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Stp</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">xtrapl</span><span class="o">*</span><span class="p">(</span><span class="n">Stp</span><span class="o">-</span><span class="n">stx</span><span class="p">)</span>
+<span class="w">         </span><span class="n">stmax</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Stp</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">xtrapu</span><span class="o">*</span><span class="p">(</span><span class="n">Stp</span><span class="o">-</span><span class="n">stx</span><span class="p">)</span>
+<span class="w">      </span><span class="k">endif</span>
+
+<span class="w">      </span><span class="c">! Force the step to be within the bounds stpmax and stpmin.</span>
+
+<span class="w">      </span><span class="n">Stp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">max</span><span class="p">(</span><span class="n">Stp</span><span class="p">,</span><span class="n">Stpmin</span><span class="p">)</span>
+<span class="w">      </span><span class="n">Stp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">min</span><span class="p">(</span><span class="n">Stp</span><span class="p">,</span><span class="n">Stpmax</span><span class="p">)</span>
+
+<span class="w">      </span><span class="c">! If further progress is not possible, let stp be the best</span>
+<span class="w">      </span><span class="c">! point obtained during the search.</span>
+
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">brackt</span><span class="w"> </span><span class="p">.</span><span class="nb">and</span><span class="p">.</span><span class="w"> </span><span class="p">(</span><span class="n">Stp</span><span class="o">&lt;=</span><span class="n">stmin</span><span class="w"> </span><span class="p">.</span><span class="nb">or</span><span class="p">.</span><span class="w"> </span><span class="n">Stp</span><span class="o">&gt;=</span><span class="n">stmax</span><span class="p">)</span><span class="w"> </span><span class="p">.</span><span class="nb">or</span><span class="p">.</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">         </span><span class="p">&amp;</span><span class="w"> </span><span class="p">(</span><span class="n">brackt</span><span class="w"> </span><span class="p">.</span><span class="nb">and</span><span class="p">.</span><span class="w"> </span><span class="n">stmax</span><span class="o">-</span><span class="n">stmin</span><span class="o">&lt;=</span><span class="n">Xtol</span><span class="o">*</span><span class="n">stmax</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">Stp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">stx</span>
+
+<span class="w">      </span><span class="c">! Obtain another function and derivative.</span>
+
+<span class="w">      </span><span class="n">Task</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;FG&#39;</span>
+
+<span class="w">      </span><span class="k">call </span><span class="n">save_locals</span><span class="p">()</span>
+
+<span class="w">      </span><span class="k">contains</span>
+
+<span class="k">      subroutine </span><span class="n">save_locals</span><span class="p">()</span>
+
+<span class="w">         </span><span class="c">!! Save local variables.</span>
+
+<span class="w">         </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">brackt</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">            </span><span class="n">Isave</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">         </span><span class="k">else</span>
+<span class="k">            </span><span class="n">Isave</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
+<span class="w">         </span><span class="k">endif</span>
+<span class="k">         </span><span class="n">Isave</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">stage</span>
+<span class="w">         </span><span class="n">Dsave</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ginit</span>
+<span class="w">         </span><span class="n">Dsave</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">gtest</span>
+<span class="w">         </span><span class="n">Dsave</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">gx</span>
+<span class="w">         </span><span class="n">Dsave</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">gy</span>
+<span class="w">         </span><span class="n">Dsave</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">finit</span>
+<span class="w">         </span><span class="n">Dsave</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fx</span>
+<span class="w">         </span><span class="n">Dsave</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fy</span>
+<span class="w">         </span><span class="n">Dsave</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">stx</span>
+<span class="w">         </span><span class="n">Dsave</span><span class="p">(</span><span class="mi">9</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sty</span>
+<span class="w">         </span><span class="n">Dsave</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">stmin</span>
+<span class="w">         </span><span class="n">Dsave</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">stmax</span>
+<span class="w">         </span><span class="n">Dsave</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">width</span>
+<span class="w">         </span><span class="n">Dsave</span><span class="p">(</span><span class="mi">13</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">width1</span>
+
+<span class="w">      </span><span class="k">end subroutine </span><span class="n">save_locals</span>
+
+<span class="w">      </span><span class="k">end subroutine </span><span class="n">dcsrch</span>
+</pre></div>
+
+    </section>
+    <br>
+    
+    </div>
+  </div>
+
+      <hr>
+    </div> <!-- /container -->
+    <footer>
+      <div class="container">
+        <div class="row justify-content-between">
+          <div class="col">
+            <p>
+              lbfgsb
+ was developed by Jacob Williams<br>              &copy; 2025 
+</p>
+          </div>
+          <div class="col">
+            <p class="text-end">
+              Documentation generated by
+              <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
+            </p>
+          </div>
+        </div>
+        <br>
+      </div> <!-- /container -->
+    </footer>
+
+    <!-- Bootstrap core JavaScript -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>    
+
+    <!-- MathJax JavaScript
+             ================================================== -->
+             <!-- Placed at the end of the document so the pages load faster -->
+        <script type="text/x-mathjax-config">
+          MathJax.Hub.Config({
+          TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } },
+          jax: ['input/TeX','input/MathML','output/HTML-CSS'],
+          extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']
+          });
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+          <script src="../tipuesearch/tipuesearch_content.js"></script>
+          <script src="../tipuesearch/tipuesearch_set.js"></script>
+          <script src="../tipuesearch/tipuesearch.js"></script>
+
+  </body>
+</html>

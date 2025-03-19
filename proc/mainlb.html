@@ -1,0 +1,2129 @@
+<!-- -*- mode: jinja2 -*- -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="description" content="lbfgsb optimization library">
+    <meta name="author" content="Jacob Williams" >
+    <link rel="icon" href="../favicon.png">
+
+    <title>mainlb &ndash; lbfgsb</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link href="../css/pygments.css" rel="stylesheet">
+    <link href="../css/font-awesome.min.css" rel="stylesheet">
+    <link href="../css/local.css" rel="stylesheet">
+      <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="../js/svg-pan-zoom.min.js"></script>
+  </head>
+
+  <body>
+
+    <!-- Fixed navbar -->
+    <div class="container-fluid mb-sm-4 mb-xl-2">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+          <a class="navbar-brand" href="../index.html">lbfgsb </a>
+          <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar"
+                  aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon">
+          </button>
+
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a class="nav-link" href="../lists/files.html">Source Files</a>
+                  </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/modules.html">Modules</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/procedures.html">Procedures</a>
+                </li>
+            </ul>
+              <div class="d-flex align-items-end flex-grow-1">
+                <form action="../search.html" role="search" class="ms-auto">
+                  <input type="text" class="form-control" aria-label="Search" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+                </form>
+              </div>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>
+    </div>
+
+    <div class="container">
+  <div class="row">
+    <h1>mainlb
+      <small>Subroutine</small>
+      
+    </h1>
+      <div class="container p-2 mb-4 bg-light border rounded-3">
+    <div class="row align-items-center justify-content-between" id="info-bar">
+      <div class="col">
+        <ul class="list-inline" style="margin-bottom:0px;display:inline">
+
+            <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
+              <a data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true"
+                 title="19.4% of total for procedures.">388 statements</a>
+            </li>
+
+            <li class="list-inline-item" id="source-file">
+              <i class="fa fa-code"></i>
+              <a href="../src/lbfgsb.f90"> Source File</a>
+            </li>
+        </ul>
+      </div>
+      <div class="col">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb justify-content-end mb-0">
+                <li class="breadcrumb-item"><a href='../sourcefile/lbfgsb.f90.html'>lbfgsb.f90</a></li>
+                <li class="breadcrumb-item"><a href='../module/lbfgsb_module.html'>lbfgsb_module</a></li>
+            <li class="breadcrumb-item active" aria-current="page">mainlb</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+  </div>
+  <script>
+    $(function () {
+    $('[data-bs-toggle="tooltip"]').tooltip()
+    })
+  </script>
+
+  </div>
+  
+  <div class="row">
+    <div class="col-md-3 hidden-xs hidden-sm visible-md visible-lg">
+      <div id="sidebar">
+      <h3>Contents</h3>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+    <div class="card card-primary">
+      <div class="card-header text-left"><h3 class="card-title">Source Code</h3></div>
+      <div class="list-group">
+        <a class="list-group-item" href="../proc/mainlb.html#src">mainlb</a>
+      </div>
+    </div>
+
+
+  </div>
+
+    </div>
+    
+    <div class="col-md-9" id='text'>
+    <h2>private  subroutine mainlb(n, m, x, l, u, Nbd, f, g, Factr, Pgtol, Ws, Wy, Sy, Ss, Wt, Wn, Snd, z, r, d, t, Xp, Wa, Index, Iwhere, Indx2, Task, Iprint, Csave, Lsave, Isave, Dsave, iteration_file)  
+</h2>
+    
+
+    <p>This subroutine solves bound constrained optimization problems by
+  using the compact formula of the limited memory BFGS updates.</p>
+<h3>References</h3>
+<ol>
+<li>R. H. Byrd, P. Lu, J. Nocedal and C. Zhu, "A limited
+     memory algorithm for bound constrained optimization",
+     SIAM J. Scientific Computing 16 (1995), no. 5, pp. 1190--1208.</li>
+<li>C. Zhu, R.H. Byrd, P. Lu, J. Nocedal, "L-BFGS-B: FORTRAN
+     Subroutines for Large Scale Bound Constrained Optimization"
+     Tech. Report, NAM-11, EECS Department, Northwestern University,
+     1994.</li>
+<li>R. Byrd, J. Nocedal and R. Schnabel "Representations of
+     Quasi-Newton Matrices and their use in Limited Memory Methods",
+     Mathematical Programming 63 (1994), no. 4, pp. 129-156.</li>
+</ol>
+<h3>History</h3>
+<ul>
+<li>NEOS, November 1994. (Latest revision June 1996.)
+    Optimization Technology Center.
+    Argonne National Laboratory and Northwestern University.
+    Written by Ciyou Zhu in collaboration with R.H. Byrd, P. Lu-Chen and J. Nocedal.</li>
+</ul>
+
+
+    <h3>Arguments</h3>
+        <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-n~4"></span>
+              integer,
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>n</strong></td>
+            <td>
+                <p>the number of variables.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-m~2"></span>
+              integer,
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>m</strong></td>
+            <td>
+                <p>the maximum number of variable metric
+corrections allowed in the limited memory matrix.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-x~2"></span>
+              real(kind=wp),
+            </td>
+<td>intent(inout)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>x</strong>(n)</td>
+            <td>
+                <p>On entry x is an approximation to the solution.
+On exit x is the current approximation.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-l~2"></span>
+              real(kind=wp),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>l</strong>(n)</td>
+            <td>
+                <p>the lower bound of x.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-u~2"></span>
+              real(kind=wp),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>u</strong>(n)</td>
+            <td>
+                <p>the upper bound of x.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-nbd~2"></span>
+              integer,
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>Nbd</strong>(n)</td>
+            <td>
+                <p>the type of bounds imposed on the
+variables, and must be specified as follows:</p>
+<ul>
+<li><code>nbd(i)=0</code> if <code>x(i)</code> is unbounded,</li>
+<li><code>nbd(i)=1</code> if <code>x(i)</code> has only a lower bound,</li>
+<li><code>nbd(i)=2</code> if <code>x(i)</code> has both lower and upper bounds,</li>
+<li><code>nbd(i)=3</code> if <code>x(i)</code> has only an upper bound.</li>
+</ul>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-f~2"></span>
+              real(kind=wp),
+            </td>
+<td>intent(inout)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>f</strong></td>
+            <td>
+                <p>On first entry f is unspecified.
+On final exit f is the value of the function at x.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-g~2"></span>
+              real(kind=wp),
+            </td>
+<td>intent(inout)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>g</strong>(n)</td>
+            <td>
+                <p>On first entry g is unspecified.
+On final exit g is the value of the gradient at x.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-factr~2"></span>
+              real(kind=wp),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>Factr</strong></td>
+            <td>
+                <p>On entry <code>factr &gt;= 0</code> is specified by the user.  The iteration
+will stop when</p>
+<p><code>(f^k - f^{k+1})/max{|f^k|,|f^{k+1}|,1} &lt;= factr*epsmch</code></p>
+<p>where epsmch is the machine precision, which is automatically
+generated by the code.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-pgtol~2"></span>
+              real(kind=wp),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>Pgtol</strong></td>
+            <td>
+                <p>On entry pgtol &gt;= 0 is specified by the user.  The iteration
+will stop when</p>
+<p><code>max{|proj g_i | i = 1, ..., n} &lt;= pgtol</code></p>
+<p>where pg_i is the ith component of the projected gradient.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-ws"></span>
+              real(kind=wp)
+            </td>
+<td></td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>Ws</strong>(n,m)</td>
+            <td>
+                <p>working array used to store information defining the limited memory BFGS matrix: stores S, the matrix of s-vectors;</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-wy"></span>
+              real(kind=wp)
+            </td>
+<td></td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>Wy</strong>(n,m)</td>
+            <td>
+                <p>working array used to store information defining the limited memory BFGS matrix: stores Y, the matrix of y-vectors;</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-sy"></span>
+              real(kind=wp)
+            </td>
+<td></td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>Sy</strong>(m,m)</td>
+            <td>
+                <p>working array used to store information defining the limited memory BFGS matrix: stores S'Y;</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-ss"></span>
+              real(kind=wp)
+            </td>
+<td></td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>Ss</strong>(m,m)</td>
+            <td>
+                <p>working array used to store information defining the limited memory BFGS matrix: stores S'S;</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-wt"></span>
+              real(kind=wp)
+            </td>
+<td></td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>Wt</strong>(m,m)</td>
+            <td>
+                <p>working array used to store information defining the limited memory BFGS matrix: stores the Cholesky factorization
+of (theta*S'S+LD^(-1)L'); see eq. (2.26) in [3].</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-wn"></span>
+              real(kind=wp)
+            </td>
+<td></td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>Wn</strong>(2*m,2*m)</td>
+            <td>
+                <p>working array
+ used to store the LEL^T factorization of the indefinite matrix</p>
+<div class="codehilite"><pre><span></span><code>  K = [-D -Y&#39;ZZ&#39;Y/theta     L_a&#39;-R_z&#39;  ]
+      [L_a -R_z           theta*S&#39;AA&#39;S ]
+</code></pre></div>
+
+<p>where</p>
+<div class="codehilite"><pre><span></span><code>  E = [-I  0]
+      [ 0  I]
+</code></pre></div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-snd"></span>
+              real(kind=wp)
+            </td>
+<td></td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>Snd</strong>(2*m,2*m)</td>
+            <td>
+                <p>working array
+ used to store the lower triangular part of</p>
+<div class="codehilite"><pre><span></span><code>  N = [Y&#39; ZZ&#39;Y   L_a&#39;+R_z&#39;]
+      [L_a +R_z  S&#39;AA&#39;S   ]
+</code></pre></div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-z"></span>
+              real(kind=wp)
+            </td>
+<td></td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>z</strong>(n)</td>
+            <td>
+                <p>working array.
+used at different times to store the Cauchy point and the Newton point.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-r"></span>
+              real(kind=wp)
+            </td>
+<td></td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>r</strong>(n)</td>
+            <td>
+                <p>working array.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-d"></span>
+              real(kind=wp)
+            </td>
+<td></td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>d</strong>(n)</td>
+            <td>
+                <p>working array.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-t~3"></span>
+              real(kind=wp)
+            </td>
+<td></td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>t</strong>(n)</td>
+            <td>
+                <p>working array.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-xp"></span>
+              real(kind=wp)
+            </td>
+<td></td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>Xp</strong>(n)</td>
+            <td>
+                <p>working array.
+used to safeguard the projected Newton direction</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-wa~2"></span>
+              real(kind=wp)
+            </td>
+<td></td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>Wa</strong>(8*m)</td>
+            <td>
+                <p>working array.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-index"></span>
+              integer
+            </td>
+<td></td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>Index</strong>(n)</td>
+            <td>
+                <p>working array.
+In subroutine <a href="../proc/freev.html">freev</a>, index is used to store the free and fixed
+variables at the Generalized Cauchy Point (GCP).</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-iwhere"></span>
+              integer
+            </td>
+<td></td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>Iwhere</strong>(n)</td>
+            <td>
+                <p>working array used to record
+the status of the vector x for GCP computation:</p>
+<ul>
+<li><code>iwhere(i)= 0 or -3</code> if <code>x(i)</code> is free and has bounds,</li>
+<li><code>iwhere(i)= 1</code> if <code>x(i)</code> is fixed at l(i), and l(i) /= u(i)</li>
+<li><code>iwhere(i)= 2</code> if <code>x(i)</code> is fixed at u(i), and u(i) /= l(i)</li>
+<li><code>iwhere(i)= 3</code> if <code>x(i)</code> is always fixed, i.e.,  u(i)=x(i)=l(i)</li>
+<li><code>iwhere(i)=-1</code> if <code>x(i)</code> is always free, i.e., no bounds on it.</li>
+</ul>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-indx2"></span>
+              integer
+            </td>
+<td></td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>Indx2</strong>(n)</td>
+            <td>
+                <p>integer working array.
+Within subroutine <a href="../proc/cauchy.html">cauchy</a>, indx2 corresponds to the array iorder.
+In subroutine <a href="../proc/freev.html">freev</a>, a list of variables entering and leaving
+the free set is stored in indx2, and it is passed on to
+subroutine <a href="../proc/formk.html">formk</a> with this information.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-task~2"></span>
+              character(len=60),
+            </td>
+<td>intent(inout)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>Task</strong></td>
+            <td>
+                <p>indicates the current job when
+entering and leaving this subroutine.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-iprint~2"></span>
+              integer,
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>Iprint</strong></td>
+            <td>
+                <p>Controls the frequency and type of output generated:</p>
+<ul>
+<li><code>iprint&lt;0</code> no output is generated;</li>
+<li><code>iprint=0</code> print only one line at the last iteration;</li>
+<li><code>0&lt;iprint&lt;99</code> print also f and |proj g| every iprint iterations;</li>
+<li><code>iprint=99</code> print details of every iteration except n-vectors;</li>
+<li><code>iprint=100</code> print also the changes of active set and final x;</li>
+<li><code>iprint&gt;100</code> print details of every iteration including x and g;</li>
+</ul>
+<p>When <code>iprint &gt; 0</code>, the file <code>iterate.dat</code> will be created to
+summarize the iteration.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-csave~2"></span>
+              character(len=60)
+            </td>
+<td></td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>Csave</strong></td>
+            <td>
+                <p>working string</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-lsave~2"></span>
+              logical
+            </td>
+<td></td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>Lsave</strong>(4)</td>
+            <td>
+                <p>working array</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-isave~2"></span>
+              integer
+            </td>
+<td></td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>Isave</strong>(23)</td>
+            <td>
+                <p>working array</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-dsave~2"></span>
+              real(kind=wp)
+            </td>
+<td></td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>Dsave</strong>(29)</td>
+            <td>
+                <p>working array</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-iteration_file~2"></span>
+              character(len=*),
+            </td>
+<td>intent(in),</td>
+              <td>optional</td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>iteration_file</strong></td>
+            <td>
+                <p>The name of the iteration file if used (<code>Iprint&gt;=1</code>).
+If not specified, then 'iterate.dat' is used.</p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+    <br>
+    <div class="card">
+      <div class="card-header">
+  <h3 class="card-title">Calls</h3>
+      </div>
+      <div class="card-body">
+  <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.43.0 (0)
+ -->
+<!-- Title: proc~~mainlb~~CallsGraph Pages: 1 -->
+<svg id="procmainlbCallsGraph" width="422pt" height="730pt"
+ viewBox="0.00 0.00 422.00 730.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="proc~~mainlb~~CallsGraph" class="graph" transform="scale(1 1) rotate(0) translate(4 726)">
+<title>proc~~mainlb~~CallsGraph</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-726 418,-726 418,4 -4,4"/>
+<!-- proc~mainlb -->
+<g id="proc~~mainlb~~CallsGraph_node1" class="node">
+<title>proc~mainlb</title>
+<polygon fill="none" stroke="black" points="54,-358 0,-358 0,-334 54,-334 54,-358"/>
+<text text-anchor="middle" x="27" y="-343.6" font-family="Helvetica,sans-Serif" font-size="10.50">mainlb</text>
+</g>
+<!-- proc~active -->
+<g id="proc~~mainlb~~CallsGraph_node2" class="node">
+<title>proc~active</title>
+<g id="a_proc~~mainlb~~CallsGraph_node2"><a xlink:href="../proc/active.html" xlink:title="active">
+<polygon fill="#d9534f" stroke="#d9534f" points="144,-722 90,-722 90,-698 144,-698 144,-722"/>
+<text text-anchor="middle" x="117" y="-707.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">active</text>
+</a>
+</g>
+</g>
+<!-- proc~mainlb&#45;&gt;proc~active -->
+<g id="proc~~mainlb~~CallsGraph_edge1" class="edge">
+<title>proc~mainlb&#45;&gt;proc~active</title>
+<path fill="none" stroke="#000000" d="M27.7,-358.2C27.08,-403.96 29.41,-568.58 90,-684 91.08,-686.07 92.39,-688.07 93.83,-689.99"/>
+<polygon fill="#000000" stroke="#000000" points="91.5,-692.64 100.75,-697.8 96.73,-687.99 91.5,-692.64"/>
+</g>
+<!-- proc~cauchy -->
+<g id="proc~~mainlb~~CallsGraph_node3" class="node">
+<title>proc~cauchy</title>
+<g id="a_proc~~mainlb~~CallsGraph_node3"><a xlink:href="../proc/cauchy.html" xlink:title="cauchy">
+<polygon fill="#d9534f" stroke="#d9534f" points="144,-318 90,-318 90,-294 144,-294 144,-318"/>
+<text text-anchor="middle" x="117" y="-303.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">cauchy</text>
+</a>
+</g>
+</g>
+<!-- proc~mainlb&#45;&gt;proc~cauchy -->
+<g id="proc~~mainlb~~CallsGraph_edge2" class="edge">
+<title>proc~mainlb&#45;&gt;proc~cauchy</title>
+<path fill="none" stroke="#000000" d="M54.4,-334C62.66,-330.25 71.9,-326.05 80.66,-322.06"/>
+<polygon fill="#000000" stroke="#000000" points="82.26,-325.18 89.92,-317.86 79.37,-318.81 82.26,-325.18"/>
+</g>
+<!-- proc~cmprlb -->
+<g id="proc~~mainlb~~CallsGraph_node4" class="node">
+<title>proc~cmprlb</title>
+<g id="a_proc~~mainlb~~CallsGraph_node4"><a xlink:href="../proc/cmprlb.html" xlink:title="cmprlb">
+<polygon fill="#d9534f" stroke="#d9534f" points="144,-276 90,-276 90,-252 144,-252 144,-276"/>
+<text text-anchor="middle" x="117" y="-261.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">cmprlb</text>
+</a>
+</g>
+</g>
+<!-- proc~mainlb&#45;&gt;proc~cmprlb -->
+<g id="proc~~mainlb~~CallsGraph_edge3" class="edge">
+<title>proc~mainlb&#45;&gt;proc~cmprlb</title>
+<path fill="none" stroke="#000000" d="M39.55,-333.95C51.77,-321.39 71.74,-301.28 90,-285 90.82,-284.27 91.67,-283.53 92.52,-282.78"/>
+<polygon fill="#000000" stroke="#000000" points="94.97,-285.3 100.39,-276.19 90.48,-279.93 94.97,-285.3"/>
+</g>
+<!-- proc~dcopy -->
+<g id="proc~~mainlb~~CallsGraph_node5" class="node">
+<title>proc~dcopy</title>
+<g id="a_proc~~mainlb~~CallsGraph_node5"><a xlink:href="../proc/dcopy.html" xlink:title="dcopy">
+<polygon fill="#d9534f" stroke="#d9534f" points="234,-482 180,-482 180,-458 234,-458 234,-482"/>
+<text text-anchor="middle" x="207" y="-467.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">dcopy</text>
+</a>
+</g>
+</g>
+<!-- proc~mainlb&#45;&gt;proc~dcopy -->
+<g id="proc~~mainlb~~CallsGraph_edge4" class="edge">
+<title>proc~mainlb&#45;&gt;proc~dcopy</title>
+<path fill="none" stroke="#000000" d="M31.62,-358.17C38.83,-380.17 57.19,-426.36 90,-449 113.18,-465 144.97,-469.86 169.4,-470.94"/>
+<polygon fill="#000000" stroke="#000000" points="169.63,-474.45 179.72,-471.2 169.81,-467.45 169.63,-474.45"/>
+</g>
+<!-- proc~ddot -->
+<g id="proc~~mainlb~~CallsGraph_node6" class="node">
+<title>proc~ddot</title>
+<g id="a_proc~~mainlb~~CallsGraph_node6"><a xlink:href="../proc/ddot.html" xlink:title="ddot">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="414,-522 360,-522 360,-498 414,-498 414,-522"/>
+<text text-anchor="middle" x="387" y="-507.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ddot</text>
+</a>
+</g>
+</g>
+<!-- proc~mainlb&#45;&gt;proc~ddot -->
+<g id="proc~~mainlb~~CallsGraph_edge5" class="edge">
+<title>proc~mainlb&#45;&gt;proc~ddot</title>
+<path fill="none" stroke="#000000" d="M29.15,-358.15C33.86,-405.34 53.2,-575.77 90,-613 163.41,-687.26 235.48,-689.39 324,-634 359.82,-611.58 375.67,-561.59 382.09,-532.39"/>
+<polygon fill="#000000" stroke="#000000" points="385.58,-532.81 384.12,-522.32 378.72,-531.43 385.58,-532.81"/>
+</g>
+<!-- proc~dscal -->
+<g id="proc~~mainlb~~CallsGraph_node7" class="node">
+<title>proc~dscal</title>
+<g id="a_proc~~mainlb~~CallsGraph_node7"><a xlink:href="../proc/dscal.html" xlink:title="dscal">
+<polygon fill="#d9534f" stroke="#d9534f" points="234,-326 180,-326 180,-302 234,-302 234,-326"/>
+<text text-anchor="middle" x="207" y="-311.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">dscal</text>
+</a>
+</g>
+</g>
+<!-- proc~mainlb&#45;&gt;proc~dscal -->
+<g id="proc~~mainlb~~CallsGraph_edge6" class="edge">
+<title>proc~mainlb&#45;&gt;proc~dscal</title>
+<path fill="none" stroke="#000000" d="M54.32,-342.03C77.87,-338.4 113.31,-332.73 144,-327 152.38,-325.44 161.36,-323.63 169.82,-321.87"/>
+<polygon fill="#000000" stroke="#000000" points="170.74,-325.25 179.81,-319.76 169.3,-318.4 170.74,-325.25"/>
+</g>
+<!-- proc~errclb -->
+<g id="proc~~mainlb~~CallsGraph_node8" class="node">
+<title>proc~errclb</title>
+<g id="a_proc~~mainlb~~CallsGraph_node8"><a xlink:href="../proc/errclb.html" xlink:title="errclb">
+<polygon fill="#d9534f" stroke="#d9534f" points="144,-234 90,-234 90,-210 144,-210 144,-234"/>
+<text text-anchor="middle" x="117" y="-219.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">errclb</text>
+</a>
+</g>
+</g>
+<!-- proc~mainlb&#45;&gt;proc~errclb -->
+<g id="proc~~mainlb~~CallsGraph_edge7" class="edge">
+<title>proc~mainlb&#45;&gt;proc~errclb</title>
+<path fill="none" stroke="#000000" d="M33.5,-334C43.1,-313.82 64.36,-272.43 90,-243 90.6,-242.31 91.23,-241.63 91.87,-240.95"/>
+<polygon fill="#000000" stroke="#000000" points="94.33,-243.44 99.27,-234.07 89.56,-238.32 94.33,-243.44"/>
+</g>
+<!-- proc~formk -->
+<g id="proc~~mainlb~~CallsGraph_node9" class="node">
+<title>proc~formk</title>
+<g id="a_proc~~mainlb~~CallsGraph_node9"><a xlink:href="../proc/formk.html" xlink:title="formk">
+<polygon fill="#d9534f" stroke="#d9534f" points="144,-440 90,-440 90,-416 144,-416 144,-440"/>
+<text text-anchor="middle" x="117" y="-425.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">formk</text>
+</a>
+</g>
+</g>
+<!-- proc~mainlb&#45;&gt;proc~formk -->
+<g id="proc~~mainlb~~CallsGraph_edge8" class="edge">
+<title>proc~mainlb&#45;&gt;proc~formk</title>
+<path fill="none" stroke="#000000" d="M39.55,-358.05C51.77,-370.61 71.74,-390.72 90,-407 90.82,-407.73 91.67,-408.47 92.52,-409.22"/>
+<polygon fill="#000000" stroke="#000000" points="90.48,-412.07 100.39,-415.81 94.97,-406.7 90.48,-412.07"/>
+</g>
+<!-- proc~formt -->
+<g id="proc~~mainlb~~CallsGraph_node10" class="node">
+<title>proc~formt</title>
+<g id="a_proc~~mainlb~~CallsGraph_node10"><a xlink:href="../proc/formt.html" xlink:title="formt">
+<polygon fill="#d9534f" stroke="#d9534f" points="144,-562 90,-562 90,-538 144,-538 144,-562"/>
+<text text-anchor="middle" x="117" y="-547.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">formt</text>
+</a>
+</g>
+</g>
+<!-- proc~mainlb&#45;&gt;proc~formt -->
+<g id="proc~~mainlb~~CallsGraph_edge9" class="edge">
+<title>proc~mainlb&#45;&gt;proc~formt</title>
+<path fill="none" stroke="#000000" d="M29.72,-358.18C34.57,-389.18 50.66,-472.6 90,-529 90.35,-529.51 90.72,-530.01 91.1,-530.5"/>
+<polygon fill="#000000" stroke="#000000" points="88.74,-533.09 98.18,-537.89 93.79,-528.25 88.74,-533.09"/>
+</g>
+<!-- proc~freev -->
+<g id="proc~~mainlb~~CallsGraph_node11" class="node">
+<title>proc~freev</title>
+<g id="a_proc~~mainlb~~CallsGraph_node11"><a xlink:href="../proc/freev.html" xlink:title="freev">
+<polygon fill="#d9534f" stroke="#d9534f" points="144,-192 90,-192 90,-168 144,-168 144,-192"/>
+<text text-anchor="middle" x="117" y="-177.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">freev</text>
+</a>
+</g>
+</g>
+<!-- proc~mainlb&#45;&gt;proc~freev -->
+<g id="proc~~mainlb~~CallsGraph_edge10" class="edge">
+<title>proc~mainlb&#45;&gt;proc~freev</title>
+<path fill="none" stroke="#000000" d="M31.07,-333.7C38.09,-307.33 57.29,-244.23 90,-201 90.46,-200.39 90.94,-199.79 91.44,-199.2"/>
+<polygon fill="#000000" stroke="#000000" points="94.03,-201.56 98.65,-192.02 89.09,-196.6 94.03,-201.56"/>
+</g>
+<!-- proc~lnsrlb -->
+<g id="proc~~mainlb~~CallsGraph_node12" class="node">
+<title>proc~lnsrlb</title>
+<g id="a_proc~~mainlb~~CallsGraph_node12"><a xlink:href="../proc/lnsrlb.html" xlink:title="lnsrlb">
+<polygon fill="#d9534f" stroke="#d9534f" points="144,-604 90,-604 90,-580 144,-580 144,-604"/>
+<text text-anchor="middle" x="117" y="-589.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lnsrlb</text>
+</a>
+</g>
+</g>
+<!-- proc~mainlb&#45;&gt;proc~lnsrlb -->
+<g id="proc~~mainlb~~CallsGraph_edge11" class="edge">
+<title>proc~mainlb&#45;&gt;proc~lnsrlb</title>
+<path fill="none" stroke="#000000" d="M28.75,-358.04C31.46,-393.51 43.25,-499.66 90,-571 90.34,-571.52 90.69,-572.02 91.06,-572.53"/>
+<polygon fill="#000000" stroke="#000000" points="88.65,-575.07 98.03,-580 93.77,-570.3 88.65,-575.07"/>
+</g>
+<!-- proc~matupd -->
+<g id="proc~~mainlb~~CallsGraph_node13" class="node">
+<title>proc~matupd</title>
+<g id="a_proc~~mainlb~~CallsGraph_node13"><a xlink:href="../proc/matupd.html" xlink:title="matupd">
+<polygon fill="#d9534f" stroke="#d9534f" points="144,-520 90,-520 90,-496 144,-496 144,-520"/>
+<text text-anchor="middle" x="117" y="-505.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">matupd</text>
+</a>
+</g>
+</g>
+<!-- proc~mainlb&#45;&gt;proc~matupd -->
+<g id="proc~~mainlb~~CallsGraph_edge12" class="edge">
+<title>proc~mainlb&#45;&gt;proc~matupd</title>
+<path fill="none" stroke="#000000" d="M31.84,-358.02C40.07,-382.69 61.01,-440.21 90,-482 91.5,-484.16 93.18,-486.29 94.96,-488.36"/>
+<polygon fill="#000000" stroke="#000000" points="92.64,-491 102.05,-495.86 97.73,-486.19 92.64,-491"/>
+</g>
+<!-- proc~prn1lb -->
+<g id="proc~~mainlb~~CallsGraph_node14" class="node">
+<title>proc~prn1lb</title>
+<g id="a_proc~~mainlb~~CallsGraph_node14"><a xlink:href="../proc/prn1lb.html" xlink:title="prn1lb">
+<polygon fill="#d9534f" stroke="#d9534f" points="144,-150 90,-150 90,-126 144,-126 144,-150"/>
+<text text-anchor="middle" x="117" y="-135.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">prn1lb</text>
+</a>
+</g>
+</g>
+<!-- proc~mainlb&#45;&gt;proc~prn1lb -->
+<g id="proc~~mainlb~~CallsGraph_edge13" class="edge">
+<title>proc~mainlb&#45;&gt;proc~prn1lb</title>
+<path fill="none" stroke="#000000" d="M29.65,-333.55C34.34,-301.88 50.08,-216.64 90,-159 90.35,-158.49 90.72,-157.99 91.1,-157.5"/>
+<polygon fill="#000000" stroke="#000000" points="93.79,-159.74 98.16,-150.09 88.73,-154.91 93.79,-159.74"/>
+</g>
+<!-- proc~prn2lb -->
+<g id="proc~~mainlb~~CallsGraph_node15" class="node">
+<title>proc~prn2lb</title>
+<g id="a_proc~~mainlb~~CallsGraph_node15"><a xlink:href="../proc/prn2lb.html" xlink:title="prn2lb">
+<polygon fill="#d9534f" stroke="#d9534f" points="144,-108 90,-108 90,-84 144,-84 144,-108"/>
+<text text-anchor="middle" x="117" y="-93.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">prn2lb</text>
+</a>
+</g>
+</g>
+<!-- proc~mainlb&#45;&gt;proc~prn2lb -->
+<g id="proc~~mainlb~~CallsGraph_edge14" class="edge">
+<title>proc~mainlb&#45;&gt;proc~prn2lb</title>
+<path fill="none" stroke="#000000" d="M28.69,-333.75C31.24,-297.65 42.64,-189.62 90,-117 90.26,-116.6 90.53,-116.2 90.81,-115.81"/>
+<polygon fill="#000000" stroke="#000000" points="93.58,-117.97 97.75,-108.23 88.42,-113.24 93.58,-117.97"/>
+</g>
+<!-- proc~prn3lb -->
+<g id="proc~~mainlb~~CallsGraph_node16" class="node">
+<title>proc~prn3lb</title>
+<g id="a_proc~~mainlb~~CallsGraph_node16"><a xlink:href="../proc/prn3lb.html" xlink:title="prn3lb">
+<polygon fill="#d9534f" stroke="#d9534f" points="144,-66 90,-66 90,-42 144,-42 144,-66"/>
+<text text-anchor="middle" x="117" y="-51.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">prn3lb</text>
+</a>
+</g>
+</g>
+<!-- proc~mainlb&#45;&gt;proc~prn3lb -->
+<g id="proc~~mainlb~~CallsGraph_edge15" class="edge">
+<title>proc~mainlb&#45;&gt;proc~prn3lb</title>
+<path fill="none" stroke="#000000" d="M28.04,-333.87C28.7,-293.73 35.17,-162.82 90,-75 90.25,-74.59 90.52,-74.19 90.79,-73.8"/>
+<polygon fill="#000000" stroke="#000000" points="93.57,-75.94 97.65,-66.16 88.36,-71.27 93.57,-75.94"/>
+</g>
+<!-- proc~projgr -->
+<g id="proc~~mainlb~~CallsGraph_node17" class="node">
+<title>proc~projgr</title>
+<g id="a_proc~~mainlb~~CallsGraph_node17"><a xlink:href="../proc/projgr.html" xlink:title="projgr">
+<polygon fill="#d9534f" stroke="#d9534f" points="144,-24 90,-24 90,0 144,0 144,-24"/>
+<text text-anchor="middle" x="117" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">projgr</text>
+</a>
+</g>
+</g>
+<!-- proc~mainlb&#45;&gt;proc~projgr -->
+<g id="proc~~mainlb~~CallsGraph_edge16" class="edge">
+<title>proc~mainlb&#45;&gt;proc~projgr</title>
+<path fill="none" stroke="#000000" d="M27.56,-333.89C26.51,-289.95 27.7,-136.13 90,-33 90.25,-32.59 90.51,-32.19 90.77,-31.78"/>
+<polygon fill="#000000" stroke="#000000" points="93.56,-33.92 97.57,-24.12 88.32,-29.28 93.56,-33.92"/>
+</g>
+<!-- proc~subsm -->
+<g id="proc~~mainlb~~CallsGraph_node18" class="node">
+<title>proc~subsm</title>
+<g id="a_proc~~mainlb~~CallsGraph_node18"><a xlink:href="../proc/subsm.html" xlink:title="subsm">
+<polygon fill="#d9534f" stroke="#d9534f" points="144,-398 90,-398 90,-374 144,-374 144,-398"/>
+<text text-anchor="middle" x="117" y="-383.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">subsm</text>
+</a>
+</g>
+</g>
+<!-- proc~mainlb&#45;&gt;proc~subsm -->
+<g id="proc~~mainlb~~CallsGraph_edge17" class="edge">
+<title>proc~mainlb&#45;&gt;proc~subsm</title>
+<path fill="none" stroke="#000000" d="M54.4,-358C62.66,-361.75 71.9,-365.95 80.66,-369.94"/>
+<polygon fill="#000000" stroke="#000000" points="79.37,-373.19 89.92,-374.14 82.26,-366.82 79.37,-373.19"/>
+</g>
+<!-- proc~cauchy&#45;&gt;proc~dcopy -->
+<g id="proc~~mainlb~~CallsGraph_edge20" class="edge">
+<title>proc~cauchy&#45;&gt;proc~dcopy</title>
+<path fill="none" stroke="#000000" d="M124.47,-318.06C139.35,-345.78 176.13,-414.33 194.77,-449.08"/>
+<polygon fill="#000000" stroke="#000000" points="191.71,-450.77 199.52,-457.92 197.88,-447.46 191.71,-450.77"/>
+</g>
+<!-- proc~cauchy&#45;&gt;proc~ddot -->
+<g id="proc~~mainlb~~CallsGraph_edge21" class="edge">
+<title>proc~cauchy&#45;&gt;proc~ddot</title>
+<path fill="none" stroke="#000000" d="M144.06,-299.29C155.07,-296.78 168.08,-294.24 180,-293 246.07,-286.15 278.98,-284.16 324,-333 365,-377.48 379.14,-450.62 383.82,-487.39"/>
+<polygon fill="#000000" stroke="#000000" points="380.37,-488.03 384.98,-497.57 387.32,-487.23 380.37,-488.03"/>
+</g>
+<!-- proc~cauchy&#45;&gt;proc~dscal -->
+<g id="proc~~mainlb~~CallsGraph_edge22" class="edge">
+<title>proc~cauchy&#45;&gt;proc~dscal</title>
+<path fill="none" stroke="#000000" d="M144.4,-308.4C152.39,-309.13 161.31,-309.94 169.82,-310.71"/>
+<polygon fill="#000000" stroke="#000000" points="169.64,-314.21 179.92,-311.63 170.28,-307.24 169.64,-314.21"/>
+</g>
+<!-- proc~bmv -->
+<g id="proc~~mainlb~~CallsGraph_node19" class="node">
+<title>proc~bmv</title>
+<g id="a_proc~~mainlb~~CallsGraph_node19"><a xlink:href="../proc/bmv.html" xlink:title="bmv">
+<polygon fill="#d9534f" stroke="#d9534f" points="234,-166 180,-166 180,-142 234,-142 234,-166"/>
+<text text-anchor="middle" x="207" y="-151.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">bmv</text>
+</a>
+</g>
+</g>
+<!-- proc~cauchy&#45;&gt;proc~bmv -->
+<g id="proc~~mainlb~~CallsGraph_edge18" class="edge">
+<title>proc~cauchy&#45;&gt;proc~bmv</title>
+<path fill="none" stroke="#000000" d="M135.81,-293.89C138.84,-291.23 141.74,-288.23 144,-285 172.3,-244.59 153.88,-221.85 180,-180 181.36,-177.82 182.94,-175.68 184.62,-173.63"/>
+<polygon fill="#000000" stroke="#000000" points="187.27,-175.92 191.49,-166.21 182.13,-171.17 187.27,-175.92"/>
+</g>
+<!-- proc~daxpy -->
+<g id="proc~~mainlb~~CallsGraph_node20" class="node">
+<title>proc~daxpy</title>
+<g id="a_proc~~mainlb~~CallsGraph_node20"><a xlink:href="../proc/daxpy.html" xlink:title="daxpy">
+<polygon fill="#d9534f" stroke="#d9534f" points="414,-286 360,-286 360,-262 414,-262 414,-286"/>
+<text text-anchor="middle" x="387" y="-271.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">daxpy</text>
+</a>
+</g>
+</g>
+<!-- proc~cauchy&#45;&gt;proc~daxpy -->
+<g id="proc~~mainlb~~CallsGraph_edge19" class="edge">
+<title>proc~cauchy&#45;&gt;proc~daxpy</title>
+<path fill="none" stroke="#000000" d="M135.2,-293.86C138.36,-291.17 141.45,-288.16 144,-285 166.43,-257.12 149.57,-231.81 180,-213 239.86,-176.01 323.37,-226.66 363.16,-255.88"/>
+<polygon fill="#000000" stroke="#000000" points="361.09,-258.7 371.19,-261.92 365.3,-253.11 361.09,-258.7"/>
+</g>
+<!-- proc~hpsolb -->
+<g id="proc~~mainlb~~CallsGraph_node24" class="node">
+<title>proc~hpsolb</title>
+<g id="a_proc~~mainlb~~CallsGraph_node24"><a xlink:href="../proc/hpsolb.html" xlink:title="hpsolb">
+<polygon fill="#d9534f" stroke="#d9534f" points="234,-246 180,-246 180,-222 234,-222 234,-246"/>
+<text text-anchor="middle" x="207" y="-231.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">hpsolb</text>
+</a>
+</g>
+</g>
+<!-- proc~cauchy&#45;&gt;proc~hpsolb -->
+<g id="proc~~mainlb~~CallsGraph_edge23" class="edge">
+<title>proc~cauchy&#45;&gt;proc~hpsolb</title>
+<path fill="none" stroke="#000000" d="M133.14,-293.81C136.71,-290.93 140.49,-287.86 144,-285 157.04,-274.37 171.57,-262.43 183.28,-252.77"/>
+<polygon fill="#000000" stroke="#000000" points="185.76,-255.26 191.25,-246.2 181.31,-249.86 185.76,-255.26"/>
+</g>
+<!-- proc~cmprlb&#45;&gt;proc~bmv -->
+<g id="proc~~mainlb~~CallsGraph_edge24" class="edge">
+<title>proc~cmprlb&#45;&gt;proc~bmv</title>
+<path fill="none" stroke="#000000" d="M134.79,-251.98C138.05,-249.23 141.29,-246.18 144,-243 164.9,-218.44 160.43,-205.63 180,-180 181.63,-177.87 183.42,-175.74 185.28,-173.66"/>
+<polygon fill="#000000" stroke="#000000" points="188.18,-175.7 192.59,-166.07 183.13,-170.85 188.18,-175.7"/>
+</g>
+<!-- proc~formk&#45;&gt;proc~dcopy -->
+<g id="proc~~mainlb~~CallsGraph_edge25" class="edge">
+<title>proc~formk&#45;&gt;proc~dcopy</title>
+<path fill="none" stroke="#000000" d="M143.45,-440.15C152.21,-444.33 162.17,-449.08 171.52,-453.54"/>
+<polygon fill="#000000" stroke="#000000" points="170.07,-456.73 180.6,-457.88 173.09,-450.41 170.07,-456.73"/>
+</g>
+<!-- proc~formk&#45;&gt;proc~ddot -->
+<g id="proc~~mainlb~~CallsGraph_edge26" class="edge">
+<title>proc~formk&#45;&gt;proc~ddot</title>
+<path fill="none" stroke="#000000" d="M144.15,-431.19C167.89,-434.45 203.71,-440.28 234,-449 275.3,-460.89 320.81,-480 351.17,-493.67"/>
+<polygon fill="#000000" stroke="#000000" points="349.92,-496.94 360.47,-497.9 352.82,-490.57 349.92,-496.94"/>
+</g>
+<!-- proc~dpofa -->
+<g id="proc~~mainlb~~CallsGraph_node22" class="node">
+<title>proc~dpofa</title>
+<g id="a_proc~~mainlb~~CallsGraph_node22"><a xlink:href="../proc/dpofa.html" xlink:title="dpofa">
+<polygon fill="#d9534f" stroke="#d9534f" points="234,-562 180,-562 180,-538 234,-538 234,-562"/>
+<text text-anchor="middle" x="207" y="-547.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">dpofa</text>
+</a>
+</g>
+</g>
+<!-- proc~formk&#45;&gt;proc~dpofa -->
+<g id="proc~~mainlb~~CallsGraph_edge27" class="edge">
+<title>proc~formk&#45;&gt;proc~dpofa</title>
+<path fill="none" stroke="#000000" d="M126.76,-440.14C141.85,-461.06 172.89,-504.1 191.33,-529.66"/>
+<polygon fill="#000000" stroke="#000000" points="188.59,-531.84 197.28,-537.91 194.26,-527.75 188.59,-531.84"/>
+</g>
+<!-- proc~dtrsl -->
+<g id="proc~~mainlb~~CallsGraph_node23" class="node">
+<title>proc~dtrsl</title>
+<g id="a_proc~~mainlb~~CallsGraph_node23"><a xlink:href="../proc/dtrsl.html" xlink:title="dtrsl">
+<polygon fill="#d9534f" stroke="#d9534f" points="324,-366 270,-366 270,-342 324,-342 324,-366"/>
+<text text-anchor="middle" x="297" y="-351.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">dtrsl</text>
+</a>
+</g>
+</g>
+<!-- proc~formk&#45;&gt;proc~dtrsl -->
+<g id="proc~~mainlb~~CallsGraph_edge28" class="edge">
+<title>proc~formk&#45;&gt;proc~dtrsl</title>
+<path fill="none" stroke="#000000" d="M144.26,-417.08C174.98,-404.31 225.99,-383.11 260.29,-368.85"/>
+<polygon fill="#000000" stroke="#000000" points="262.03,-371.91 269.92,-364.84 259.34,-365.45 262.03,-371.91"/>
+</g>
+<!-- proc~formt&#45;&gt;proc~dpofa -->
+<g id="proc~~mainlb~~CallsGraph_edge29" class="edge">
+<title>proc~formt&#45;&gt;proc~dpofa</title>
+<path fill="none" stroke="#000000" d="M144.4,-550C152.39,-550 161.31,-550 169.82,-550"/>
+<polygon fill="#000000" stroke="#000000" points="169.92,-553.5 179.92,-550 169.92,-546.5 169.92,-553.5"/>
+</g>
+<!-- proc~lnsrlb&#45;&gt;proc~dcopy -->
+<g id="proc~~mainlb~~CallsGraph_edge30" class="edge">
+<title>proc~lnsrlb&#45;&gt;proc~dcopy</title>
+<path fill="none" stroke="#000000" d="M134.71,-579.91C137.98,-577.17 141.24,-574.14 144,-571 165.81,-546.18 184.65,-512.76 195.67,-491.3"/>
+<polygon fill="#000000" stroke="#000000" points="198.94,-492.58 200.29,-482.08 192.68,-489.44 198.94,-492.58"/>
+</g>
+<!-- proc~lnsrlb&#45;&gt;proc~ddot -->
+<g id="proc~~mainlb~~CallsGraph_edge32" class="edge">
+<title>proc~lnsrlb&#45;&gt;proc~ddot</title>
+<path fill="none" stroke="#000000" d="M144.05,-603.77C185.19,-620.46 266.42,-645.55 324,-613 354.68,-595.66 371.87,-556.37 380.01,-531.64"/>
+<polygon fill="#000000" stroke="#000000" points="383.36,-532.63 382.95,-522.04 376.67,-530.57 383.36,-532.63"/>
+</g>
+<!-- proc~dcsrch -->
+<g id="proc~~mainlb~~CallsGraph_node21" class="node">
+<title>proc~dcsrch</title>
+<g id="a_proc~~mainlb~~CallsGraph_node21"><a xlink:href="../proc/dcsrch.html" xlink:title="dcsrch">
+<polygon fill="#d9534f" stroke="#d9534f" points="234,-604 180,-604 180,-580 234,-580 234,-604"/>
+<text text-anchor="middle" x="207" y="-589.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">dcsrch</text>
+</a>
+</g>
+</g>
+<!-- proc~lnsrlb&#45;&gt;proc~dcsrch -->
+<g id="proc~~mainlb~~CallsGraph_edge31" class="edge">
+<title>proc~lnsrlb&#45;&gt;proc~dcsrch</title>
+<path fill="none" stroke="#000000" d="M144.4,-592C152.39,-592 161.31,-592 169.82,-592"/>
+<polygon fill="#000000" stroke="#000000" points="169.92,-595.5 179.92,-592 169.92,-588.5 169.92,-595.5"/>
+</g>
+<!-- proc~matupd&#45;&gt;proc~dcopy -->
+<g id="proc~~mainlb~~CallsGraph_edge33" class="edge">
+<title>proc~matupd&#45;&gt;proc~dcopy</title>
+<path fill="none" stroke="#000000" d="M144.4,-496.6C152.66,-493.03 161.9,-489.04 170.66,-485.26"/>
+<polygon fill="#000000" stroke="#000000" points="172.13,-488.44 179.92,-481.26 169.35,-482.01 172.13,-488.44"/>
+</g>
+<!-- proc~matupd&#45;&gt;proc~ddot -->
+<g id="proc~~mainlb~~CallsGraph_edge34" class="edge">
+<title>proc~matupd&#45;&gt;proc~ddot</title>
+<path fill="none" stroke="#000000" d="M144.18,-508.2C192.22,-508.55 294.51,-509.32 349.39,-509.73"/>
+<polygon fill="#000000" stroke="#000000" points="349.68,-513.23 359.71,-509.8 349.74,-506.23 349.68,-513.23"/>
+</g>
+<!-- proc~subsm&#45;&gt;proc~dcopy -->
+<g id="proc~~mainlb~~CallsGraph_edge35" class="edge">
+<title>proc~subsm&#45;&gt;proc~dcopy</title>
+<path fill="none" stroke="#000000" d="M133.64,-398.15C137.11,-400.98 140.73,-404.04 144,-407 159.44,-421 175.95,-437.87 188.04,-450.64"/>
+<polygon fill="#000000" stroke="#000000" points="185.56,-453.1 194.96,-457.99 190.66,-448.3 185.56,-453.1"/>
+</g>
+<!-- proc~subsm&#45;&gt;proc~dscal -->
+<g id="proc~~mainlb~~CallsGraph_edge36" class="edge">
+<title>proc~subsm&#45;&gt;proc~dscal</title>
+<path fill="none" stroke="#000000" d="M132.93,-373.79C146.79,-362.44 167.62,-345.4 183.5,-332.41"/>
+<polygon fill="#000000" stroke="#000000" points="185.77,-335.07 191.29,-326.03 181.34,-329.66 185.77,-335.07"/>
+</g>
+<!-- proc~subsm&#45;&gt;proc~dtrsl -->
+<g id="proc~~mainlb~~CallsGraph_edge37" class="edge">
+<title>proc~subsm&#45;&gt;proc~dtrsl</title>
+<path fill="none" stroke="#000000" d="M144.26,-381.28C174.85,-375.78 225.55,-366.67 259.84,-360.5"/>
+<polygon fill="#000000" stroke="#000000" points="260.69,-363.9 269.92,-358.69 259.46,-357.01 260.69,-363.9"/>
+</g>
+<!-- proc~bmv&#45;&gt;proc~dtrsl -->
+<g id="proc~~mainlb~~CallsGraph_edge38" class="edge">
+<title>proc~bmv&#45;&gt;proc~dtrsl</title>
+<path fill="none" stroke="#000000" d="M213.38,-166.2C218.64,-178.13 226.87,-196.81 234,-213 252.63,-255.32 274.38,-304.8 286.53,-332.46"/>
+<polygon fill="#000000" stroke="#000000" points="283.47,-334.18 290.7,-341.93 289.88,-331.36 283.47,-334.18"/>
+</g>
+<!-- proc~dcstep -->
+<g id="proc~~mainlb~~CallsGraph_node25" class="node">
+<title>proc~dcstep</title>
+<g id="a_proc~~mainlb~~CallsGraph_node25"><a xlink:href="../proc/dcstep.html" xlink:title="dcstep">
+<polygon fill="#d9534f" stroke="#d9534f" points="324,-604 270,-604 270,-580 324,-580 324,-604"/>
+<text text-anchor="middle" x="297" y="-589.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">dcstep</text>
+</a>
+</g>
+</g>
+<!-- proc~dcsrch&#45;&gt;proc~dcstep -->
+<g id="proc~~mainlb~~CallsGraph_edge39" class="edge">
+<title>proc~dcsrch&#45;&gt;proc~dcstep</title>
+<path fill="none" stroke="#000000" d="M234.4,-592C242.39,-592 251.31,-592 259.82,-592"/>
+<polygon fill="#000000" stroke="#000000" points="259.92,-595.5 269.92,-592 259.92,-588.5 259.92,-595.5"/>
+</g>
+<!-- proc~dpofa&#45;&gt;proc~ddot -->
+<g id="proc~~mainlb~~CallsGraph_edge40" class="edge">
+<title>proc~dpofa&#45;&gt;proc~ddot</title>
+<path fill="none" stroke="#000000" d="M234.26,-544.13C257.78,-538.86 293.19,-530.93 324,-524 332.34,-522.12 341.32,-520.1 349.77,-518.19"/>
+<polygon fill="#000000" stroke="#000000" points="350.77,-521.55 359.76,-515.94 349.23,-514.72 350.77,-521.55"/>
+</g>
+<!-- proc~dtrsl&#45;&gt;proc~ddot -->
+<g id="proc~~mainlb~~CallsGraph_edge42" class="edge">
+<title>proc~dtrsl&#45;&gt;proc~ddot</title>
+<path fill="none" stroke="#000000" d="M304.91,-366.24C319.88,-392.78 355.48,-455.9 374.13,-488.96"/>
+<polygon fill="#000000" stroke="#000000" points="371.17,-490.83 379.13,-497.82 377.26,-487.39 371.17,-490.83"/>
+</g>
+<!-- proc~dtrsl&#45;&gt;proc~daxpy -->
+<g id="proc~~mainlb~~CallsGraph_edge41" class="edge">
+<title>proc~dtrsl&#45;&gt;proc~daxpy</title>
+<path fill="none" stroke="#000000" d="M311.37,-341.85C325.66,-328.85 348.53,-308.07 365.18,-292.92"/>
+<polygon fill="#000000" stroke="#000000" points="367.75,-295.32 372.8,-286 363.04,-290.14 367.75,-295.32"/>
+</g>
+</g>
+</svg>
+</div>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#CallsGraph-help-text">Help</a>
+          </div>
+          <div class="modal fade" id="CallsGraph-help-text" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+<p>Nodes of different colours represent the following: </p>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.43.0 (0)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="641pt" height="28pt"
+ viewBox="0.00 0.00 641.00 27.51" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(0.86 0.86) rotate(0) translate(4 28)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-28 741.5,-28 741.5,4 -4,4"/>
+<!-- Subroutine -->
+<g id="node1" class="node">
+<title>Subroutine</title>
+<polygon fill="#d9534f" stroke="#d9534f" points="70,-24 0,-24 0,0 70,0 70,-24"/>
+<text text-anchor="middle" x="35" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
+</g>
+<!-- Function -->
+<g id="node2" class="node">
+<title>Function</title>
+<polygon fill="#d94e8f" stroke="#d94e8f" points="146,-24 88,-24 88,0 146,0 146,-24"/>
+<text text-anchor="middle" x="117" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
+</g>
+<!-- Interface -->
+<g id="node3" class="node">
+<title>Interface</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="225.5,-24 164.5,-24 164.5,0 225.5,0 225.5,-24"/>
+<text text-anchor="middle" x="195" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Interface</text>
+</g>
+<!-- Type Bound Procedure -->
+<g id="node4" class="node">
+<title>Type Bound Procedure</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="374,-24 244,-24 244,0 374,0 374,-24"/>
+<text text-anchor="middle" x="309" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Type Bound Procedure</text>
+</g>
+<!-- Unknown Procedure Type -->
+<g id="node5" class="node">
+<title>Unknown Procedure Type</title>
+<polygon fill="#777777" stroke="#777777" points="537.5,-24 392.5,-24 392.5,0 537.5,0 537.5,-24"/>
+<text text-anchor="middle" x="465" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Unknown Procedure Type</text>
+</g>
+<!-- Program -->
+<g id="node6" class="node">
+<title>Program</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="614,-24 556,-24 556,0 614,0 614,-24"/>
+<text text-anchor="middle" x="585" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node7" class="node">
+<title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="737.5,-24 632.5,-24 632.5,0 737.5,0 737.5,-24"/>
+<text text-anchor="middle" x="685" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+<p>Solid arrows point from a procedure to one which it calls. Dashed 
+arrows point from an interface to procedures which implement that interface.
+This could include the module procedures in a generic interface or the
+implementation in a submodule of an interface in a parent module.
+</p>
+ </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header">
+  <h3 class="card-title">Called by</h3>
+      </div>
+      <div class="card-body">
+  <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.43.0 (0)
+ -->
+<!-- Title: proc~~mainlb~~CalledByGraph Pages: 1 -->
+<svg id="procmainlbCalledByGraph" width="152pt" height="32pt"
+ viewBox="0.00 0.00 152.00 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="proc~~mainlb~~CalledByGraph" class="graph" transform="scale(1 1) rotate(0) translate(4 28)">
+<title>proc~~mainlb~~CalledByGraph</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-28 148,-28 148,4 -4,4"/>
+<!-- proc~mainlb -->
+<g id="proc~~mainlb~~CalledByGraph_node1" class="node">
+<title>proc~mainlb</title>
+<polygon fill="none" stroke="black" points="144,-24 90,-24 90,0 144,0 144,-24"/>
+<text text-anchor="middle" x="117" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">mainlb</text>
+</g>
+<!-- proc~setulb -->
+<g id="proc~~mainlb~~CalledByGraph_node2" class="node">
+<title>proc~setulb</title>
+<g id="a_proc~~mainlb~~CalledByGraph_node2"><a xlink:href="../proc/setulb.html" xlink:title="setulb">
+<polygon fill="#d9534f" stroke="#d9534f" points="54,-24 0,-24 0,0 54,0 54,-24"/>
+<text text-anchor="middle" x="27" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">setulb</text>
+</a>
+</g>
+</g>
+<!-- proc~setulb&#45;&gt;proc~mainlb -->
+<g id="proc~~mainlb~~CalledByGraph_edge1" class="edge">
+<title>proc~setulb&#45;&gt;proc~mainlb</title>
+<path fill="none" stroke="#000000" d="M54.4,-12C62.39,-12 71.31,-12 79.82,-12"/>
+<polygon fill="#000000" stroke="#000000" points="79.92,-15.5 89.92,-12 79.92,-8.5 79.92,-15.5"/>
+</g>
+</g>
+</svg>
+</div>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#CalledByGraph-help-text">Help</a>
+          </div>
+          <div class="modal fade" id="CalledByGraph-help-text" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+<p>Nodes of different colours represent the following: </p>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.43.0 (0)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="641pt" height="28pt"
+ viewBox="0.00 0.00 641.00 27.51" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(0.86 0.86) rotate(0) translate(4 28)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-28 741.5,-28 741.5,4 -4,4"/>
+<!-- Subroutine -->
+<g id="node1" class="node">
+<title>Subroutine</title>
+<polygon fill="#d9534f" stroke="#d9534f" points="70,-24 0,-24 0,0 70,0 70,-24"/>
+<text text-anchor="middle" x="35" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
+</g>
+<!-- Function -->
+<g id="node2" class="node">
+<title>Function</title>
+<polygon fill="#d94e8f" stroke="#d94e8f" points="146,-24 88,-24 88,0 146,0 146,-24"/>
+<text text-anchor="middle" x="117" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
+</g>
+<!-- Interface -->
+<g id="node3" class="node">
+<title>Interface</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="225.5,-24 164.5,-24 164.5,0 225.5,0 225.5,-24"/>
+<text text-anchor="middle" x="195" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Interface</text>
+</g>
+<!-- Type Bound Procedure -->
+<g id="node4" class="node">
+<title>Type Bound Procedure</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="374,-24 244,-24 244,0 374,0 374,-24"/>
+<text text-anchor="middle" x="309" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Type Bound Procedure</text>
+</g>
+<!-- Unknown Procedure Type -->
+<g id="node5" class="node">
+<title>Unknown Procedure Type</title>
+<polygon fill="#777777" stroke="#777777" points="537.5,-24 392.5,-24 392.5,0 537.5,0 537.5,-24"/>
+<text text-anchor="middle" x="465" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Unknown Procedure Type</text>
+</g>
+<!-- Program -->
+<g id="node6" class="node">
+<title>Program</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="614,-24 556,-24 556,0 614,0 614,-24"/>
+<text text-anchor="middle" x="585" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node7" class="node">
+<title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="737.5,-24 632.5,-24 632.5,0 737.5,0 737.5,-24"/>
+<text text-anchor="middle" x="685" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+<p>Solid arrows point from a procedure to one which it calls. Dashed 
+arrows point from an interface to procedures which implement that interface.
+This could include the module procedures in a generic interface or the
+implementation in a submodule of an interface in a parent module.
+</p>
+ </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+
+
+    
+    
+
+    
+    
+
+
+
+    
+    <section>
+    <h2><span class="anchor" id="src"></span>Source Code</h2>
+    <div class="hl codehilite"><pre><span></span><span class="w">      </span><span class="k">subroutine </span><span class="n">mainlb</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">l</span><span class="p">,</span><span class="n">u</span><span class="p">,</span><span class="n">Nbd</span><span class="p">,</span><span class="n">f</span><span class="p">,</span><span class="n">g</span><span class="p">,</span><span class="n">Factr</span><span class="p">,</span><span class="n">Pgtol</span><span class="p">,</span><span class="n">Ws</span><span class="p">,</span><span class="n">Wy</span><span class="p">,</span><span class="n">Sy</span><span class="p">,</span><span class="n">Ss</span><span class="p">,</span><span class="n">Wt</span><span class="p">,</span><span class="n">Wn</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">                        </span><span class="n">Snd</span><span class="p">,</span><span class="n">z</span><span class="p">,</span><span class="n">r</span><span class="p">,</span><span class="n">d</span><span class="p">,</span><span class="n">t</span><span class="p">,</span><span class="n">Xp</span><span class="p">,</span><span class="n">Wa</span><span class="p">,</span><span class="nb">Index</span><span class="p">,</span><span class="n">Iwhere</span><span class="p">,</span><span class="n">Indx2</span><span class="p">,</span><span class="n">Task</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">                        </span><span class="n">Iprint</span><span class="p">,</span><span class="n">Csave</span><span class="p">,</span><span class="n">Lsave</span><span class="p">,</span><span class="n">Isave</span><span class="p">,</span><span class="n">Dsave</span><span class="p">,</span><span class="n">iteration_file</span><span class="p">)</span>
+
+<span class="w">      </span><span class="k">implicit none</span>
+
+<span class="k">      </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="mi">60</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Task</span><span class="w"> </span><span class="c">!! indicates the current job when</span>
+<span class="w">                                              </span><span class="c">!! entering and leaving this subroutine.</span>
+<span class="w">      </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="mi">60</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Csave</span><span class="w"> </span><span class="c">!! working string</span>
+<span class="w">      </span><span class="kt">logical</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Lsave</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="w"> </span><span class="c">!! working array</span>
+<span class="w">      </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Isave</span><span class="p">(</span><span class="mi">23</span><span class="p">)</span><span class="w"> </span><span class="c">!! working array</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Dsave</span><span class="p">(</span><span class="mi">29</span><span class="p">)</span><span class="w"> </span><span class="c">!! working array</span>
+<span class="w">      </span><span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="c">!! the number of variables.</span>
+<span class="w">      </span><span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">m</span><span class="w"> </span><span class="c">!! the maximum number of variable metric</span>
+<span class="w">                              </span><span class="c">!! corrections allowed in the limited memory matrix.</span>
+<span class="w">      </span><span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Iprint</span><span class="w"> </span><span class="c">!! Controls the frequency and type of output generated:</span>
+<span class="w">                                   </span><span class="c">!!</span>
+<span class="w">                                   </span><span class="c">!!  * `iprint&lt;0   ` no output is generated;</span>
+<span class="w">                                   </span><span class="c">!!  * `iprint=0   ` print only one line at the last iteration;</span>
+<span class="w">                                   </span><span class="c">!!  * `0&lt;iprint&lt;99` print also f and |proj g| every iprint iterations;</span>
+<span class="w">                                   </span><span class="c">!!  * `iprint=99  ` print details of every iteration except n-vectors;</span>
+<span class="w">                                   </span><span class="c">!!  * `iprint=100 ` print also the changes of active set and final x;</span>
+<span class="w">                                   </span><span class="c">!!  * `iprint&gt;100 ` print details of every iteration including x and g;</span>
+<span class="w">                                   </span><span class="c">!!</span>
+<span class="w">                                   </span><span class="c">!! When `iprint &gt; 0`, the file `iterate.dat` will be created to</span>
+<span class="w">                                   </span><span class="c">!! summarize the iteration.</span>
+<span class="w">      </span><span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Nbd</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="c">!! the type of bounds imposed on the</span>
+<span class="w">                                   </span><span class="c">!! variables, and must be specified as follows:</span>
+<span class="w">                                   </span><span class="c">!!</span>
+<span class="w">                                   </span><span class="c">!!  * `nbd(i)=0` if `x(i)` is unbounded,</span>
+<span class="w">                                   </span><span class="c">!!  * `nbd(i)=1` if `x(i)` has only a lower bound,</span>
+<span class="w">                                   </span><span class="c">!!  * `nbd(i)=2` if `x(i)` has both lower and upper bounds,</span>
+<span class="w">                                   </span><span class="c">!!  * `nbd(i)=3` if `x(i)` has only an upper bound.</span>
+<span class="w">      </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="nb">Index</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="c">!! working array.</span>
+<span class="w">                          </span><span class="c">!! In subroutine [[freev]], index is used to store the free and fixed</span>
+<span class="w">                          </span><span class="c">!! variables at the Generalized Cauchy Point (GCP).</span>
+<span class="w">      </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Iwhere</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="c">!! working array used to record</span>
+<span class="w">                           </span><span class="c">!! the status of the vector x for GCP computation:</span>
+<span class="w">                           </span><span class="c">!!</span>
+<span class="w">                           </span><span class="c">!!  * `iwhere(i)= 0 or -3` if `x(i)` is free and has bounds,</span>
+<span class="w">                           </span><span class="c">!!  * `iwhere(i)= 1      ` if `x(i)` is fixed at l(i), and l(i) /= u(i)</span>
+<span class="w">                           </span><span class="c">!!  * `iwhere(i)= 2      ` if `x(i)` is fixed at u(i), and u(i) /= l(i)</span>
+<span class="w">                           </span><span class="c">!!  * `iwhere(i)= 3      ` if `x(i)` is always fixed, i.e.,  u(i)=x(i)=l(i)</span>
+<span class="w">                           </span><span class="c">!!  * `iwhere(i)=-1      ` if `x(i)` is always free, i.e., no bounds on it.</span>
+<span class="w">      </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Indx2</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="c">!! integer working array.</span>
+<span class="w">                          </span><span class="c">!! Within subroutine [[cauchy]], indx2 corresponds to the array iorder.</span>
+<span class="w">                          </span><span class="c">!! In subroutine [[freev]], a list of variables entering and leaving</span>
+<span class="w">                          </span><span class="c">!! the free set is stored in indx2, and it is passed on to</span>
+<span class="w">                          </span><span class="c">!! subroutine [[formk]] with this information.</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">f</span><span class="w"> </span><span class="c">!! On first entry f is unspecified.</span>
+<span class="w">                                  </span><span class="c">!! On final exit f is the value of the function at x.</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Factr</span><span class="w"> </span><span class="c">!! On entry `factr &gt;= 0` is specified by the user.  The iteration</span>
+<span class="w">                                   </span><span class="c">!! will stop when</span>
+<span class="w">                                   </span><span class="c">!!</span>
+<span class="w">                                   </span><span class="c">!! `(f^k - f^{k+1})/max{|f^k|,|f^{k+1}|,1} &lt;= factr*epsmch`</span>
+<span class="w">                                   </span><span class="c">!!</span>
+<span class="w">                                   </span><span class="c">!! where epsmch is the machine precision, which is automatically</span>
+<span class="w">                                   </span><span class="c">!! generated by the code.</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Pgtol</span><span class="w"> </span><span class="c">!! On entry pgtol &gt;= 0 is specified by the user.  The iteration</span>
+<span class="w">                                   </span><span class="c">!! will stop when</span>
+<span class="w">                                   </span><span class="c">!!</span>
+<span class="w">                                   </span><span class="c">!! `max{|proj g_i | i = 1, ..., n} &lt;= pgtol`</span>
+<span class="w">                                   </span><span class="c">!!</span>
+<span class="w">                                   </span><span class="c">!! where pg_i is the ith component of the projected gradient.</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">x</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="c">!! On entry x is an approximation to the solution.</span>
+<span class="w">                                     </span><span class="c">!! On exit x is the current approximation.</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">l</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="c">!! the lower bound of x.</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">u</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="c">!! the upper bound of x.</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">g</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="c">!! On first entry g is unspecified.</span>
+<span class="w">                                     </span><span class="c">!! On final exit g is the value of the gradient at x.</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">z</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="c">!! working array.</span>
+<span class="w">                       </span><span class="c">!! used at different times to store the Cauchy point and the Newton point.</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">r</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="c">!! working array.</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">d</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="c">!! working array.</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">t</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="c">!! working array.</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Xp</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="c">!! working array.</span>
+<span class="w">                        </span><span class="c">!! used to safeguard the projected Newton direction</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Wa</span><span class="p">(</span><span class="mi">8</span><span class="o">*</span><span class="n">m</span><span class="p">)</span><span class="w"> </span><span class="c">!! working array.</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Ws</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">m</span><span class="p">)</span><span class="w"> </span><span class="c">!! working array used to store information defining the limited memory BFGS matrix: stores S, the matrix of s-vectors;</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Wy</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">m</span><span class="p">)</span><span class="w"> </span><span class="c">!! working array used to store information defining the limited memory BFGS matrix: stores Y, the matrix of y-vectors;</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Sy</span><span class="p">(</span><span class="n">m</span><span class="p">,</span><span class="n">m</span><span class="p">)</span><span class="w"> </span><span class="c">!! working array used to store information defining the limited memory BFGS matrix: stores S&#39;Y;</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Ss</span><span class="p">(</span><span class="n">m</span><span class="p">,</span><span class="n">m</span><span class="p">)</span><span class="w"> </span><span class="c">!! working array used to store information defining the limited memory BFGS matrix: stores S&#39;S;</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Wt</span><span class="p">(</span><span class="n">m</span><span class="p">,</span><span class="n">m</span><span class="p">)</span><span class="w"> </span><span class="c">!! working array used to store information defining the limited memory BFGS matrix: stores the Cholesky factorization</span>
+<span class="w">                          </span><span class="c">!! of (theta*S&#39;S+LD^(-1)L&#39;); see eq. (2.26) in [3].</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Wn</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">m</span><span class="p">,</span><span class="mi">2</span><span class="o">*</span><span class="n">m</span><span class="p">)</span><span class="w"> </span><span class="c">!! working array</span>
+<span class="w">                              </span><span class="c">!! used to store the LEL^T factorization of the indefinite matrix</span>
+<span class="w">                              </span><span class="c">!!```</span>
+<span class="w">                              </span><span class="c">!!  K = [-D -Y&#39;ZZ&#39;Y/theta     L_a&#39;-R_z&#39;  ]</span>
+<span class="w">                              </span><span class="c">!!      [L_a -R_z           theta*S&#39;AA&#39;S ]</span>
+<span class="w">                              </span><span class="c">!!```</span>
+<span class="w">                              </span><span class="c">!! where</span>
+<span class="w">                              </span><span class="c">!!```</span>
+<span class="w">                              </span><span class="c">!!  E = [-I  0]</span>
+<span class="w">                              </span><span class="c">!!      [ 0  I]</span>
+<span class="w">                              </span><span class="c">!!```</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Snd</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">m</span><span class="p">,</span><span class="mi">2</span><span class="o">*</span><span class="n">m</span><span class="p">)</span><span class="w"> </span><span class="c">!! working array</span>
+<span class="w">                               </span><span class="c">!! used to store the lower triangular part of</span>
+<span class="w">                               </span><span class="c">!!```</span>
+<span class="w">                               </span><span class="c">!!  N = [Y&#39; ZZ&#39;Y   L_a&#39;+R_z&#39;]</span>
+<span class="w">                               </span><span class="c">!!      [L_a +R_z  S&#39;AA&#39;S   ]</span>
+<span class="w">                               </span><span class="c">!!```</span>
+<span class="w">      </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">),</span><span class="k">optional</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">iteration_file</span><span class="w"> </span><span class="c">!! The name of the iteration file if used (`Iprint&gt;=1`).</span>
+<span class="w">                                                             </span><span class="c">!! If not specified, then &#39;iterate.dat&#39; is used.</span>
+
+<span class="w">      </span><span class="kt">logical</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">prjctd</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">cnstnd</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">boxed</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">updatd</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">wrk</span>
+<span class="w">      </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">word</span>
+<span class="w">      </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">nintol</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">itfile</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">iback</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">nskip</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">head</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">                 </span><span class="n">iter</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">itail</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">iupdat</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">nseg</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">nfgv</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">info</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">ifun</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">                 </span><span class="n">iword</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">nfree</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">nact</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">ileave</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">nenter</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">theta</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">fold</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">dr</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">rr</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">tol</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">xstep</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">                  </span><span class="n">sbgnrm</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">ddum</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">dnorm</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">dtd</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">epsmch</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">cpu1</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">                  </span><span class="n">cpu2</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">cachyt</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">sbtime</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">lnscht</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">time1</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">time2</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">                  </span><span class="n">gd</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">gdold</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">stp</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">stpmx</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="nb">time</span>
+
+<span class="nb">      </span><span class="kt">logical</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">compute_infinity_norm_of_projected_gradient</span>
+<span class="w">      </span><span class="kt">logical</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">prelims</span>
+<span class="w">      </span><span class="kt">logical</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">linesearch</span>
+
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">Task</span><span class="o">==</span><span class="s1">&#39;START&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+
+<span class="k">         </span><span class="n">epsmch</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">epsilon</span><span class="p">(</span><span class="n">one</span><span class="p">)</span>
+
+<span class="w">         </span><span class="k">call </span><span class="nb">cpu_time</span><span class="p">(</span><span class="n">time1</span><span class="p">)</span>
+
+<span class="w">         </span><span class="c">! Initialize counters and scalars when task=&#39;START&#39;.</span>
+
+<span class="w">         </span><span class="c">! for the limited memory BFGS matrices:</span>
+<span class="w">         </span><span class="n">col</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
+<span class="w">         </span><span class="n">head</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">         </span><span class="n">theta</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">one</span>
+<span class="w">         </span><span class="n">iupdat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
+<span class="w">         </span><span class="n">updatd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">false</span><span class="p">.</span>
+<span class="w">         </span><span class="n">iback</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
+<span class="w">         </span><span class="n">itail</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
+<span class="w">         </span><span class="n">iword</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
+<span class="w">         </span><span class="n">nact</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
+<span class="w">         </span><span class="n">ileave</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
+<span class="w">         </span><span class="n">nenter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
+<span class="w">         </span><span class="n">fold</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">zero</span>
+<span class="w">         </span><span class="n">dnorm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">zero</span>
+<span class="w">         </span><span class="n">cpu1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">zero</span>
+<span class="w">         </span><span class="n">gd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">zero</span>
+<span class="w">         </span><span class="n">stpmx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">zero</span>
+<span class="w">         </span><span class="n">sbgnrm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">zero</span>
+<span class="w">         </span><span class="n">stp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">zero</span>
+<span class="w">         </span><span class="n">gdold</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">zero</span>
+<span class="w">         </span><span class="n">dtd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">zero</span>
+
+<span class="w">         </span><span class="c">! for operation counts:</span>
+<span class="w">         </span><span class="n">iter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
+<span class="w">         </span><span class="n">nfgv</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
+<span class="w">         </span><span class="n">nseg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
+<span class="w">         </span><span class="n">nintol</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
+<span class="w">         </span><span class="n">nskip</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
+<span class="w">         </span><span class="n">nfree</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">n</span>
+<span class="w">         </span><span class="n">ifun</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
+<span class="w">         </span><span class="c">! for stopping tolerance:</span>
+<span class="w">         </span><span class="n">tol</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Factr</span><span class="o">*</span><span class="n">epsmch</span>
+
+<span class="w">         </span><span class="c">! for measuring running time:</span>
+<span class="w">         </span><span class="n">cachyt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
+<span class="w">         </span><span class="n">sbtime</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
+<span class="w">         </span><span class="n">lnscht</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
+
+<span class="w">         </span><span class="c">! &#39;word&#39; records the status of subspace solutions.</span>
+<span class="w">         </span><span class="n">word</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;---&#39;</span>
+
+<span class="w">         </span><span class="c">! &#39;info&#39; records the termination information.</span>
+<span class="w">         </span><span class="n">info</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
+
+<span class="w">         </span><span class="c">! open a summary file &#39;iterate.dat&#39;</span>
+<span class="w">         </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">Iprint</span><span class="o">&gt;=</span><span class="mi">1</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">            if</span><span class="w"> </span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">iteration_file</span><span class="p">))</span><span class="w"> </span><span class="k">then</span>
+<span class="k">               open</span><span class="w"> </span><span class="p">(</span><span class="n">newunit</span><span class="o">=</span><span class="n">itfile</span><span class="p">,</span><span class="k">file</span><span class="o">=</span><span class="nb">trim</span><span class="p">(</span><span class="n">iteration_file</span><span class="p">),</span><span class="n">status</span><span class="o">=</span><span class="s1">&#39;unknown&#39;</span><span class="p">)</span>
+<span class="w">            </span><span class="k">else</span><span class="w"> </span><span class="c">! use default name if not specified</span>
+<span class="w">               </span><span class="k">open</span><span class="w"> </span><span class="p">(</span><span class="n">newunit</span><span class="o">=</span><span class="n">itfile</span><span class="p">,</span><span class="k">file</span><span class="o">=</span><span class="s1">&#39;iterate.dat&#39;</span><span class="p">,</span><span class="n">status</span><span class="o">=</span><span class="s1">&#39;unknown&#39;</span><span class="p">)</span>
+<span class="w">            </span><span class="k">end if</span>
+<span class="k">         end if</span>
+<span class="w">         </span><span class="c">! Check the input arguments for errors.</span>
+<span class="w">         </span><span class="k">call </span><span class="n">errclb</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">Factr</span><span class="p">,</span><span class="n">l</span><span class="p">,</span><span class="n">u</span><span class="p">,</span><span class="n">Nbd</span><span class="p">,</span><span class="n">Task</span><span class="p">,</span><span class="n">info</span><span class="p">,</span><span class="n">k</span><span class="p">)</span>
+<span class="w">         </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">Task</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="mi">5</span><span class="p">)</span><span class="o">==</span><span class="s1">&#39;ERROR&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">            call </span><span class="n">prn3lb</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">f</span><span class="p">,</span><span class="n">Task</span><span class="p">,</span><span class="n">Iprint</span><span class="p">,</span><span class="n">info</span><span class="p">,</span><span class="n">itfile</span><span class="p">,</span><span class="n">iter</span><span class="p">,</span><span class="n">nfgv</span><span class="p">,</span><span class="n">nintol</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">                        </span><span class="n">nskip</span><span class="p">,</span><span class="n">nact</span><span class="p">,</span><span class="n">sbgnrm</span><span class="p">,</span><span class="n">zero</span><span class="p">,</span><span class="n">nseg</span><span class="p">,</span><span class="n">word</span><span class="p">,</span><span class="n">iback</span><span class="p">,</span><span class="n">stp</span><span class="p">,</span><span class="w">     </span><span class="p">&amp;</span>
+<span class="w">                        </span><span class="n">xstep</span><span class="p">,</span><span class="n">k</span><span class="p">,</span><span class="n">cachyt</span><span class="p">,</span><span class="n">sbtime</span><span class="p">,</span><span class="n">lnscht</span><span class="p">)</span>
+<span class="w">            </span><span class="k">return</span>
+<span class="k">         endif</span>
+<span class="k">         call </span><span class="n">prn1lb</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">l</span><span class="p">,</span><span class="n">u</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">Iprint</span><span class="p">,</span><span class="n">itfile</span><span class="p">,</span><span class="n">epsmch</span><span class="p">)</span>
+
+<span class="w">         </span><span class="c">! Initialize iwhere &amp; project x onto the feasible set.</span>
+<span class="w">         </span><span class="k">call </span><span class="n">active</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">l</span><span class="p">,</span><span class="n">u</span><span class="p">,</span><span class="n">Nbd</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">Iwhere</span><span class="p">,</span><span class="n">Iprint</span><span class="p">,</span><span class="n">prjctd</span><span class="p">,</span><span class="n">cnstnd</span><span class="p">,</span><span class="n">boxed</span><span class="p">)</span>
+
+<span class="w">         </span><span class="c">! The end of the initialization.</span>
+<span class="w">         </span><span class="k">call </span><span class="n">start</span><span class="p">()</span>
+<span class="w">         </span><span class="k">return</span>
+
+<span class="k">      end if</span>
+
+<span class="w">      </span><span class="c">! restore local variables.</span>
+
+<span class="w">      </span><span class="n">prjctd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Lsave</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="w">      </span><span class="n">cnstnd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Lsave</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="w">      </span><span class="n">boxed</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Lsave</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="w">      </span><span class="n">updatd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Lsave</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+
+<span class="w">      </span><span class="n">nintol</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Isave</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="w">      </span><span class="n">itfile</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Isave</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="w">      </span><span class="n">iback</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Isave</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+<span class="w">      </span><span class="n">nskip</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Isave</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="w">      </span><span class="n">head</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Isave</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
+<span class="w">      </span><span class="n">col</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Isave</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span>
+<span class="w">      </span><span class="n">itail</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Isave</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
+<span class="w">      </span><span class="n">iter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Isave</span><span class="p">(</span><span class="mi">9</span><span class="p">)</span>
+<span class="w">      </span><span class="n">iupdat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Isave</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="w">      </span><span class="n">nseg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Isave</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span>
+<span class="w">      </span><span class="n">nfgv</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Isave</span><span class="p">(</span><span class="mi">13</span><span class="p">)</span>
+<span class="w">      </span><span class="n">info</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Isave</span><span class="p">(</span><span class="mi">14</span><span class="p">)</span>
+<span class="w">      </span><span class="n">ifun</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Isave</span><span class="p">(</span><span class="mi">15</span><span class="p">)</span>
+<span class="w">      </span><span class="n">iword</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Isave</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span>
+<span class="w">      </span><span class="n">nfree</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Isave</span><span class="p">(</span><span class="mi">17</span><span class="p">)</span>
+<span class="w">      </span><span class="n">nact</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Isave</span><span class="p">(</span><span class="mi">18</span><span class="p">)</span>
+<span class="w">      </span><span class="n">ileave</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Isave</span><span class="p">(</span><span class="mi">19</span><span class="p">)</span>
+<span class="w">      </span><span class="n">nenter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Isave</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+
+<span class="w">      </span><span class="n">theta</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Dsave</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="w">      </span><span class="n">fold</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Dsave</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="w">      </span><span class="n">tol</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Dsave</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="w">      </span><span class="n">dnorm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Dsave</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+<span class="w">      </span><span class="n">epsmch</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Dsave</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="w">      </span><span class="n">cpu1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Dsave</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
+<span class="w">      </span><span class="n">cachyt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Dsave</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span>
+<span class="w">      </span><span class="n">sbtime</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Dsave</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
+<span class="w">      </span><span class="n">lnscht</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Dsave</span><span class="p">(</span><span class="mi">9</span><span class="p">)</span>
+<span class="w">      </span><span class="n">time1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Dsave</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="w">      </span><span class="n">gd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Dsave</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span>
+<span class="w">      </span><span class="n">stpmx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Dsave</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span>
+<span class="w">      </span><span class="n">sbgnrm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Dsave</span><span class="p">(</span><span class="mi">13</span><span class="p">)</span>
+<span class="w">      </span><span class="n">stp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Dsave</span><span class="p">(</span><span class="mi">14</span><span class="p">)</span>
+<span class="w">      </span><span class="n">gdold</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Dsave</span><span class="p">(</span><span class="mi">15</span><span class="p">)</span>
+<span class="w">      </span><span class="n">dtd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Dsave</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span>
+
+<span class="w">      </span><span class="c">! After returning from the driver go to the point</span>
+<span class="w">      </span><span class="c">! where execution is to resume.</span>
+<span class="w">      </span><span class="n">compute_infinity_norm_of_projected_gradient</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">true</span><span class="p">.</span>
+<span class="w">      </span><span class="n">prelims</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">true</span><span class="p">.</span>
+<span class="w">      </span><span class="n">linesearch</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">true</span><span class="p">.</span>
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">Task</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="mi">5</span><span class="p">)</span><span class="o">==</span><span class="s1">&#39;FG_LN&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">         </span><span class="n">compute_infinity_norm_of_projected_gradient</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">false</span><span class="p">.</span>
+<span class="w">         </span><span class="n">prelims</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">false</span><span class="p">.</span>
+<span class="w">      </span><span class="k">else if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">Task</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="mi">5</span><span class="p">)</span><span class="o">==</span><span class="s1">&#39;NEW_X&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">         </span><span class="n">compute_infinity_norm_of_projected_gradient</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">false</span><span class="p">.</span>
+<span class="w">         </span><span class="n">prelims</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">false</span><span class="p">.</span>
+<span class="w">         </span><span class="n">linesearch</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">false</span><span class="p">.</span>
+<span class="w">      </span><span class="k">else if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">Task</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="mi">5</span><span class="p">)</span><span class="o">/=</span><span class="s1">&#39;FG_ST&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">         if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">Task</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="mi">4</span><span class="p">)</span><span class="o">==</span><span class="s1">&#39;STOP&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">            if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">Task</span><span class="p">(</span><span class="mi">7</span><span class="p">:</span><span class="mi">9</span><span class="p">)</span><span class="o">==</span><span class="s1">&#39;CPU&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="w">               </span><span class="c">! restore the previous iterate.</span>
+<span class="w">               </span><span class="k">call </span><span class="n">dcopy</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">t</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="w">               </span><span class="k">call </span><span class="n">dcopy</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">r</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">g</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="w">               </span><span class="n">f</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fold</span>
+<span class="w">            </span><span class="k">endif</span>
+<span class="k">            call </span><span class="n">finish</span><span class="p">()</span>
+<span class="w">         </span><span class="k">else</span>
+<span class="k">            call </span><span class="n">start</span><span class="p">()</span>
+<span class="w">         </span><span class="k">endif</span>
+<span class="k">         return</span>
+<span class="k">      end if</span>
+
+<span class="k">      if</span><span class="w"> </span><span class="p">(</span><span class="n">compute_infinity_norm_of_projected_gradient</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="w">         </span><span class="c">! Compute the infinity norm of the (-) projected gradient.</span>
+<span class="w">         </span><span class="n">nfgv</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">         </span><span class="k">call </span><span class="n">projgr</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">l</span><span class="p">,</span><span class="n">u</span><span class="p">,</span><span class="n">Nbd</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">g</span><span class="p">,</span><span class="n">sbgnrm</span><span class="p">)</span>
+
+<span class="w">         </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">Iprint</span><span class="o">&gt;=</span><span class="mi">1</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">            write</span><span class="w"> </span><span class="p">(</span><span class="n">output_unit</span><span class="p">,</span><span class="s1">&#39;(/,a,i5,4x,a,1p,d12.5,4x,a,1p,d12.5)&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">                     </span><span class="s1">&#39;At iterate&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">iter</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;f= &#39;</span><span class="p">,</span><span class="w"> </span><span class="n">f</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;|proj g|= &#39;</span><span class="p">,</span><span class="w"> </span><span class="n">sbgnrm</span>
+<span class="w">            </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="n">itfile</span><span class="p">,</span><span class="s1">&#39;(2(1x,i4),5x,a,5x,a,3x,a,5x,a,5x,a,8x,a,3x,1p,2(1x,d10.3))&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">                     </span><span class="n">iter</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">nfgv</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;-&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;-&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;-&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;-&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;-&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;-&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">sbgnrm</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">f</span>
+<span class="w">         </span><span class="k">endif</span>
+<span class="k">         if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">sbgnrm</span><span class="o">&lt;=</span><span class="n">Pgtol</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="w">            </span><span class="c">! terminate the algorithm.</span>
+<span class="w">            </span><span class="n">Task</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;CONVERGENCE: NORM_OF_PROJECTED_GRADIENT_&lt;=_PGTOL&#39;</span>
+<span class="w">            </span><span class="k">call </span><span class="n">finish</span><span class="p">()</span>
+<span class="w">            </span><span class="k">return</span>
+<span class="k">         endif</span>
+<span class="k">      end if</span>
+
+<span class="w">      </span><span class="c">! ----------------- the beginning of the loop --------------------------</span>
+<span class="w">      </span><span class="n">main_loop</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="k">do</span>
+
+<span class="k">         if</span><span class="w"> </span><span class="p">(</span><span class="n">prelims</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+
+<span class="k">            if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">Iprint</span><span class="o">&gt;=</span><span class="mi">99</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="n">output_unit</span><span class="p">,</span><span class="s1">&#39;(//,A,i5)&#39;</span><span class="p">)</span><span class="w"> </span><span class="s1">&#39;ITERATION &#39;</span><span class="p">,</span><span class="w"> </span><span class="n">iter</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span>
+
+<span class="w">            </span><span class="n">iword</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span>
+
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="p">.</span><span class="nb">not</span><span class="p">.</span><span class="n">cnstnd</span><span class="w"> </span><span class="p">.</span><span class="nb">and</span><span class="p">.</span><span class="w"> </span><span class="n">col</span><span class="o">&gt;</span><span class="mi">0</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="w">               </span><span class="c">! skip the search for GCP.</span>
+<span class="w">               </span><span class="k">call </span><span class="n">dcopy</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">z</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="w">               </span><span class="n">wrk</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">updatd</span>
+<span class="w">               </span><span class="n">nseg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
+<span class="w">            </span><span class="k">else</span>
+
+<span class="w">               </span><span class="c">! Compute the Generalized Cauchy Point (GCP).</span>
+
+<span class="w">               </span><span class="k">call </span><span class="nb">cpu_time</span><span class="p">(</span><span class="n">cpu1</span><span class="p">)</span>
+<span class="w">               </span><span class="k">call </span><span class="n">cauchy</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">l</span><span class="p">,</span><span class="n">u</span><span class="p">,</span><span class="n">Nbd</span><span class="p">,</span><span class="n">g</span><span class="p">,</span><span class="n">Indx2</span><span class="p">,</span><span class="n">Iwhere</span><span class="p">,</span><span class="n">t</span><span class="p">,</span><span class="n">d</span><span class="p">,</span><span class="n">z</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">Wy</span><span class="p">,</span><span class="n">Ws</span><span class="p">,</span><span class="n">Sy</span><span class="p">,</span><span class="n">Wt</span><span class="p">,</span><span class="n">theta</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">                           </span><span class="n">col</span><span class="p">,</span><span class="n">head</span><span class="p">,</span><span class="n">Wa</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span><span class="n">Wa</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">m</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span><span class="n">Wa</span><span class="p">(</span><span class="mi">4</span><span class="o">*</span><span class="n">m</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span><span class="n">Wa</span><span class="p">(</span><span class="mi">6</span><span class="o">*</span><span class="n">m</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span><span class="n">nseg</span><span class="p">,</span><span class="w">    </span><span class="p">&amp;</span>
+<span class="w">                           </span><span class="n">Iprint</span><span class="p">,</span><span class="n">sbgnrm</span><span class="p">,</span><span class="n">info</span><span class="p">,</span><span class="n">epsmch</span><span class="p">)</span>
+<span class="w">               </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">info</span><span class="o">/=</span><span class="mi">0</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="w">                  </span><span class="c">! singular triangular system detected; refresh the lbfgs memory.</span>
+<span class="w">                  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">Iprint</span><span class="o">&gt;=</span><span class="mi">1</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="n">output_unit</span><span class="p">,</span><span class="s1">&#39;(/,A,/,A)&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">                     </span><span class="s1">&#39; Singular triangular system detected;&#39;</span><span class="p">,&amp;</span>
+<span class="w">                     </span><span class="s1">&#39;   refresh the lbfgs memory and restart the iteration.&#39;</span>
+<span class="w">                  </span><span class="n">info</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
+<span class="w">                  </span><span class="n">col</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
+<span class="w">                  </span><span class="n">head</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">                  </span><span class="n">theta</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">one</span>
+<span class="w">                  </span><span class="n">iupdat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
+<span class="w">                  </span><span class="n">updatd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">false</span><span class="p">.</span>
+<span class="w">                  </span><span class="k">call </span><span class="nb">cpu_time</span><span class="p">(</span><span class="n">cpu2</span><span class="p">)</span>
+<span class="w">                  </span><span class="n">cachyt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cachyt</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">cpu2</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">cpu1</span>
+<span class="w">                  </span><span class="k">call </span><span class="n">continue_loop</span><span class="p">()</span>
+<span class="w">                  </span><span class="k">cycle </span><span class="n">main_loop</span>
+<span class="w">               </span><span class="k">endif</span>
+<span class="k">               call </span><span class="nb">cpu_time</span><span class="p">(</span><span class="n">cpu2</span><span class="p">)</span>
+<span class="w">               </span><span class="n">cachyt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cachyt</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">cpu2</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">cpu1</span>
+<span class="w">               </span><span class="n">nintol</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nintol</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">nseg</span>
+
+<span class="w">               </span><span class="c">! Count the entering and leaving variables for iter &gt; 0;</span>
+<span class="w">               </span><span class="c">! find the index set of free and active variables at the GCP.</span>
+<span class="w">               </span><span class="k">call </span><span class="n">freev</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">nfree</span><span class="p">,</span><span class="nb">Index</span><span class="p">,</span><span class="n">nenter</span><span class="p">,</span><span class="n">ileave</span><span class="p">,</span><span class="n">Indx2</span><span class="p">,</span><span class="n">Iwhere</span><span class="p">,</span><span class="n">wrk</span><span class="p">,</span><span class="n">updatd</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">                          </span><span class="n">cnstnd</span><span class="p">,</span><span class="n">Iprint</span><span class="p">,</span><span class="n">iter</span><span class="p">)</span>
+<span class="w">               </span><span class="n">nact</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">nfree</span>
+
+<span class="w">            </span><span class="k">end if</span>
+
+<span class="k">            if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">nfree</span><span class="o">==</span><span class="mi">0</span><span class="w"> </span><span class="p">.</span><span class="nb">or</span><span class="p">.</span><span class="w"> </span><span class="n">col</span><span class="o">==</span><span class="mi">0</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="w">               </span><span class="c">! If there are no free variables or B=theta*I, then</span>
+<span class="w">               </span><span class="c">! skip the subspace minimization.</span>
+<span class="w">            </span><span class="k">else</span>
+
+<span class="w">               </span><span class="c">! Subspace minimization.</span>
+
+<span class="w">               </span><span class="k">call </span><span class="nb">cpu_time</span><span class="p">(</span><span class="n">cpu1</span><span class="p">)</span>
+
+<span class="w">               </span><span class="c">!     Form  the LEL^T factorization of the indefinite</span>
+<span class="w">               </span><span class="c">!       matrix    K = [-D -Y&#39;ZZ&#39;Y/theta     L_a&#39;-R_z&#39;  ]</span>
+<span class="w">               </span><span class="c">!                     [L_a -R_z           theta*S&#39;AA&#39;S ]</span>
+<span class="w">               </span><span class="c">!       where     E = [-I  0]</span>
+<span class="w">               </span><span class="c">!                     [ 0  I]</span>
+
+<span class="w">               </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">wrk</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">call </span><span class="n">formk</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">nfree</span><span class="p">,</span><span class="nb">Index</span><span class="p">,</span><span class="n">nenter</span><span class="p">,</span><span class="n">ileave</span><span class="p">,</span><span class="n">Indx2</span><span class="p">,</span><span class="n">iupdat</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">                                     </span><span class="n">updatd</span><span class="p">,</span><span class="n">Wn</span><span class="p">,</span><span class="n">Snd</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">Ws</span><span class="p">,</span><span class="n">Wy</span><span class="p">,</span><span class="n">Sy</span><span class="p">,</span><span class="n">theta</span><span class="p">,</span><span class="n">col</span><span class="p">,</span><span class="n">head</span><span class="p">,</span><span class="w">  </span><span class="p">&amp;</span>
+<span class="w">                                     </span><span class="n">info</span><span class="p">)</span>
+<span class="w">               </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">info</span><span class="o">/=</span><span class="mi">0</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="w">                  </span><span class="c">! nonpositive definiteness in Cholesky factorization;</span>
+<span class="w">                  </span><span class="c">! refresh the lbfgs memory and restart the iteration.</span>
+<span class="w">                  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">Iprint</span><span class="o">&gt;=</span><span class="mi">1</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="n">output_unit</span><span class="p">,</span><span class="s1">&#39;(/,a,/,a)&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">                     </span><span class="s1">&#39; Nonpositive definiteness in Cholesky factorization in formk;&#39;</span><span class="p">,&amp;</span>
+<span class="w">                     </span><span class="s1">&#39;   refresh the lbfgs memory and restart the iteration.&#39;</span>
+<span class="w">                  </span><span class="n">info</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
+<span class="w">                  </span><span class="n">col</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
+<span class="w">                  </span><span class="n">head</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">                  </span><span class="n">theta</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">one</span>
+<span class="w">                  </span><span class="n">iupdat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
+<span class="w">                  </span><span class="n">updatd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">false</span><span class="p">.</span>
+<span class="w">                  </span><span class="k">call </span><span class="nb">cpu_time</span><span class="p">(</span><span class="n">cpu2</span><span class="p">)</span>
+<span class="w">                  </span><span class="n">sbtime</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sbtime</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">cpu2</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">cpu1</span>
+<span class="w">                  </span><span class="k">call </span><span class="n">continue_loop</span><span class="p">()</span>
+<span class="w">                  </span><span class="k">cycle </span><span class="n">main_loop</span>
+<span class="w">               </span><span class="k">endif</span>
+
+<span class="w">               </span><span class="c">! compute r=-Z&#39;B(xcp-xk)-Z&#39;g (using wa(2m+1)=W&#39;(xcp-x)</span>
+<span class="w">               </span><span class="c">! from &#39;cauchy&#39;).</span>
+<span class="w">               </span><span class="k">call </span><span class="n">cmprlb</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">g</span><span class="p">,</span><span class="n">Ws</span><span class="p">,</span><span class="n">Wy</span><span class="p">,</span><span class="n">Sy</span><span class="p">,</span><span class="n">Wt</span><span class="p">,</span><span class="n">z</span><span class="p">,</span><span class="n">r</span><span class="p">,</span><span class="n">Wa</span><span class="p">,</span><span class="nb">Index</span><span class="p">,</span><span class="n">theta</span><span class="p">,</span><span class="n">col</span><span class="p">,</span><span class="n">head</span><span class="p">,</span><span class="n">nfree</span><span class="p">,&amp;</span>
+<span class="w">                           </span><span class="n">cnstnd</span><span class="p">,</span><span class="n">info</span><span class="p">)</span>
+<span class="w">               </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">info</span><span class="o">==</span><span class="mi">0</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="w">                  </span><span class="c">!-jlm-jn   call the direct method.</span>
+<span class="w">                  </span><span class="k">call </span><span class="n">subsm</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">nfree</span><span class="p">,</span><span class="nb">Index</span><span class="p">,</span><span class="n">l</span><span class="p">,</span><span class="n">u</span><span class="p">,</span><span class="n">Nbd</span><span class="p">,</span><span class="n">z</span><span class="p">,</span><span class="n">r</span><span class="p">,</span><span class="n">Xp</span><span class="p">,</span><span class="n">Ws</span><span class="p">,</span><span class="n">Wy</span><span class="p">,</span><span class="n">theta</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">g</span><span class="p">,</span><span class="n">col</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">                             </span><span class="n">head</span><span class="p">,</span><span class="n">iword</span><span class="p">,</span><span class="n">Wa</span><span class="p">,</span><span class="n">Wn</span><span class="p">,</span><span class="n">Iprint</span><span class="p">,</span><span class="n">info</span><span class="p">)</span>
+<span class="w">               </span><span class="k">end if</span>
+
+<span class="k">               if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">info</span><span class="o">/=</span><span class="mi">0</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="w">                  </span><span class="c">! singular triangular system detected;</span>
+<span class="w">                  </span><span class="c">! refresh the lbfgs memory and restart the iteration.</span>
+<span class="w">                  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">Iprint</span><span class="o">&gt;=</span><span class="mi">1</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="n">output_unit</span><span class="p">,</span><span class="s1">&#39;(/,A,/,A)&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">                     </span><span class="s1">&#39; Singular triangular system detected;&#39;</span><span class="p">,&amp;</span>
+<span class="w">                     </span><span class="s1">&#39;   refresh the lbfgs memory and restart the iteration.&#39;</span>
+<span class="w">                  </span><span class="n">info</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
+<span class="w">                  </span><span class="n">col</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
+<span class="w">                  </span><span class="n">head</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">                  </span><span class="n">theta</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">one</span>
+<span class="w">                  </span><span class="n">iupdat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
+<span class="w">                  </span><span class="n">updatd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">false</span><span class="p">.</span>
+<span class="w">                  </span><span class="k">call </span><span class="nb">cpu_time</span><span class="p">(</span><span class="n">cpu2</span><span class="p">)</span>
+<span class="w">                  </span><span class="n">sbtime</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sbtime</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">cpu2</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">cpu1</span>
+<span class="w">                  </span><span class="k">call </span><span class="n">continue_loop</span><span class="p">()</span>
+<span class="w">                  </span><span class="k">cycle </span><span class="n">main_loop</span>
+<span class="w">               </span><span class="k">endif</span>
+
+<span class="k">               call </span><span class="nb">cpu_time</span><span class="p">(</span><span class="n">cpu2</span><span class="p">)</span>
+<span class="w">               </span><span class="n">sbtime</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sbtime</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">cpu2</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">cpu1</span>
+
+<span class="w">            </span><span class="k">end if</span>
+
+<span class="w">            </span><span class="c">! Line search and optimality tests.</span>
+
+<span class="w">            </span><span class="c">! Generate the search direction d:=z-x.</span>
+<span class="w">            </span><span class="k">do </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">n</span>
+<span class="w">               </span><span class="n">d</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">z</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">x</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+<span class="w">            </span><span class="k">enddo</span>
+<span class="k">            call </span><span class="nb">cpu_time</span><span class="p">(</span><span class="n">cpu1</span><span class="p">)</span>
+
+<span class="w">         </span><span class="k">end if</span>
+
+<span class="w">         </span><span class="c">! ------------------------------------</span>
+
+<span class="w">         </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">linesearch</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+
+<span class="k">            call </span><span class="n">lnsrlb</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">l</span><span class="p">,</span><span class="n">u</span><span class="p">,</span><span class="n">Nbd</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">f</span><span class="p">,</span><span class="n">fold</span><span class="p">,</span><span class="n">gd</span><span class="p">,</span><span class="n">gdold</span><span class="p">,</span><span class="n">g</span><span class="p">,</span><span class="n">d</span><span class="p">,</span><span class="n">r</span><span class="p">,</span><span class="n">t</span><span class="p">,</span><span class="n">z</span><span class="p">,</span><span class="n">stp</span><span class="p">,</span><span class="n">dnorm</span><span class="p">,</span><span class="n">dtd</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">                        </span><span class="n">xstep</span><span class="p">,</span><span class="n">stpmx</span><span class="p">,</span><span class="n">iter</span><span class="p">,</span><span class="n">ifun</span><span class="p">,</span><span class="n">iback</span><span class="p">,</span><span class="n">nfgv</span><span class="p">,</span><span class="n">info</span><span class="p">,</span><span class="n">Task</span><span class="p">,</span><span class="n">boxed</span><span class="p">,</span><span class="w">    </span><span class="p">&amp;</span>
+<span class="w">                        </span><span class="n">cnstnd</span><span class="p">,</span><span class="n">Csave</span><span class="p">,</span><span class="n">Isave</span><span class="p">(</span><span class="mi">22</span><span class="p">),</span><span class="n">Dsave</span><span class="p">(</span><span class="mi">17</span><span class="p">))</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">info</span><span class="o">/=</span><span class="mi">0</span><span class="w"> </span><span class="p">.</span><span class="nb">or</span><span class="p">.</span><span class="w"> </span><span class="n">iback</span><span class="o">&gt;=</span><span class="mi">20</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="w">               </span><span class="c">! restore the previous iterate.</span>
+<span class="w">               </span><span class="k">call </span><span class="n">dcopy</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">t</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="w">               </span><span class="k">call </span><span class="n">dcopy</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">r</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">g</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="w">               </span><span class="n">f</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fold</span>
+<span class="w">               </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">col</span><span class="o">==</span><span class="mi">0</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="w">                  </span><span class="c">! abnormal termination.</span>
+<span class="w">                  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">info</span><span class="o">==</span><span class="mi">0</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">                     </span><span class="n">info</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="mi">9</span>
+<span class="w">                     </span><span class="c">! restore the actual number of f and g evaluations etc.</span>
+<span class="w">                     </span><span class="n">nfgv</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nfgv</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">                     </span><span class="n">ifun</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ifun</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">                     </span><span class="n">iback</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">iback</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">                  </span><span class="k">endif</span>
+<span class="k">                  </span><span class="n">Task</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;ABNORMAL_TERMINATION_IN_LNSRCH&#39;</span>
+<span class="w">                  </span><span class="n">iter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">iter</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">                  </span><span class="k">call </span><span class="n">finish</span><span class="p">()</span>
+<span class="w">                  </span><span class="k">return</span>
+<span class="k">               else</span>
+<span class="w">                  </span><span class="c">! refresh the lbfgs memory and restart the iteration.</span>
+<span class="w">                  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">Iprint</span><span class="o">&gt;=</span><span class="mi">1</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="n">output_unit</span><span class="p">,</span><span class="s1">&#39;(/,a,/,a)&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">                                       </span><span class="s1">&#39; Bad direction in the line search;&#39;</span><span class="p">,&amp;</span>
+<span class="w">                                       </span><span class="s1">&#39;   refresh the lbfgs memory and restart the iteration.&#39;</span>
+<span class="w">                  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">info</span><span class="o">==</span><span class="mi">0</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">nfgv</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nfgv</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">                  </span><span class="n">info</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
+<span class="w">                  </span><span class="n">col</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
+<span class="w">                  </span><span class="n">head</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">                  </span><span class="n">theta</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">one</span>
+<span class="w">                  </span><span class="n">iupdat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
+<span class="w">                  </span><span class="n">updatd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">false</span><span class="p">.</span>
+<span class="w">                  </span><span class="n">Task</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;RESTART_FROM_LNSRCH&#39;</span>
+<span class="w">                  </span><span class="k">call </span><span class="nb">cpu_time</span><span class="p">(</span><span class="n">cpu2</span><span class="p">)</span>
+<span class="w">                  </span><span class="n">lnscht</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lnscht</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">cpu2</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">cpu1</span>
+<span class="w">                  </span><span class="k">call </span><span class="n">continue_loop</span><span class="p">()</span>
+<span class="w">                  </span><span class="k">cycle </span><span class="n">main_loop</span>
+<span class="w">               </span><span class="k">endif</span>
+<span class="k">            else if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">Task</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="mi">5</span><span class="p">)</span><span class="o">==</span><span class="s1">&#39;FG_LN&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="w">               </span><span class="c">! return to the driver for calculating f and g; reenter at 666.</span>
+<span class="w">               </span><span class="k">call </span><span class="n">save_locals</span><span class="p">()</span>
+<span class="w">               </span><span class="k">return</span>
+<span class="k">            else</span>
+<span class="w">               </span><span class="c">! calculate and print out the quantities related to the new X.</span>
+<span class="w">               </span><span class="k">call </span><span class="nb">cpu_time</span><span class="p">(</span><span class="n">cpu2</span><span class="p">)</span>
+<span class="w">               </span><span class="n">lnscht</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lnscht</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">cpu2</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">cpu1</span>
+<span class="w">               </span><span class="n">iter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">iter</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span>
+
+<span class="w">               </span><span class="c">! Compute the infinity norm of the projected (-)gradient.</span>
+<span class="w">               </span><span class="k">call </span><span class="n">projgr</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">l</span><span class="p">,</span><span class="n">u</span><span class="p">,</span><span class="n">Nbd</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">g</span><span class="p">,</span><span class="n">sbgnrm</span><span class="p">)</span>
+
+<span class="w">               </span><span class="c">! Print iteration information.</span>
+<span class="w">               </span><span class="k">call </span><span class="n">prn2lb</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">f</span><span class="p">,</span><span class="n">g</span><span class="p">,</span><span class="n">Iprint</span><span class="p">,</span><span class="n">itfile</span><span class="p">,</span><span class="n">iter</span><span class="p">,</span><span class="n">nfgv</span><span class="p">,</span><span class="n">nact</span><span class="p">,</span><span class="n">sbgnrm</span><span class="p">,</span><span class="n">nseg</span><span class="p">,</span><span class="w">  </span><span class="p">&amp;</span>
+<span class="w">                           </span><span class="n">word</span><span class="p">,</span><span class="n">iword</span><span class="p">,</span><span class="n">iback</span><span class="p">,</span><span class="n">stp</span><span class="p">,</span><span class="n">xstep</span><span class="p">)</span>
+<span class="w">               </span><span class="k">call </span><span class="n">save_locals</span><span class="p">()</span>
+<span class="w">               </span><span class="k">return</span>
+<span class="k">            endif</span>
+
+<span class="k">         end if</span>
+
+<span class="w">         </span><span class="c">! ------------------------------------</span>
+
+<span class="w">         </span><span class="c">! Test for termination.</span>
+<span class="w">         </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">sbgnrm</span><span class="o">&lt;=</span><span class="n">Pgtol</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="w">            </span><span class="c">! terminate the algorithm.</span>
+<span class="w">            </span><span class="n">Task</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;CONVERGENCE: NORM_OF_PROJECTED_GRADIENT_&lt;=_PGTOL&#39;</span>
+<span class="w">            </span><span class="k">call </span><span class="n">finish</span><span class="p">()</span>
+<span class="w">            </span><span class="k">return</span>
+<span class="k">         endif</span>
+
+<span class="k">         </span><span class="n">ddum</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">max</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">fold</span><span class="p">),</span><span class="nb">abs</span><span class="p">(</span><span class="n">f</span><span class="p">),</span><span class="n">one</span><span class="p">)</span>
+<span class="w">         </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="p">(</span><span class="n">fold</span><span class="o">-</span><span class="n">f</span><span class="p">)</span><span class="o">&lt;=</span><span class="n">tol</span><span class="o">*</span><span class="n">ddum</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="w">            </span><span class="c">! terminate the algorithm.</span>
+<span class="w">            </span><span class="n">Task</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;CONVERGENCE: REL_REDUCTION_OF_F_&lt;=_FACTR*EPSMCH&#39;</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">iback</span><span class="o">&gt;=</span><span class="mi">10</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">info</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="mi">5</span>
+<span class="w">            </span><span class="c">! i.e., to issue a warning if iback&gt;10 in the line search.</span>
+<span class="w">            </span><span class="k">call </span><span class="n">finish</span><span class="p">()</span>
+<span class="w">            </span><span class="k">return</span>
+<span class="k">         endif</span>
+
+<span class="w">         </span><span class="c">! Compute d=newx-oldx, r=newg-oldg, rr=y&#39;y and dr=y&#39;s.</span>
+<span class="w">         </span><span class="k">do </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">n</span>
+<span class="w">            </span><span class="n">r</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">g</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">r</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+<span class="w">         </span><span class="k">enddo</span>
+<span class="k">         </span><span class="n">rr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ddot</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">r</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">r</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="w">         </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">stp</span><span class="o">==</span><span class="n">one</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">            </span><span class="n">dr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">gd</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">gdold</span>
+<span class="w">            </span><span class="n">ddum</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="n">gdold</span>
+<span class="w">         </span><span class="k">else</span>
+<span class="k">            </span><span class="n">dr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">gd</span><span class="o">-</span><span class="n">gdold</span><span class="p">)</span><span class="o">*</span><span class="n">stp</span>
+<span class="w">            </span><span class="k">call </span><span class="n">dscal</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">stp</span><span class="p">,</span><span class="n">d</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="w">            </span><span class="n">ddum</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="n">gdold</span><span class="o">*</span><span class="n">stp</span>
+<span class="w">         </span><span class="k">endif</span>
+
+<span class="k">         if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">dr</span><span class="o">&lt;=</span><span class="n">epsmch</span><span class="o">*</span><span class="n">ddum</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="w">            </span><span class="c">! skip the L-BFGS update.</span>
+<span class="w">            </span><span class="n">nskip</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nskip</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">            </span><span class="n">updatd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">false</span><span class="p">.</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">Iprint</span><span class="o">&gt;=</span><span class="mi">1</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="n">output_unit</span><span class="p">,</span><span class="s1">&#39;(a,1p,e10.3,a,1p,e10.3,a)&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">                           </span><span class="s1">&#39;  ys=&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">dr</span><span class="p">,</span><span class="s1">&#39;  -gs=&#39;</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">ddum</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39; BFGS update SKIPPED&#39;</span>
+<span class="w">            </span><span class="k">call </span><span class="n">continue_loop</span><span class="p">()</span>
+<span class="w">            </span><span class="k">cycle </span><span class="n">main_loop</span>
+<span class="w">         </span><span class="k">endif</span>
+
+<span class="w">         </span><span class="c">! Update the L-BFGS matrix.</span>
+
+<span class="w">         </span><span class="n">updatd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">true</span><span class="p">.</span>
+<span class="w">         </span><span class="n">iupdat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">iupdat</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span>
+
+<span class="w">         </span><span class="c">! Update matrices WS and WY and form the middle matrix in B.</span>
+<span class="w">         </span><span class="k">call </span><span class="n">matupd</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">Ws</span><span class="p">,</span><span class="n">Wy</span><span class="p">,</span><span class="n">Sy</span><span class="p">,</span><span class="n">Ss</span><span class="p">,</span><span class="n">d</span><span class="p">,</span><span class="n">r</span><span class="p">,</span><span class="n">itail</span><span class="p">,</span><span class="n">iupdat</span><span class="p">,</span><span class="n">col</span><span class="p">,</span><span class="n">head</span><span class="p">,</span><span class="n">theta</span><span class="p">,</span><span class="n">rr</span><span class="p">,</span><span class="n">dr</span><span class="p">,&amp;</span>
+<span class="w">                     </span><span class="n">stp</span><span class="p">,</span><span class="n">dtd</span><span class="p">)</span>
+
+<span class="w">         </span><span class="c">! Form the upper half of the pds T = theta*SS + L*D^(-1)*L&#39;;</span>
+<span class="w">         </span><span class="c">!    Store T in the upper triangular of the array wt;</span>
+<span class="w">         </span><span class="c">!    Cholesky factorize T to J*J&#39; with</span>
+<span class="w">         </span><span class="c">!       J&#39; stored in the upper triangular of wt.</span>
+<span class="w">         </span><span class="k">call </span><span class="n">formt</span><span class="p">(</span><span class="n">m</span><span class="p">,</span><span class="n">Wt</span><span class="p">,</span><span class="n">Sy</span><span class="p">,</span><span class="n">Ss</span><span class="p">,</span><span class="n">col</span><span class="p">,</span><span class="n">theta</span><span class="p">,</span><span class="n">info</span><span class="p">)</span>
+
+<span class="w">         </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">info</span><span class="o">/=</span><span class="mi">0</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="w">            </span><span class="c">! nonpositive definiteness in Cholesky factorization;</span>
+<span class="w">            </span><span class="c">! refresh the lbfgs memory and restart the iteration.</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">Iprint</span><span class="o">&gt;=</span><span class="mi">1</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="n">output_unit</span><span class="p">,</span><span class="s1">&#39;(/,a,/,a)&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">               </span><span class="s1">&#39; Nonpositive definiteness in Cholesky factorization in formt;&#39;</span><span class="p">,&amp;</span>
+<span class="w">               </span><span class="s1">&#39;   refresh the lbfgs memory and restart the iteration.&#39;</span>
+<span class="w">            </span><span class="n">info</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
+<span class="w">            </span><span class="n">col</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
+<span class="w">            </span><span class="n">head</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">            </span><span class="n">theta</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">one</span>
+<span class="w">            </span><span class="n">iupdat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
+<span class="w">            </span><span class="n">updatd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">false</span><span class="p">.</span>
+<span class="w">         </span><span class="k">endif</span>
+
+<span class="w">         </span><span class="c">! Now the inverse of the middle matrix in B is</span>
+
+<span class="w">         </span><span class="c">! [  D^(1/2)      O ] [ -D^(1/2)  D^(-1/2)*L&#39; ]</span>
+<span class="w">         </span><span class="c">! [ -L*D^(-1/2)   J ] [  0        J&#39;          ]</span>
+
+<span class="w">         </span><span class="k">call </span><span class="n">continue_loop</span><span class="p">()</span>
+
+<span class="w">      </span><span class="k">end do </span><span class="n">main_loop</span>
+
+<span class="w">      </span><span class="k">contains</span>
+
+<span class="k">         subroutine </span><span class="n">continue_loop</span><span class="p">()</span>
+<span class="w">            </span><span class="c">!! prepare for next loop iteration</span>
+
+<span class="w">            </span><span class="n">prelims</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">true</span><span class="p">.</span>
+<span class="w">            </span><span class="n">linesearch</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">true</span><span class="p">.</span>
+
+<span class="w">         </span><span class="k">end subroutine </span><span class="n">continue_loop</span>
+
+<span class="w">         </span><span class="k">subroutine </span><span class="n">start</span><span class="p">()</span>
+<span class="w">            </span><span class="c">!! return to the driver to calculate f and g</span>
+
+<span class="w">            </span><span class="n">Task</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;FG_START&#39;</span>
+<span class="w">            </span><span class="k">call </span><span class="n">save_locals</span><span class="p">()</span>
+
+<span class="w">         </span><span class="k">end subroutine </span><span class="n">start</span>
+
+<span class="w">         </span><span class="k">subroutine </span><span class="n">finish</span><span class="p">()</span>
+<span class="w">            </span><span class="c">!! before returning</span>
+
+<span class="w">            </span><span class="k">call </span><span class="nb">cpu_time</span><span class="p">(</span><span class="n">time2</span><span class="p">)</span>
+<span class="w">            </span><span class="nb">time</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">time2</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">time1</span>
+<span class="w">            </span><span class="k">call </span><span class="n">prn3lb</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">f</span><span class="p">,</span><span class="n">Task</span><span class="p">,</span><span class="n">Iprint</span><span class="p">,</span><span class="n">info</span><span class="p">,</span><span class="n">itfile</span><span class="p">,</span><span class="n">iter</span><span class="p">,</span><span class="n">nfgv</span><span class="p">,</span><span class="n">nintol</span><span class="p">,</span><span class="n">nskip</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">                        </span><span class="n">nact</span><span class="p">,</span><span class="n">sbgnrm</span><span class="p">,</span><span class="nb">time</span><span class="p">,</span><span class="n">nseg</span><span class="p">,</span><span class="n">word</span><span class="p">,</span><span class="n">iback</span><span class="p">,</span><span class="n">stp</span><span class="p">,</span><span class="n">xstep</span><span class="p">,</span><span class="n">k</span><span class="p">,</span><span class="n">cachyt</span><span class="p">,</span><span class="w">  </span><span class="p">&amp;</span>
+<span class="w">                        </span><span class="n">sbtime</span><span class="p">,</span><span class="n">lnscht</span><span class="p">)</span>
+<span class="w">            </span><span class="k">call </span><span class="n">save_locals</span><span class="p">()</span>
+
+<span class="w">         </span><span class="k">end subroutine </span><span class="n">finish</span>
+
+<span class="w">         </span><span class="k">subroutine </span><span class="n">save_locals</span><span class="p">()</span>
+<span class="w">            </span><span class="c">!! Save local variables.</span>
+
+<span class="w">            </span><span class="n">Lsave</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">prjctd</span>
+<span class="w">            </span><span class="n">Lsave</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cnstnd</span>
+<span class="w">            </span><span class="n">Lsave</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">boxed</span>
+<span class="w">            </span><span class="n">Lsave</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">updatd</span>
+
+<span class="w">            </span><span class="n">Isave</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nintol</span>
+<span class="w">            </span><span class="n">Isave</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">itfile</span>
+<span class="w">            </span><span class="n">Isave</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">iback</span>
+<span class="w">            </span><span class="n">Isave</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nskip</span>
+<span class="w">            </span><span class="n">Isave</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">head</span>
+<span class="w">            </span><span class="n">Isave</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">col</span>
+<span class="w">            </span><span class="n">Isave</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">itail</span>
+<span class="w">            </span><span class="n">Isave</span><span class="p">(</span><span class="mi">9</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">iter</span>
+<span class="w">            </span><span class="n">Isave</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">iupdat</span>
+<span class="w">            </span><span class="n">Isave</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nseg</span>
+<span class="w">            </span><span class="n">Isave</span><span class="p">(</span><span class="mi">13</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nfgv</span>
+<span class="w">            </span><span class="n">Isave</span><span class="p">(</span><span class="mi">14</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">info</span>
+<span class="w">            </span><span class="n">Isave</span><span class="p">(</span><span class="mi">15</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ifun</span>
+<span class="w">            </span><span class="n">Isave</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">iword</span>
+<span class="w">            </span><span class="n">Isave</span><span class="p">(</span><span class="mi">17</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nfree</span>
+<span class="w">            </span><span class="n">Isave</span><span class="p">(</span><span class="mi">18</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nact</span>
+<span class="w">            </span><span class="n">Isave</span><span class="p">(</span><span class="mi">19</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ileave</span>
+<span class="w">            </span><span class="n">Isave</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nenter</span>
+
+<span class="w">            </span><span class="n">Dsave</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">theta</span>
+<span class="w">            </span><span class="n">Dsave</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fold</span>
+<span class="w">            </span><span class="n">Dsave</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tol</span>
+<span class="w">            </span><span class="n">Dsave</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dnorm</span>
+<span class="w">            </span><span class="n">Dsave</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">epsmch</span>
+<span class="w">            </span><span class="n">Dsave</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cpu1</span>
+<span class="w">            </span><span class="n">Dsave</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cachyt</span>
+<span class="w">            </span><span class="n">Dsave</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sbtime</span>
+<span class="w">            </span><span class="n">Dsave</span><span class="p">(</span><span class="mi">9</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lnscht</span>
+<span class="w">            </span><span class="n">Dsave</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">time1</span>
+<span class="w">            </span><span class="n">Dsave</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">gd</span>
+<span class="w">            </span><span class="n">Dsave</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">stpmx</span>
+<span class="w">            </span><span class="n">Dsave</span><span class="p">(</span><span class="mi">13</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sbgnrm</span>
+<span class="w">            </span><span class="n">Dsave</span><span class="p">(</span><span class="mi">14</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">stp</span>
+<span class="w">            </span><span class="n">Dsave</span><span class="p">(</span><span class="mi">15</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">gdold</span>
+<span class="w">            </span><span class="n">Dsave</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dtd</span>
+<span class="w">         </span><span class="k">end subroutine </span><span class="n">save_locals</span>
+
+<span class="w">      </span><span class="k">end subroutine </span><span class="n">mainlb</span>
+</pre></div>
+
+    </section>
+    <br>
+    
+    </div>
+  </div>
+
+      <hr>
+    </div> <!-- /container -->
+    <footer>
+      <div class="container">
+        <div class="row justify-content-between">
+          <div class="col">
+            <p>
+              lbfgsb
+ was developed by Jacob Williams<br>              &copy; 2025 
+</p>
+          </div>
+          <div class="col">
+            <p class="text-end">
+              Documentation generated by
+              <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
+            </p>
+          </div>
+        </div>
+        <br>
+      </div> <!-- /container -->
+    </footer>
+
+    <!-- Bootstrap core JavaScript -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>    
+
+    <!-- MathJax JavaScript
+             ================================================== -->
+             <!-- Placed at the end of the document so the pages load faster -->
+        <script type="text/x-mathjax-config">
+          MathJax.Hub.Config({
+          TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } },
+          jax: ['input/TeX','input/MathML','output/HTML-CSS'],
+          extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']
+          });
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+          <script src="../tipuesearch/tipuesearch_content.js"></script>
+          <script src="../tipuesearch/tipuesearch_set.js"></script>
+          <script src="../tipuesearch/tipuesearch.js"></script>
+
+  </body>
+</html>

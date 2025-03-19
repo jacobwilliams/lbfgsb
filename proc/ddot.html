@@ -1,0 +1,712 @@
+<!-- -*- mode: jinja2 -*- -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="description" content="lbfgsb optimization library">
+    <meta name="author" content="Jacob Williams" >
+    <link rel="icon" href="../favicon.png">
+
+    <title>ddot &ndash; lbfgsb</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link href="../css/pygments.css" rel="stylesheet">
+    <link href="../css/font-awesome.min.css" rel="stylesheet">
+    <link href="../css/local.css" rel="stylesheet">
+      <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="../js/svg-pan-zoom.min.js"></script>
+  </head>
+
+  <body>
+
+    <!-- Fixed navbar -->
+    <div class="container-fluid mb-sm-4 mb-xl-2">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+          <a class="navbar-brand" href="../index.html">lbfgsb </a>
+          <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar"
+                  aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon">
+          </button>
+
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a class="nav-link" href="../lists/files.html">Source Files</a>
+                  </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/modules.html">Modules</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/procedures.html">Procedures</a>
+                </li>
+            </ul>
+              <div class="d-flex align-items-end flex-grow-1">
+                <form action="../search.html" role="search" class="ms-auto">
+                  <input type="text" class="form-control" aria-label="Search" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+                </form>
+              </div>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>
+    </div>
+
+    <div class="container">
+  <div class="row">
+    <h1>ddot
+      <small>Function</small>
+      
+    </h1>
+      <div class="container p-2 mb-4 bg-light border rounded-3">
+    <div class="row align-items-center justify-content-between" id="info-bar">
+      <div class="col">
+        <ul class="list-inline" style="margin-bottom:0px;display:inline">
+
+            <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
+              <a data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true"
+                 title=" 2.1% of total for procedures.">41 statements</a>
+            </li>
+
+            <li class="list-inline-item" id="source-file">
+              <i class="fa fa-code"></i>
+              <a href="../src/lbfgsb_blas_module.F90"> Source File</a>
+            </li>
+        </ul>
+      </div>
+      <div class="col">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb justify-content-end mb-0">
+                <li class="breadcrumb-item"><a href='../sourcefile/lbfgsb_blas_module.f90.html'>lbfgsb_blas_module.F90</a></li>
+                <li class="breadcrumb-item"><a href='../module/lbfgsb_blas_module.html'>lbfgsb_blas_module</a></li>
+            <li class="breadcrumb-item active" aria-current="page">ddot</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+  </div>
+  <script>
+    $(function () {
+    $('[data-bs-toggle="tooltip"]').tooltip()
+    })
+  </script>
+
+  </div>
+  
+  <div class="row">
+    <div class="col-md-3 hidden-xs hidden-sm visible-md visible-lg">
+      <div id="sidebar">
+      <h3>Contents</h3>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+    <div class="card card-primary">
+      <div class="card-header text-left"><h3 class="card-title">Source Code</h3></div>
+      <div class="list-group">
+        <a class="list-group-item" href="../proc/ddot.html#src">ddot</a>
+      </div>
+    </div>
+
+
+  </div>
+
+    </div>
+    
+    <div class="col-md-9" id='text'>
+    <h2>public  function ddot(n, dx, incx, dy, incy)  
+</h2>
+    
+
+    <p>forms the dot product of two vectors.
+  uses unrolled loops for increments equal to one.</p>
+<h3>Author</h3>
+<p>jack dongarra, linpack, 3/11/78.</p>
+
+
+    <h3>Arguments</h3>
+        <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-n~21"></span>
+              integer,
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>n</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-dx~3"></span>
+              real(kind=wp),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>dx</strong>(*)</td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-incx~3"></span>
+              integer,
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>incx</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-dy~3"></span>
+              real(kind=wp),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>dy</strong>(*)</td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-incy~3"></span>
+              integer,
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>incy</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+      <h3>Return Value
+        <small>
+          <span class="anchor" id="variable-ddot"></span>
+          real(kind=wp)
+        </small>
+      </h3>
+      
+    <br>
+    <div class="card">
+      <div class="card-header">
+  <h3 class="card-title">Called by</h3>
+      </div>
+      <div class="card-body">
+  <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.43.0 (0)
+ -->
+<!-- Title: proc~~ddot~~CalledByGraph Pages: 1 -->
+<svg id="procddotCalledByGraph" width="512pt" height="314pt"
+ viewBox="0.00 0.00 512.00 314.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="proc~~ddot~~CalledByGraph" class="graph" transform="scale(1 1) rotate(0) translate(4 310)">
+<title>proc~~ddot~~CalledByGraph</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-310 508,-310 508,4 -4,4"/>
+<!-- proc~ddot -->
+<g id="proc~~ddot~~CalledByGraph_node1" class="node">
+<title>proc~ddot</title>
+<polygon fill="none" stroke="black" points="504,-144 450,-144 450,-120 504,-120 504,-144"/>
+<text text-anchor="middle" x="477" y="-129.6" font-family="Helvetica,sans-Serif" font-size="10.50">ddot</text>
+</g>
+<!-- proc~cauchy -->
+<g id="proc~~ddot~~CalledByGraph_node2" class="node">
+<title>proc~cauchy</title>
+<g id="a_proc~~ddot~~CalledByGraph_node2"><a xlink:href="../proc/cauchy.html" xlink:title="cauchy">
+<polygon fill="#d9534f" stroke="#d9534f" points="234,-142 180,-142 180,-118 234,-118 234,-142"/>
+<text text-anchor="middle" x="207" y="-127.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">cauchy</text>
+</a>
+</g>
+</g>
+<!-- proc~cauchy&#45;&gt;proc~ddot -->
+<g id="proc~~ddot~~CalledByGraph_edge1" class="edge">
+<title>proc~cauchy&#45;&gt;proc~ddot</title>
+<path fill="none" stroke="#000000" d="M234.18,-130.2C282.22,-130.55 384.51,-131.32 439.39,-131.73"/>
+<polygon fill="#000000" stroke="#000000" points="439.68,-135.23 449.71,-131.8 439.74,-128.23 439.68,-135.23"/>
+</g>
+<!-- proc~bmv -->
+<g id="proc~~ddot~~CalledByGraph_node9" class="node">
+<title>proc~bmv</title>
+<g id="a_proc~~ddot~~CalledByGraph_node9"><a xlink:href="../proc/bmv.html" xlink:title="bmv">
+<polygon fill="#d9534f" stroke="#d9534f" points="324,-184 270,-184 270,-160 324,-160 324,-184"/>
+<text text-anchor="middle" x="297" y="-169.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">bmv</text>
+</a>
+</g>
+</g>
+<!-- proc~cauchy&#45;&gt;proc~bmv -->
+<g id="proc~~ddot~~CalledByGraph_edge18" class="edge">
+<title>proc~cauchy&#45;&gt;proc~bmv</title>
+<path fill="none" stroke="#000000" d="M233.45,-142.15C242.21,-146.33 252.17,-151.08 261.52,-155.54"/>
+<polygon fill="#000000" stroke="#000000" points="260.07,-158.73 270.6,-159.88 263.09,-152.41 260.07,-158.73"/>
+</g>
+<!-- proc~dpofa -->
+<g id="proc~~ddot~~CalledByGraph_node3" class="node">
+<title>proc~dpofa</title>
+<g id="a_proc~~ddot~~CalledByGraph_node3"><a xlink:href="../proc/dpofa.html" xlink:title="dpofa">
+<polygon fill="#d9534f" stroke="#d9534f" points="414,-264 360,-264 360,-240 414,-240 414,-264"/>
+<text text-anchor="middle" x="387" y="-249.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">dpofa</text>
+</a>
+</g>
+</g>
+<!-- proc~dpofa&#45;&gt;proc~ddot -->
+<g id="proc~~ddot~~CalledByGraph_edge2" class="edge">
+<title>proc~dpofa&#45;&gt;proc~ddot</title>
+<path fill="none" stroke="#000000" d="M401.23,-239.79C405.5,-235.59 410.13,-230.75 414,-226 433.33,-202.31 452.18,-172.48 463.93,-152.85"/>
+<polygon fill="#000000" stroke="#000000" points="467.02,-154.5 469.09,-144.11 460.99,-150.94 467.02,-154.5"/>
+</g>
+<!-- proc~dtrsl -->
+<g id="proc~~ddot~~CalledByGraph_node4" class="node">
+<title>proc~dtrsl</title>
+<g id="a_proc~~ddot~~CalledByGraph_node4"><a xlink:href="../proc/dtrsl.html" xlink:title="dtrsl">
+<polygon fill="#d9534f" stroke="#d9534f" points="414,-184 360,-184 360,-160 414,-160 414,-184"/>
+<text text-anchor="middle" x="387" y="-169.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">dtrsl</text>
+</a>
+</g>
+</g>
+<!-- proc~dtrsl&#45;&gt;proc~ddot -->
+<g id="proc~~ddot~~CalledByGraph_edge3" class="edge">
+<title>proc~dtrsl&#45;&gt;proc~ddot</title>
+<path fill="none" stroke="#000000" d="M414.4,-160C422.66,-156.25 431.9,-152.05 440.66,-148.06"/>
+<polygon fill="#000000" stroke="#000000" points="442.26,-151.18 449.92,-143.86 439.37,-144.81 442.26,-151.18"/>
+</g>
+<!-- proc~formk -->
+<g id="proc~~ddot~~CalledByGraph_node5" class="node">
+<title>proc~formk</title>
+<g id="a_proc~~ddot~~CalledByGraph_node5"><a xlink:href="../proc/formk.html" xlink:title="formk">
+<polygon fill="#d9534f" stroke="#d9534f" points="324,-264 270,-264 270,-240 324,-240 324,-264"/>
+<text text-anchor="middle" x="297" y="-249.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">formk</text>
+</a>
+</g>
+</g>
+<!-- proc~formk&#45;&gt;proc~ddot -->
+<g id="proc~~ddot~~CalledByGraph_edge4" class="edge">
+<title>proc~formk&#45;&gt;proc~ddot</title>
+<path fill="none" stroke="#000000" d="M324.18,-241.45C348.58,-231 385.39,-213.59 414,-193 430.49,-181.13 446.77,-164.89 458.51,-152.15"/>
+<polygon fill="#000000" stroke="#000000" points="461.43,-154.14 465.52,-144.37 456.23,-149.45 461.43,-154.14"/>
+</g>
+<!-- proc~formk&#45;&gt;proc~dpofa -->
+<g id="proc~~ddot~~CalledByGraph_edge9" class="edge">
+<title>proc~formk&#45;&gt;proc~dpofa</title>
+<path fill="none" stroke="#000000" d="M324.4,-252C332.39,-252 341.31,-252 349.82,-252"/>
+<polygon fill="#000000" stroke="#000000" points="349.92,-255.5 359.92,-252 349.92,-248.5 349.92,-255.5"/>
+</g>
+<!-- proc~formk&#45;&gt;proc~dtrsl -->
+<g id="proc~~ddot~~CalledByGraph_edge12" class="edge">
+<title>proc~formk&#45;&gt;proc~dtrsl</title>
+<path fill="none" stroke="#000000" d="M311.37,-239.85C325.66,-226.85 348.53,-206.07 365.18,-190.92"/>
+<polygon fill="#000000" stroke="#000000" points="367.75,-193.32 372.8,-184 363.04,-188.14 367.75,-193.32"/>
+</g>
+<!-- proc~lnsrlb -->
+<g id="proc~~ddot~~CalledByGraph_node6" class="node">
+<title>proc~lnsrlb</title>
+<g id="a_proc~~ddot~~CalledByGraph_node6"><a xlink:href="../proc/lnsrlb.html" xlink:title="lnsrlb">
+<polygon fill="#d9534f" stroke="#d9534f" points="414,-104 360,-104 360,-80 414,-80 414,-104"/>
+<text text-anchor="middle" x="387" y="-89.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lnsrlb</text>
+</a>
+</g>
+</g>
+<!-- proc~lnsrlb&#45;&gt;proc~ddot -->
+<g id="proc~~ddot~~CalledByGraph_edge5" class="edge">
+<title>proc~lnsrlb&#45;&gt;proc~ddot</title>
+<path fill="none" stroke="#000000" d="M414.4,-104C422.66,-107.75 431.9,-111.95 440.66,-115.94"/>
+<polygon fill="#000000" stroke="#000000" points="439.37,-119.19 449.92,-120.14 442.26,-112.82 439.37,-119.19"/>
+</g>
+<!-- proc~mainlb -->
+<g id="proc~~ddot~~CalledByGraph_node7" class="node">
+<title>proc~mainlb</title>
+<g id="a_proc~~ddot~~CalledByGraph_node7"><a xlink:href="../proc/mainlb.html" xlink:title="mainlb">
+<polygon fill="#d9534f" stroke="#d9534f" points="144,-163 90,-163 90,-139 144,-139 144,-163"/>
+<text text-anchor="middle" x="117" y="-148.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">mainlb</text>
+</a>
+</g>
+</g>
+<!-- proc~mainlb&#45;&gt;proc~ddot -->
+<g id="proc~~ddot~~CalledByGraph_edge6" class="edge">
+<title>proc~mainlb&#45;&gt;proc~ddot</title>
+<path fill="none" stroke="#000000" d="M126.99,-138.87C137.87,-125.18 157.56,-103.48 180,-93 253.03,-58.9 279.55,-75.9 360,-71 383.96,-69.54 391.79,-61.91 414,-71 433.9,-79.15 450.85,-97.11 461.97,-111.45"/>
+<polygon fill="#000000" stroke="#000000" points="459.37,-113.81 468.12,-119.79 465,-109.66 459.37,-113.81"/>
+</g>
+<!-- proc~mainlb&#45;&gt;proc~cauchy -->
+<g id="proc~~ddot~~CalledByGraph_edge8" class="edge">
+<title>proc~mainlb&#45;&gt;proc~cauchy</title>
+<path fill="none" stroke="#000000" d="M144.4,-144.7C152.48,-142.77 161.51,-140.62 170.1,-138.57"/>
+<polygon fill="#000000" stroke="#000000" points="171,-141.95 179.92,-136.22 169.38,-135.14 171,-141.95"/>
+</g>
+<!-- proc~mainlb&#45;&gt;proc~formk -->
+<g id="proc~~ddot~~CalledByGraph_edge14" class="edge">
+<title>proc~mainlb&#45;&gt;proc~formk</title>
+<path fill="none" stroke="#000000" d="M123.17,-163.13C131.88,-181.96 151.4,-217.85 180,-235 203.87,-249.32 235.34,-253.19 259.48,-253.69"/>
+<polygon fill="#000000" stroke="#000000" points="259.66,-257.19 269.67,-253.71 259.68,-250.19 259.66,-257.19"/>
+</g>
+<!-- proc~mainlb&#45;&gt;proc~lnsrlb -->
+<g id="proc~~ddot~~CalledByGraph_edge15" class="edge">
+<title>proc~mainlb&#45;&gt;proc~lnsrlb</title>
+<path fill="none" stroke="#000000" d="M131.63,-138.7C143.48,-128.79 161.61,-115.48 180,-109 236.78,-88.98 307.62,-87.9 349.7,-89.53"/>
+<polygon fill="#000000" stroke="#000000" points="349.6,-93.03 359.75,-90 349.93,-86.04 349.6,-93.03"/>
+</g>
+<!-- proc~matupd -->
+<g id="proc~~ddot~~CalledByGraph_node8" class="node">
+<title>proc~matupd</title>
+<g id="a_proc~~ddot~~CalledByGraph_node8"><a xlink:href="../proc/matupd.html" xlink:title="matupd">
+<polygon fill="#d9534f" stroke="#d9534f" points="324,-24 270,-24 270,0 324,0 324,-24"/>
+<text text-anchor="middle" x="297" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">matupd</text>
+</a>
+</g>
+</g>
+<!-- proc~mainlb&#45;&gt;proc~matupd -->
+<g id="proc~~ddot~~CalledByGraph_edge17" class="edge">
+<title>proc~mainlb&#45;&gt;proc~matupd</title>
+<path fill="none" stroke="#000000" d="M121.04,-138.92C127.59,-115.53 145.3,-64.09 180,-38 202.95,-20.74 235.21,-14.56 259.89,-12.52"/>
+<polygon fill="#000000" stroke="#000000" points="260.2,-16.01 269.95,-11.88 259.75,-9.02 260.2,-16.01"/>
+</g>
+<!-- proc~formt -->
+<g id="proc~~ddot~~CalledByGraph_node10" class="node">
+<title>proc~formt</title>
+<g id="a_proc~~ddot~~CalledByGraph_node10"><a xlink:href="../proc/formt.html" xlink:title="formt">
+<polygon fill="#d9534f" stroke="#d9534f" points="234,-306 180,-306 180,-282 234,-282 234,-306"/>
+<text text-anchor="middle" x="207" y="-291.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">formt</text>
+</a>
+</g>
+</g>
+<!-- proc~mainlb&#45;&gt;proc~formt -->
+<g id="proc~~ddot~~CalledByGraph_edge20" class="edge">
+<title>proc~mainlb&#45;&gt;proc~formt</title>
+<path fill="none" stroke="#000000" d="M123.06,-163.32C132.46,-185.44 154.04,-232.87 180,-268 181.56,-270.11 183.29,-272.22 185.09,-274.26"/>
+<polygon fill="#000000" stroke="#000000" points="182.79,-276.92 192.23,-281.74 187.86,-272.09 182.79,-276.92"/>
+</g>
+<!-- proc~subsm -->
+<g id="proc~~ddot~~CalledByGraph_node12" class="node">
+<title>proc~subsm</title>
+<g id="a_proc~~ddot~~CalledByGraph_node12"><a xlink:href="../proc/subsm.html" xlink:title="subsm">
+<polygon fill="#d9534f" stroke="#d9534f" points="234,-226 180,-226 180,-202 234,-202 234,-226"/>
+<text text-anchor="middle" x="207" y="-211.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">subsm</text>
+</a>
+</g>
+</g>
+<!-- proc~mainlb&#45;&gt;proc~subsm -->
+<g id="proc~~ddot~~CalledByGraph_edge21" class="edge">
+<title>proc~mainlb&#45;&gt;proc~subsm</title>
+<path fill="none" stroke="#000000" d="M134.97,-163.15C147.99,-172.47 166.18,-185.49 180.89,-196.02"/>
+<polygon fill="#000000" stroke="#000000" points="178.92,-198.91 189.08,-201.89 182.99,-193.22 178.92,-198.91"/>
+</g>
+<!-- proc~cmprlb -->
+<g id="proc~~ddot~~CalledByGraph_node13" class="node">
+<title>proc~cmprlb</title>
+<g id="a_proc~~ddot~~CalledByGraph_node13"><a xlink:href="../proc/cmprlb.html" xlink:title="cmprlb">
+<polygon fill="#d9534f" stroke="#d9534f" points="234,-184 180,-184 180,-160 234,-160 234,-184"/>
+<text text-anchor="middle" x="207" y="-169.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">cmprlb</text>
+</a>
+</g>
+</g>
+<!-- proc~mainlb&#45;&gt;proc~cmprlb -->
+<g id="proc~~ddot~~CalledByGraph_edge22" class="edge">
+<title>proc~mainlb&#45;&gt;proc~cmprlb</title>
+<path fill="none" stroke="#000000" d="M144.4,-157.3C152.48,-159.23 161.51,-161.38 170.1,-163.43"/>
+<polygon fill="#000000" stroke="#000000" points="169.38,-166.86 179.92,-165.78 171,-160.05 169.38,-166.86"/>
+</g>
+<!-- proc~matupd&#45;&gt;proc~ddot -->
+<g id="proc~~ddot~~CalledByGraph_edge7" class="edge">
+<title>proc~matupd&#45;&gt;proc~ddot</title>
+<path fill="none" stroke="#000000" d="M324.18,-12.37C349.27,-13.91 387.16,-19.48 414,-38 439.97,-55.93 457.84,-88.62 467.5,-110.33"/>
+<polygon fill="#000000" stroke="#000000" points="464.35,-111.87 471.47,-119.72 470.8,-109.15 464.35,-111.87"/>
+</g>
+<!-- proc~bmv&#45;&gt;proc~dtrsl -->
+<g id="proc~~ddot~~CalledByGraph_edge11" class="edge">
+<title>proc~bmv&#45;&gt;proc~dtrsl</title>
+<path fill="none" stroke="#000000" d="M324.4,-172C332.39,-172 341.31,-172 349.82,-172"/>
+<polygon fill="#000000" stroke="#000000" points="349.92,-175.5 359.92,-172 349.92,-168.5 349.92,-175.5"/>
+</g>
+<!-- proc~formt&#45;&gt;proc~dpofa -->
+<g id="proc~~ddot~~CalledByGraph_edge10" class="edge">
+<title>proc~formt&#45;&gt;proc~dpofa</title>
+<path fill="none" stroke="#000000" d="M234.04,-290.41C257.7,-286.88 293.48,-280.88 324,-273 332.54,-270.79 341.6,-267.99 350.08,-265.16"/>
+<polygon fill="#000000" stroke="#000000" points="351.39,-268.42 359.71,-261.86 349.11,-261.8 351.39,-268.42"/>
+</g>
+<!-- proc~setulb -->
+<g id="proc~~ddot~~CalledByGraph_node11" class="node">
+<title>proc~setulb</title>
+<g id="a_proc~~ddot~~CalledByGraph_node11"><a xlink:href="../proc/setulb.html" xlink:title="setulb">
+<polygon fill="#d9534f" stroke="#d9534f" points="54,-163 0,-163 0,-139 54,-139 54,-163"/>
+<text text-anchor="middle" x="27" y="-148.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">setulb</text>
+</a>
+</g>
+</g>
+<!-- proc~setulb&#45;&gt;proc~mainlb -->
+<g id="proc~~ddot~~CalledByGraph_edge16" class="edge">
+<title>proc~setulb&#45;&gt;proc~mainlb</title>
+<path fill="none" stroke="#000000" d="M54.4,-151C62.39,-151 71.31,-151 79.82,-151"/>
+<polygon fill="#000000" stroke="#000000" points="79.92,-154.5 89.92,-151 79.92,-147.5 79.92,-154.5"/>
+</g>
+<!-- proc~subsm&#45;&gt;proc~dtrsl -->
+<g id="proc~~ddot~~CalledByGraph_edge13" class="edge">
+<title>proc~subsm&#45;&gt;proc~dtrsl</title>
+<path fill="none" stroke="#000000" d="M234.04,-210.41C257.7,-206.88 293.48,-200.88 324,-193 332.54,-190.79 341.6,-187.99 350.08,-185.16"/>
+<polygon fill="#000000" stroke="#000000" points="351.39,-188.42 359.71,-181.86 349.11,-181.8 351.39,-188.42"/>
+</g>
+<!-- proc~cmprlb&#45;&gt;proc~bmv -->
+<g id="proc~~ddot~~CalledByGraph_edge19" class="edge">
+<title>proc~cmprlb&#45;&gt;proc~bmv</title>
+<path fill="none" stroke="#000000" d="M234.4,-172C242.39,-172 251.31,-172 259.82,-172"/>
+<polygon fill="#000000" stroke="#000000" points="259.92,-175.5 269.92,-172 259.92,-168.5 259.92,-175.5"/>
+</g>
+</g>
+</svg>
+</div>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#CalledByGraph-help-text">Help</a>
+          </div>
+          <div class="modal fade" id="CalledByGraph-help-text" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+<p>Nodes of different colours represent the following: </p>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.43.0 (0)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="641pt" height="28pt"
+ viewBox="0.00 0.00 641.00 27.51" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(0.86 0.86) rotate(0) translate(4 28)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-28 741.5,-28 741.5,4 -4,4"/>
+<!-- Subroutine -->
+<g id="node1" class="node">
+<title>Subroutine</title>
+<polygon fill="#d9534f" stroke="#d9534f" points="70,-24 0,-24 0,0 70,0 70,-24"/>
+<text text-anchor="middle" x="35" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
+</g>
+<!-- Function -->
+<g id="node2" class="node">
+<title>Function</title>
+<polygon fill="#d94e8f" stroke="#d94e8f" points="146,-24 88,-24 88,0 146,0 146,-24"/>
+<text text-anchor="middle" x="117" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
+</g>
+<!-- Interface -->
+<g id="node3" class="node">
+<title>Interface</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="225.5,-24 164.5,-24 164.5,0 225.5,0 225.5,-24"/>
+<text text-anchor="middle" x="195" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Interface</text>
+</g>
+<!-- Type Bound Procedure -->
+<g id="node4" class="node">
+<title>Type Bound Procedure</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="374,-24 244,-24 244,0 374,0 374,-24"/>
+<text text-anchor="middle" x="309" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Type Bound Procedure</text>
+</g>
+<!-- Unknown Procedure Type -->
+<g id="node5" class="node">
+<title>Unknown Procedure Type</title>
+<polygon fill="#777777" stroke="#777777" points="537.5,-24 392.5,-24 392.5,0 537.5,0 537.5,-24"/>
+<text text-anchor="middle" x="465" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Unknown Procedure Type</text>
+</g>
+<!-- Program -->
+<g id="node6" class="node">
+<title>Program</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="614,-24 556,-24 556,0 614,0 614,-24"/>
+<text text-anchor="middle" x="585" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node7" class="node">
+<title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="737.5,-24 632.5,-24 632.5,0 737.5,0 737.5,-24"/>
+<text text-anchor="middle" x="685" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+<p>Solid arrows point from a procedure to one which it calls. Dashed 
+arrows point from an interface to procedures which implement that interface.
+This could include the module procedures in a generic interface or the
+implementation in a submodule of an interface in a parent module.
+</p>
+ </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+
+
+    
+    
+
+    
+    
+
+
+
+    
+    <section>
+    <h2><span class="anchor" id="src"></span>Source Code</h2>
+    <div class="hl codehilite"><pre><span></span><span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w"> </span><span class="k">function </span><span class="n">ddot</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">dx</span><span class="p">,</span><span class="n">incx</span><span class="p">,</span><span class="n">dy</span><span class="p">,</span><span class="n">incy</span><span class="p">)</span>
+
+<span class="w">      </span><span class="k">implicit none</span>
+
+<span class="k">      </span><span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">n</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">dx</span><span class="p">(</span><span class="o">*</span><span class="p">)</span>
+<span class="w">      </span><span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">incx</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">dy</span><span class="p">(</span><span class="o">*</span><span class="p">)</span>
+<span class="w">      </span><span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">incy</span>
+
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">dtemp</span>
+<span class="w">      </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">ix</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">iy</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">m</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">mp1</span>
+
+<span class="w">      </span><span class="n">ddot</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">zero</span>
+<span class="w">      </span><span class="n">dtemp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">zero</span>
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">n</span><span class="o">&lt;=</span><span class="mi">0</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">return</span>
+<span class="k">      if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">incx</span><span class="o">==</span><span class="mi">1</span><span class="w"> </span><span class="p">.</span><span class="nb">and</span><span class="p">.</span><span class="w"> </span><span class="n">incy</span><span class="o">==</span><span class="mi">1</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+
+<span class="w">         </span><span class="c">! code for both increments equal to 1</span>
+
+<span class="w">         </span><span class="c">! clean-up loop</span>
+
+<span class="w">         </span><span class="n">m</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">mod</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
+<span class="w">         </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">m</span><span class="o">/=</span><span class="mi">0</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">            do </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">m</span>
+<span class="w">               </span><span class="n">dtemp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dtemp</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">dx</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">*</span><span class="n">dy</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+<span class="w">            </span><span class="k">end do</span>
+<span class="k">            if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">n</span><span class="o">&lt;</span><span class="mi">5</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">               </span><span class="n">ddot</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dtemp</span>
+<span class="w">               </span><span class="k">return</span>
+<span class="k">            end if</span>
+<span class="k">         end if</span>
+<span class="k">         </span><span class="n">mp1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">m</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">         </span><span class="k">do </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mp1</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="mi">5</span>
+<span class="w">            </span><span class="n">dtemp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dtemp</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">dx</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">*</span><span class="n">dy</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">dx</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">dy</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">                    </span><span class="n">dx</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="n">dy</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">dx</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">3</span><span class="p">)</span><span class="o">*</span><span class="n">dy</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">3</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">dx</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">4</span><span class="p">)</span><span class="o">*</span><span class="n">dy</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">4</span><span class="p">)</span>
+<span class="w">         </span><span class="k">end do</span>
+<span class="k">         </span><span class="n">ddot</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dtemp</span>
+
+<span class="w">      </span><span class="k">else</span>
+
+<span class="w">         </span><span class="c">! code for unequal increments or equal increments</span>
+<span class="w">         </span><span class="c">! not equal to 1</span>
+
+<span class="w">         </span><span class="n">ix</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">         </span><span class="n">iy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">         </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">incx</span><span class="o">&lt;</span><span class="mi">0</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">ix</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="o">-</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">incx</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">         </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">incy</span><span class="o">&lt;</span><span class="mi">0</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">iy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="o">-</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">incy</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">         </span><span class="k">do </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">n</span>
+<span class="w">            </span><span class="n">dtemp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dtemp</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">dx</span><span class="p">(</span><span class="n">ix</span><span class="p">)</span><span class="o">*</span><span class="n">dy</span><span class="p">(</span><span class="n">iy</span><span class="p">)</span>
+<span class="w">            </span><span class="n">ix</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ix</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">incx</span>
+<span class="w">            </span><span class="n">iy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">iy</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">incy</span>
+<span class="w">         </span><span class="k">end do</span>
+<span class="k">         </span><span class="n">ddot</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dtemp</span>
+
+<span class="w">      </span><span class="k">end if</span>
+
+<span class="k">      end function </span><span class="n">ddot</span>
+</pre></div>
+
+    </section>
+    <br>
+    
+    </div>
+  </div>
+
+      <hr>
+    </div> <!-- /container -->
+    <footer>
+      <div class="container">
+        <div class="row justify-content-between">
+          <div class="col">
+            <p>
+              lbfgsb
+ was developed by Jacob Williams<br>              &copy; 2025 
+</p>
+          </div>
+          <div class="col">
+            <p class="text-end">
+              Documentation generated by
+              <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
+            </p>
+          </div>
+        </div>
+        <br>
+      </div> <!-- /container -->
+    </footer>
+
+    <!-- Bootstrap core JavaScript -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>    
+
+    <!-- MathJax JavaScript
+             ================================================== -->
+             <!-- Placed at the end of the document so the pages load faster -->
+        <script type="text/x-mathjax-config">
+          MathJax.Hub.Config({
+          TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } },
+          jax: ['input/TeX','input/MathML','output/HTML-CSS'],
+          extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']
+          });
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+          <script src="../tipuesearch/tipuesearch_content.js"></script>
+          <script src="../tipuesearch/tipuesearch_set.js"></script>
+          <script src="../tipuesearch/tipuesearch.js"></script>
+
+  </body>
+</html>
